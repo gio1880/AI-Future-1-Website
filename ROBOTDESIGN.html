@@ -364,34 +364,6 @@
 
     sup a{ text-decoration:none; }
 
-    /* Responsive improvements */
-    /* Make images fluid */
-    .ph img, .media img, figure img, .grid img { max-width: 100%; height: auto; display: block; }
-
-    /* Allow the main two-column grid to gracefully shift between sizes */
-    .grid{ grid-template-columns: 1.25fr .75fr; }
-    @media (max-width:1200px){ .grid{ grid-template-columns: 1fr .9fr; gap:18px; } }
-    @media (max-width:980px){ .grid{ grid-template-columns: 1fr; gap:16px; } }
-
-    /* Header/nav responsiveness */
-    nav ul{ gap:10px; overflow:auto; -webkit-overflow-scrolling:touch; }
-    .brand{ min-width:180px; }
-    @media (max-width:760px){
-      .brand{ min-width:120px; }
-      .brand strong{ font-size:13px; }
-      .brand span{ display:none; }
-      nav ul{ gap:8px; }
-      .nav-cta{ display:none; }
-    }
-
-    /* Blob artwork scale down on small screens */
-    .blob.b1{ width: 420px; height: 420px; }
-    .blob.b2{ width: 520px; height: 520px; }
-    @media (max-width:760px){
-      .blob.b1{ width: 260px; height: 260px; left: -80px; top: 80px; }
-      .blob.b2{ width: 340px; height: 340px; right: -120px; top: 420px; }
-    }
-
     /* Mission sorting UI (inserted section styles) */
     .run-tabs{ display:flex; gap:10px; }
     .run-tab{
@@ -867,7 +839,7 @@
   </section>
   <!-- 4. Julisa Management -->
   <section id="management" class="section">
-    <div class="wrap" style="width:100%; max-width:none;">
+    <div class="wrap grid">
       <div class="card strong reveal">
         <div class="kicker"><span class="bar"></span> Julisa — Project Management (visual)</div>
         <h2 style="margin-bottom:6px;">Photos • Schedule • Progress</h2>
@@ -1020,12 +992,21 @@
           <p style="margin:6px 0 0;">Check photos for build issues, follow the weekly calendar, update the tracker after each session.</p>
         </div>
       </div>
+
+      <aside class="card reveal tilt" style="min-width:210px;">
+        <h3 style="margin-top:0;">Quick checklist</h3>
+        <ul style="margin:8px 0 0; padding-left:18px; color:var(--muted);">
+          <li>Photo before/after each swap</li>
+          <li>Assign owner for each run (sheet)</li>
+          <li>Update progress bar after 3 successful trials</li>
+        </ul>
+      </aside>
     </div>
   </section>
 
   <!-- 4. Brian Pybricks -->
   <section id="pybricks" class="section">
-    <div class="wrap" style="width:100%; max-width:none;">
+    <div class="wrap">
       <div class="card strong reveal">
         <div class="kicker"><span class="bar"></span> Brian — Pybricks (show, don't tell)</div>
         <h2 style="margin-bottom:6px;">Faster loops • tighter control • sensor-first</h2>
@@ -1130,6 +1111,11 @@ while True:
           </figure>
         </div>
 
+        <div class="callout" style="margin-top:12px; display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <span class="pill">Show logs, not long prose</span>
+          <span class="pill">Use screenshots + SVGs</span>
+          <span class="pill">Keep code snippets short</span>
+        </div>
       </div>
 
     </div>
@@ -1145,150 +1131,164 @@ while True:
     </style>
   </section>
 
-  <!-- 5. Jonathan Sensors (visual-first) -->
-  <section id="sensors" class="section">
-    <div class="wrap grid">
-      <div class="card strong reveal">
-        <div class="kicker"><span class="bar"></span> Jonathan — Sensors (show, not tell)</div>
-        <h2 style="margin-bottom:8px;">Gyro + Encoders → predictable turns & distance</h2>
+  <!-- 5. Jonathan Sensors (full-width layout) -->
+  <section id="sensors" class="section" style="padding-top:36px; padding-bottom:36px;">
+    <div class="wrap" style="width:100%; max-width:none; padding:0 20px;">
+      <div style="display:grid; grid-template-columns: repeat(12, 1fr); gap:12px; align-items:start;">
 
-        <p class="lead" style="margin-bottom:12px; font-size:13px;">
-          Minimal notes — visuals below show heading correction and encoder tracking (we use only gyro and motor encoders).
-        </p>
+        <!-- Main content (wide) -->
+        <div class="card strong reveal" style="grid-column: 1 / span 8; padding:18px;">
+          <div class="kicker"><span class="bar"></span> Jonathan — Sensors (show, not tell)</div>
+          <h2 style="margin-bottom:8px;">Gyro + Encoders → predictable turns & distance</h2>
 
-        <div class="media" style="grid-template-columns: 1.2fr .9fr; gap:12px; align-items:start;">
-          <!-- Heading overlay SVG (multiple trials) -->
-          <figure class="ph tilt" style="padding:12px;">
+          <p class="lead" style="margin-bottom:12px; font-size:13px;">
+            Minimal notes — visuals show heading correction and encoder tracking (we use only gyro + motor encoders).
+          </p>
+
+          <!-- Heading overlay (larger, full-width inside card) -->
+          <figure class="ph tilt" style="padding:10px; margin:0;">
             <div class="label"><b>Heading vs time — 3 trials</b></div>
-            <svg width="100%" height="160" viewBox="0 0 360 160" style="margin-top:10px;">
+            <svg width="100%" height="180" viewBox="0 0 720 180" style="margin-top:10px;">
               <rect x="0" y="0" width="100%" height="100%" fill="transparent"/>
               <!-- axes -->
-              <line x1="30" y1="140" x2="330" y2="140" stroke="rgba(11,18,32,.06)"/>
-              <line x1="30" y1="12" x2="30" y2="140" stroke="rgba(11,18,32,.06)"/>
+              <line x1="60" y1="160" x2="660" y2="160" stroke="rgba(11,18,32,.06)"/>
+              <line x1="60" y1="16" x2="60" y2="160" stroke="rgba(11,18,32,.06)"/>
               <!-- target line -->
-              <line x1="30" y1="60" x2="330" y2="60" stroke="rgba(7,62,119,.12)" stroke-dasharray="4 4"/>
-              <text x="34" y="54" font-size="11" fill="#0b1220">Target</text>
+              <line x1="60" y1="68" x2="660" y2="68" stroke="rgba(7,62,119,.12)" stroke-dasharray="4 4"/>
+              <text x="66" y="62" font-size="12" fill="#0b1220">Target</text>
 
-              <!-- trial curves -->
-              <path d="M30,120 C80,82 140,68 200,64 260,62 320,60" fill="none" stroke="#073e77" stroke-width="2.5" opacity="0.95"/>
-              <path d="M30,130 C80,96 140,72 200,66 260,62 320,61" fill="none" stroke="#fece00" stroke-width="2.2" opacity="0.9"/>
-              <path d="M30,118 C80,88 140,70 200,63 260,61 320,60.5" fill="none" stroke="#d9da26" stroke-width="2" opacity="0.85"/>
+              <!-- trial curves (scaled wider) -->
+              <path d="M60,140 C180,90 320,76 460,72 600,69 640,68" fill="none" stroke="#073e77" stroke-width="3" opacity="0.95"/>
+              <path d="M60,150 C180,104 320,82 460,74 600,69 640,69" fill="none" stroke="#fece00" stroke-width="2.6" opacity="0.9"/>
+              <path d="M60,138 C180,96 320,78 460,71 600,68 640,67.5" fill="none" stroke="#d9da26" stroke-width="2.2" opacity="0.85"/>
 
               <!-- markers -->
-              <circle cx="200" cy="64" r="3" fill="#073e77"/><text x="206" y="68" font-size="10" fill="#0b1220">end</text>
+              <circle cx="460" cy="72" r="4" fill="#073e77"/><text x="472" y="76" font-size="11" fill="#0b1220">end</text>
 
               <!-- legend -->
-              <rect x="42" y="8" width="12" height="6" rx="2" fill="#073e77"/><text x="60" y="14" font-size="10" fill="#0b1220">Trial A</text>
-              <rect x="120" y="8" width="12" height="6" rx="2" fill="#fece00"/><text x="138" y="14" font-size="10" fill="#0b1220">Trial B</text>
-              <rect x="198" y="8" width="12" height="6" rx="2" fill="#d9da26"/><text x="216" y="14" font-size="10" fill="#0b1220">Trial C</text>
+              <rect x="84" y="12" width="14" height="8" rx="2" fill="#073e77"/><text x="108" y="18" font-size="11" fill="#0b1220">Trial A</text>
+              <rect x="216" y="12" width="14" height="8" rx="2" fill="#fece00"/><text x="240" y="18" font-size="11" fill="#0b1220">Trial B</text>
+              <rect x="348" y="12" width="14" height="8" rx="2" fill="#d9da26"/><text x="372" y="18" font-size="11" fill="#0b1220">Trial C</text>
             </svg>
             <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:10px;">Heading correction converges to target across trials</figcaption>
           </figure>
 
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <!-- Encoder distance mini chart -->
-            <figure class="ph tilt" style="padding:12px; min-height:120px;">
+          <!-- Encoder repeatability + fusion -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px;">
+            <figure class="ph tilt" style="padding:10px; margin:0;">
               <div class="label"><b>Encoder distance repeatability</b></div>
-              <svg width="100%" height="100" viewBox="0 0 300 100" style="margin-top:10px;">
-                <!-- bars -->
-                <g transform="translate(20,10)">
-                  <rect x="0" y="28" width="36" height="48" rx="6" fill="#dbeafe" stroke="rgba(11,18,32,.04)"/>
-                  <rect x="50" y="22" width="36" height="54" rx="6" fill="#fef3c7" stroke="rgba(11,18,32,.04)"/>
-                  <rect x="100" y="26" width="36" height="50" rx="6" fill="#dcfce7" stroke="rgba(11,18,32,.04)"/>
-                  <rect x="150" y="20" width="36" height="56" rx="6" fill="#ffe5e5" stroke="rgba(11,18,32,.04)"/>
-                  <rect x="200" y="24" width="36" height="52" rx="6" fill="#fff5f5" stroke="rgba(11,18,32,.04)"/>
-
-                  <text x="8" y="88" font-size="10" fill="#0b1220">Trial 1</text>
-                  <text x="58" y="88" font-size="10" fill="#0b1220">Trial 2</text>
-                  <text x="108" y="88" font-size="10" fill="#0b1220">Trial 3</text>
-                  <text x="158" y="88" font-size="10" fill="#0b1220">Trial 4</text>
-                  <text x="208" y="88" font-size="10" fill="#0b1220">Trial 5</text>
+              <svg width="100%" height="120" viewBox="0 0 360 120" style="margin-top:10px;">
+                <g transform="translate(18,10)">
+                  <rect x="0" y="36" width="56" height="64" rx="6" fill="#dbeafe" stroke="rgba(11,18,32,.04)"/>
+                  <rect x="70" y="30" width="56" height="70" rx="6" fill="#fef3c7" stroke="rgba(11,18,32,.04)"/>
+                  <rect x="140" y="34" width="56" height="66" rx="6" fill="#dcfce7" stroke="rgba(11,18,32,.04)"/>
+                  <rect x="210" y="28" width="56" height="72" rx="6" fill="#ffe5e5" stroke="rgba(11,18,32,.04)"/>
+                  <rect x="280" y="32" width="56" height="68" rx="6" fill="#fff5f5" stroke="rgba(11,18,32,.04)"/>
+                  <text x="10" y="108" font-size="11" fill="#0b1220">T1</text>
+                  <text x="80" y="108" font-size="11" fill="#0b1220">T2</text>
+                  <text x="150" y="108" font-size="11" fill="#0b1220">T3</text>
+                  <text x="220" y="108" font-size="11" fill="#0b1220">T4</text>
+                  <text x="290" y="108" font-size="11" fill="#0b1220">T5</text>
                 </g>
               </svg>
               <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Encoder counts show tight distribution</figcaption>
             </figure>
 
-            <!-- Sensor fusion diagram -->
-            <figure class="ph tilt" style="padding:12px; min-height:120px;">
+            <figure class="ph tilt" style="padding:10px; margin:0;">
               <div class="label"><b>Sensor fusion (runtime)</b></div>
-              <svg width="100%" height="110" viewBox="0 0 360 110" style="margin-top:10px;">
-                <!-- blocks -->
-                <rect x="18" y="20" width="84" height="40" rx="8" fill="#fff" stroke="rgba(11,18,32,.06)"/>
-                <text x="60" y="45" font-size="11" fill="#0b1220" text-anchor="middle">Gyro</text>
+              <svg width="100%" height="120" viewBox="0 0 360 120" style="margin-top:10px;">
+                <rect x="18" y="18" width="84" height="36" rx="8" fill="#fff" stroke="rgba(11,18,32,.06)"/>
+                <text x="60" y="40" font-size="11" fill="#0b1220" text-anchor="middle">Gyro</text>
 
-                <rect x="140" y="20" width="84" height="40" rx="8" fill="#fff" stroke="rgba(11,18,32,.06)"/>
-                <text x="182" y="45" font-size="11" fill="#0b1220" text-anchor="middle">Fusion</text>
+                <rect x="138" y="18" width="84" height="36" rx="8" fill="#fff" stroke="rgba(11,18,32,.06)"/>
+                <text x="180" y="40" font-size="11" fill="#0b1220" text-anchor="middle">Fusion</text>
 
-                <rect x="262" y="20" width="84" height="40" rx="8" fill="#fff" stroke="rgba(11,18,32,.06)"/>
-                <text x="304" y="45" font-size="11" fill="#0b1220" text-anchor="middle">Motors</text>
-
-                <!-- inputs -->
-                <path d="M60,60 L60,84" stroke="#073e77" stroke-width="2" marker-end="url(#arrow1)"/>
-                <text x="44" y="98" font-size="10" fill="#0b1220">angle</text>
-
-                <path d="M182,60 L182,84" stroke="#d9da26" stroke-width="2" marker-end="url(#arrow1)"/>
-                <text x="170" y="98" font-size="10" fill="#0b1220">correction</text>
-
-                <path d="M306,60 L306,84" stroke="#fece00" stroke-width="2" marker-end="url(#arrow1)"/>
-                <text x="292" y="98" font-size="10" fill="#0b1220">power</text>
+                <rect x="258" y="18" width="84" height="36" rx="8" fill="#fff" stroke="rgba(11,18,32,.06)"/>
+                <text x="300" y="40" font-size="11" fill="#0b1220" text-anchor="middle">Motors</text>
 
                 <defs>
-                  <marker id="arrow1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                  <marker id="arrow1-s" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
                     <path d="M0,0 L6,3 L0,6 z" fill="#073e77"/>
                   </marker>
                 </defs>
 
-                <!-- feedback arrow -->
-                <path d="M262,34 C200,10 120,10 60,34" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arrow1)"/>
+                <path d="M60,54 L60,78" stroke="#073e77" stroke-width="2" marker-end="url(#arrow1-s)"/>
+                <text x="46" y="98" font-size="10" fill="#0b1220">angle</text>
+
+                <path d="M180,54 L180,78" stroke="#d9da26" stroke-width="2" marker-end="url(#arrow1-s)"/>
+                <text x="168" y="98" font-size="10" fill="#0b1220">correction</text>
+
+                <path d="M300,54 L300,78" stroke="#fece00" stroke-width="2" marker-end="url(#arrow1-s)"/>
+                <text x="286" y="98" font-size="10" fill="#0b1220">power</text>
+
+                <path d="M258,36 C200,10 120,10 60,36" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arrow1-s)"/>
                 <text x="160" y="12" font-size="10" fill="#0b1220" text-anchor="middle">feedback</text>
               </svg>
               <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Gyro guides heading; encoders confirm distance</figcaption>
             </figure>
           </div>
 
-          <!-- Full-width gallery row (below) -->
-          <figure class="ph tilt" style="padding:12px; grid-column: 1 / -1; margin-top:12px;">
-            <div class="label"><b>Test snapshots</b></div>
-            <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; margin-top:10px;">
+        </div>
+
+        <!-- Side notes / compact gallery (narrow) -->
+        <aside class="card reveal tilt" style="grid-column: 9 / span 4; padding:14px;">
+          <h3 style="margin-top:0;">Quick facts</h3>
+          <ul style="margin:8px 0 0; padding-left:18px; color:var(--muted);">
+            <li>Sensors used: Gyro (hub) + motor encoders</li>
+            <li>Use consistent axes/scale for screenshots</li>
+            <li>Average 5–10 trials for confidence</li>
+          </ul>
+
+          <div style="margin-top:12px;">
+            <div class="label" style="font-size:13px;margin-bottom:8px;"><b>Test snapshots</b></div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
               <img src="/assets/robot/sensors/gyro-curve-1.png" alt="gyro curve 1" style="width:100%;height:96px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
               <img src="/assets/robot/sensors/encoder-readout.jpg" alt="encoder readout" style="width:100%;height:96px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
               <img src="/assets/robot/sensors/fusion-diagram.png" alt="fusion diagram" style="width:100%;height:96px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
               <img src="/assets/robot/sensors/setup-photo.jpg" alt="test setup" style="width:100%;height:96px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
             </div>
-            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Replace placeholders with your actual screenshots for clarity.</figcaption>
-          </figure>
+            <div style="font-size:12px;color:var(--muted);margin-top:8px;">Replace placeholders with clear, same-scale screenshots.</div>
+          </div>
+        </aside>
 
-          <!-- Hardware photos: sensors used (only gyro + encoder) -->
-          <figure class="ph tilt" style="padding:12px; grid-column: 1 / -1; margin-top:12px;">
-            <div class="label"><b>Hardware — sensors we use</b></div>
-            <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:8px; margin-top:10px; align-items:start;">
-              <div style="text-align:center;">
-                <img src="/assets/robot/sensors/gyro-module.jpg" alt="Gyro/IMU" style="width:100%;height:96px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-                <div style="font-size:12px;color:rgba(11,18,32,.62);margin-top:6px;">Gyro / IMU (Prime hub)</div>
-              </div>
-
-              <div style="text-align:center;">
-                <img src="/assets/robot/sensors/motor-encoder.jpg" alt="Motor encoder" style="width:100%;height:96px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-                <div style="font-size:12px;color:rgba(11,18,32,.62);margin-top:6px;">Built-in motor encoders</div>
-              </div>
+        <!-- Full-width hardware gallery and details (span all columns) -->
+        <figure class="ph tilt" style="padding:12px; grid-column: 1 / -1; margin-top:12px;">
+          <div class="label"><b>Hardware — sensors we use</b></div>
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-top:10px;">
+            <div style="text-align:center;">
+              <img src="/assets/robot/sensors/gyro-module.jpg" alt="Gyro/IMU" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+              <div style="font-size:12px;color:rgba(11,18,32,.62);margin-top:6px;">Gyro / IMU (Prime hub)</div>
             </div>
-            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">We use only gyro and motor encoders — replace with your exact parts and orientations.</figcaption>
-          </figure>
+
+            <div style="text-align:center;">
+              <img src="/assets/robot/sensors/motor-encoder.jpg" alt="Motor encoder" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+              <div style="font-size:12px;color:rgba(11,18,32,.62);margin-top:6px;">Built-in motor encoders</div>
+            </div>
+
+            <div style="text-align:center;">
+              <img src="/assets/robot/sensors/wiring-top.jpg" alt="Wiring top" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+              <div style="font-size:12px;color:rgba(11,18,32,.62);margin-top:6px;">Hub orientation & wiring</div>
+            </div>
+
+            <div style="text-align:center;">
+              <img src="/assets/robot/sensors/mounting.jpg" alt="Sensor mounting" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+              <div style="font-size:12px;color:rgba(11,18,32,.62);margin-top:6px;">Stable mounting reduces drift</div>
+            </div>
+          </div>
+          <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:10px;">We use gyro + encoders only — document exact part/orientation here.</figcaption>
+        </figure>
+
+        <!-- Bottom callout spanning full width -->
+        <div class="callout" style="margin-top:12px; grid-column: 1 / -1; border-radius:16px;">
+          <b style="display:block;">Presentation tips</b>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
+            <span class="pill">Use same axes/scale for graphs</span>
+            <span class="pill">Replace captions with one-line observations</span>
+            <span class="pill">Put raw logs in shared folder (link in Coop section)</span>
+          </div>
         </div>
 
-        <div class="callout" style="margin-top:12px; display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-          <span class="pill">Keep metrics visual</span>
-          <span class="pill">Short captions > long paragraphs</span>
-          <span class="pill">Use consistent screenshots (same axes/scale)</span>
-        </div>
       </div>
-
-      <aside class="card reveal tilt" style="min-width:210px;">
-        <h3 style="margin-top:0;">Quick takeaway</h3>
-        <p style="margin:6px 0 0;font-size:13px;color:var(--muted);">
-          Gyro for heading, encoders for distance — fuse at runtime and show results with charts.
-        </p>
-      </aside>
     </div>
   </section>
 
