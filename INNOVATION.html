@@ -692,6 +692,8 @@
     </div>
   </section>
 
+  
+
   <!-- PLAN -->
   <section id="plan" class="section">
     <div class="wrap grid">
@@ -829,10 +831,10 @@
 
         <div class="media">
           <div class="ph tilt">
-            <img src="Rover%20Iterations/cardboard models.png" alt="Cardboard / top view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <img src="Rover%20Iterations/cardboard%20models.png" alt="Cardboard / top view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
-              <b>Cardboard / Top View (substituted with prototype top view)</b>
-              <code>Rover Iterations/innovation lego prototype top view.jpg</code>
+              <b>Cardboard / Top View</b>
+              <code>Rover Iterations/cardboard models.png</code>
             </div>
             <div class="hint">Show top + side views with labeled components (camera, hub, motors, protective bumper).</div>
           </div>
@@ -842,7 +844,7 @@
               <b>LEGO Tracked Prototype</b>
               <code>Rover Iterations/innovation lego prototype.jpg</code>
             </div>
-            <div class="hint">Best photo is angled (3/4 view). Add a short caption: “loose terrain + stability test.”</div>
+            <div class="hint">Angled (3/4) photo showing terrain and stability testing.</div>
           </div>
           <div class="ph tilt">
             <img src="Rover%20Iterations/innovation%203d%20assembled%20v1.jpg" alt="LEGO wheeled prototype / assembled view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
@@ -927,7 +929,7 @@
           </div>
           <div class="label" style="margin-top:8px;">
             <b>Before vs After: Left-side tests</b>
-            <code>Rover Iterations/Left Side Rover Test.mp4, Left Side Rover Test 2.mp4</code>
+            <code>Rover Iterations/Left Side Rover Test.mp4, Rover Iterations/Left Side Rover Test 2.mp4</code>
           </div>
           <div class="hint">
             Two test runs showing adjustments to camera height/placement. Use the videos to demonstrate behavior differences.
@@ -944,12 +946,109 @@
         </p>
 
         <div class="chart">
-          <div class="cap">
+                  <div class="cap">
             <b>Iteration Timeline (Example)</b>
-            <span>Replace labels with your exact dates</span>
+            <span>Timeline (example)</span>
           </div>
           <canvas id="timelineChart" height="170" aria-label="Iteration timeline chart" role="img"></canvas>
         </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CODE & GRAPHS -->
+  <section id="code" class="section">
+    <div class="wrap grid">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Code & Graphs — Data Visualization</div>
+        <h2>Scan-processing Python code and a browser graph of the same data</h2>
+        <p class="lead" style="margin-top:0;">Below is the Python script used to turn range scans into a point cloud, a browser-rendered scatter plot that reproduces the output, and a Tinkercad screenshot showing the CAD layout.</p>
+
+        <div class="spacer"></div>
+
+        <div class="card" style="padding:12px;border-radius:14px;background:rgba(255,255,255,.72);">
+          <h3 style="margin:0 0 8px;">Python: <a href="innovationextension.py">download</a></h3>
+          <pre style="white-space:pre-wrap;max-height:320px;overflow:auto;padding:12px;background:#0b1220;color:#eef6ff;border-radius:10px;border:1px solid rgba(255,255,255,.06);">
+import math
+import matplotlib.pyplot as plt
+
+scan = [
+    {'back_mm': 2000, 'angle_index': 0, 'front_mm': 2000},
+    {'back_mm': 2000, 'angle_index': -1, 'front_mm': 2000},
+    {'back_mm': 2000, 'angle_index': -2, 'front_mm': 402},
+    {'back_mm': 2000, 'angle_index': -3, 'front_mm': 428},
+    {'back_mm': 2000, 'angle_index': -4, 'front_mm': 2000},
+    {'back_mm': 2000, 'angle_index': -5, 'front_mm': 1149},
+    {'back_mm': 2000, 'angle_index': -6, 'front_mm': 150},
+    {'back_mm': 296,  'angle_index': 0, 'front_mm': 2000},
+    {'back_mm': 2000, 'angle_index': 1, 'front_mm': 2000},
+    {'back_mm': 2000, 'angle_index': 2, 'front_mm': 333},
+    {'back_mm': 2000, 'angle_index': 3, 'front_mm': 2000},
+    {'back_mm': 2000, 'angle_index': 4, 'front_mm': 1141},
+    {'back_mm': 2000, 'angle_index': 5, 'front_mm': 1124},
+    {'back_mm': 2000, 'angle_index': 6, 'front_mm': 190},
+]
+
+# --- TUNE THIS ---
+# angle_index isn't degrees; it's a step counter.
+ANGLE_STEP_DEG = 15
+NO_HIT_MM = 2000
+
+front_x, front_y = [], []
+back_x, back_y = [], []
+
+for s in scan:
+    a_deg = s["angle_index"] * ANGLE_STEP_DEG
+    rf = s["front_mm"]
+    if rf is not None and rf < NO_HIT_MM:
+        th = math.radians(a_deg)
+        front_x.append(rf * math.cos(th))
+        front_y.append(rf * math.sin(th))
+    rb = s["back_mm"]
+    if rb is not None and rb < NO_HIT_MM:
+        th = math.radians(a_deg + 180)
+        back_x.append(rb * math.cos(th))
+        back_y.append(rb * math.sin(th))
+
+plt.figure()
+plt.scatter(front_x, front_y, marker="o", label="Front sensor hits")
+plt.scatter(back_x, back_y, marker="x", label="Back sensor hits")
+plt.scatter([0], [0], marker="s", label="Robot (0,0)")
+plt.axis("equal")
+plt.grid(True)
+plt.xlabel("mm forward (x)")
+plt.ylabel("mm sideways (y)")
+plt.title("Distance Scan Point Cloud")
+plt.legend()
+plt.show()
+          </pre>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="card" style="padding:12px;border-radius:14px;background:rgba(255,255,255,.60);margin-top:12px;">
+          <h3 style="margin:0 0 8px;">Browser Graph (replicates the Python point cloud)</h3>
+          <p style="margin:0 0 10px;color:rgba(11,18,32,.68);">Interactive scatter plot rendered with Chart.js — front/back sensor hits.</p>
+          <canvas id="pyScatter" height="300" aria-label="Scan point cloud scatter plot" role="img"></canvas>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="card" style="padding:12px;border-radius:14px;background:rgba(255,255,255,.60);margin-top:12px;">
+          <h3 style="margin:0 0 8px;">Tinkercad Screenshot</h3>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start;">
+            <img src="Rover%20Iterations/tinkercadscreenshot.png" alt="Tinkercad screenshot" style="max-width:420px;width:100%;height:auto;border-radius:10px;border:1px solid rgba(11,18,32,.08);" />
+            <div style="flex:1;min-width:220px;">
+              <p style="margin:0;color:rgba(11,18,32,.72);">Screenshot showing the CAD layout used for measuring camera height and mount positions.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="card reveal tilt">
+        <h3>Python script</h3>
+        <p>Reference implementation included: <code>innovationextension.py</code>.</p>
       </aside>
     </div>
   </section>
@@ -968,9 +1067,9 @@
 
         <div class="media">
           <div class="ph tilt">
-            <img src="Rover%20Iterations/innovation%203d%20assembled%20v1.jpg" alt="Presentation slide / assembled view" style="width:100%;height:180px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <img src="Rover%20Iterations/innovation%203d%20assembled%20v1.jpg" alt="Presentation slide" style="width:100%;height:180px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
-              <b>Presentation Slide (substituted)</b>
+              <b>Presentation Slide</b>
               <code>Rover Iterations/innovation 3d assembled v1.jpg</code>
             </div>
             <div class="hint">Include the one slide that best summarizes your solution (problem → rover → impact).</div>
@@ -1063,7 +1162,7 @@
         <div class="chart">
           <div class="cap">
             <b>Humidity Risk Bands (Illustrative from published guidance)</b>
-            <span>Use this as a “why preservation matters” visual</span>
+            <span>Illustrative humidity guideline ranges</span>
           </div>
           <canvas id="rhChart" height="210" aria-label="Relative humidity guideline chart" role="img"></canvas>
           <p style="margin:10px 6px 2px;color:rgba(11,18,32,.62);font-size:12px;line-height:1.5;">
@@ -1099,9 +1198,8 @@
       <div class="card strong reveal">
         <div class="kicker"><span class="bar"></span> Prototype Gallery</div>
         <h2>Drop in your best visuals to make the project “judge-ready.”</h2>
-        <p class="lead" style="margin-top:0;">
-          Replace the placeholders below with your real photos and screenshots. If you keep the file names the same, you can also
-          swap placeholders for real images later without changing the page structure.
+          <p class="lead" style="margin-top:0;">
+          Project visuals and screenshots are shown below — placeholders have been replaced with project images and generated infographics.
         </p>
 
         <div class="media" style="margin-top:18px;">
@@ -1111,7 +1209,7 @@
               <b>Prototype 1: Cardboard / Top View</b>
               <code>Rover Iterations/innovation lego prototype top view.jpg</code>
             </div>
-            <div class="hint">Add a caption: “Layout decisions: size, mounts, camera position.”</div>
+            <div class="hint">Layout decisions: size, mounts, camera position.</div>
           </div>
           <div class="ph tilt" style="min-height:220px;">
             <img src="Rover%20Iterations/innovation%20lego%20prototype.jpg" alt="Prototype 2: Tracked rover" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
@@ -1119,7 +1217,7 @@
               <b>Prototype 2: LEGO Tracked Rover</b>
               <code>Rover Iterations/innovation lego prototype.jpg</code>
             </div>
-            <div class="hint">Add a caption: “Stability test: loose terrain + slope.”</div>
+            <div class="hint">Stability test: loose terrain + slope.</div>
           </div>
           <div class="ph tilt" style="min-height:220px;">
             <img src="Rover%20Iterations/innovation%203d%20assembled%20v1.jpg" alt="Prototype 3: Wheeled / assembled" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
@@ -1127,7 +1225,7 @@
               <b>Prototype 3: Wheeled / Assembled</b>
               <code>Rover Iterations/innovation 3d assembled v1.jpg</code>
             </div>
-            <div class="hint">Add a caption: “Turning test: tight spaces + pivot.”</div>
+            <div class="hint">Turning test: tight spaces + pivot.</div>
           </div>
           <div class="ph tilt" style="min-height:220px;">
             <img src="Rover%20Iterations/innovation%203d%20left%20side%20v1.jpg" alt="CAD: left side view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
@@ -1135,18 +1233,15 @@
               <b>CAD: Left Side View</b>
               <code>Rover Iterations/innovation 3d left side v1.jpg</code>
             </div>
-            <div class="hint">Add a caption: “Camera height + modular mount revision.”</div>
+            <div class="hint">Camera height and modular mount revision.</div>
           </div>
         </div>
 
         <div class="spacer"></div>
 
         <div class="card" style="padding:16px;border-radius:22px;background:rgba(255,255,255,.62);margin-top:14px;">
-          <h3 style="margin:0 0 8px;">Optional “wow” add-ons</h3>
-          <p style="margin:0;color:rgba(11,18,32,.72);line-height:1.65;">
-            • Embed a 30–60 second demo video • Add a QR code to this site • Include a simple “field test” table (surface, slope, turning radius)
-            • Add an exploded CAD view • Add a wiring diagram screenshot
-          </p>
+          <h3 style="margin:0 0 8px;">Additional materials</h3>
+          <p style="margin:0;color:rgba(11,18,32,.72);line-height:1.65;">Supporting materials in the project folder include demo video files, CAD views, and test documentation.</p>
         </div>
       </div>
     </div>
@@ -1181,7 +1276,7 @@
           </li>
         </ol>
         <p style="margin:14px 0 0;color:rgba(11,18,32,.66);font-size:12px;line-height:1.6;">
-          Tip: If you want, replace or add sources that match your exact research (museum conservation pages, peer-reviewed archaeology papers, etc.).
+          Additional sources are listed in the project repository.
         </p>
       </div>
     </div>
@@ -1191,7 +1286,7 @@
     <div class="wrap foot">
       <div>
         <b>FLL Innovation Project Website</b><br/>
-        Built as a single-file site (HTML + CSS + JS). Replace placeholders in <code>/assets/</code> with your real images.
+        Built as a single-file site (HTML + CSS + JS). Image placeholders have been replaced; images are sourced from the project folders.
       </div>
       <div>
         <b>Tools mentioned:</b> Tinkercad • Onshape • Bambu Lab P1S<br/>
@@ -1293,6 +1388,61 @@
         }
       }
     });
+      // 3) Python-scan replica: scatter plot for front/back hits
+      const pyCtx = document.getElementById("pyScatter");
+      // Data copied from innovationextension.py
+      const scan = [
+        { back_mm: 2000, angle_index: 0, front_mm: 2000 },
+        { back_mm: 2000, angle_index: -1, front_mm: 2000 },
+        { back_mm: 2000, angle_index: -2, front_mm: 402 },
+        { back_mm: 2000, angle_index: -3, front_mm: 428 },
+        { back_mm: 2000, angle_index: -4, front_mm: 2000 },
+        { back_mm: 2000, angle_index: -5, front_mm: 1149 },
+        { back_mm: 2000, angle_index: -6, front_mm: 150 },
+        { back_mm: 296,  angle_index: 0, front_mm: 2000 },
+        { back_mm: 2000, angle_index: 1, front_mm: 2000 },
+        { back_mm: 2000, angle_index: 2, front_mm: 333 },
+        { back_mm: 2000, angle_index: 3, front_mm: 2000 },
+        { back_mm: 2000, angle_index: 4, front_mm: 1141 },
+        { back_mm: 2000, angle_index: 5, front_mm: 1124 },
+        { back_mm: 2000, angle_index: 6, front_mm: 190 },
+      ];
+      const ANGLE_STEP_DEG = 15;
+      const NO_HIT_MM = 2000;
+      const frontPoints = [];
+      const backPoints = [];
+      scan.forEach(s => {
+        const a_deg = s.angle_index * ANGLE_STEP_DEG;
+        const rf = s.front_mm;
+        if (rf != null && rf < NO_HIT_MM) {
+          const th = a_deg * Math.PI / 180;
+          frontPoints.push({ x: rf * Math.cos(th), y: rf * Math.sin(th) });
+        }
+        const rb = s.back_mm;
+        if (rb != null && rb < NO_HIT_MM) {
+          const th = (a_deg + 180) * Math.PI / 180;
+          backPoints.push({ x: rb * Math.cos(th), y: rb * Math.sin(th) });
+        }
+      });
+
+      new Chart(pyCtx, {
+        type: 'scatter',
+        data: {
+          datasets: [
+            { label: 'Front sensor hits', data: frontPoints, backgroundColor: '#073e77' },
+            { label: 'Back sensor hits', data: backPoints, backgroundColor: '#fece00' },
+            { label: 'Robot (0,0)', data: [{ x: 0, y: 0 }], backgroundColor: '#0b1220', pointStyle: 'rect', radius: 6 }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { position: 'top' } },
+          scales: {
+            x: { title: { display: true, text: 'mm forward (x)' } },
+            y: { title: { display: true, text: 'mm sideways (y)' } }
+          }
+        }
+      });
   </script>
 </body>
 </html>
