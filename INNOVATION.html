@@ -705,19 +705,73 @@
         </p>
 
         <div class="media">
-          <div class="ph tilt">
-            <div class="label">
-              <b>Placeholder: Project Spreadsheet Screenshot</b>
-              <code>/assets/plan/spreadsheet.png</code>
+          <div class="ph tilt" style="padding:12px;">
+            <div class="label"><b>Project Plan — Snapshot</b><code style="margin-left:8px;color:rgba(11,18,32,.56);">Generated infographic</code></div>
+            <div style="margin-top:10px;">
+              <svg viewBox="0 0 600 200" width="100%" height="160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kanban style project plan infographic" style="border-radius:8px;">
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#073e77" stop-opacity="0.18"/><stop offset="1" stop-color="#fece00" stop-opacity="0.08"/></linearGradient>
+                </defs>
+                <rect x="0" y="0" width="600" height="200" rx="12" fill="url(#g1)" />
+                <!-- Columns -->
+                <g font-family="system-ui,Segoe UI,Roboto,Arial" font-size="12" fill="#072b55" opacity="0.95">
+                  <text x="40" y="24" font-weight="700">To Do</text>
+                  <text x="240" y="24" font-weight="700">In Progress</text>
+                  <text x="440" y="24" font-weight="700">Done</text>
+                </g>
+                <!-- Cards -->
+                <g>
+                  <rect x="20" y="36" width="160" height="36" rx="6" fill="#fff" stroke="rgba(11,18,32,.06)" />
+                  <text x="30" y="58" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Define scope & interview expert</text>
+
+                  <rect x="220" y="36" width="160" height="36" rx="6" fill="#fff" stroke="rgba(11,18,32,.06)" />
+                  <text x="230" y="58" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Build cardboard mockup</text>
+
+                  <rect x="420" y="36" width="160" height="36" rx="6" fill="#e9f5ff" stroke="#bcd9ff" />
+                  <text x="430" y="58" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#073e77">Finalize camera placement</text>
+
+                  <rect x="20" y="84" width="160" height="36" rx="6" fill="#fff" stroke="rgba(11,18,32,.06)" />
+                  <text x="30" y="106" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Prepare test plan</text>
+
+                  <rect x="220" y="84" width="160" height="36" rx="6" fill="#fff" stroke="rgba(11,18,32,.06)" />
+                  <text x="230" y="106" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">LEGO stability tests</text>
+
+                  <rect x="420" y="84" width="160" height="36" rx="6" fill="#e9f5ff" stroke="#bcd9ff" />
+                  <text x="430" y="106" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#073e77">CAD sync + iterate</text>
+                </g>
+                <!-- Timeline bar -->
+                <g>
+                  <rect x="40" y="140" width="520" height="12" rx="6" fill="#fff" opacity="0.85" stroke="rgba(11,18,32,.06)" />
+                  <rect x="40" y="140" width="320" height="12" rx="6" fill="#073e77" opacity="0.14" />
+                  <text x="40" y="172" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Timeline: Weeks 1–4 (progress shown)</text>
+                </g>
+              </svg>
             </div>
-            <div class="hint">Replace with a screenshot of your assignments + timeline. Add blurred student last names if needed.</div>
+            <div class="hint" style="margin-top:10px;">Visual summary of assignments, current status, and short timeline — generated infographic.</div>
           </div>
-          <div class="ph tilt">
-            <div class="label">
-              <b>Placeholder: Early Sketches / Ideation Wall</b>
-              <code>/assets/plan/sketches.jpg</code>
+
+          <div class="ph tilt" style="padding:12px;">
+            <div class="label"><b>Ideation Wall — Sketches</b><code style="margin-left:8px;color:rgba(11,18,32,.56);">Generated infographic</code></div>
+            <div style="margin-top:10px;">
+              <svg viewBox="0 0 600 200" width="100%" height="160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sketches sticky note infographic">
+                <rect x="0" y="0" width="600" height="200" rx="12" fill="rgba(255,255,255,0.02)" />
+                <!-- sticky notes -->
+                <g>
+                  <rect x="28" y="32" width="140" height="88" rx="8" fill="#fff7d6" stroke="#f2d98a" />
+                  <text x="38" y="56" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="12" fill="#073e77" font-weight="700">Camera Height</text>
+                  <text x="38" y="74" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Raise 10–15 cm to capture walls</text>
+
+                  <rect x="196" y="28" width="140" height="76" rx="8" fill="#e6fff0" stroke="#bfe9c7" />
+                  <text x="206" y="50" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="12" fill="#095a2e" font-weight="700">Modularity</text>
+                  <text x="206" y="68" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Quick-swap mounts for field repairs</text>
+
+                  <rect x="364" y="36" width="200" height="96" rx="8" fill="#eef6ff" stroke="#cddcf6" />
+                  <text x="374" y="60" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="12" fill="#073e77" font-weight="700">Lighting & Sensors</text>
+                  <text x="374" y="78" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Integrate LED ring + distance mapping</text>
+                </g>
+              </svg>
             </div>
-            <div class="hint">Upload photos of sketches, sticky notes, decision matrices, and “pros/cons” charts.</div>
+            <div class="hint" style="margin-top:10px;">Quick visual summary of early ideas and decisions — generated from your project notes.</div>
           </div>
         </div>
 
@@ -775,30 +829,34 @@
 
         <div class="media">
           <div class="ph tilt">
+            <img src="Rover%20Iterations/cardboard models.png" alt="Cardboard / top view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
-              <b>Placeholder: Cardboard Form Model</b>
-              <code>/assets/create/cardboard.jpg</code>
+              <b>Cardboard / Top View (substituted with prototype top view)</b>
+              <code>Rover Iterations/innovation lego prototype top view.jpg</code>
             </div>
             <div class="hint">Show top + side views with labeled components (camera, hub, motors, protective bumper).</div>
           </div>
           <div class="ph tilt">
+            <img src="Rover%20Iterations/innovation%20lego%20prototype.jpg" alt="LEGO tracked prototype" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
-              <b>Placeholder: LEGO Tracked Prototype</b>
-              <code>/assets/create/tracks.jpg</code>
+              <b>LEGO Tracked Prototype</b>
+              <code>Rover Iterations/innovation lego prototype.jpg</code>
             </div>
             <div class="hint">Best photo is angled (3/4 view). Add a short caption: “loose terrain + stability test.”</div>
           </div>
           <div class="ph tilt">
+            <img src="Rover%20Iterations/innovation%203d%20assembled%20v1.jpg" alt="LEGO wheeled prototype / assembled view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
-              <b>Placeholder: LEGO Wheeled Prototype</b>
-              <code>/assets/create/wheels.jpg</code>
+              <b>LEGO Wheeled / Assembled View</b>
+              <code>Rover Iterations/innovation 3d assembled v1.jpg</code>
             </div>
             <div class="hint">Capture tight turns and turning radius. Add a quick note: “smooth surface maneuvering.”</div>
           </div>
           <div class="ph tilt">
+            <img src="Rover%20Iterations/innovation%203d%20left%20side%20v1.jpg" alt="CAD / left side" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
-              <b>Placeholder: CAD Model Screenshot</b>
-              <code>/assets/create/cad.png</code>
+              <b>CAD / Left Side View</b>
+              <code>Rover Iterations/innovation 3d left side v1.jpg</code>
             </div>
             <div class="hint">Use an isometric view + an exploded view if you have one.</div>
           </div>
@@ -857,12 +915,22 @@
         </div>
 
         <div class="ph tilt" style="margin-top:14px;min-height:170px;">
-          <div class="label">
-            <b>Placeholder: “Before vs After” Comparison</b>
-            <code>/assets/iterate/before-after.png</code>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <video controls style="width:100%;height:160px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.08);">
+              <source src="Rover%20Iterations/Left%20Side%20Rover%20Test.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <video controls style="width:100%;height:160px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.08);">
+              <source src="Rover%20Iterations/Left%20Side%20Rover%20Test%202.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="label" style="margin-top:8px;">
+            <b>Before vs After: Left-side tests</b>
+            <code>Rover Iterations/Left Side Rover Test.mp4, Left Side Rover Test 2.mp4</code>
           </div>
           <div class="hint">
-            Put two images side-by-side: old camera height vs new camera height. Add arrows + 1–2 captions to show what changed.
+            Two test runs showing adjustments to camera height/placement. Use the videos to demonstrate behavior differences.
           </div>
         </div>
       </div>
@@ -900,16 +968,21 @@
 
         <div class="media">
           <div class="ph tilt">
+            <img src="Rover%20Iterations/innovation%203d%20assembled%20v1.jpg" alt="Presentation slide / assembled view" style="width:100%;height:180px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
-              <b>Placeholder: Presentation Slide Screenshot</b>
-              <code>/assets/communicate/slides.png</code>
+              <b>Presentation Slide (substituted)</b>
+              <code>Rover Iterations/innovation 3d assembled v1.jpg</code>
             </div>
             <div class="hint">Include the one slide that best summarizes your solution (problem → rover → impact).</div>
           </div>
           <div class="ph tilt">
+            <video controls style="width:100%;height:180px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);">
+              <source src="Rover%20Iterations/Final%20Innovation%20Project%20Moving.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
             <div class="label">
-              <b>Placeholder: Demo Photo / Video Thumbnail</b>
-              <code>/assets/communicate/demo.jpg</code>
+              <b>Demo Video</b>
+              <code>Rover Iterations/Final Innovation Project Moving.mp4</code>
             </div>
             <div class="hint">Use a still frame from your best demo video (or embed a video link later).</div>
           </div>
@@ -1033,30 +1106,34 @@
 
         <div class="media" style="margin-top:18px;">
           <div class="ph tilt" style="min-height:220px;">
+            <img src="Rover%20Iterations/innovation%20lego%20prototype%20top%20view.jpg" alt="Prototype 1: Top view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
-              <b>Prototype 1: Cardboard Scale Model</b>
-              <code>/assets/gallery/proto-cardboard.jpg</code>
+              <b>Prototype 1: Cardboard / Top View</b>
+              <code>Rover Iterations/innovation lego prototype top view.jpg</code>
             </div>
             <div class="hint">Add a caption: “Layout decisions: size, mounts, camera position.”</div>
           </div>
           <div class="ph tilt" style="min-height:220px;">
+            <img src="Rover%20Iterations/innovation%20lego%20prototype.jpg" alt="Prototype 2: Tracked rover" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
               <b>Prototype 2: LEGO Tracked Rover</b>
-              <code>/assets/gallery/proto-tracks.jpg</code>
+              <code>Rover Iterations/innovation lego prototype.jpg</code>
             </div>
             <div class="hint">Add a caption: “Stability test: loose terrain + slope.”</div>
           </div>
           <div class="ph tilt" style="min-height:220px;">
+            <img src="Rover%20Iterations/innovation%203d%20assembled%20v1.jpg" alt="Prototype 3: Wheeled / assembled" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
-              <b>Prototype 3: LEGO Wheeled Rover</b>
-              <code>/assets/gallery/proto-wheels.jpg</code>
+              <b>Prototype 3: Wheeled / Assembled</b>
+              <code>Rover Iterations/innovation 3d assembled v1.jpg</code>
             </div>
             <div class="hint">Add a caption: “Turning test: tight spaces + pivot.”</div>
           </div>
           <div class="ph tilt" style="min-height:220px;">
+            <img src="Rover%20Iterations/innovation%203d%20left%20side%20v1.jpg" alt="CAD: left side view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
-              <b>CAD: Onshape Assembly View</b>
-              <code>/assets/gallery/cad-onshape.png</code>
+              <b>CAD: Left Side View</b>
+              <code>Rover Iterations/innovation 3d left side v1.jpg</code>
             </div>
             <div class="hint">Add a caption: “Camera height + modular mount revision.”</div>
           </div>

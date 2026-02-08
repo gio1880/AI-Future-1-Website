@@ -667,6 +667,45 @@
             <span class="pill">Keep attachment swaps ≤15s</span>
           </div>
         </div>
+
+        <div class="card" style="margin-top:12px;">
+          <h3 style="margin-top:0;">Run Photos — what happened during each attempt</h3>
+          <p class="lead" style="margin-top:6px;">Below are the photos from each recorded run. Use these when explaining to judges exactly what we saw and why we adjusted strategy between runs.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;">
+            <figure style="width:220px;margin:0;">
+              <img src="Attachments/Run%20A/Run%20A%20attachment%20V2.jpg" alt="Run A" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run A — main camera: showed early tipping during turn.</figcaption>
+            </figure>
+            <figure style="width:220px;margin:0;">
+              <img src="Attachments/Run%20B/run%20b%20attachment%20v1.jpg" alt="Run B v1" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run B — attempt 1: missed alignment with target.</figcaption>
+            </figure>
+            <figure style="width:220px;margin:0;">
+              <img src="Attachments/Run%20B/run%20b%20attachment%20v2.jpg" alt="Run B v2" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run B — attempt 2: adjusted approach, partial success.</figcaption>
+            </figure>
+            <figure style="width:220px;margin:0;">
+              <img src="Attachments/Run%20C/run%20c%20attachment%20v1.jpg" alt="Run C v1" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run C — front view: shows attachment engagement.</figcaption>
+            </figure>
+            <figure style="width:220px;margin:0;">
+              <img src="Attachments/Run%20C/run%20c%20attachment%20v2.jpg" alt="Run C v2" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run C — side view: shows clearance near obstacles.</figcaption>
+            </figure>
+            <figure style="width:220px;margin:0;">
+              <img src="Attachments/Run%20D/run%20d%20attachment%20v1.jpg" alt="Run D" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run D — attempt: sensor occlusion observed.</figcaption>
+            </figure>
+            <figure style="width:220px;margin:0;">
+              <img src="Attachments/Run%20E/run%203%20attachment%20V1.jpg" alt="Run E" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run E — overview: attachment swapped, improved hold.</figcaption>
+            </figure>
+            <figure style="width:220px;margin:0;">
+              <img src="Attachments/Run%20F/Run%20F%20attachment%20V1.jpg" alt="Run F" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run F — final attempt: clean execution after tweaks.</figcaption>
+            </figure>
+          </div>
+        </div>
       </div>
 
       <aside class="card reveal tilt" style="min-width:210px;">
@@ -850,16 +889,53 @@
         <div class="media" style="grid-template-columns: 1fr 1fr; gap:12px;">
           <!-- Photo collage -->
           <div class="ph tilt" style="padding:10px;">
-            <div class="label"><b>Iteration & testing gallery</b></div>
-            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:10px;">
-              <img src="Robot%20Iterations/base%20robot%20iteration%204.jpg" alt="Iteration 4" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06);">
-              <img src="Robot%20Iterations/base%20robot%20iteration%205.jpg" alt="Iteration 5" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06);">
-              <img src="Robot%20Iterations/lastyearrobot.png" alt="Last year" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06);">
-              <img src="Attachments/pinless%20attachment%20still.gif" alt="Pinless demo" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06);">
-              <img src="Robot%20Iterations/new%20base%20bot%204-24%20(1).png" alt="New base" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06);">
-              <img src="Robot%20Iterations/base%20robot%20iteration%202.png" alt="Iteration 2" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06);">
+            <div class="label"><b>Iteration & testing gallery — step-by-step</b></div>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:12px;">
+              <div>
+                <b>Iteration 2 — Base frame</b>
+                <p class="hint" style="margin:6px 0 0;">Initial chassis used for early testing. Problems identified: uneven motor heights and loose mounts.</p>
+                <img src="Robot%20Iterations/base%20robot%20iteration%202.png" alt="Iteration 2" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
+              </div>
+
+              <div>
+                <b>Iteration 3 — Chassis adjustments</b>
+                <p class="hint" style="margin:6px 0 0;">Raised and re-mounted plates, moved motors to align center of gravity.</p>
+                <img src="Robot%20Iterations/base%20robot%20iteration%203.jpg" alt="Iteration 3" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
+              </div>
+
+              <div>
+                <b>Iteration 4 — Attachment mount</b>
+                <p class="hint" style="margin:6px 0 0;">Added a standardized front mount to accept pinless and pinned attachments reliably.</p>
+                <img src="Robot%20Iterations/base%20robot%20iteration%204.jpg" alt="Iteration 4" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
+              </div>
+
+              <div>
+                <b>Iteration 5 — Wiring & drivetrain tuning</b>
+                <p class="hint" style="margin:6px 0 0;">Cleaned routing, improved gear ratios; reduced slippage under load.</p>
+                <img src="Robot%20Iterations/base%20robot%20iteration%205.jpg" alt="Iteration 5" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
+              </div>
+
+              <div>
+                <b>Final configuration series — 6.0 → 6.2</b>
+                <p class="hint" style="margin:6px 0 0;">Three final builds captured during tuning. We retained all versions for comparison and safety reasons.</p>
+                <img src="Robot%20Iterations/base%20robot%20iteration%206.0.jpg" alt="Iteration 6.0" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
+                <img src="Robot%20Iterations/base%20robot%20iteration%206.1.jpg" alt="Iteration 6.1" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
+                <img src="Robot%20Iterations/base%20robot%20iteration%206.2.jpg" alt="Iteration 6.2" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
+              </div>
+
+              <div>
+                <b>Reference: previous season</b>
+                <p class="hint" style="margin:6px 0 0;">Saved for judges to compare our improvements against last year's baseline.</p>
+                <img src="Robot%20Iterations/lastyearrobot.png" alt="Last year robot" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
+              </div>
+
+              <div>
+                <b>Final layout (photo)</b>
+                <p class="hint" style="margin:6px 0 0;">Newest front-mounted layout used for competition.</p>
+                <img src="Robot%20Iterations/new%20base%20bot%204-24%20(1).png" alt="New base" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
+              </div>
             </div>
-            <div class="hint" style="margin-top:10px;">Top: quick visual record to speed inspection and decisions.</div>
+            <div class="hint" style="margin-top:10px;">Use this timeline to explain why each change was made and what we learned from testing.</div>
           </div>
 
           <!-- Infographics: calendar + progress tracker -->
@@ -1438,18 +1514,23 @@ while True:
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
             <!-- Embedded video / playlist (placeholder) -->
             <div class="ph tilt" style="padding:10px;">
-              <div class="label"><b>Featured tutorial (embed)</b></div>
-              <div style="margin-top:10px;">
-                <iframe width="100%" height="200" src="https://www.youtube.com/embed/VIDEO_ID" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius:12px;"></iframe>
+              <div class="label"><b>Featured social screenshots</b></div>
+              <div style="margin-top:10px; display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <a href="#" target="_blank" rel="noreferrer" style="display:block;">
+                  <img src="youtube%20screenshot.png" alt="YouTube channel screenshot" style="width:100%;height:140px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);" />
+                </a>
+                <a href="#" target="_blank" rel="noreferrer" style="display:block;">
+                  <img src="tiktok%20screenshot.png" alt="TikTok profile screenshot" style="width:100%;height:140px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);" />
+                </a>
               </div>
-              <div class="hint" style="margin-top:8px;">Replace VIDEO_ID with your real video id</div>
+              <div class="hint" style="margin-top:8px;">These are static screenshots—replace the <code>href</code> values with your social links.</div>
             </div>
 
             <!-- Embedded folder preview (placeholder, e.g., Google Drive preview URL) -->
             <div class="ph tilt" style="padding:10px;">
               <div class="label"><b>Student shared folder (embed)</b></div>
               <div style="margin-top:10px;">
-                <iframe src="https://drive.google.com/embeddedfolderview?id=FOLDER_ID#grid" style="width:100%;height:200px;border:0;border-radius:12px;" frameborder="0" title="Shared folder"></iframe>
+                <iframe src="https://drive.google.com/drive/u/0/folders/1B6XECwAZmHYZJ98tYbxKaUwV0gmVvS7Z" style="width:100%;height:200px;border:0;border-radius:12px;" frameborder="0" title="Shared folder"></iframe>
               </div>
               <div class="hint" style="margin-top:8px;">Replace FOLDER_ID with your folder id (or use another embed)</div>
             </div>
