@@ -110,6 +110,27 @@
     .idea-chip{position:absolute;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--text);padding:8px 12px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:transform .18s,box-shadow .18s}
     .idea-chip:hover{transform:translateY(-6px) scale(1.03);box-shadow:0 8px 30px rgba(0,0,0,.35)}
     .timeline-inline .tag{margin-right:6px}
+
+    /* standout subheadings */
+    .subhead-strong{
+      margin: 0 0 8px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: .2px;
+      color: #ffffff;
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0,0,0,.35);
+    }
+    .subhead-strong .accent{color: var(--a1)}
+
+    /* standout section headings */
+    .section-title{
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      text-shadow: 0 4px 14px rgba(0,0,0,.45);
+    }
+    .section-title .accent{color: var(--a1)}
   </style>
 </head>
 
@@ -184,7 +205,7 @@
         <div class="sectionHead">
             <div class="left">
                 <div class="kicker">Phase 1</div>
-                <h2>Identify — core problems</h2>
+                <h2 class="section-title">We are presenting: <span class="accent">Identify — core problems</span></h2>
                 <p class="muted">Quick summary and visual evidence from our early research, site visits, and reading.</p>
             </div>
             <div class="right">
@@ -197,7 +218,7 @@
         <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
             <div class="card">
                 <div class="inner">
-                    <h3>Photos & evidence</h3>
+                    <h3 class="subhead-strong">We are presenting: <span class="accent">Evidence photos</span></h3>
                     <p class="muted" style="margin-top:6px">Visits to the MET, documentary stills, and our reading sessions documented here.</p>
                     <div class="gallery" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
                         <img src="museum trip.png" alt="At the MET museum" data-caption="MET visit — observing displays and preservation setups"/>
@@ -211,15 +232,15 @@
 
             <div class="card">
                 <div class="inner">
-                    <h3>Articles & sources we read</h3>
+                    <h3 class="subhead-strong">We are presenting: <span class="accent">Key articles & sources</span></h3>
                     <p class="muted" style="margin-top:6px">Key readings that informed our approach and constraints.</p>
                     <ul class="clean" style="margin-top:8px">
-                        <li>Remote sensing and GIS applications in archaeology — Journal of Archaeological Science</li>
-                        <li>Conservation ethics and site preservation — Antiquity / Heritage journals</li>
-                        <li>Small-scale robotics for cultural heritage — Heritage Science</li>
-                        <li>Imaging and low-light photography techniques — Journal of Field Archaeology</li>
-                        <li>Human impact and site vulnerability studies — World Archaeology</li>
-                        <li>Best practices for non-invasive sampling — Conservation literature</li>
+                        <li>Remote sensing and GIS applications in archaeology</li>
+                        <li>Conservation ethics and site preservation</li>
+                        <li>Small-scale robotics for cultural heritage</li>
+                        <li>Imaging and low-light photography techniques</li>
+                        <li>Human impact and site vulnerability studies</li>
+                        <li>Best practices for non-invasive sampling</li>
                     </ul>
                     <!-- <div class="muted" style="margin-top:8px">Add links or full citations if you want to archive these sources.</div> -->
                 </div>
@@ -229,7 +250,7 @@
                 <div class="inner" style="padding:18px;">
                     <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
                         <div>
-                            <h3 style="margin:0 0 6px">Our Initial Research & Brainstorming</h3>
+                            <h3 class="subhead-strong" style="margin:0 0 6px">We are presenting: <span class="accent">Research themes brainstormed</span></h3>
                             <div class="kicker" style="margin-top:6px">Diverging — exploring many areas</div>
                         </div>
                         <div class="badge" style="background:linear-gradient(180deg, rgba(254,206,0,.12), rgba(255,255,255,.03));border-radius:10px;padding:8px 10px;font-weight:700;font-size:13px;color:var(--text);">Research snapshot</div>
@@ -266,7 +287,7 @@
 
             <div class="card">
                 <div class="inner" style="padding:18px;">
-                    <h3 style="margin-top:0">From Diverging to Converging</h3>
+                    <h3 class="subhead-strong" style="margin-top:0">We are presenting: <span class="accent">Final focus after voting</span></h3>
                     <p class="muted" style="margin-top:6px">We narrowed the list by voting as a team.</p>
 
                     <div class="divider" style="margin-top:10px"></div>
@@ -327,7 +348,7 @@
 
     <div class="card">
         <div class="inner">
-            <h3>Conversation with Grace Howe</h3>
+            <h3 class="subhead-strong">We are presenting: <span class="accent">Expert interview summary</span></h3>
             <p class="muted" style="margin-top:6px">A quick glance at our Zoom call with archaeologist Grace Howe and the key safety guidance she shared.</p>
 
             <div class="imgph" style="margin-top:12px; aspect-ratio:16/9;">
@@ -359,7 +380,7 @@
         <div class="sectionHead">
             <div class="left">
                 <div class="kicker">Phase 2</div>
-                <h2>Research — what we compared</h2>
+                <h2 class="section-title">We are presenting: <span class="accent">Research — what we compared</span></h2>
                 <p>A quick look at common inspection tools and why they fall short in fragile, narrow tunnels.</p>
             </div>
             <div class="right">
@@ -372,60 +393,60 @@
         <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px;">
             <div class="card">
             <div class="inner">
-                <h3>Tethered borescope</h3>
-                <img src="tetheredborescope.jpg" alt="Tethered borescope" loading="lazy" style="width:100%;height:auto;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06);margin-top:8px"/>
-                <p class="muted">Flexible camera on a cable for tight spaces.</p>
+                <h3 class="subhead-strong">We are presenting: <span class="accent">Human exploration</span></h3>
+                <img src="tetheredborescope.jpg" alt="Human exploration with protective gear" loading="lazy" style="width:100%;height:auto;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06);margin-top:8px"/>
+                <p class="muted">Archaeologists enter with protective gear and lights to study artifacts up close.</p>
 
                 <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-                <span class="tag">Very narrow</span>
-                <span class="tag warn">Tethered</span>
+                <span class="tag warn">High risk</span>
+                <span class="tag">Close access</span>
                 </div>
 
                 <div class="divider" style="margin-top:10px"></div>
 
                 <ul style="margin-top:8px">
-                <li><strong>Pros:</strong> Ultra-slim, low cost.</li>
-                <li><strong>Cons:</strong> Snag risk, limited mapping.</li>
+                <li><strong>Pros:</strong> Direct observation and detailed study.</li>
+                <li><strong>Cons:</strong> Tight spaces, poor air, unstable tunnels; human movement can damage fragile walls/artifacts.</li>
                 </ul>
             </div>
             </div>
 
             <div class="card">
             <div class="inner">
-                <h3>Drones</h3>
-                <img src="drone.jpg" alt="Inspection drone" loading="lazy" style="width:100%;height:auto;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06);margin-top:8px"/>
-                <p class="muted">Aerial inspection for larger chambers and open shafts.</p>
+                <h3 class="subhead-strong">We are presenting: <span class="accent">Large robots & scanners</span></h3>
+                <img src="drone.jpg" alt="Large robots or scanning machines" loading="lazy" style="width:100%;height:auto;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06);margin-top:8px"/>
+                <p class="muted">Large robotic platforms and scanning machines collect data without direct human entry.</p>
 
                 <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-                <span class="tag good">Rapid coverage</span>
-                <span class="tag warn">Requires space</span>
+                <span class="tag">Data collection</span>
+                <span class="tag warn">Too large</span>
                 </div>
 
                 <div class="divider" style="margin-top:10px"></div>
 
                 <ul style="margin-top:8px">
-                <li><strong>Pros:</strong> Fast survey, high-angle visuals.</li>
-                <li><strong>Cons:</strong> Too large for narrow tunnels, airflow disturbance.</li>
+                <li><strong>Pros:</strong> Helpful scans and measurements.</li>
+                <li><strong>Cons:</strong> Often too big for narrow tunnels, hard to transport to remote sites, and vibrations can damage fragile areas.</li>
                 </ul>
             </div>
             </div>
 
             <div class="card">
             <div class="inner">
-                <h3>Ground-penetrating radar (GPR)</h3>
-                <img src="gpr.jpg" alt="Ground-penetrating radar" loading="lazy" style="width:100%;height:auto;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06);margin-top:8px"/>
-                <p class="muted">Non-invasive subsurface scanning for voids and structures.</p>
+                <h3 class="subhead-strong">We are presenting: <span class="accent">Underwater archaeology robots</span></h3>
+                <img src="gpr.jpg" alt="Underwater archaeology robot" loading="lazy" style="width:100%;height:auto;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06);margin-top:8px"/>
+                <p class="muted">Specialized robots used underwater (like the one Grace Howe shared).</p>
 
                 <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-                <span class="tag">Non-invasive</span>
-                <span class="tag warn">Interpretation heavy</span>
+                <span class="tag good">Safer access</span>
+                <span class="tag warn">Not for tunnels</span>
                 </div>
 
                 <div class="divider" style="margin-top:10px"></div>
 
                 <ul style="margin-top:8px">
-                <li><strong>Pros:</strong> Detects hidden features without entry.</li>
-                <li><strong>Cons:</strong> Indirect data, limited tunnel visuals.</li>
+                <li><strong>Pros:</strong> Improves safety compared to human entry.</li>
+                <li><strong>Cons:</strong> Expensive, complex, and built for underwater environments — not tight, fragile tunnels or caves.</li>
                 </ul>
             </div>
             </div>
@@ -435,8 +456,8 @@
 
         <div class="card">
             <div class="inner">
-                <h3>Summary — key gaps</h3>
-                <p class="muted" style="margin-top:6px">No single option meets all needs: narrow fit, low vibration, and reliable mapping.</p>
+                <h3 class="subhead-strong">We are presenting: <span class="accent">Key gap we found</span></h3>
+                <p class="muted" style="margin-top:6px">Current solutions either put people at risk or use large, expensive tools that don’t fit narrow, fragile tunnels — leaving a clear gap for a small, low‑impact rover.</p>
 
                 <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
                     <span class="tag bad">Tether risk</span>
@@ -455,7 +476,7 @@
     <div class="sectionHead">
       <div class="left">
         <div class="kicker">Solution goals</div>
-        <h2>Clear targets before we designed</h2>
+        <h2 class="section-title">We are presenting: <span class="accent">Clear targets before we designed</span></h2>
         <p>These were the outcomes we aimed for to guide planning and brainstorming.</p>
       </div>
       <div class="right">
@@ -468,37 +489,37 @@
     <div class="grid" style="grid-template-columns: 1fr 1fr; gap:16px; align-items:stretch;">
       <div class="card">
         <div class="inner">
-        <h3>Goal infographic</h3>
-        <div class="grid" style="gap:10px;">
-          <div class="callout" style="border-color: rgba(255,255,255,.16); background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));">
-            <div class="dot" style="background: rgba(52,211,153,.9); box-shadow: 0 0 0 6px rgba(52,211,153,.12)" aria-hidden="true"></div>
+        <h3 class="subhead-strong">We are presenting: <span class="accent">Project goals infographic</span></h3>
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="border:1px solid rgba(255,255,255,.14);border-radius:14px;background:rgba(255,255,255,.04);padding:14px;display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:10px;height:10px;border-radius:999px;background:var(--good);margin-top:6px;"></div>
             <div>
-            <strong>Low-cost rover</strong>
-            <p>Affordable parts and simple build.</p>
+              <div style="font-weight:800">Low-cost rover</div>
+              <div class="muted2" style="font-size:13px;margin-top:4px">Affordable parts and simple build</div>
             </div>
           </div>
 
-          <div class="callout" style="border-color: rgba(255,255,255,.16); background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));">
-            <div class="dot" style="background: rgba(7,62,119,.9); box-shadow: 0 0 0 6px rgba(7,62,119,.12)" aria-hidden="true"></div>
+          <div style="border:1px solid rgba(255,255,255,.14);border-radius:14px;background:rgba(255,255,255,.04);padding:14px;display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:10px;height:10px;border-radius:999px;background:var(--a2);margin-top:6px;"></div>
             <div>
-            <strong>Safe navigation</strong>
-            <p>Sense obstacles in tight tunnels.</p>
+              <div style="font-weight:800">Safe navigation</div>
+              <div class="muted2" style="font-size:13px;margin-top:4px">Sense obstacles in tight tunnels</div>
             </div>
           </div>
 
-          <div class="callout" style="border-color: rgba(255,255,255,.16); background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));">
-            <div class="dot" style="background: rgba(217,218,38,.9); box-shadow: 0 0 0 6px rgba(217,218,38,.12)" aria-hidden="true"></div>
+          <div style="border:1px solid rgba(255,255,255,.14);border-radius:14px;background:rgba(255,255,255,.04);padding:14px;display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:10px;height:10px;border-radius:999px;background:var(--a3);margin-top:6px;"></div>
             <div>
-            <strong>Low-impact design</strong>
-            <p>Protect fragile spaces.</p>
+              <div style="font-weight:800">Low-impact design</div>
+              <div class="muted2" style="font-size:13px;margin-top:4px">Protect fragile spaces</div>
             </div>
           </div>
 
-          <div class="callout" style="border-color: rgba(255,255,255,.16); background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));">
-            <div class="dot" style="background: rgba(254,206,0,.95); box-shadow: 0 0 0 6px rgba(254,206,0,.12)" aria-hidden="true"></div>
+          <div style="border:1px solid rgba(255,255,255,.14);border-radius:14px;background:rgba(255,255,255,.04);padding:14px;display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:10px;height:10px;border-radius:999px;background:var(--a1);margin-top:6px;"></div>
             <div>
-            <strong>Capture + share</strong>
-            <p>Record data for VR.</p>
+              <div style="font-weight:800">Capture + share</div>
+              <div class="muted2" style="font-size:13px;margin-top:4px">Record data for VR</div>
             </div>
           </div>
         </div>
@@ -510,7 +531,7 @@
 
         <div class="card" aria-label="VR section with image placeholder">
           <div class="inner">
-            <h3>Why VR matters</h3>
+            <h3 class="subhead-strong">We are presenting: <span class="accent">Why VR matters</span></h3>
             <p>
               VR lets people explore ancient spaces from the rover’s perspective — without traveling, without entering danger, and without risking damage.
             </p>
@@ -551,7 +572,7 @@
         <div class="sectionHead">
             <div class="left">
                 <div class="kicker">Phase 3</div>
-                <h2>Design — planning the rover</h2>
+                <h2 class="section-title">We are presenting: <span class="accent">Design — planning the rover</span></h2>
                 <p>We used IDEO’s 7 rules to brainstorm, sketch, compare tradeoffs, and organize responsibilities.</p>
             </div>
             <div class="right">
@@ -564,7 +585,7 @@
         <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px;">
             <div class="card">
                 <div class="inner">
-                    <h3>7 rules of brainstorming — fun edition</h3>
+                    <h3 class="subhead-strong">We are presenting: <span class="accent">IDEO brainstorming rules</span></h3>
                     <div class="grid" style="grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
                         <div class="tag">🎯 Stay focused on the topic</div>
                         <div class="tag">😄 Encourage wild ideas</div>
@@ -580,7 +601,7 @@
 
             <div class="card">
                 <div class="inner">
-                    <h3>Sketches + drawings collage</h3>
+                    <h3 class="subhead-strong">We are presenting: <span class="accent">Sketches collage</span></h3>
                     <div class="gallery" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px">
                         <img src="sketch_1.jpg" alt="Sketch 1"/>
                         <img src="sketch_2.jpg" alt="Sketch 2"/>
@@ -598,7 +619,7 @@
 
         <div class="card">
             <div class="inner">
-                <h3>Creative timeline — across the project</h3>
+                <h3 class="subhead-strong">We are presenting: <span class="accent">Design timeline</span></h3>
                 <p class="muted" style="margin-top:6px">A single, horizontal view of our full design process.</p>
 
                 <div style="position:relative;margin-top:12px;padding:18px 10px 8px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);overflow-x:auto;">
@@ -655,7 +676,7 @@
         <div class="sectionHead">
             <div class="left">
                 <div class="kicker">Phase 4</div>
-                <h2>Create, iterate, communicate</h2>
+                <h2 class="section-title">We are presenting: <span class="accent">Create, iterate, communicate</span></h2>
                 <p>Timeline of builds, feedback, and upgrades.</p>
             </div>
             <div class="right">
@@ -668,7 +689,7 @@
 
         <div class="card">
             <div class="inner">
-                <h3>Timeline (top to bottom)</h3>
+                <h3 class="subhead-strong">We are presenting: <span class="accent">Build timeline</span></h3>
                 <div class="timeline" style="margin-top:10px">
                     <div class="titem">
                         <div class="tlabel">Create, Iterate, Communicate — Julissa</div>
@@ -760,7 +781,7 @@
       <div class="sectionHead">
         <div class="left">
           <div class="kicker">Phase 5</div>
-          <h2>Programming — making decisions from sensor data</h2>
+          <h2 class="section-title">We are presenting: <span class="accent">Programming — making decisions from sensor data</span></h2>
           <p>We tested different logic and adjusted it repeatedly to improve reliability while navigating tight spaces.</p>
         </div>
         <div class="right">
@@ -773,7 +794,7 @@
       <div class="grid" style="grid-template-columns:1fr;gap:12px;">
         <div class="card">
           <div class="inner">
-            <h3>Programming highlights</h3>
+            <h3 class="subhead-strong">We are presenting: <span class="accent">Programming highlights</span></h3>
             <ul class="clean">
               <li>Basic logic: obstacle detection → slow/turn, otherwise forward</li>
               <li>Three distance sensors reduced blind spots</li>
@@ -796,7 +817,7 @@
       <div class="sectionHead">
         <div class="left">
           <div class="kicker">What’s next</div>
-          <h2>Future improvements</h2>
+          <h2 class="section-title">We are presenting: <span class="accent">Future improvements</span></h2>
           <p>We want to strengthen the rover, upgrade sensing, and improve mapping accuracy for better VR experiences.</p>
         </div>
         <div class="right">
@@ -809,7 +830,7 @@
       <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px;">
         <div class="card">
           <div class="inner">
-            <h3>Next hardware steps</h3>
+            <h3 class="subhead-strong">We are presenting: <span class="accent">Next hardware steps</span></h3>
             <ul class="clean">
               <li>Durability: better panels and protection</li>
               <li>Sensing: swap to cameras for mapping</li>
@@ -820,7 +841,7 @@
 
         <div class="card">
           <div class="inner">
-            <h3>Future visuals</h3>
+            <h3 class="subhead-strong">We are presenting: <span class="accent">Future visuals</span></h3>
             <div class="gallery" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
               <img src="innovation 3d assembled v1.jpg" alt="Assembled rover"/>
               <img src="innovation lego prototype top view.jpg" alt="Prototype top view"/>
@@ -832,7 +853,7 @@
 
       <div class="card" style="margin-top:16px;">
         <div class="inner">
-          <h3>Closing</h3>
+          <h3 class="subhead-strong">We are presenting: <span class="accent">Closing summary</span></h3>
           <p>This project protects people and history. We developed prototypes and tests toward a VR experience — here is the progress we made so far.</p>
         </div>
       </div>
