@@ -454,8 +454,11 @@
 
             <div class="grid" style="grid-template-columns:1.1fr .9fr;gap:12px;margin-top:12px;align-items:start;">
               <div>
-                <div class="imgph" style="aspect-ratio:4/3;">
-                  <img src="challenges-placeholder.svg" alt="Cave and temple challenges" data-caption="Dark, narrow, unstable spaces" />
+                <div class="imgph" style="aspect-ratio:4/3;max-width:320px;margin:0 auto;">
+                  <img src="darkcave.jpg" alt="Dark cave passage" data-caption="Dark, narrow, unstable spaces" />
+                </div>
+                <div class="imgph" style="aspect-ratio:4/3;max-width:320px;margin:10px auto 0;">
+                  <img src="narrow caves.jpg" alt="Narrow cave passage" data-caption="Narrow passages and limited visibility" />
                 </div>
                 <div class="cap">“Robots can explore places that are too risky for people.”</div>
 
@@ -466,8 +469,11 @@
               </div>
 
               <div>
-                <div class="imgph" style="aspect-ratio:4/3;">
+                <div class="imgph" style="aspect-ratio:4/3;max-width:320px;margin:0 auto;">
                   <img src="feahterd_serpent_temple.png" alt="Temple of the Feathered Serpent" data-caption="Temple of the Feathered Serpent — Mexico" />
+                </div>
+                <div class="imgph" style="aspect-ratio:4/3;max-width:320px;margin:10px auto 0;">
+                  <img src="sergio gomez chavez.jpg" alt="Sergio Gómez Chávez" data-caption="Sergio Gómez Chávez — led the Feathered Serpent exploration" />
                 </div>
                 <div class="cap">“Our problem is how to safely explore and map narrow and unstable underground spaces.”</div>
 
@@ -594,59 +600,114 @@
                 <h3 class="subhead-strong">We are presenting: <span class="accent">Goals tracker</span></h3>
                 <p class="muted" style="margin-top:6px">A simple spreadsheet-style view of who owned each goal.</p>
 
-                <div style="overflow-x:auto;margin-top:10px;border-radius:12px;border:1px solid rgba(255,255,255,.08)">
-                  <table style="width:100%;border-collapse:collapse;font-size:13px">
+                <div style="overflow-x:auto;margin-top:10px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:#ffffff;box-shadow:var(--shadow-soft)">
+                  <table style="width:100%;border-collapse:collapse;font-size:13px;color:#111">
                     <thead>
-                      <tr style="background:rgba(255,255,255,.04)">
-                        <th style="text-align:left;padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Member</th>
-                        <th style="text-align:left;padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Goal</th>
-                        <th style="text-align:left;padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Week(s)</th>
-                        <th style="text-align:left;padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Status</th>
-                        <th style="text-align:left;padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Notes</th>
+                      <tr style="background:#e8f5e9;color:#0b5f2a;">
+                        <th style="text-align:left;padding:10px;border:1px solid #dfe5e8">Owner</th>
+                        <th style="text-align:left;padding:10px;border:1px solid #dfe5e8">Goal</th>
+                        <th style="text-align:left;padding:10px;border:1px solid #dfe5e8">Deadline</th>
+                        <th style="text-align:left;padding:10px;border:1px solid #dfe5e8">Status</th>
+                        <th style="text-align:left;padding:10px;border:1px solid #dfe5e8">Evidence</th>
+                        <th style="text-align:left;padding:10px;border:1px solid #dfe5e8">Next step</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Owen</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Cardboard mock sizing/layout</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Week 2</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Complete</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Built initial prototype to confirm dimensions.</td>
+                      <tr style="background:#ffffff">
+                        <td style="padding:10px;border:1px solid #eef1f3">Owen</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Cardboard mock sizing, wheelbase, and component placement</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">09/14/2025</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Complete</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Cardboard models photo; tunnel clearance check</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Compare against LEGO chassis size</td>
                       </tr>
-                      <tr>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">First‑year FLL participant</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">LEGO model build + basic movement</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Week 3</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Complete</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Built confidence with the LEGO platform.</td>
+                      <tr style="background:#f8fafc">
+                        <td style="padding:10px;border:1px solid #eef1f3">Owen</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Component layout map (motors, hub, sensors)</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">09/21/2025</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Complete</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Placement sketch + photos</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Confirm cable routing paths</td>
                       </tr>
-                      <tr>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Isabella</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">CAD design for custom parts</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Weeks 4–6</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Complete</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Applied CAD skills learned at school.</td>
+                      <tr style="background:#ffffff">
+                        <td style="padding:10px;border:1px solid #eef1f3">First‑year FLL participant</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">LEGO drivetrain assembly + stability baseline</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">09/28/2025</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Complete</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">LEGO prototype photos; short movement trial</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Adjust bumper height and wheel clearance</td>
                       </tr>
-                      <tr>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Jonathan</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Programming lead + team support</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Weeks 7–9</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">In progress</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Everyone helped with testing and fixes.</td>
+                      <tr style="background:#f8fafc">
+                        <td style="padding:10px;border:1px solid #eef1f3">First‑year FLL participant</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Rebuild for tighter turning radius</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">10/05/2025</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Complete</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Photo + notes on turning test</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Share changes with CAD team</td>
                       </tr>
-                      <tr>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Team</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Testing + iteration</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Weeks 10–14</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">In progress</td>
-                        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.06)">Sensor checks and durability trials.</td>
+                      <tr style="background:#ffffff">
+                        <td style="padding:10px;border:1px solid #eef1f3">Isabella</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">CAD: tread design + mounting brackets</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">10/12/2025</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Complete</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Tinkercad screenshots; print preview</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Print test piece for fit</td>
                       </tr>
-                      <tr>
-                        <td style="padding:10px">Team</td>
-                        <td style="padding:10px">Final prep + presentation</td>
-                        <td style="padding:10px">Weeks 15–18</td>
-                        <td style="padding:10px">Planned</td>
-                        <td style="padding:10px">Polish slides, demo, and pitch.</td>
+                      <tr style="background:#f8fafc">
+                        <td style="padding:10px;border:1px solid #eef1f3">Isabella</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">CAD: protective plate + sensor mount revisions</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">10/26/2025</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Complete</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Fit check photos; mounting notes</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Finalize print settings</td>
+                      </tr>
+                      <tr style="background:#ffffff">
+                        <td style="padding:10px;border:1px solid #eef1f3">Jonathan</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Programming: sensor polling + obstacle avoidance</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">11/09/2025</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">In progress</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Code screenshots; hallway test log</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Tune distance thresholds</td>
+                      </tr>
+                      <tr style="background:#f8fafc">
+                        <td style="padding:10px;border:1px solid #eef1f3">Jonathan</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Programming: data logging for VR mapping</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">11/23/2025</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">In progress</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Sample log files + test run</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Validate export format</td>
+                      </tr>
+                      <tr style="background:#ffffff">
+                        <td style="padding:10px;border:1px solid #eef1f3">Team</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Testing: terrain traction + tread durability</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">12/07/2025</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">In progress</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Rover test GIFs + wear notes</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Adjust tread thickness</td>
+                      </tr>
+                      <tr style="background:#f8fafc">
+                        <td style="padding:10px;border:1px solid #eef1f3">Team</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Testing: sensor mapping + blind‑spot checks</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">12/21/2025</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">In progress</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Distance sensor mapping results</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Reposition sensors if needed</td>
+                      </tr>
+                      <tr style="background:#ffffff">
+                        <td style="padding:10px;border:1px solid #eef1f3">Team</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Presentation: storyboard + demo script</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">01/05/2026</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Planned</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Slides outline + demo checklist</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Add timing and transitions</td>
+                      </tr>
+                      <tr style="background:#f8fafc">
+                        <td style="padding:10px;border:1px solid #eef1f3">Team</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Judging practice + final polish</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">01/19/2026</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Planned</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Q&amp;A list + rehearsal notes</td>
+                        <td style="padding:10px;border:1px solid #eef1f3">Run full demo rehearsal</td>
                       </tr>
                     </tbody>
                   </table>
@@ -679,7 +740,7 @@
             <div class="card">
             <div class="inner">
                 <h3 class="subhead-strong"><span class="accent">Human exploration</span></h3>
-                <img src="tetheredborescope.jpg" alt="Human exploration with protective gear" loading="lazy" style="width:100%;height:auto;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06);margin-top:8px"/>
+                <img src="human exploration.jpg" alt="Human exploration in narrow sites" loading="lazy" style="width:100%;height:auto;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06);margin-top:8px"/>
                 <p class="muted">Archaeologists enter with protective gear and lights to study artifacts up close.</p>
 
                 <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
@@ -699,7 +760,7 @@
             <div class="card">
             <div class="inner">
                 <h3 class="subhead-strong"><span class="accent">Large robots & scanners</span></h3>
-                <img src="drone.jpg" alt="Large robots or scanning machines" loading="lazy" style="width:100%;height:auto;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06);margin-top:8px"/>
+                <img src="big robot explorers.jpg" alt="Large robots or scanning machines" loading="lazy" style="width:100%;height:auto;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06);margin-top:8px"/>
                 <p class="muted">Large robotic platforms and scanning machines collect data without direct human entry.</p>
 
                 <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
@@ -719,7 +780,7 @@
             <div class="card">
             <div class="inner">
                 <h3 class="subhead-strong"><span class="accent">Underwater archaeology robots</span></h3>
-                <img src="gpr.jpg" alt="Underwater archaeology robot" loading="lazy" style="width:100%;height:auto;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06);margin-top:8px"/>
+                <img src="underwater robot explorer.jpg" alt="Underwater archaeology robot" loading="lazy" style="width:100%;height:auto;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06);margin-top:8px"/>
                 <p class="muted">Specialized robots used underwater (like the one Grace Howe shared).</p>
 
                 <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
@@ -810,6 +871,14 @@
         </div>
 
         <div class="divider"></div>
+        <div class="imgph" style="aspect-ratio:16/9;max-width:520px;margin:10px auto 0;">
+          <img src="Final Prototype.gif" alt="Final prototype" data-caption="Final prototype — our goal is safe mapping of narrow, unstable spaces" />
+        </div>
+        <div class="gallery" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px">
+          <img src="final prototype front view.jpg" alt="Final prototype front view" data-caption="Front view" style="width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06)"/>
+          <img src="final prototype side view.jpg" alt="Final prototype side view" data-caption="Side view" style="width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06)"/>
+          <img src="final prototype corner view.jpg" alt="Final prototype corner view" data-caption="Corner view" style="width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.06)"/>
+        </div>
         <p class="muted2" style="font-size:13px;">These goals set our direction before planning and brainstorming.</p>
         </div>
       </div>
@@ -985,14 +1054,17 @@
                             <div class="gallery" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;align-items:start">
                                 <div class="imgph" style="aspect-ratio:16/9;">
                                     <img src="zoom_grace_howe.png" alt="Zoom meeting with Grace Howe" data-caption="Zoom meeting with Grace Howe"/>
-                                    <!-- <div class="cap">Left: Zoom call with Grace Howe</div> -->
+                                    <div class="cap">Left: Zoom call with Grace Howe</div>
                                 </div>
                                 <div class="gallery" style="display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px;align-items:start">
                                   <div class="imgph" style="aspect-ratio:16/9;max-width:520px;margin:0 auto;">
-                                    <video src="Left Side Rover Test 2.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video>
+                                    <img src="Left Side Rover Test.gif" alt="Rover left side test" data-caption="Rover test — left side" />
                                   </div>
                                   <div class="imgph" style="aspect-ratio:16/9;max-width:520px;margin:0 auto;">
-                                    <video src="Final Innovation Project Moving.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video>
+                                    <!-- <img src="Final Innovation Project Moving.gif" alt="Final innovation project moving" data-caption="Final rover movement test" /> -->
+                                  </div>
+                                  <div class="imgph" style="aspect-ratio:16/9;max-width:520px;margin:0 auto;">
+                                    <!-- <img src="Final Prototype.gif" alt="Final prototype" data-caption="Final prototype — our goal is safe mapping of narrow, unstable spaces" /> -->
                                   </div>
                                 </div>
                             </div>
