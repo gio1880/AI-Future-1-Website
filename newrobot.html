@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>FLL Neon Team Showcase</title>
+
+<style>
+:root{
+  --bg:#050816;
+  --purple:#9d7bff;
+  --cyan:#00eaff;
+  --gold:#ffcc33;
+  --green:#4cff9d;
+  --pink:#ff4fd8;
+  --text:#f8fbff;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Segoe UI, sans-serif;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(157,123,255,.25), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(0,234,255,.2), transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(255,204,51,.15), transparent 50%),
+    var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* Glow helpers */
+.neon-purple{color:var(--purple); text-shadow:0 0 8px var(--purple),0 0 18px var(--purple);}
+.neon-cyan{color:var(--cyan); text-shadow:0 0 8px var(--cyan),0 0 18px var(--cyan);}
+.neon-gold{color:var(--gold); text-shadow:0 0 8px var(--gold),0 0 18px var(--gold);}
+.neon-green{color:var(--green); text-shadow:0 0 8px var(--green),0 0 18px var(--green);}
+.neon-pink{color:var(--pink); text-shadow:0 0 8px var(--pink),0 0 18px var(--pink);}
+
+.wrapper{
+  max-width:1100px;
+  margin:auto;
+  padding:60px 20px 100px;
+}
+
+section{
+  margin-bottom:70px;
+}
+
+.card{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  padding:30px;
+  margin-top:20px;
+  backdrop-filter:blur(8px);
+  box-shadow:0 0 25px rgba(0,0,0,.6);
+}
+
+.hero{
+  text-align:center;
+  padding-bottom:40px;
+}
+
+.hero h1{
+  font-size:48px;
+  margin-bottom:20px;
+  background:linear-gradient(90deg,var(--purple),var(--cyan));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 25px rgba(157,123,255,.6);
+}
+
+.hero p{
+  font-size:18px;
+  opacity:.9;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:25px;
+}
+
+.placeholder{
+  margin-top:18px;
+  height:220px;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:14px;
+  color:#d0d6ff;
+  background:rgba(255,255,255,.02);
+  border:2px solid;
+  animation:glowBorder 4s infinite alternate;
+}
+
+.photo{
+  width:100%;
+  height:auto;
+  max-height:170px;
+  object-fit:contain;
+  border-radius:18px;
+  border:2px solid rgba(255,255,255,.12);
+  box-shadow:0 0 18px rgba(0,0,0,.45);
+  animation:neonSweep 5s linear infinite;
+}
+
+@keyframes neonSweep{
+  0%{box-shadow:0 0 10px var(--cyan), 0 0 18px rgba(0,0,0,.45);} 
+  33%{box-shadow:0 0 10px var(--purple), 0 0 18px rgba(0,0,0,.45);} 
+  66%{box-shadow:0 0 10px var(--gold), 0 0 18px rgba(0,0,0,.45);} 
+  100%{box-shadow:0 0 10px var(--cyan), 0 0 18px rgba(0,0,0,.45);} 
+}
+
+/* Mission analysis infographic */
+.mission-infographic{
+  margin-top:22px;
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:16px;
+}
+.mission-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+  padding:14px;
+  min-height:140px;
+  box-shadow:0 0 18px rgba(0,0,0,.35);
+}
+.mission-card h4{
+  margin:0 0 8px;
+  font-size:14px;
+  letter-spacing:.3px;
+}
+.mission-tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;}
+.mission-tag{
+  font-size:12px;
+  padding:6px 8px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.05);
+}
+.mission-line{
+  grid-column:1 / -1;
+  height:2px;
+  background:linear-gradient(90deg, var(--cyan), var(--purple), var(--gold));
+  border-radius:999px;
+  opacity:.6;
+  margin-top:4px;
+}
+.mission-note{
+  grid-column:1 / -1;
+  font-size:13px;
+  opacity:.85;
+}
+
+/* Project management infographic */
+.pm-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:18px;}
+.timeline{
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+  padding:14px;
+  background:rgba(255,255,255,.04);
+}
+.timeline-item{display:grid; grid-template-columns:80px 1fr; gap:12px; margin-bottom:10px; align-items:center;}
+.timeline-item:last-child{margin-bottom:0;}
+.timeline-badge{
+  text-align:center;
+  padding:6px 8px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  font-size:12px;
+  color:#f0f4ff;
+  background:rgba(255,255,255,.05);
+}
+.progress-box{
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+  padding:14px;
+  background:rgba(255,255,255,.04);
+}
+.progress-row{display:grid; grid-template-columns:70px 1fr 40px; gap:10px; align-items:center; margin:8px 0;}
+.progress-bar{height:8px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden;}
+.progress-bar > span{display:block; height:100%; border-radius:999px; background:linear-gradient(90deg,var(--cyan),var(--purple));}
+.calendar{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:repeat(7, 1fr);
+  gap:6px;
+  font-size:11px;
+}
+.calendar div{padding:8px 0; text-align:center; border-radius:8px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);} 
+.calendar .active{background:rgba(0,234,255,.18); border-color:rgba(0,234,255,.4);}
+
+@media(max-width:800px){
+  .pm-grid{grid-template-columns:1fr;}
+}
+
+.robot-evolution{
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+}
+.arrow{
+  font-size:42px;
+  color:var(--cyan);
+  text-shadow:0 0 12px var(--cyan);
+  text-align:center;
+  padding:0 6px;
+}
+@media(max-width:800px){
+  .robot-evolution{grid-template-columns:1fr;}
+  .arrow{transform:rotate(90deg);}
+}
+
+@media(max-width:800px){
+  .mission-infographic{grid-template-columns:1fr;}
+}
+
+@keyframes glowBorder{
+  0%{box-shadow:0 0 10px var(--cyan);}
+  50%{box-shadow:0 0 18px var(--purple);}
+  100%{box-shadow:0 0 10px var(--cyan);}
+}
+
+ul{
+  padding-left:18px;
+  opacity:.9;
+}
+.bullet-detail{
+  margin:6px 0 0;
+  padding:8px 10px;
+  border-radius:12px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.12);
+  font-size:13px;
+  color:#d9e2ff;
+}
+.before-after{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.before-after > div{
+  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.18);
+  background:linear-gradient(180deg, rgba(157,123,255,.12), rgba(0,234,255,.06));
+  box-shadow:0 0 12px rgba(0,0,0,.35);
+}
+
+.before-after-infographic{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:12px;
+  align-items:center;
+}
+.ba-card{
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.22);
+  background:linear-gradient(180deg, rgba(157,123,255,.18), rgba(0,234,255,.08));
+  box-shadow:0 0 14px rgba(0,0,0,.35);
+}
+.ba-title{font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:#cfe1ff; margin-bottom:6px;}
+.ba-list{font-size:13px; line-height:1.6;}
+.ba-arrow{font-size:28px; color:var(--cyan); text-shadow:0 0 12px var(--cyan); text-align:center;}
+@media(max-width:800px){
+  .before-after-infographic{grid-template-columns:1fr;}
+  .ba-arrow{transform:rotate(90deg);}
+}
+@media(max-width:800px){
+  .before-after{grid-template-columns:1fr;}
+}
+
+footer{
+  text-align:center;
+  margin-top:80px;
+  opacity:.6;
+  font-size:14px;
+}
+
+@media(max-width:800px){
+  .grid{grid-template-columns:1fr}
+  .hero h1{font-size:36px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Robot Evolution & Strategy</h1>
+  <p>Precision. Efficiency. Consistency. Innovation.</p>
+</section>
+
+<!-- ROBOT -->
+<section>
+  <h2 class="neon-purple">Robot Evolution (Owen)</h2>
+  <div class="card">
+    <ul>
+      <li>Moved both attachment motors to the front.
+        <div class="bullet-detail">Front motors keep weight balanced and make the base easier to line up each run.</div>
+      </li>
+      <li>Reduced structural stress and instability.
+        <div class="bullet-detail">We reinforced weak points so the robot stayed rigid during turns and pushes.</div>
+      </li>
+      <li>Created a pinless gravity-based attachment system.
+        <div class="bullet-detail">Attachments drop in quickly, saving time between runs and keeping alignment consistent.</div>
+      </li>
+    </ul>
+    <div class="grid robot-evolution">
+      <img class="photo" src="Robot%20Iterations/lastyearrobot.png" alt="Last year's robot" />
+      <div class="arrow">➜</div>
+      <img class="photo" src="Robot%20Iterations/new%20base%20bot%204-24%20(1).png" alt="This year's robot" />
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGY -->
+<section>
+  <h2 class="neon-cyan">Strategy & Mission Grouping (Isabella)</h2>
+  <div class="card">
+    <ul>
+      <li>Analyzed scoring, movement, and risk.
+        <div class="bullet-detail">We compared points vs. travel distance to avoid low‑value, high‑risk paths.</div>
+      </li>
+      <li>Grouped missions by action and location.
+        <div class="bullet-detail">Missions that use the same attachment or are close together were paired.</div>
+      </li>
+      <li>Bundled nearby missions for efficient runs.
+        <div class="bullet-detail">Shorter routes reduced time and kept alignment more reliable.</div>
+      </li>
+    </ul>
+    <div class="grid">
+      <div class="placeholder">[ Field Map Diagram ]</div>
+      <div class="placeholder">[ Run Grouping Chart ]</div>
+    </div>
+
+    <div class="mission-infographic">
+      <div class="mission-card">
+        <h4 class="neon-cyan">Step 1: Action type</h4>
+        <div class="mission-tags">
+          <span class="mission-tag">Push</span>
+          <span class="mission-tag">Pull</span>
+          <span class="mission-tag">Lift</span>
+          <span class="mission-tag">Drop‑off</span>
+        </div>
+      </div>
+
+      <div class="mission-card">
+        <h4 class="neon-purple">Step 2: Location</h4>
+        <div class="mission-tags">
+          <span class="mission-tag">Near base</span>
+          <span class="mission-tag">Center</span>
+          <span class="mission-tag">Far zone</span>
+        </div>
+      </div>
+
+      <div class="mission-card">
+        <h4 class="neon-gold">Step 3: Difficulty level</h4>
+        <div class="mission-tags">
+          <span class="mission-tag">Low risk</span>
+          <span class="mission-tag">Medium risk</span>
+          <span class="mission-tag">High risk</span>
+          <span class="mission-tag">Fast run</span>
+        </div>
+      </div>
+
+      <div class="mission-line"></div>
+      <div class="mission-note">Result: We grouped nearby missions with similar actions to reduce travel time and mistakes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ORGANIZATION -->
+<section>
+  <h2 class="neon-gold">Project Management (Julisa)</h2>
+  <div class="card">
+    <ul>
+      <li>Labeled runs A–G for flexible order.
+        <div class="bullet-detail">
+          <div class="before-after-infographic">
+            <div class="ba-card">
+              <div class="ba-title">Before</div>
+              <div class="ba-list">Runs A, B, C, D, E, F, G</div>
+            </div>
+            <div class="ba-arrow">➜</div>
+            <div class="ba-card">
+              <div class="ba-title">After</div>
+              <div class="ba-list">Run 1 = A, Run 2 = B, Run 3 = G, Run 4 = E, Run 5 = C, Run 6 = D</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>Split into Red & Blue robot teams.
+        <div class="bullet-detail">Two groups tested in parallel so we gathered data faster.</div>
+      </li>
+      <li>Workflow: Draft → Tune → Debug → Repeat.
+        <div class="bullet-detail">Every change was tested, logged, and improved before moving on.</div>
+      </li>
+    </ul>
+    <p>
+      We met once a week on Saturdays, and some of us met again on Sundays for 90 minutes.
+      As competition got closer, we met 3 times a week as a team and connected over Zoom almost every day.
+    </p>
+    <div class="pm-grid">
+      <div class="timeline">
+        <div class="neon-gold" style="font-size:14px;margin-bottom:10px;">Progress timeline</div>
+        <div class="timeline-item">
+          <div class="timeline-badge">Week 1</div>
+          <div>Plan missions and test base driving.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-badge">Week 2</div>
+          <div>Build attachments and try Run A/B.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-badge">Week 3</div>
+          <div>Refine alignment and repeat tests.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-badge">Week 4</div>
+          <div>Finalize runs and lock in strategy.</div>
+        </div>
+      </div>
+
+      <div class="progress-box">
+        <div class="neon-gold" style="font-size:14px;margin-bottom:10px;">Tracking & calendar</div>
+        <div class="progress-row">
+          <div>Run A</div>
+          <div class="progress-bar"><span style="width:80%"></span></div>
+          <div>80%</div>
+        </div>
+        <div class="progress-row">
+          <div>Run B</div>
+          <div class="progress-bar"><span style="width:60%"></span></div>
+          <div>60%</div>
+        </div>
+        <div class="progress-row">
+          <div>Run C</div>
+          <div class="progress-bar"><span style="width:70%"></span></div>
+          <div>70%</div>
+        </div>
+        <div class="calendar" aria-label="Weekly practice calendar">
+          <div class="active">Mon</div>
+          <div>Tue</div>
+          <div class="active">Wed</div>
+          <div>Thu</div>
+          <div class="active">Fri</div>
+          <div>Sat</div>
+          <div>Sun</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMMING -->
+<section>
+  <h2 class="neon-green">Programming Improvements (Owen)</h2>
+  <div class="card">
+    <ul>
+      <li>Transitioned from block coding to Pybricks.
+        <div class="bullet-detail">Faster code loops let us react to errors immediately.</div>
+      </li>
+      <li>Improved turn precision and speed control.
+        <div class="bullet-detail">We fine‑tuned power levels to reduce drift and overshoot.</div>
+      </li>
+      <li>Enhanced sensor-based consistency.
+        <div class="bullet-detail">Sensors corrected small errors so runs stayed repeatable.</div>
+      </li>
+    </ul>
+    <div class="grid">
+      <div class="placeholder">[ Pybricks Code Screenshot ]</div>
+      <div class="placeholder">[ Motion Control Graph ]</div>
+    </div>
+  </div>
+</section>
+
+<!-- SENSORS -->
+<section>
+  <h2 class="neon-pink">Sensors & Consistency (Jonathan)</h2>
+  <div class="card">
+    <ul>
+      <li>Gyro sensor for exact angles.
+        <div class="bullet-detail">The gyro keeps turns accurate even if the floor changes.</div>
+      </li>
+      <li>Motor encoders for precise distances.
+        <div class="bullet-detail">Encoders track wheel rotations to keep distances consistent.</div>
+      </li>
+      <li>Auto-corrected drift while driving.
+        <div class="bullet-detail">Small corrections keep the robot centered on its path.</div>
+      </li>
+    </ul>
+    <div class="grid">
+      <div class="placeholder">[ Sensor Layout ]</div>
+      <div class="placeholder">[ Drift Correction Diagram ]</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTING -->
+<section>
+  <h2 class="neon-cyan">Testing & Refinement (Isabella)</h2>
+  <div class="card">
+    <ul>
+      <li>Repeated testing for data-based adjustments.
+        <div class="bullet-detail">We logged results to see patterns and fix weak points.</div>
+      </li>
+      <li>Smoothed starts and stops.
+        <div class="bullet-detail">Gentler acceleration reduced wheel slip.</div>
+      </li>
+      <li>Improved reliability during competition.
+        <div class="bullet-detail">Stable routines meant fewer resets under pressure.</div>
+      </li>
+    </ul>
+    <div class="placeholder">[ Before vs After Results ]</div>
+  </div>
+</section>
+
+<!-- COOPERTITION -->
+<section>
+  <h2 class="neon-gold">Coopertition & Knowledge Sharing (Julisa)</h2>
+  <div class="card">
+    <p>
+      We maintain a shared folder of designs, attachments, and code.
+      We create tutorials to support other teams.
+      Sharing strengthens the entire FLL community.
+    </p>
+    <div class="grid">
+      <div class="placeholder">[ Shared Folder Screenshot ]</div>
+      <div class="placeholder">[ Tutorial Example ]</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Thank you for listening.
+</footer>
+
+</div>
+
+</body>
+</html>

@@ -3,390 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>FLL Robot Design & Programming</title>
-  <meta name="description" content="Robot Design page: evolution, strategy, project management, Pybricks, gyro/encoder integration, PID tuning, and coopertition." />
-
+  <title>Robot Design & Programming</title>
   <style>
     :root{
-      --bg: #f6f1e6;         /* beige */
-      --panel: rgba(255,255,255,.70);
-      --panel-strong: rgba(255,255,255,.88);
-      --ink: #0b1220;
-      --muted: rgba(11,18,32,.68);
-      --line: rgba(11,18,32,.12);
-      --shadow: 0 18px 60px rgba(7,62,119,.14);
-      --shadow-soft: 0 10px 30px rgba(11,18,32,.10);
-
-      --blue: #073e77;
-      --yellow: #fece00;
-      --lime: #d9da26;
-
-      --radius-xl: 28px;
-      --radius-lg: 18px;
-      --radius-md: 14px;
-
-      --max: 1180px;
+      --bg:#f6f1e6;
+      --ink:#0b1220;
+      --muted:rgba(11,18,32,.68);
+      --line:rgba(11,18,32,.12);
+      --panel:rgba(255,255,255,.75);
+      --panel-strong:rgba(255,255,255,.92);
+      --blue:#073e77;
+      --yellow:#fece00;
+      --lime:#d9da26;
+      --shadow:0 18px 60px rgba(7,62,119,.14);
+      --shadow-soft:0 10px 30px rgba(11,18,32,.10);
+      --radius-xl:24px;
+      --radius-lg:16px;
+      --max:1180px;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color: var(--ink);
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--ink);
       background:
-        radial-gradient(1100px 600px at 80% 10%, rgba(254,206,0,.25), transparent 60%),
-        radial-gradient(900px 500px at 10% 20%, rgba(217,218,38,.22), transparent 58%),
-        radial-gradient(900px 600px at 50% 100%, rgba(7,62,119,.18), transparent 55%),
+        radial-gradient(1100px 600px at 80% 10%, rgba(254,206,0,.22), transparent 60%),
+        radial-gradient(900px 500px at 10% 20%, rgba(217,218,38,.20), transparent 58%),
+        radial-gradient(900px 600px at 50% 100%, rgba(7,62,119,.16), transparent 55%),
         var(--bg);
-      overflow-x: hidden;
+      overflow-x:hidden;
     }
 
-    /* progress bar */
-    .progress{
-      position: fixed; inset: 0 0 auto 0;
-      height: 4px; z-index: 9999;
-      background: transparent;
-    }
-    .progress > div{
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--blue), var(--yellow), var(--lime));
-      border-radius: 999px;
-      box-shadow: 0 8px 18px rgba(7,62,119,.25);
-    }
-
-    /* blobs */
-    .blob{
-      position: absolute;
-      filter: blur(30px);
-      opacity: .55;
-      transform: translateZ(0);
-      pointer-events: none;
-    }
-    .blob.b1{
-      width: 420px; height: 420px;
-      left: -120px; top: 120px;
-      background: radial-gradient(circle at 30% 30%, rgba(254,206,0,.85), transparent 55%),
-                  radial-gradient(circle at 70% 70%, rgba(7,62,119,.65), transparent 55%);
-      border-radius: 42% 58% 52% 48% / 52% 44% 56% 48%;
-      animation: float1 16s ease-in-out infinite;
-    }
-    .blob.b2{
-      width: 520px; height: 520px;
-      right: -180px; top: 540px;
-      background: radial-gradient(circle at 30% 30%, rgba(217,218,38,.75), transparent 60%),
-                  radial-gradient(circle at 70% 60%, rgba(7,62,119,.55), transparent 62%);
-      border-radius: 50% 50% 40% 60% / 55% 45% 55% 45%;
-      animation: float2 18s ease-in-out infinite;
-    }
-    @keyframes float1{
-      0%,100%{ transform: translate(0,0) rotate(0deg); }
-      50%{ transform: translate(28px, -20px) rotate(8deg); }
-    }
-    @keyframes float2{
-      0%,100%{ transform: translate(0,0) rotate(0deg); }
-      50%{ transform: translate(-30px, 24px) rotate(-8deg); }
-    }
-
-    .wrap{ width: min(var(--max), calc(100% - 120px)); margin: 0 auto; padding: 0 24px; }
-    @media (max-width: 980px){ .wrap{ width: calc(100% - 48px); padding: 0 16px; } }
-    .section{ padding: 88px 0; position: relative; }
-    .grid{
-      display: grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap: 22px;
-      align-items: start;
-    }
-    @media (max-width: 980px){
-      .grid{ grid-template-columns: 1fr; }
-    }
+    .wrap{width:min(var(--max), calc(100% - 120px)); margin:0 auto; padding:0 24px;}
+    @media (max-width:980px){.wrap{width:calc(100% - 48px); padding:0 16px;}}
 
     header{
-      position: sticky; top: 0;
-      z-index: 9998;
+      position:sticky; top:0; z-index:10;
       backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, rgba(246,241,230,.84), rgba(246,241,230,.55));
-      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(246,241,230,.9), rgba(246,241,230,.6));
+      border-bottom:1px solid var(--line);
     }
-    .nav{
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 0;
-      gap: 14px;
-    }
-    .brand{
-      display:flex; align-items:center; gap: 10px;
-      text-decoration:none; color: inherit;
-      min-width: 260px;
-    }
-    .logo{
-      width: 34px; height: 34px;
-      border-radius: 12px;
-      background: conic-gradient(from 210deg, var(--blue), var(--yellow), var(--lime), var(--blue));
-      box-shadow: 0 10px 25px rgba(7,62,119,.25);
-    }
-    .brand strong{ font-size: 14px; letter-spacing: .2px; }
-    .brand span{ display:block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:14px; padding:14px 0;}
+    .brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; min-width:240px;}
+    .logo{width:34px; height:34px; border-radius:10px; background:conic-gradient(from 210deg, var(--blue), var(--yellow), var(--lime), var(--blue)); box-shadow:var(--shadow-soft);} 
+    nav ul{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px;}
+    nav a{display:inline-flex; align-items:center; font-size:13px; text-decoration:none; color:rgba(11,18,32,.8); padding:8px 10px; border-radius:999px; border:1px solid transparent; background:rgba(255,255,255,.5);} 
+    nav a:hover{border-color:rgba(7,62,119,.2); background:rgba(255,255,255,.8);} 
 
-    nav ul{
-      list-style: none; margin: 0; padding: 0;
-      display: flex; flex-wrap: wrap; gap: 10px;
-      justify-content: flex-end;
-    }
-    nav a{
-      display:inline-flex; align-items:center; gap: 8px;
-      font-size: 13px;
-      color: rgba(11,18,32,.78);
-      text-decoration:none;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      transition: transform .15s ease, background .2s ease, border-color .2s ease;
-      background: rgba(255,255,255,.35);
-    }
-    nav a:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,.68);
-      border-color: rgba(7,62,119,.18);
-    }
-    .nav-cta{ display:flex; align-items:center; gap: 10px; }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      border: 1px solid rgba(7,62,119,.18);
-      background: rgba(255,255,255,.70);
-      padding: 10px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: transform .15s ease, background .2s ease;
-      color: rgba(11,18,32,.82);
-      user-select: none;
-      text-decoration:none;
-    }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.88); }
-    .btn.primary{
-      border-color: rgba(7,62,119,.25);
-      background: linear-gradient(135deg, rgba(7,62,119,.92), rgba(7,62,119,.78));
-      color: rgba(255,255,255,.95);
-      box-shadow: 0 18px 45px rgba(7,62,119,.22);
-    }
+    .btn{display:inline-flex; align-items:center; justify-content:center; padding:10px 12px; border-radius:999px; border:1px solid rgba(7,62,119,.18); background:rgba(255,255,255,.7); color:rgba(11,18,32,.82); text-decoration:none; font-size:13px; font-weight:700; letter-spacing:.2px;}
+    .btn.primary{background:linear-gradient(135deg, var(--blue), rgba(7,62,119,.75)); color:#fff; border-color:rgba(7,62,119,.35);} 
 
-    .card{
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      padding: 28px;
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-    }
-    .card.strong{ background: var(--panel-strong); box-shadow: var(--shadow); }
-    .card h3{ margin: 0 0 10px; font-size: 16px; letter-spacing: .2px; }
-    .card p{ margin: 0 0 12px; color: var(--muted); line-height: 1.6; font-size: 14px; }
-    .card p:last-child{ margin-bottom: 0; }
+    .section{padding:100px 0;}
+    .card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius-xl); padding:32px; box-shadow:var(--shadow-soft); transition:transform .2s ease, box-shadow .2s ease;}
+    .card.strong{background:var(--panel-strong); box-shadow:var(--shadow);} 
+    .card:hover{transform:translateY(-2px); box-shadow:var(--shadow);} 
 
-    .kicker{
-      display:inline-flex; align-items:center; gap: 10px;
-      font-size: 12px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(7,62,119,.78);
-      margin-bottom: 14px;
-    }
-    .kicker .bar{
-      width: 42px; height: 2px; border-radius: 999px;
-      background: linear-gradient(90deg, var(--blue), var(--yellow), var(--lime));
-    }
-    h1{
-      margin: 0 0 14px;
-      font-size: clamp(34px, 4vw, 52px);
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-    }
-    h2{
-      margin: 0 0 14px;
-      font-size: clamp(24px, 3vw, 34px);
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-    }
-    .lead{
-      font-size: 15px;
-      color: rgba(11,18,32,.78);
-      line-height: 1.7;
-      max-width: 75ch;
-      margin: 0;
-    }
+    h1{margin:0 0 14px; font-size:clamp(34px, 4vw, 52px); line-height:1.05;}
+    h2{margin:0 0 14px; font-size:clamp(24px, 3vw, 34px); line-height:1.15; position:relative; padding-bottom:8px;}
+    h2:after{content:""; position:absolute; left:0; bottom:0; width:64px; height:3px; border-radius:999px; background:linear-gradient(90deg, var(--blue), var(--yellow), var(--lime));}
+    h3{margin:0 0 8px; font-size:16px;}
+    p{margin:0 0 12px; color:var(--muted); line-height:1.75; font-size:15px;}
+    .lead{font-size:16px; line-height:1.8; color:rgba(11,18,32,.78); max-width:75ch;}
 
-    .pill-row{ display:flex; flex-wrap:wrap; gap: 10px; margin-top: 14px; }
-    .pill{
-      display:inline-flex; align-items:center; gap: 8px;
-      font-size: 12px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(11,18,32,.12);
-      background: rgba(255,255,255,.55);
-      color: rgba(11,18,32,.78);
-      white-space: nowrap;
-    }
-    .dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--blue); box-shadow: 0 8px 18px rgba(7,62,119,.25); }
-    .dot.y{ background: var(--yellow); }
-    .dot.g{ background: var(--lime); }
+    .kicker{display:inline-flex; align-items:center; gap:10px; font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:rgba(7,62,119,.78); margin-bottom:14px;}
+    .kicker .bar{width:42px; height:2px; border-radius:999px; background:linear-gradient(90deg, var(--blue), var(--yellow), var(--lime));}
 
-    .media{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 14px;
-    }
-    @media (max-width: 760px){ .media{ grid-template-columns: 1fr; } }
-    .ph{
-      border-radius: 18px;
-      border: 1px dashed rgba(11,18,32,.25);
-      background: rgba(255,255,255,.50);
-      padding: 16px;
-      min-height: 150px;
-      position: relative;
-      overflow: hidden;
-    }
-    .ph:before{
-      content:"";
-      position:absolute; inset: -40%;
-      background: radial-gradient(circle at 30% 30%, rgba(7,62,119,.14), transparent 60%),
-                  radial-gradient(circle at 70% 70%, rgba(254,206,0,.14), transparent 60%);
-      transform: rotate(12deg);
-    }
-    .ph .label{
-      position: relative;
-      font-size: 12px; color: rgba(11,18,32,.78);
-      display:flex; align-items:center; justify-content: space-between; gap: 10px;
-    }
-    .ph .hint{
-      position: relative;
-      margin-top: 10px;
-      color: rgba(11,18,32,.62);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-    .ph code{
-      position: relative;
-      font-size: 11px;
-      background: rgba(255,255,255,.65);
-      padding: 2px 6px;
-      border: 1px solid rgba(11,18,32,.12);
-      border-radius: 999px;
-    }
+    .simple-grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; margin-top:18px;}
+    .two-col{display:grid; grid-template-columns:1.1fr .9fr; gap:18px;}
+    .image-grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px; margin-top:12px;}
+    @media (max-width:980px){.simple-grid,.two-col,.image-grid{grid-template-columns:1fr;}}
 
-    .callout{
-      border-radius: 22px;
-      border: 1px solid rgba(11,18,32,.10);
-      background: rgba(255,255,255,.62);
-      padding: 14px;
-      margin-top: 14px;
-    }
-    .callout b{ font-size: 13px; }
-    .callout p{ margin: 6px 0 0; font-size: 13px; }
+    .section-title{margin:0 0 8px;}
+    .ph{border-radius:16px; border:1px solid rgba(11,18,32,.12); background:rgba(255,255,255,.6); padding:16px; box-shadow:var(--shadow-soft);} 
+    .label{font-size:12px; color:rgba(11,18,32,.78);}
+    .hint{font-size:12px; color:rgba(11,18,32,.62);}
 
-    .chart{
-      border-radius: 22px;
-      border: 1px solid rgba(11,18,32,.10);
-      background: rgba(255,255,255,.60);
-      padding: 14px;
-      margin-top: 14px;
-      overflow: hidden;
-    }
-    .chart .cap{
-      display:flex; align-items:baseline; justify-content: space-between;
-      gap: 12px; padding: 4px 6px 10px;
-    }
-    .chart .cap b{ font-size: 13px; }
-    .chart .cap span{ font-size: 12px; color: rgba(11,18,32,.65); }
+    img{max-width:100%; height:auto; display:block;}
+    .image-grid img{height:120px; object-fit:cover; border-radius:10px;}
+    .simple-grid img{height:120px; object-fit:cover; border-radius:8px;}
+    .two-col img{max-height:200px; object-fit:cover;}
+    .ph img{width:100%; border-radius:10px;}
 
-    .seg{
-      display:flex; flex-wrap:wrap; gap: 8px;
-      padding: 6px;
-      border-radius: 999px;
-      border: 1px solid rgba(11,18,32,.12);
-      background: rgba(255,255,255,.55);
-      width: fit-content;
-    }
-    .seg button{
-      border: 0;
-      background: transparent;
-      padding: 8px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      color: rgba(11,18,32,.78);
-      cursor: pointer;
-      transition: background .2s ease, transform .15s ease;
-    }
-    .seg button:hover{ transform: translateY(-1px); background: rgba(255,255,255,.75); }
-    .seg button.active{
-      background: linear-gradient(135deg, rgba(7,62,119,.95), rgba(7,62,119,.80));
-      color: rgba(255,255,255,.95);
-    }
+    .takeaway{margin-top:14px; padding:12px 14px; border-radius:14px; border:1px solid rgba(7,62,119,.18); background:rgba(255,255,255,.82); box-shadow:var(--shadow-soft); font-size:14px; color:var(--ink);} 
+    .takeaway b{color:var(--blue);} 
 
-    .refs{
-      margin-top: 10px;
-      padding-left: 18px;
-      color: rgba(11,18,32,.78);
-      line-height: 1.6;
-      font-size: 13px;
-    }
-    .refs li{ margin: 10px 0; }
-    .refs a{ color: var(--blue); text-decoration: none; }
-    .refs a:hover{ text-decoration: underline; }
-
-    footer{
-      padding: 28px 0 60px;
-      border-top: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(246,241,230,.0), rgba(246,241,230,.75));
-    }
-    .foot{
-      display:flex; align-items:flex-start; justify-content: space-between; gap: 14px;
-      flex-wrap: wrap;
-      color: rgba(11,18,32,.70);
-      font-size: 12px;
-      line-height: 1.6;
-    }
-
-    .reveal{
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity .7s ease, transform .7s ease;
-      will-change: opacity, transform;
-    }
-    .reveal.in{
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .tilt{ transition: transform .15s ease; }
-    .tilt:hover{ transform: translateY(-2px); }
-
-    sup a{ text-decoration:none; }
-
-    /* Mission sorting UI (inserted section styles) */
-    .run-tabs{ display:flex; gap:10px; }
-    .run-tab{
-      background: rgba(255,255,255,.75);
-      border: 1px solid rgba(11,18,32,.08);
-      padding: 8px 12px; border-radius: 999px; cursor: pointer; font-size: 13px;
-    }
-    .run-tab.active{ background: linear-gradient(135deg, var(--blue), rgba(7,62,119,.85)); color: #fff; border-color: rgba(7,62,119,.2); }
-    .run-content{ display: none; }
-    .run-content.active{ display: block; }
-    .challenge-badge, .tag, .success-badge{ display:inline-flex; align-items:center; justify-content:center; padding:6px 10px; border-radius:999px; background: rgba(11,18,32,.06); color: rgba(11,18,32,.78); font-weight:700; }
-    @media (max-width:980px){
-      #mission-sorting .grid{ grid-template-columns: 1fr !important; }
-      .run-tabs{ justify-content:center; flex-wrap:wrap; }
-    }
+    .refs{padding-left:18px; color:rgba(11,18,32,.78); line-height:1.6; font-size:13px;}
+    footer{padding:28px 0 60px; border-top:1px solid var(--line); background:linear-gradient(180deg, rgba(246,241,230,0), rgba(246,241,230,.75));}
+    .foot{display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; color:rgba(11,18,32,.7); font-size:12px;}
   </style>
 </head>
-
 <body>
-  <div class="progress" aria-hidden="true"><div id="progressBar"></div></div>
-  <div class="blob b1" aria-hidden="true"></div>
-  <div class="blob b2" aria-hidden="true"></div>
-
   <header>
     <div class="wrap">
       <div class="nav">
@@ -394,1078 +102,271 @@
           <div class="logo" aria-hidden="true"></div>
           <div>
             <strong>Robot Design & Programming</strong>
-            <span>Build evolution • strategy • controls • coopertition</span>
+            <span>Simple overview • clear results • beginner friendly</span>
           </div>
         </a>
 
         <nav aria-label="Primary">
           <ul>
             <li><a href="index.html">Innovation Page</a></li>
-            <li><a href="#evolution">Evolution</a></li>
+            <li><a href="#evolution">Build</a></li>
             <li><a href="#strategy">Strategy</a></li>
-            <li><a href="#management">Management</a></li>
-            <li><a href="#pybricks">Pybricks</a></li>
+            <li><a href="#management">Planning</a></li>
+            <li><a href="#pybricks">Programming</a></li>
             <li><a href="#sensors">Sensors</a></li>
-            <li><a href="#pid">PID Tuning</a></li>
-            <li><a href="#coop">Coopertition</a></li>
-            <li><a href="#refs">Refs</a></li>
+            <li><a href="#pid">Tuning</a></li>
+            <li><a href="#coop">Sharing</a></li>
+            <li><a href="#refs">References</a></li>
           </ul>
         </nav>
 
         <div class="nav-cta">
-          <a class="btn" href="#pid">See Graphs</a>
-          <a class="btn primary" href="#gallery">Add Photos</a>
+          <a class="btn primary" href="#evolution">Start here</a>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- HERO -->
-  <main id="top" class="section" style="padding-top:54px;">
-    <div class="wrap grid">
-      <section class="card strong reveal">
-        <div class="kicker"><span class="bar"></span> Robot Design Story</div>
-        <h1>Consistency, Reliability, and Control—On Purpose</h1>
-        <p class="lead">
-          This page explains how we evolved our robot hardware, built a mission strategy, and refined programming so our robot
-          performs predictably under competition conditions.
-        </p>
+  <main id="top" class="section">
+    <div class="wrap">
+      <div class="card strong">
+        <div class="kicker"><span class="bar"></span> Robot Design Overview</div>
+        <h1>How we built a robot that works the same way every time</h1>
+        <p class="lead">We explain our build, strategy, and programming in simple steps so anyone can understand our process.</p>
+        <div class="takeaway"><b>Key takeaway:</b> We focused on repeatable results, not just one good run.</div>
 
-        <div class="callout">
-          <b>Definitions used throughout this page</b>
-          <p>
-            <b>Consistency</b> = the robot repeats the same action the same way across many trials (different speeds, distances, battery levels).<br/>
-            <b>Reliability</b> = the robot completes intended tasks successfully without frequent failures or “surprise behavior.”
-          </p>
+        <div class="simple-grid">
+          <div class="card">
+            <h3 class="section-title">What we built</h3>
+            <p>A stable base, reliable attachments, and clean wiring for quick fixes.</p>
+          </div>
+          <div class="card">
+            <h3 class="section-title">How it works</h3>
+            <p>Sensors guide turns and distance so the robot stays accurate.</p>
+          </div>
+          <div class="card">
+            <h3 class="section-title">How we improved</h3>
+            <p>We tested, measured, and tuned until the robot was consistent.</p>
+          </div>
         </div>
-
-        <div class="pill-row">
-          <span class="pill"><span class="dot"></span> Stable hardware</span>
-          <span class="pill"><span class="dot y"></span> Smart mission grouping</span>
-          <span class="pill"><span class="dot g"></span> Sensor-based corrections</span>
-        </div>
-      </section>
-
-      <aside class="card reveal tilt">
-        <h3>What judges will quickly see</h3>
-        <p>
-          You didn’t just “build a robot.” You documented decision-making:
-          redesign → strategy → workflow → tools → sensor integration → tuning → community impact.
-        </p>
-        <div class="callout" style="margin-top:12px;">
-          <b>Quick navigation tip</b>
-          <p>
-            Use the menu to jump by speaker section (Kyle → Anthony → Julisa → Brian → Jonathan → Anthony → Julisa).
-          </p>
-        </div>
-      </aside>
+      </div>
     </div>
   </main>
 
-  <!-- 1. Kyle (visual-first) -->
   <section id="evolution" class="section">
-    <div class="wrap grid">
-      <div class="card strong reveal">
-        <div class="kicker"><span class="bar"></span> Kyle — Robot Evolution (Show, not tell)</div>
-        <h2 style="margin-bottom:8px;">Before → After: motor layout & attachments</h2>
+    <div class="wrap">
+      <div class="card strong">
+        <div class="kicker"><span class="bar"></span> Build Evolution</div>
+        <h2>From an uneven base to a stable robot</h2>
+        <p class="lead">We simplified the motor layout and attachments so the robot is easier to build, check, and repair.</p>
+        <div class="takeaway"><b>Key takeaway:</b> A simple, stable base made every run more reliable.</div>
 
-        <div class="pill-row" style="margin-bottom:12px;">
-          <span class="pill"><span class="dot"></span> Front-mounted motors</span>
-          <span class="pill"><span class="dot y"></span> Pinless attachments</span>
-          <span class="pill"><span class="dot g"></span> Faster swaps • fewer resets</span>
-        </div>
-
-        <div class="media" style="grid-template-columns: 1fr 1fr 1fr; gap:12px; margin-top:8px;">
-          <figure class="ph tilt" style="padding:10px; text-align:center;">
+        <div class="image-grid">
+          <figure class="ph" style="padding:10px;">
             <div class="label"><b>Old layout</b></div>
             <img src="Robot%20Iterations/lastyearrobotfrontmotorview.png" alt="Old motor layout" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);margin-top:8px;">
-            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Front+back motors — inconsistent mounting</figcaption>
           </figure>
-
-          <figure class="ph tilt" style="padding:10px; text-align:center;">
+          <figure class="ph" style="padding:10px;">
             <div class="label"><b>New layout</b></div>
-            <img src="Robot%20Iterations/new%20base%20bot%204-24%20(1).png" alt="New front-mounted layout" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);margin-top:8px;">
-            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Both motors front-mounted, laid flat → more stable</figcaption>
+            <img src="Robot%20Iterations/new%20base%20bot%204-24%20(1).png" alt="New motor layout" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);margin-top:8px;">
           </figure>
-
-          <figure class="ph tilt" style="padding:10px; text-align:center;">
-            <div class="label"><b>Pinless attachment (demo)</b></div>
-            <img src="Attachments/pinless%20attachment%20still.gif" alt="Pinless attachment still" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);margin-top:8px;">
-            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Sits on axle pins — gravity holds it, quick swaps</figcaption>
+          <figure class="ph" style="padding:10px;">
+            <div class="label"><b>Pinless attachment</b></div>
+            <img src="Attachments/pinless%20attachment%20still.gif" alt="Pinless attachment" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);margin-top:8px;">
           </figure>
-        </div>
-
-        <div class="media" style="grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px;">
-          <figure class="ph tilt" style="padding:10px; text-align:center;">
-            <div class="label"><b>Pinless rotation view</b></div>
-            <img src="Attachments/pinless%20attachment%20rotating.gif" alt="Pinless rotating" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);margin-top:8px;">
-            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Quick inspect — consistent seating every time</figcaption>
-          </figure>
-
-          <figure class="ph tilt" style="padding:10px; text-align:center;">
-            <div class="label"><b>Close-up: mount points</b></div>
-            <img src="Attachments/pinless%20attachment%20still.gif" alt="Mount close-up" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);filter:grayscale(.0);margin-top:8px;">
-            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Axle-pin locations and seating tolerance</figcaption>
-          </figure>
-        </div>
-
-        <div class="callout" style="margin-top:12px; padding:10px;">
-          <b style="display:block; margin-bottom:6px;">Minimal notes</b>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <span class="pill" style="padding:6px 8px;">Fewer loose parts</span>
-            <span class="pill" style="padding:6px 8px;">Faster attachment swaps</span>
-            <span class="pill" style="padding:6px 8px;">Repeatable alignment</span>
-          </div>
-          <details style="margin-top:8px;">
-            <summary style="cursor:pointer;font-size:13px;color:var(--muted);">More context (expand)</summary>
-            <p style="margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.5;">
-              Previous layout had mismatched motor heights and loose front plates. Moving both motors front and using a pinless system
-              reduced mechanical drift, cut reset time, and made testing iterations faster.
-            </p>
-          </details>
         </div>
       </div>
-
-      <aside class="card reveal tilt" style="min-width:210px;">
-        <h3 style="margin-top:0;">Design principle</h3>
-        <p style="margin:6px 0 10px;font-size:13px;color:var(--muted);">Make hardware easy to mount and inspect — that enables rapid, repeatable testing.</p>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <img src="Robot%20Iterations/new%20base%20bot%204-24%20(1).png" alt="thumbnail" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
-          <div style="font-size:12px;color:rgba(11,18,32,.62);">Try a photo checklist: mount, seat, test-drive, log.</div>
-        </div>
-      </aside>
     </div>
   </section>
 
-  <!-- 2. Anthony Strategy (concise, info-first) -->
   <section id="strategy" class="section">
-    <div class="wrap grid">
-      <div class="card strong reveal">
-        <div class="kicker"><span class="bar"></span> Anthony — Strategy & Run Bundles</div>
-        <h2 style="margin-bottom:8px;">Runs built for efficiency — show, not tell</h2>
-        <p class="lead" style="margin-bottom:12px;">
-          Group missions by action + proximity. Each run card below shows quick metrics: missions, est. time, risk, points, and attachment.
-        </p>
-
-        <div class="media" style="grid-template-columns: repeat(2, 1fr); gap:12px; margin-top:8px;">
-          <div style="display:grid; gap:10px;">
-            <div class="card" style="padding:12px; display:flex; gap:10px; align-items:center;">
-              <div style="min-width:92px;">
-                <img src="Attachments/Run%20A/Run%20A%20attachment%20V2.jpg" alt="Run A" style="width:92px;height:64px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              </div>
-              <div style="flex:1;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <b>Run A</b>
-                  <span class="pill" style="padding:6px 8px;">Est: ~22s</span>
-                </div>
-                <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
-                  <span class="challenge-badge" style="background:#fef3c7;color:#92400e;">M1</span>
-                  <span class="challenge-badge" style="background:#ffe5e5;color:#c92a2a;">M2</span>
-                  <span class="challenge-badge" style="background:#dbeafe;color:#1e40af;">M9</span>
-                </div>
-                <div style="margin-top:8px;display:flex;gap:8px;align-items:center;">
-                  <span class="pill">Pts: <b style="margin-left:6px;">28</b></span>
-                  <span class="pill" style="background:rgba(16,185,129,.12);color:#065f46;">Risk: Low</span>
-                  <span class="pill">Attach: Dual-arm</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="card" style="padding:12px; display:flex; gap:10px; align-items:center;">
-              <div style="min-width:92px;">
-                <img src="Attachments/Run%20B/run%20b%20attachment%20v1.jpg" alt="Run B" style="width:92px;height:64px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              </div>
-              <div style="flex:1;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <b>Run B</b>
-                  <span class="pill" style="padding:6px 8px;">Est: ~35s</span>
-                </div>
-                <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
-                  <span class="challenge-badge" style="background:#ffe5e5;color:#c92a2a;">M5</span>
-                  <span class="challenge-badge" style="background:#fef3c7;color:#92400e;">M4</span>
-                </div>
-                <div style="margin-top:8px;display:flex;gap:8px;align-items:center;">
-                  <span class="pill">Pts: <b style="margin-left:6px;">34</b></span>
-                  <span class="pill" style="background:rgba(245,158,11,.12);color:#92400e;">Risk: Medium</span>
-                  <span class="pill">Attach: Pinless scoop</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="card" style="padding:12px; display:flex; gap:10px; align-items:center;">
-              <div style="min-width:92px;">
-                <img src="Attachments/Run%20C/run%20c%20attachment%20v1.jpg" alt="Run C" style="width:92px;height:64px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              </div>
-              <div style="flex:1;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <b>Run C</b>
-                  <span class="pill" style="padding:6px 8px;">Est: ~18s</span>
-                </div>
-                <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
-                  <span class="challenge-badge" style="background:#dcfce7;color:#166534;">M3</span>
-                  <span class="challenge-badge" style="background:#dbeafe;color:#1e40af;">M12</span>
-                </div>
-                <div style="margin-top:8px;display:flex;gap:8px;align-items:center;">
-                  <span class="pill">Pts: <b style="margin-left:6px;">22</b></span>
-                  <span class="pill" style="background:rgba(16,185,129,.12);color:#065f46;">Risk: Low</span>
-                  <span class="pill">Attach: Lift arm</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div style="display:grid; gap:10px;">
-            <div class="card" style="padding:12px; display:flex; gap:10px; align-items:center;">
-              <div style="min-width:92px;">
-                <img src="Attachments/Run%20D/run%20d%20attachment%20v1.jpg" alt="Run D" style="width:92px;height:64px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              </div>
-              <div style="flex:1;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <b>Run D</b>
-                  <span class="pill" style="padding:6px 8px;">Est: ~40s</span>
-                </div>
-                <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
-                  <span class="challenge-badge" style="background:#ffe5e5;color:#c92a2a;">M8</span>
-                  <span class="challenge-badge" style="background:#fef3c7;color:#92400e;">M15</span>
-                </div>
-                <div style="margin-top:8px;display:flex;gap:8px;align-items:center;">
-                  <span class="pill">Pts: <b style="margin-left:6px;">40</b></span>
-                  <span class="pill" style="background:rgba(239,68,68,.12);color:#991b1b;">Risk: High</span>
-                  <span class="pill">Attach: Long reach</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="card" style="padding:12px; display:flex; gap:10px; align-items:center;">
-              <div style="min-width:92px;">
-                <img src="Attachments/Run%20E/run%203%20attachment%20V1.jpg" alt="Run E" style="width:92px;height:64px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              </div>
-              <div style="flex:1;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <b>Run E</b>
-                  <span class="pill" style="padding:6px 8px;">Est: ~28s</span>
-                </div>
-                <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
-                  <span class="challenge-badge" style="background:#fef3c7;color:#92400e;">M14</span>
-                  <span class="challenge-badge" style="background:#dcfce7;color:#166534;">M13</span>
-                </div>
-                <div style="margin-top:8px;display:flex;gap:8px;align-items:center;">
-                  <span class="pill">Pts: <b style="margin-left:6px;">30</b></span>
-                  <span class="pill" style="background:rgba(245,158,11,.12);color:#92400e;">Risk: Medium</span>
-                  <span class="pill">Attach: Grab + tilt</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="callout" style="margin-top:12px;">
-          <b style="display:block;">Quick rules we used</b>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
-            <span class="pill">Prefer <b>low travel</b> combos</span>
-            <span class="pill">Avoid >2 high-risk actions in one run</span>
-            <span class="pill">Keep attachment swaps ≤15s</span>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:12px;">
-          <h3 style="margin-top:0;">Run Photos — what happened during each attempt</h3>
-          <p class="lead" style="margin-top:6px;">Below are the photos from each recorded run. Use these when explaining to judges exactly what we saw and why we adjusted strategy between runs.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;">
-            <figure style="width:220px;margin:0;">
-              <img src="Attachments/Run%20A/Run%20A%20attachment%20V2.jpg" alt="Run A" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run A — main camera: showed early tipping during turn.</figcaption>
-            </figure>
-            <figure style="width:220px;margin:0;">
-              <img src="Attachments/Run%20B/run%20b%20attachment%20v1.jpg" alt="Run B v1" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run B — attempt 1: missed alignment with target.</figcaption>
-            </figure>
-            <figure style="width:220px;margin:0;">
-              <img src="Attachments/Run%20B/run%20b%20attachment%20v2.jpg" alt="Run B v2" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run B — attempt 2: adjusted approach, partial success.</figcaption>
-            </figure>
-            <figure style="width:220px;margin:0;">
-              <img src="Attachments/Run%20C/run%20c%20attachment%20v1.jpg" alt="Run C v1" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run C — front view: shows attachment engagement.</figcaption>
-            </figure>
-            <figure style="width:220px;margin:0;">
-              <img src="Attachments/Run%20C/run%20c%20attachment%20v2.jpg" alt="Run C v2" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run C — side view: shows clearance near obstacles.</figcaption>
-            </figure>
-            <figure style="width:220px;margin:0;">
-              <img src="Attachments/Run%20D/run%20d%20attachment%20v1.jpg" alt="Run D" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run D — attempt: sensor occlusion observed.</figcaption>
-            </figure>
-            <figure style="width:220px;margin:0;">
-              <img src="Attachments/Run%20E/run%203%20attachment%20V1.jpg" alt="Run E" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run E — overview: attachment swapped, improved hold.</figcaption>
-            </figure>
-            <figure style="width:220px;margin:0;">
-              <img src="Attachments/Run%20F/Run%20F%20attachment%20V1.jpg" alt="Run F" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <figcaption style="font-size:12px;color:var(--muted);margin-top:6px;">Run F — final attempt: clean execution after tweaks.</figcaption>
-            </figure>
-          </div>
-        </div>
-      </div>
-
-      <aside class="card reveal tilt" style="min-width:210px;">
-        <h3 style="margin-top:0;">Strategy takeaway</h3>
-        <p style="margin:6px 0 0;font-size:13px;color:var(--muted);">
-          Visible metrics > long paragraphs. Use these cards as a checklist when choosing runs during practice and competition.
-        </p>
-      </aside>
-    </div>
-  </section>
-
-  <!-- 3. Julisa Management -->
-  <!-- Mission Analysis & Sorting (inserted) -->
-  <section id="mission-sorting" class="section">
     <div class="wrap">
-      <div class="card strong reveal">
-        <div class="kicker"><span class="bar"></span> Mission Analysis & Sorting System</div>
-        <h2>Mission Analysis & Sorting System</h2>
-        <p>Before designing our robot and planning runs, we categorized all 15 missions by action type, difficulty, and point value. This systematic analysis helped us identify natural groupings and prioritize which missions to attempt.</p>
+      <div class="card strong">
+        <div class="kicker"><span class="bar"></span> Strategy</div>
+        <h2>We grouped missions to save time and reduce risk</h2>
+        <p class="lead">Instead of many long runs, we combined nearby missions into short, safe runs.</p>
+        <div class="takeaway"><b>Key takeaway:</b> Fewer, smarter runs = fewer errors.</div>
 
-        <div class="run-tabs" style="justify-content: center; margin-top: 2rem;">
-          <button class="run-tab active" onclick="showSortView('action-type', event)">By Action Type</button>
-          <button class="run-tab" onclick="showSortView('difficulty', event)">By Difficulty</button>
-          <button class="run-tab" onclick="showSortView('points', event)">By Points</button>
-        </div>
-
-        <!-- Action Type View -->
-        <div id="action-type" class="run-content active" style="display: block;">
-          <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-top: 2rem; gap:12px;">
-            <div class="card" style="background: linear-gradient(135deg, #fff5f5, #ffe5e5); border-left: 4px solid #ff6b6b;">
-              <h4 style="color: #c92a2a; margin-top: 0;">🔴 Push Missions</h4>
-              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
-                <span class="challenge-badge" style="background: #ffe5e5; color: #c92a2a;">M2</span>
-                <span class="challenge-badge" style="background: #ffe5e5; color: #c92a2a;">M5</span>
-                <span class="challenge-badge" style="background: #ffe5e5; color: #c92a2a;">M6</span>
-                <span class="challenge-badge" style="background: #ffe5e5; color: #c92a2a;">M8</span>
-                <span class="challenge-badge" style="background: #ffe5e5; color: #c92a2a;">M10</span>
-                <span class="challenge-badge" style="background: #ffe5e5; color: #c92a2a;">M11</span>
-                <span class="challenge-badge" style="background: #ffe5e5; color: #c92a2a;">M12</span>
-              </div>
-              <p style="margin-top: 1rem; font-size: 0.9rem;">7 missions require pushing objects or models</p>
-            </div>
-
-            <div class="card" style="background: linear-gradient(135deg, #f0f9ff, #dbeafe); border-left: 4px solid #3b82f6;">
-              <h4 style="color: #1e40af; margin-top: 0;">🔵 Pull Missions</h4>
-              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
-                <span class="challenge-badge" style="background: #dbeafe; color: #1e40af;">M9</span>
-                <span class="challenge-badge" style="background: #dbeafe; color: #1e40af;">M10</span>
-                <span class="challenge-badge" style="background: #dbeafe; color: #1e40af;">M12</span>
-              </div>
-              <p style="margin-top: 1rem; font-size: 0.9rem;">3 missions involve pulling mechanisms</p>
-            </div>
-
-            <div class="card" style="background: linear-gradient(135deg, #fefce8, #fef3c7); border-left: 4px solid #f59e0b;">
-              <h4 style="color: #92400e; margin-top: 0;">🟡 Pick Up/Drop Off</h4>
-              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
-                <span class="challenge-badge" style="background: #fef3c7; color: #92400e;">M1</span>
-                <span class="challenge-badge" style="background: #fef3c7; color: #92400e;">M2</span>
-                <span class="challenge-badge" style="background: #fef3c7; color: #92400e;">M4</span>
-                <span class="challenge-badge" style="background: #fef3c7; color: #92400e;">M14</span>
-                <span class="challenge-badge" style="background: #fef3c7; color: #92400e;">M15</span>
-              </div>
-              <p style="margin-top: 1rem; font-size: 0.9rem;">5 missions require precise object manipulation</p>
-            </div>
-
-            <div class="card" style="background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-left: 4px solid #22c55e;">
-              <h4 style="color: #166534; margin-top: 0;">🟢 Lift Missions</h4>
-              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
-                <span class="challenge-badge" style="background: #dcfce7; color: #166534;">M3</span>
-                <span class="challenge-badge" style="background: #dcfce7; color: #166534;">M7</span>
-                <span class="challenge-badge" style="background: #dcfce7; color: #166534;">M13</span>
-              </div>
-              <p style="margin-top: 1rem; font-size: 0.9rem;">3 missions need vertical lifting action</p>
-            </div>
+        <div class="simple-grid">
+          <div class="card">
+            <h3 class="section-title">Run A (short)</h3>
+            <img src="Attachments/Run%20A/Run%20A%20attachment%20V2.jpg" alt="Run A" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+            <p>Quick missions near home base with a low risk attachment.</p>
+          </div>
+          <div class="card">
+            <h3 class="section-title">Run B (medium)</h3>
+            <img src="Attachments/Run%20B/run%20b%20attachment%20v1.jpg" alt="Run B" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+            <p>Mid‑range mission group with careful alignment.</p>
+          </div>
+          <div class="card">
+            <h3 class="section-title">Run C (short)</h3>
+            <img src="Attachments/Run%20C/run%20c%20attachment%20v1.jpg" alt="Run C" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+            <p>Quick collection and return with a light attachment.</p>
           </div>
         </div>
-
-        <!-- Difficulty View -->
-        <div id="difficulty" class="run-content">
-          <div style="margin-top: 2rem; max-width: 900px; margin-left: auto; margin-right: auto;">
-            <div class="card" style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-left: 6px solid #10b981; margin-bottom: 1.5rem;">
-              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-                <h4 style="color: #065f46; margin: 0;">✅ Easy Missions</h4>
-                <span style="background: #10b981; color: white; padding: 0.5rem 1rem; border-radius: 999px; font-weight: 700;">6 Missions</span>
-              </div>
-              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
-                <span class="success-badge" style="font-size: 1rem; padding: 0.5rem 1rem;">M2</span>
-                <span class="success-badge" style="font-size: 1rem; padding: 0.5rem 1rem;">M5</span>
-                <span class="success-badge" style="font-size: 1rem; padding: 0.5rem 1rem;">M6</span>
-                <span class="success-badge" style="font-size: 1rem; padding: 0.5rem 1rem;">M12</span>
-                <span class="success-badge" style="font-size: 1rem; padding: 0.5rem 1rem;">M13</span>
-                <span class="success-badge" style="font-size: 1rem; padding: 0.5rem 1rem;">M14</span>
-              </div>
-              <p style="margin-top: 1rem; color: #065f46;">High success rate, straightforward execution, great for building confidence</p>
-            </div>
-
-            <div class="card" style="background: linear-gradient(135deg, #fffbeb, #fef3c7); border-left: 6px solid #f59e0b; margin-bottom: 1.5rem;">
-              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-                <h4 style="color: #92400e; margin: 0;">⚠️ Medium Missions</h4>
-                <span style="background: #f59e0b; color: white; padding: 0.5rem 1rem; border-radius: 999px; font-weight: 700;">5 Missions</span>
-              </div>
-              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
-                <span class="tag" style="font-size: 1rem; padding: 0.5rem 1rem; background: #fef3c7; color: #92400e;">M1</span>
-                <span class="tag" style="font-size: 1rem; padding: 0.5rem 1rem; background: #fef3c7; color: #92400e;">M7</span>
-                <span class="tag" style="font-size: 1rem; padding: 0.5rem 1rem; background: #fef3c7; color: #92400e;">M9</span>
-                <span class="tag" style="font-size: 1rem; padding: 0.5rem 1rem; background: #fef3c7; color: #92400e;">M10</span>
-                <span class="tag" style="font-size: 1rem; padding: 0.5rem 1rem; background: #fef3c7; color: #92400e;">M15</span>
-              </div>
-              <p style="margin-top: 1rem; color: #92400e;">Moderate complexity, requires careful programming and attachment design</p>
-            </div>
-
-            <div class="card" style="background: linear-gradient(135deg, #fef2f2, #fee2e2); border-left: 6px solid #ef4444; margin-bottom: 1.5rem;">
-              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-                <h4 style="color: #991b1b; margin: 0;">🔥 Hard Missions</h4>
-                <span style="background: #ef4444; color: white; padding: 0.5rem 1rem; border-radius: 999px; font-weight: 700;">3 Missions</span>
-              </div>
-              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
-                <span class="challenge-badge" style="font-size: 1rem; padding: 0.5rem 1rem;">M4</span>
-                <span class="challenge-badge" style="font-size: 1rem; padding: 0.5rem 1rem;">M8</span>
-                <span class="challenge-badge" style="font-size: 1rem; padding: 0.5rem 1rem;">M11</span>
-              </div>
-              <p style="margin-top: 1rem; color: #991b1b;">High precision required, multiple failure points, advanced mechanisms needed</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Points View -->
-        <div id="points" class="run-content">
-          <div style="margin-top: 2rem;">
-            <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem;">
-              <div class="card" style="text-align: center; padding: 1rem;">
-                <div style="font-size: 2.5rem; font-weight: bold; color: var(--blue); margin-bottom: 0.5rem;">30</div>
-                <div style="font-size: 0.85rem; color: #666; margin-bottom: 0.75rem;">M1</div>
-                <div style="font-size: 0.75rem; color: #999;">10+10+10 pts</div>
-              </div>
-              <!-- more point cards (omitted here for brevity) -->
-              <div class="card" style="margin-top: 2rem; background: linear-gradient(135deg, #ef4444, var(--blue), var(--yellow)); color: white; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.5rem;">🏆 Total Available Points</h3>
-                <div style="font-size: 4rem; font-weight: bold; margin: 1rem 0;">490</div>
-                <p style="margin: 0; font-size: 1.1rem; opacity: 0.9;">Maximum score across all 15 missions</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <script>
-          function showSortView(viewId, ev) {
-            // Hide all views
-            const contents = document.querySelectorAll('#mission-sorting .run-content');
-            contents.forEach(content => content.classList.remove('active'));
-            contents.forEach(content => content.style.display = 'none');
-            
-            // Remove active from all tabs
-            const tabs = document.querySelectorAll('#mission-sorting .run-tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            // Show selected view
-            const selectedView = document.getElementById(viewId);
-            if (selectedView){
-              selectedView.classList.add('active');
-              selectedView.style.display = 'block';
-            }
-            
-            // Add active to clicked tab
-            if (ev && ev.target) ev.target.classList.add('active');
-          }
-        </script>
       </div>
     </div>
   </section>
-  <!-- 4. Julisa Management -->
+
   <section id="management" class="section">
-    <div class="wrap grid">
-      <div class="card strong reveal">
-        <div class="kicker"><span class="bar"></span> Julisa — Project Management (visual)</div>
-        <h2 style="margin-bottom:6px;">Photos • Schedule • Progress</h2>
-        <p class="lead" style="margin-bottom:12px; font-size:13px; max-width:60ch;">
-          Short notes + visual infographics to show how we organize and track runs.
-        </p>
+    <div class="wrap">
+      <div class="card strong">
+        <div class="kicker"><span class="bar"></span> Planning & Tracking</div>
+        <h2>We used photos and schedules to stay organized</h2>
+        <p class="lead">Simple tracking helped us see what worked and what needed fixing.</p>
+        <div class="takeaway"><b>Key takeaway:</b> Good planning saved time during testing.</div>
 
-        <div class="media" style="grid-template-columns: 1fr 1fr; gap:12px;">
-          <!-- Photo collage -->
-          <div class="ph tilt" style="padding:10px;">
-            <div class="label"><b>Iteration & testing gallery — step-by-step</b></div>
-            <div style="margin-top:10px; display:flex; flex-direction:column; gap:12px;">
-              <div>
-                <b>Iteration 2 — Base frame</b>
-                <p class="hint" style="margin:6px 0 0;">Initial chassis used for early testing. Problems identified: uneven motor heights and loose mounts.</p>
-                <img src="Robot%20Iterations/base%20robot%20iteration%202.png" alt="Iteration 2" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
-              </div>
-
-              <div>
-                <b>Iteration 3 — Chassis adjustments</b>
-                <p class="hint" style="margin:6px 0 0;">Raised and re-mounted plates, moved motors to align center of gravity.</p>
-                <img src="Robot%20Iterations/base%20robot%20iteration%203.jpg" alt="Iteration 3" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
-              </div>
-
-              <div>
-                <b>Iteration 4 — Attachment mount</b>
-                <p class="hint" style="margin:6px 0 0;">Added a standardized front mount to accept pinless and pinned attachments reliably.</p>
-                <img src="Robot%20Iterations/base%20robot%20iteration%204.jpg" alt="Iteration 4" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
-              </div>
-
-              <div>
-                <b>Iteration 5 — Wiring & drivetrain tuning</b>
-                <p class="hint" style="margin:6px 0 0;">Cleaned routing, improved gear ratios; reduced slippage under load.</p>
-                <img src="Robot%20Iterations/base%20robot%20iteration%205.jpg" alt="Iteration 5" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
-              </div>
-
-              <div>
-                <b>Final configuration series — 6.0 → 6.2</b>
-                <p class="hint" style="margin:6px 0 0;">Three final builds captured during tuning. We retained all versions for comparison and safety reasons.</p>
-                <img src="Robot%20Iterations/base%20robot%20iteration%206.0.jpg" alt="Iteration 6.0" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
-                <img src="Robot%20Iterations/base%20robot%20iteration%206.1.jpg" alt="Iteration 6.1" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
-                <img src="Robot%20Iterations/base%20robot%20iteration%206.2.jpg" alt="Iteration 6.2" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
-              </div>
-
-              <div>
-                <b>Reference: previous season</b>
-                <p class="hint" style="margin:6px 0 0;">Saved for judges to compare our improvements against last year's baseline.</p>
-                <img src="Robot%20Iterations/lastyearrobot.png" alt="Last year robot" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
-              </div>
-
-              <div>
-                <b>Final layout (photo)</b>
-                <p class="hint" style="margin:6px 0 0;">Newest front-mounted layout used for competition.</p>
-                <img src="Robot%20Iterations/new%20base%20bot%204-24%20(1).png" alt="New base" style="width:100%;border-radius:8px; border:1px solid rgba(11,18,32,.06); margin-top:8px;">
-              </div>
-            </div>
-            <div class="hint" style="margin-top:10px;">Use this timeline to explain why each change was made and what we learned from testing.</div>
+        <div class="two-col">
+          <div class="ph" style="padding:10px;">
+            <div class="label"><b>Build photos</b></div>
+            <img src="Robot%20Iterations/base%20robot%20iteration%206.2.jpg" alt="Build gallery" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);margin-top:8px;">
+            <div class="hint" style="margin-top:8px;">We take photos after every big change.</div>
           </div>
-
-          <!-- Infographics: calendar + progress tracker -->
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div class="ph tilt" style="padding:12px; display:flex; flex-direction:column; align-items:center;">
-              <div class="label" style="width:100%;display:flex;justify-content:space-between;align-items:center;">
-                <b>Practice calendar (weekly)</b>
-                <span class="pill" style="padding:6px 8px;">90 min / wk</span>
-              </div>
-
-              <!-- Simple calendar SVG -->
-              <svg width="100%" height="160" viewBox="0 0 360 160" style="margin-top:10px;">
-                <defs>
-                  <linearGradient id="gCal" x1="0" x2="1">
-                    <stop offset="0" stop-color="#fff" stop-opacity="0.85"/>
-                    <stop offset="1" stop-color="#f8fafc" stop-opacity="0.85"/>
-                  </linearGradient>
-                </defs>
-                <rect x="4" y="4" width="352" height="152" rx="12" fill="url(#gCal)" stroke="rgba(11,18,32,.06)"/>
-                <!-- day labels -->
-                <text x="18" y="26" font-size="12" fill="#0b1220" font-weight="700">Mon</text>
-                <text x="68" y="26" font-size="12" fill="#0b1220" font-weight="700">Tue</text>
-                <text x="118" y="26" font-size="12" fill="#0b1220" font-weight="700">Wed</text>
-                <text x="168" y="26" font-size="12" fill="#0b1220" font-weight="700">Thu</text>
-                <text x="218" y="26" font-size="12" fill="#0b1220" font-weight="700">Fri</text>
-                <text x="268" y="26" font-size="12" fill="#0b1220" font-weight="700">Sat</text>
-                <text x="318" y="26" font-size="12" fill="#0b1220" font-weight="700">Sun</text>
-
-                <!-- week cells -->
-                <!-- empty cells -->
-                <g fill="rgba(11,18,32,.04)" stroke="rgba(11,18,32,.02)">
-                  <rect x="12" y="34" width="44" height="40" rx="6"/>
-                  <rect x="62" y="34" width="44" height="40" rx="6"/>
-                  <rect x="112" y="34" width="44" height="40" rx="6"/>
-                  <rect x="162" y="34" width="44" height="40" rx="6"/>
-                  <rect x="212" y="34" width="44" height="40" rx="6"/>
-                  <rect x="262" y="34" width="44" height="40" rx="6"/>
-                  <rect x="312" y="34" width="32" height="40" rx="6"/>
-                </g>
-
-                <!-- Highlight practice day (Wed) -->
-                <g>
-                  <rect x="112" y="34" width="44" height="40" rx="6" fill="#dbeafe"/>
-                  <text x="121" y="58" font-size="11" fill="#1e40af">Practice</text>
-                  <text x="121" y="72" font-size="10" fill="#1e40af">6–7:30pm</text>
-                </g>
-
-                <!-- Sprint review (Sat) -->
-                <g>
-                  <rect x="262" y="34" width="44" height="40" rx="6" fill="#fef3c7"/>
-                  <text x="274" y="58" font-size="11" fill="#92400e">Sprint</text>
-                  <text x="274" y="72" font-size="10" fill="#92400e">review</text>
-                </g>
-
-                <!-- small legend -->
-                <rect x="18" y="86" width="8" height="8" rx="2" fill="#dbeafe"/>
-                <text x="32" y="93" font-size="11" fill="#0b1220">Practice</text>
-                <rect x="118" y="86" width="8" height="8" rx="2" fill="#fef3c7"/>
-                <text x="132" y="93" font-size="11" fill="#0b1220">Sprint review</text>
-              </svg>
-
-              <div class="hint" style="margin-top:8px;">Weekly rhythm: practice → refine → review.</div>
-            </div>
-
-            <div class="ph tilt" style="padding:12px;">
-              <div class="label" style="display:flex;justify-content:space-between;align-items:center;width:100%;">
-                <b>Run progress tracker</b>
-                <span class="pill" style="padding:6px 8px;">Goal: reliable runs</span>
-              </div>
-
-              <!-- Runs A-E progress -->
-              <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
-                <!-- Run A -->
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div style="width:64px;font-weight:700;">Run A</div>
-                  <div style="flex:1;height:12px;border-radius:999px;background:rgba(11,18,32,.06);overflow:hidden;">
-                    <div style="width:85%;height:100%;background:linear-gradient(90deg,#073e77,#fece00);"></div>
-                  </div>
-                  <div style="width:48px;text-align:right;font-size:12px;">85%</div>
-                </div>
-
-                <!-- Run B -->
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div style="width:64px;font-weight:700;">Run B</div>
-                  <div style="flex:1;height:12px;border-radius:999px;background:rgba(11,18,32,.06);overflow:hidden;">
-                    <div style="width:60%;height:100%;background:linear-gradient(90deg,#073e77,#d9da26);"></div>
-                  </div>
-                  <div style="width:48px;text-align:right;font-size:12px;">60%</div>
-                </div>
-
-                <!-- Run C -->
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div style="width:64px;font-weight:700;">Run C</div>
-                  <div style="flex:1;height:12px;border-radius:999px;background:rgba(11,18,32,.06);overflow:hidden;">
-                    <div style="width:40%;height:100%;background:linear-gradient(90deg,#073e77,#9ae6b4);"></div>
-                  </div>
-                  <div style="width:48px;text-align:right;font-size:12px;">40%</div>
-                </div>
-
-                <!-- Run D -->
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div style="width:64px;font-weight:700;">Run D</div>
-                  <div style="flex:1;height:12px;border-radius:999px;background:rgba(11,18,32,.06);overflow:hidden;">
-                    <div style="width:20%;height:100%;background:linear-gradient(90deg,#073e77,#fef3c7);"></div>
-                  </div>
-                  <div style="width:48px;text-align:right;font-size:12px;">20%</div>
-                </div>
-
-                <!-- Run E -->
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div style="width:64px;font-weight:700;">Run E</div>
-                  <div style="flex:1;height:12px;border-radius:999px;background:rgba(11,18,32,.06);overflow:hidden;">
-                    <div style="width:52%;height:100%;background:linear-gradient(90deg,#073e77,#fece00);"></div>
-                  </div>
-                  <div style="width:48px;text-align:right;font-size:12px;">52%</div>
-                </div>
-              </div>
-
-              <div style="display:flex;gap:8px;align-items:center;margin-top:10px;">
-                <span class="pill" style="padding:6px 8px;">Green = tested</span>
-                <span class="pill" style="padding:6px 8px;">Yellow = needs tuning</span>
-                <span class="pill" style="padding:6px 8px;">Gray = early draft</span>
-              </div>
-            </div>
+          <div class="ph" style="padding:10px;">
+            <div class="label"><b>Weekly plan</b></div>
+            <img src="Robot%20Iterations/base%20robot%20iteration%206.0.jpg" alt="Weekly plan" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);margin-top:8px;">
+            <div class="hint" style="margin-top:8px;">We track goals, tests, and fixes each week.</div>
           </div>
-        </div>
-
-        <div class="callout" style="margin-top:12px;">
-          <b style="display:block;">How to use</b>
-          <p style="margin:6px 0 0;">Check photos for build issues, follow the weekly calendar, update the tracker after each session.</p>
         </div>
       </div>
-
-      <aside class="card reveal tilt" style="min-width:210px;">
-        <h3 style="margin-top:0;">Quick checklist</h3>
-        <ul style="margin:8px 0 0; padding-left:18px; color:var(--muted);">
-          <li>Photo before/after each swap</li>
-          <li>Assign owner for each run (sheet)</li>
-          <li>Update progress bar after 3 successful trials</li>
-        </ul>
-      </aside>
     </div>
   </section>
 
-  <!-- 4. Brian Pybricks -->
   <section id="pybricks" class="section">
     <div class="wrap">
-      <div class="card strong reveal">
-        <div class="kicker"><span class="bar"></span> Brian — Pybricks (show, don't tell)</div>
-        <h2 style="margin-bottom:6px;">Faster loops • tighter control • sensor-first</h2>
+      <div class="card strong">
+        <div class="kicker"><span class="bar"></span> Programming (Pybricks)</div>
+        <h2>Simple code loops keep the robot on track</h2>
+        <p class="lead">We use fast code loops so the robot can correct small errors quickly.</p>
+        <div class="takeaway"><b>Key takeaway:</b> Faster loops = faster corrections.</div>
 
-        <div class="pill-row" style="margin-top:8px;">
-          <span class="pill"><span class="dot"></span> Loop-rate gains</span>
-          <span class="pill"><span class="dot y"></span> Sensor fusion</span>
-          <span class="pill"><span class="dot g"></span> Repeatable outcomes</span>
-        </div>
-
-        <!-- Adjusted media layout: fewer columns, larger images / SVGs, more gap -->
-        <div class="media" style="grid-template-columns: 1.6fr 1fr; gap:18px; margin-top:16px; align-items:start;">
-          <!-- Infographic: loop speed vs correction frequency -->
-          <figure class="ph tilt" style="padding:14px; text-align:center; min-height:260px; display:flex; flex-direction:column; justify-content:flex-start;">
-            <div class="label"><b>Loop rate → correction fidelity</b></div>
-            <svg width="100%" height="180" viewBox="0 0 360 140" style="margin-top:12px; flex:0 0 auto;">
-              <defs>
-                <linearGradient id="g1" x1="0" x2="1">
-                  <stop offset="0" stop-color="#073e77"/>
-                  <stop offset="1" stop-color="#fece00"/>
-                </linearGradient>
-              </defs>
-
-              <!-- axes -->
-              <line x1="30" y1="12" x2="30" y2="110" stroke="rgba(11,18,32,.08)"/>
-              <line x1="30" y1="110" x2="340" y2="110" stroke="rgba(11,18,32,.08)"/>
-
-              <!-- curve -->
-              <path d="M34,104 C80,80 150,46 340,26" fill="none" stroke="url(#g1)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-
-              <!-- annotations -->
-              <text x="34" y="18" font-size="11" fill="#0b1220" font-weight="700">Heading error ↓</text>
-              <text x="300" y="132" font-size="11" fill="#0b1220">Loop rate →</text>
-
-              <!-- markers -->
-              <circle cx="70" cy="90" r="4" fill="#073e77"/><text x="78" y="92" font-size="11" fill="#0b1220">Block coding ~5–10Hz</text>
-              <circle cx="170" cy="60" r="4" fill="#fece00"/><text x="178" y="62" font-size="11" fill="#0b1220">Pybricks ~50–200Hz</text>
-            </svg>
-
-            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:10px;">Faster loops let the controller correct drift sooner.</figcaption>
-          </figure>
-
-          <!-- Infographic + code on right, stacked to allow larger code block -->
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <figure class="ph tilt" style="padding:12px; min-height:120px; display:flex; flex-direction:column;">
-              <div class="label"><b>Closed-loop diagram</b></div>
-              <svg width="100%" height="90" viewBox="0 0 360 90" style="margin-top:10px; flex:0 0 auto;">
-                <defs>
-                  <linearGradient id="g2" x1="0" x2="1">
-                    <stop offset="0" stop-color="#22c55e"/>
-                    <stop offset="1" stop-color="#073e77"/>
-                  </linearGradient>
-                </defs>
-
-                <rect x="18" y="18" width="80" height="36" rx="8" fill="#fff" stroke="rgba(11,18,32,.06)"/>
-                <text x="58" y="40" font-size="11" fill="#0b1220" text-anchor="middle">Sensor</text>
-
-                <rect x="140" y="18" width="80" height="36" rx="8" fill="#fff" stroke="rgba(11,18,32,.06)"/>
-                <text x="180" y="40" font-size="11" fill="#0b1220" text-anchor="middle">Controller</text>
-
-                <rect x="262" y="18" width="80" height="36" rx="8" fill="#fff" stroke="rgba(11,18,32,.06)"/>
-                <text x="302" y="40" font-size="11" fill="#0b1220" text-anchor="middle">Motors</text>
-
-                <defs>
-                  <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-                    <path d="M0,0 L6,3 L0,6 z" fill="#073e77"/>
-                  </marker>
-                </defs>
-                <path d="M98,36 L140,36" stroke="#073e77" stroke-width="2" marker-end="url(#arrow)"/>
-                <path d="M220,36 L262,36" stroke="#073e77" stroke-width="2" marker-end="url(#arrow)"/>
-                <path d="M302,54 C240,70 140,74 58,54" stroke="#22c55e" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
-                <text x="200" y="66" font-size="10" fill="#0b1220" text-anchor="middle">feedback</text>
-              </svg>
-              <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Sensor → controller → motor loop</figcaption>
-            </figure>
-
-            <figure class="ph tilt" style="padding:12px; min-height:140px; display:flex; flex-direction:column;">
-              <div class="label"><b>Mini Pybricks loop (short)</b></div>
-              <pre style="background:rgba(255,255,255,.7);padding:10px;border-radius:8px;border:1px solid rgba(11,18,32,.06);margin-top:10px;font-size:13px;line-height:1.35;overflow:auto;max-height:220px;">
-# Pybricks: simple loop (illustrative)
+        <div class="two-col">
+          <div class="ph" style="padding:12px;">
+            <div class="label"><b>Short code example</b></div>
+            <pre style="background:rgba(255,255,255,.7);padding:10px;border-radius:8px;border:1px solid rgba(11,18,32,.06);margin-top:10px;font-size:13px;line-height:1.35;overflow:auto;">
+# simple loop (example)
 while True:
-  heading = gyro.angle()
-  error = target - heading
-  power = kp * error + kd * (error - last)
-  drive.dc(power, power)   # set motor power
-  last = error
-  wait(10)  # loop ≈100Hz
-              </pre>
-            </figure>
+  error = target - gyro.angle()
+  power = kp * error
+  drive.dc(power, power)
+  wait(10)
+            </pre>
           </div>
-
-          <!-- Photo/gallery row spanning full width below -->
-          <figure class="ph tilt" style="padding:12px; grid-column: 1 / -1;">
-            <div class="label"><b>Visual: test snapshots</b></div>
-            <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; margin-top:10px;">
-              <img src="Attachments/pybricks/gyro-trial-1.jpg" alt="gyro trial" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <img src="Attachments/pybricks/encoder-log.jpg" alt="encoder log" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <img src="Attachments/pybricks/robot-close.jpg" alt="robot close" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <img src="Attachments/pybricks/run-combo.jpg" alt="run combo" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-            </div>
-            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Larger thumbnails make details readable; replace with higher-res screenshots.</figcaption>
-          </figure>
-        </div>
-
-        <div class="callout" style="margin-top:12px; display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-          <span class="pill">Show logs, not long prose</span>
-          <span class="pill">Use screenshots + SVGs</span>
-          <span class="pill">Keep code snippets short</span>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Responsive tweaks for this section only -->
-    <style>
-      /* Make the pybricks media stack nicely on small screens */
-      #pybricks .media { grid-template-columns: 1.6fr 1fr; }
-      @media (max-width: 980px){
-        #pybricks .media { grid-template-columns: 1fr !important; }
-        #pybricks .media figure.ph img { height:160px; }
-      }
-    </style>
-  </section>
-
-  <!-- 5. Jonathan Sensors (full-width layout) -->
-  <section id="sensors" class="section" style="padding-top:36px; padding-bottom:36px;">
-    <div class="wrap" style="width:100%; max-width:none; padding:0 20px;">
-      <div style="display:grid; grid-template-columns: repeat(12, 1fr); gap:12px; align-items:start;">
-
-        <!-- Main content (wide) -->
-        <div class="card strong reveal" style="grid-column: 1 / span 8; padding:18px;">
-          <div class="kicker"><span class="bar"></span> Jonathan — Sensors (show, not tell)</div>
-          <h2 style="margin-bottom:8px;">Gyro + Encoders → predictable turns & distance</h2>
-
-          <p class="lead" style="margin-bottom:12px; font-size:13px;">
-            Minimal notes — visuals show heading correction and encoder tracking (we use only gyro + motor encoders).
-          </p>
-
-          <!-- Heading overlay (larger, full-width inside card) -->
-          <figure class="ph tilt" style="padding:10px; margin:0;">
-            <div class="label"><b>Heading vs time — 3 trials</b></div>
-            <svg width="100%" height="180" viewBox="0 0 720 180" style="margin-top:10px;">
-              <rect x="0" y="0" width="100%" height="100%" fill="transparent"/>
-              <!-- axes -->
-              <line x1="60" y1="160" x2="660" y2="160" stroke="rgba(11,18,32,.06)"/>
-              <line x1="60" y1="16" x2="60" y2="160" stroke="rgba(11,18,32,.06)"/>
-              <!-- target line -->
-              <line x1="60" y1="68" x2="660" y2="68" stroke="rgba(7,62,119,.12)" stroke-dasharray="4 4"/>
-              <text x="66" y="62" font-size="12" fill="#0b1220">Target</text>
-
-              <!-- trial curves (scaled wider) -->
-              <path d="M60,140 C180,90 320,76 460,72 600,69 640,68" fill="none" stroke="#073e77" stroke-width="3" opacity="0.95"/>
-              <path d="M60,150 C180,104 320,82 460,74 600,69 640,69" fill="none" stroke="#fece00" stroke-width="2.6" opacity="0.9"/>
-              <path d="M60,138 C180,96 320,78 460,71 600,68 640,67.5" fill="none" stroke="#d9da26" stroke-width="2.2" opacity="0.85"/>
-
-              <!-- markers -->
-              <circle cx="460" cy="72" r="4" fill="#073e77"/><text x="472" y="76" font-size="11" fill="#0b1220">end</text>
-
-              <!-- legend -->
-              <rect x="84" y="12" width="14" height="8" rx="2" fill="#073e77"/><text x="108" y="18" font-size="11" fill="#0b1220">Trial A</text>
-              <rect x="216" y="12" width="14" height="8" rx="2" fill="#fece00"/><text x="240" y="18" font-size="11" fill="#0b1220">Trial B</text>
-              <rect x="348" y="12" width="14" height="8" rx="2" fill="#d9da26"/><text x="372" y="18" font-size="11" fill="#0b1220">Trial C</text>
-            </svg>
-            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:10px;">Heading correction converges to target across trials</figcaption>
-          </figure>
-
-          <!-- Encoder repeatability + fusion -->
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px;">
-            <figure class="ph tilt" style="padding:10px; margin:0;">
-              <div class="label"><b>Encoder distance repeatability</b></div>
-              <svg width="100%" height="120" viewBox="0 0 360 120" style="margin-top:10px;">
-                <g transform="translate(18,10)">
-                  <rect x="0" y="36" width="56" height="64" rx="6" fill="#dbeafe" stroke="rgba(11,18,32,.04)"/>
-                  <rect x="70" y="30" width="56" height="70" rx="6" fill="#fef3c7" stroke="rgba(11,18,32,.04)"/>
-                  <rect x="140" y="34" width="56" height="66" rx="6" fill="#dcfce7" stroke="rgba(11,18,32,.04)"/>
-                  <rect x="210" y="28" width="56" height="72" rx="6" fill="#ffe5e5" stroke="rgba(11,18,32,.04)"/>
-                  <rect x="280" y="32" width="56" height="68" rx="6" fill="#fff5f5" stroke="rgba(11,18,32,.04)"/>
-                  <text x="10" y="108" font-size="11" fill="#0b1220">T1</text>
-                  <text x="80" y="108" font-size="11" fill="#0b1220">T2</text>
-                  <text x="150" y="108" font-size="11" fill="#0b1220">T3</text>
-                  <text x="220" y="108" font-size="11" fill="#0b1220">T4</text>
-                  <text x="290" y="108" font-size="11" fill="#0b1220">T5</text>
-                </g>
-              </svg>
-              <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Encoder counts show tight distribution</figcaption>
-            </figure>
-
-            <figure class="ph tilt" style="padding:10px; margin:0;">
-              <div class="label"><b>Sensor fusion (runtime)</b></div>
-              <svg width="100%" height="120" viewBox="0 0 360 120" style="margin-top:10px;">
-                <rect x="18" y="18" width="84" height="36" rx="8" fill="#fff" stroke="rgba(11,18,32,.06)"/>
-                <text x="60" y="40" font-size="11" fill="#0b1220" text-anchor="middle">Gyro</text>
-
-                <rect x="138" y="18" width="84" height="36" rx="8" fill="#fff" stroke="rgba(11,18,32,.06)"/>
-                <text x="180" y="40" font-size="11" fill="#0b1220" text-anchor="middle">Fusion</text>
-
-                <rect x="258" y="18" width="84" height="36" rx="8" fill="#fff" stroke="rgba(11,18,32,.06)"/>
-                <text x="300" y="40" font-size="11" fill="#0b1220" text-anchor="middle">Motors</text>
-
-                <defs>
-                  <marker id="arrow1-s" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-                    <path d="M0,0 L6,3 L0,6 z" fill="#073e77"/>
-                  </marker>
-                </defs>
-
-                <path d="M60,54 L60,78" stroke="#073e77" stroke-width="2" marker-end="url(#arrow1-s)"/>
-                <text x="46" y="98" font-size="10" fill="#0b1220">angle</text>
-
-                <path d="M180,54 L180,78" stroke="#d9da26" stroke-width="2" marker-end="url(#arrow1-s)"/>
-                <text x="168" y="98" font-size="10" fill="#0b1220">correction</text>
-
-                <path d="M300,54 L300,78" stroke="#fece00" stroke-width="2" marker-end="url(#arrow1-s)"/>
-                <text x="286" y="98" font-size="10" fill="#0b1220">power</text>
-
-                <path d="M258,36 C200,10 120,10 60,36" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arrow1-s)"/>
-                <text x="160" y="12" font-size="10" fill="#0b1220" text-anchor="middle">feedback</text>
-              </svg>
-              <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Gyro guides heading; encoders confirm distance</figcaption>
-            </figure>
-          </div>
-
-        </div>
-
-        <!-- Side notes / compact gallery (narrow) -->
-        <aside class="card reveal tilt" style="grid-column: 9 / span 4; padding:14px;">
-          <h3 style="margin-top:0;">Quick facts</h3>
-          <ul style="margin:8px 0 0; padding-left:18px; color:var(--muted);">
-            <li>Sensors used: Gyro (hub) + motor encoders</li>
-            <li>Use consistent axes/scale for screenshots</li>
-            <li>Average 5–10 trials for confidence</li>
-          </ul>
-
-          <div style="margin-top:12px;">
-            <div class="label" style="font-size:13px;margin-bottom:8px;"><b>Test snapshots</b></div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-              <img src="gyrosensor.jpg" alt="gyro curve 1" style="width:100%;height:96px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <img src="encodersensor.jpg" alt="encoder readout" style="width:100%;height:96px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <img src="Robot%20Iterations/lastyearrobotfrontmotorview.png" alt="mapping results" style="width:100%;height:96px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <img src="Attachments/Run A/Run A attachment V2.jpg" alt="cardboard models" style="width:100%;height:96px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-            </div>
-            <div style="font-size:12px;color:var(--muted);margin-top:8px;">Replace placeholders with clear, same-scale screenshots.</div>
-          </div>
-        </aside>
-
-        <!-- Full-width hardware gallery and details (span all columns) -->
-        <figure class="ph tilt" style="padding:12px; grid-column: 1 / -1; margin-top:12px;">
-          <div class="label"><b>Hardware — sensors we use</b></div>
-          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-top:10px;">
-            <div style="text-align:center;">
-              <img src="gyrosensor.jpg" alt="Gyro/IMU" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <div style="font-size:12px;color:rgba(11,18,32,.62);margin-top:6px;">Gyro / IMU (Prime hub)</div>
-            </div>
-
-            <div style="text-align:center;">
-              <img src="encodersensor.jpg" alt="Motor encoder" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <div style="font-size:12px;color:rgba(11,18,32,.62);margin-top:6px;">Built-in motor encoders</div>
-            </div>
-
-            <div style="text-align:center;">
-              <img src="bricklinkstudioex1.png" alt="Wiring top" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <div style="font-size:12px;color:rgba(11,18,32,.62);margin-top:6px;">Hub orientation & wiring</div>
-            </div>
-
-            <div style="text-align:center;">
-              <img src="Robot%20Iterations/new%20base%20bot%204-24%20(1).png" alt="Sensor mounting" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
-              <div style="font-size:12px;color:rgba(11,18,32,.62);margin-top:6px;">Stable mounting reduces drift</div>
-            </div>
-          </div>
-          <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:10px;">We use gyro + encoders only — document exact part/orientation here.</figcaption>
-        </figure>
-
-        <!-- Bottom callout spanning full width -->
-        <div class="callout" style="margin-top:12px; grid-column: 1 / -1; border-radius:16px;">
-          <b style="display:block;">Presentation tips</b>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
-            <span class="pill">Use same axes/scale for graphs</span>
-            <span class="pill">Replace captions with one-line observations</span>
-            <span class="pill">Put raw logs in shared folder (link in Coop section)</span>
+          <div class="ph" style="padding:12px;">
+            <div class="label"><b>Test snapshot</b></div>
+            <img src="Attachments/pybricks/gyro-trial-1.jpg" alt="Pybricks test" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);margin-top:10px;">
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- 6. Anthony PID -->
+  <section id="sensors" class="section">
+    <div class="wrap">
+      <div class="card strong">
+        <div class="kicker"><span class="bar"></span> Sensors</div>
+        <h2>Gyro and encoders keep distance and turns accurate</h2>
+        <p class="lead">These sensors help the robot know where it is and how far it moved.</p>
+        <div class="takeaway"><b>Key takeaway:</b> Sensors make runs consistent, even if the battery changes.</div>
+
+        <div class="image-grid">
+          <img src="gyrosensor.jpg" alt="Gyro sensor" style="width:100%;height:140px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+          <img src="encodersensor.jpg" alt="Encoder sensor" style="width:100%;height:140px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+          <img src="Robot%20Iterations/new%20base%20bot%204-24%20(1).png" alt="Sensor mounting" style="width:100%;height:140px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="pid" class="section">
-    <div class="wrap grid">
-      <div class="card strong reveal">
-        <div class="kicker"><span class="bar"></span> Anthony — PID Tuning & Motion Control</div>
-        <h2>We tuned Kp and Kd using data across speeds and distances.</h2>
-        <p>
-          After integrating sensor feedback, we refined control with simple PID-style corrections. We tested multiple <b>Kp</b> values at
-          different speeds and distances, and <b>Kd</b> values to reduce wobble and improve smoothness. We used these graphs to select
-          values that produced straight and stable motion.
-        </p>
+    <div class="wrap">
+      <div class="card strong">
+        <div class="kicker"><span class="bar"></span> Tuning</div>
+        <h2>We adjusted values until the robot drove straight</h2>
+        <p class="lead">We tested different values and kept the ones that made the robot smooth and stable.</p>
+        <div class="takeaway"><b>Key takeaway:</b> Small tuning changes made a big difference.</div>
 
-        <div class="callout">
-          <b>Definition: PID (what we mean)</b>
-          <p>
-            PID is a feedback method that compares a target to the current measurement and applies correction. Proportional reacts to
-            current error; derivative helps reduce oscillation/overshoot. :contentReference[oaicite:2]{index=2}
-          </p>
-        </div>
-
-        <div class="chart">
-          <div class="cap">
-            <b>Kp Selector</b>
-            <span>Click a Kp value to update the straightness scatter plot</span>
+        <div class="two-col">
+          <div class="ph" style="padding:12px;">
+            <div class="label"><b>Replace with: Kp chart</b></div>
+            <div class="hint" style="margin-top:10px;">Use a simple chart or screenshot from your tests.</div>
           </div>
-          <canvas id="kpBar" height="160"></canvas>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap;">
-            <div class="pill-row" style="margin:0;">
-              <span class="pill"><span class="dot"></span> Lower heading error = straighter</span>
-              <span class="pill"><span class="dot y"></span> More trials = more confidence</span>
-            </div>
-            <div class="pill" id="kpChosen" style="margin-left:auto;">Selected Kp: <b style="margin-left:6px;">1.2</b></div>
+          <div class="ph" style="padding:12px;">
+            <div class="label"><b>Replace with: Kd chart</b></div>
+            <div class="hint" style="margin-top:10px;">Show which value was the smoothest.</div>
           </div>
-          <canvas id="kpScatter" height="220"></canvas>
-          <p style="margin:10px 6px 2px;color:rgba(11,18,32,.62);font-size:12px;line-height:1.5;">
-            The scatter plot shows heading error (degrees) across distances (1–4 rotations) and speeds (30–60%).
-            Replace the sample data with your real test logs when ready.
-          </p>
-        </div>
-
-        <div class="chart">
-          <div class="cap">
-            <b>Kd Selector</b>
-            <span>Click a Kd value to update the smoothness scatter plot</span>
-          </div>
-          <canvas id="kdBar" height="160"></canvas>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap;">
-            <div class="pill-row" style="margin:0;">
-              <span class="pill"><span class="dot g"></span> Lower wobble = smoother</span>
-              <span class="pill"><span class="dot y"></span> D term helps “calm” motion</span>
-            </div>
-            <div class="pill" id="kdChosen" style="margin-left:auto;">Selected Kd: <b style="margin-left:6px;">0.4</b></div>
-          </div>
-          <canvas id="kdScatter" height="220"></canvas>
         </div>
       </div>
-
-      <aside class="card reveal tilt">
-        <h3>Acceleration & Deceleration</h3>
-        <p>
-          We smoothed starts and stops to reduce wheel slip and improve repeatability, especially at higher speeds.
-        </p>
-
-        <div class="chart">
-          <div class="cap">
-            <b>Speed Profile</b>
-            <span>Select distance (rotations)</span>
-          </div>
-          <div class="seg" role="tablist" aria-label="Rotation selector">
-            <button class="active" data-rot="1">1 rot</button>
-            <button data-rot="2">2 rot</button>
-            <button data-rot="3">3 rot</button>
-            <button data-rot="4">4 rot</button>
-          </div>
-          <canvas id="speedProfile" height="230"></canvas>
-          <p style="margin:10px 6px 2px;color:rgba(11,18,32,.62);font-size:12px;line-height:1.5;">
-            Visualizing acceleration → cruise → deceleration helps explain how you improved control and reduced sliding.
-          </p>
-        </div>
-      </aside>
     </div>
   </section>
 
-  <!-- 7. Julisa Coop -->
   <section id="coop" class="section">
-    <div class="wrap grid">
+    <div class="wrap">
+      <div class="card strong">
+        <div class="kicker"><span class="bar"></span> Sharing</div>
+        <h2>We share our work so other teams can learn faster</h2>
+        <p class="lead">We post photos, code, and short tutorials for other teams to use.</p>
+        <div class="takeaway"><b>Key takeaway:</b> Sharing helps the whole community improve.</div>
+
+        <div class="image-grid">
+          <img src="Robot%20Iterations/base%20robot%20iteration%202.png" alt="Shared build" style="width:100%;height:140px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+          <img src="Robot%20Iterations/lastyearrobot.png" alt="Shared robot" style="width:100%;height:140px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+          <img src="Robot%20Iterations/base%20robot%20iteration%206.2.jpg" alt="Shared photos" style="width:100%;height:140px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+        </div>
+
+        <div class="callout" style="margin-top:12px;">
+          <b>Links to add</b>
+          <p>Replace these with your real links.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;">
+            <a class="btn" href="#" target="_blank" rel="noreferrer">YouTube</a>
+            <a class="btn" href="#" target="_blank" rel="noreferrer">TikTok</a>
+            <a class="btn" href="#" target="_blank" rel="noreferrer">Instagram</a>
+            <a class="btn" href="#" target="_blank" rel="noreferrer">Shared folder</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="refs" class="section">
+    <div class="wrap">
+      <div class="card strong">
+        <div class="kicker"><span class="bar"></span> References</div>
+        <h2>Sources used</h2>
+        <ol class="refs">
+          <li>Pybricks Prime Hub docs — <a href="https://docs.pybricks.com/en/latest/hubs/primehub.html" target="_blank" rel="noreferrer">Link</a></li>
+          <li>Pybricks Motor docs — <a href="https://docs.pybricks.com/en/latest/pupdevices/motor.html" target="_blank" rel="noreferrer">Link</a></li>
+          <li>PID theory overview — <a href="https://www.ni.com/en/shop/labview/pid-theory-explained.html" target="_blank" rel="noreferrer">Link</a></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <b>FLL Robot Design Page</b><br/>
+        Simplified layout for clear, beginner‑friendly explanation.
+      </div>
+      <div>
+        <b>Next step:</b> Add your final photos and real links.
+      </div>
+    </div>
+  </footer>
+</body>
       <div class="card strong reveal">
         <div class="kicker"><span class="bar"></span> Julisa — Knowledge Sharing & Coopertition</div>
         <h2>We share designs and code so more teams improve together.</h2>
         <p>
-          Our coach maintains a shared folder where 10 teams from Manhattan, Queens, and the Hudson Valley upload designs,
-          attachments, code, and videos. So far, 3 of the 4 Hudson Valley teams have qualified for the championships,
-          while the Manhattan and Queens teams are still competing.
+          We keep a shared folder where teams upload designs, attachments, code, and videos. This helps everyone learn faster.
         </p>
+
+        <div class="takeaway">
+          <b>Key takeaway:</b> Sharing resources helps more teams succeed.
+        </div>
+
         <p>
-          We also share tutorials on YouTube, TikTok, and Instagram. Our YouTube channel has 74 subscribers and our TikTok has
-          772 followers. Many teams reach out for help or leave feedback, and our videos average over 1,000 views.
-          We plan to upload more tutorials to continue supporting the community.
+          We also share short tutorials on YouTube, TikTok, and Instagram so other teams can copy our best ideas.
         </p>
 
         <div class="media" id="gallery" style="grid-template-columns: repeat(3, 1fr); gap:12px;">
