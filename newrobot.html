@@ -1,550 +1,1104 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>FLL Neon Team Showcase</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FLL Season Visual Companion</title>
+  <meta name="description" content="A minimal, visual-first companion site for our FLL presentation." />
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel: rgba(255,255,255,.06);
+      --line: rgba(255,255,255,.10);
+      --text:#e9ecff;
+      --muted: rgba(233,236,255,.70);
 
-<style>
-:root{
-  --bg:#050816;
-  --purple:#9d7bff;
-  --cyan:#00eaff;
-  --gold:#ffcc33;
-  --green:#4cff9d;
-  --pink:#ff4fd8;
-  --text:#f8fbff;
-}
+      --identify:#3aa7ff;
+      --design:#6dffb5;
+      --create:#ff6df1;
+      --share:#ffd56d;
 
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Segoe UI, sans-serif;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(157,123,255,.25), transparent 40%),
-    radial-gradient(circle at 80% 30%, rgba(0,234,255,.2), transparent 40%),
-    radial-gradient(circle at 50% 90%, rgba(255,204,51,.15), transparent 50%),
-    var(--bg);
-  color:var(--text);
-  line-height:1.6;
-  overflow-x:hidden;
-}
+      --max: 1100px;
+      --r: 22px;
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+    }
 
-/* Glow helpers */
-.neon-purple{color:var(--purple); text-shadow:0 0 8px var(--purple),0 0 18px var(--purple);}
-.neon-cyan{color:var(--cyan); text-shadow:0 0 8px var(--cyan),0 0 18px var(--cyan);}
-.neon-gold{color:var(--gold); text-shadow:0 0 8px var(--gold),0 0 18px var(--gold);}
-.neon-green{color:var(--green); text-shadow:0 0 8px var(--green),0 0 18px var(--green);}
-.neon-pink{color:var(--pink); text-shadow:0 0 8px var(--pink),0 0 18px var(--pink);}
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(900px 500px at 15% 5%, rgba(58,167,255,.22), transparent 60%),
+        radial-gradient(900px 500px at 85% 10%, rgba(255,109,241,.18), transparent 60%),
+        radial-gradient(900px 500px at 60% 90%, rgba(109,255,181,.14), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
 
-.wrapper{
-  max-width:1100px;
-  margin:auto;
-  padding:60px 20px 100px;
-}
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding: 0 18px;}
+    .top{
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(11,16,32,.55);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 12px 0;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight: 900;
+      letter-spacing:.2px;
+    }
+    .logo{
+      width:34px; height:34px; border-radius: 14px;
+      background: conic-gradient(from 210deg, var(--identify), var(--create), var(--design), var(--share), var(--identify));
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 0 30px rgba(58,167,255,.18);
+    }
+    .links{
+      display:flex; gap:8px; flex-wrap:wrap;
+      font-weight: 750; font-size: 13px;
+      color: var(--muted);
+    }
+    .links a{
+      padding: 8px 10px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .links a:hover{color:var(--text); border-color: rgba(255,255,255,.18)}
 
-section{
-  margin-bottom:70px;
-}
+    header{
+      padding: 30px 0 10px;
+    }
+    h1{
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -.6px;
+    }
+    .sub{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-weight: 650;
+      max-width: 70ch;
+    }
 
-.card{
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:20px;
-  padding:30px;
-  margin-top:20px;
-  backdrop-filter:blur(8px);
-  box-shadow:0 0 25px rgba(0,0,0,.6);
-}
+    section{
+      padding: 18px 0 28px;
+    }
+    .sectionHead{
+      display:flex; align-items:center; gap:10px;
+      margin-bottom: 12px;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      font-weight: 900;
+      letter-spacing: .3px;
+      font-size: 12px;
+    }
+    .dot{width:10px;height:10px;border-radius:999px}
+    .title{
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -.2px;
+    }
+    .caption{
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      font-weight: 650;
+      max-width: 80ch;
+    }
+    #runs .title{
+      font-size: 22px;
+      font-weight: 950;
+      letter-spacing: -.3px;
+    }
+    .runSubheading{
+      margin: 10px 0 4px;
+      color: var(--text);
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: -.2px;
+    }
 
-.hero{
-  text-align:center;
-  padding-bottom:40px;
-}
+    .panel{
+      border-radius: var(--r);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
 
-.hero h1{
-  font-size:48px;
-  margin-bottom:20px;
-  background:linear-gradient(90deg,var(--purple),var(--cyan));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  text-shadow:0 0 25px rgba(157,123,255,.6);
-}
+    /* Big hero collage */
+    .collage{
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap: 12px;
+    }
+    .big{
+      height: 420px;
+    }
+    .stack{
+      display:grid;
+      grid-template-rows: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .img{
+      position:relative;
+      overflow:hidden;
+      border-radius: var(--r);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      min-height: 180px;
+    }
+    .img img{
+      width:100%; height:100%;
+      object-fit: cover;
+      display:block;
+      filter: saturate(1.05) contrast(1.05);
+    }
+    .img .label{
+      position:absolute;
+      left: 12px; bottom: 12px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(10px);
+      font-weight: 850;
+      font-size: 12px;
+    }
 
-.hero p{
-  font-size:18px;
-  opacity:.9;
-}
+    /* Single visual strips */
+    .strip{
+      height: 420px;
+    }
+    .strip.tall{height: 520px;}
+    .strip.short{height: 360px;}
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:25px;
-}
+    /* 3-image storyboard */
+    .story{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+    .story .img{min-height: 260px;}
 
-.placeholder{
-  margin-top:18px;
-  height:220px;
-  border-radius:18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  font-size:14px;
-  color:#d0d6ff;
-  background:rgba(255,255,255,.02);
-  border:2px solid;
-  animation:glowBorder 4s infinite alternate;
-}
+    footer{
+      padding: 24px 0 44px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
 
-.photo{
-  width:100%;
-  height:auto;
-  max-height:170px;
-  object-fit:contain;
-  border-radius:18px;
-  border:2px solid rgba(255,255,255,.12);
-  box-shadow:0 0 18px rgba(0,0,0,.45);
-  animation:neonSweep 5s linear infinite;
-}
-
-@keyframes neonSweep{
-  0%{box-shadow:0 0 10px var(--cyan), 0 0 18px rgba(0,0,0,.45);} 
-  33%{box-shadow:0 0 10px var(--purple), 0 0 18px rgba(0,0,0,.45);} 
-  66%{box-shadow:0 0 10px var(--gold), 0 0 18px rgba(0,0,0,.45);} 
-  100%{box-shadow:0 0 10px var(--cyan), 0 0 18px rgba(0,0,0,.45);} 
-}
-
-/* Mission analysis infographic */
-.mission-infographic{
-  margin-top:22px;
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:16px;
-}
-.mission-card{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:16px;
-  padding:14px;
-  min-height:140px;
-  box-shadow:0 0 18px rgba(0,0,0,.35);
-}
-.mission-card h4{
-  margin:0 0 8px;
-  font-size:14px;
-  letter-spacing:.3px;
-}
-.mission-tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;}
-.mission-tag{
-  font-size:12px;
-  padding:6px 8px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.05);
-}
-.mission-line{
-  grid-column:1 / -1;
-  height:2px;
-  background:linear-gradient(90deg, var(--cyan), var(--purple), var(--gold));
-  border-radius:999px;
-  opacity:.6;
-  margin-top:4px;
-}
-.mission-note{
-  grid-column:1 / -1;
-  font-size:13px;
-  opacity:.85;
-}
-
-/* Project management infographic */
-.pm-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:18px;}
-.timeline{
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:16px;
-  padding:14px;
-  background:rgba(255,255,255,.04);
-}
-.timeline-item{display:grid; grid-template-columns:80px 1fr; gap:12px; margin-bottom:10px; align-items:center;}
-.timeline-item:last-child{margin-bottom:0;}
-.timeline-badge{
-  text-align:center;
-  padding:6px 8px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.18);
-  font-size:12px;
-  color:#f0f4ff;
-  background:rgba(255,255,255,.05);
-}
-.progress-box{
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:16px;
-  padding:14px;
-  background:rgba(255,255,255,.04);
-}
-.progress-row{display:grid; grid-template-columns:70px 1fr 40px; gap:10px; align-items:center; margin:8px 0;}
-.progress-bar{height:8px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden;}
-.progress-bar > span{display:block; height:100%; border-radius:999px; background:linear-gradient(90deg,var(--cyan),var(--purple));}
-.calendar{
-  margin-top:12px;
-  display:grid;
-  grid-template-columns:repeat(7, 1fr);
-  gap:6px;
-  font-size:11px;
-}
-.calendar div{padding:8px 0; text-align:center; border-radius:8px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);} 
-.calendar .active{background:rgba(0,234,255,.18); border-color:rgba(0,234,255,.4);}
-
-@media(max-width:800px){
-  .pm-grid{grid-template-columns:1fr;}
-}
-
-.robot-evolution{
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;
-}
-.arrow{
-  font-size:42px;
-  color:var(--cyan);
-  text-shadow:0 0 12px var(--cyan);
-  text-align:center;
-  padding:0 6px;
-}
-@media(max-width:800px){
-  .robot-evolution{grid-template-columns:1fr;}
-  .arrow{transform:rotate(90deg);}
-}
-
-@media(max-width:800px){
-  .mission-infographic{grid-template-columns:1fr;}
-}
-
-@keyframes glowBorder{
-  0%{box-shadow:0 0 10px var(--cyan);}
-  50%{box-shadow:0 0 18px var(--purple);}
-  100%{box-shadow:0 0 10px var(--cyan);}
-}
-
-ul{
-  padding-left:18px;
-  opacity:.9;
-}
-.bullet-detail{
-  margin:6px 0 0;
-  padding:8px 10px;
-  border-radius:12px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.12);
-  font-size:13px;
-  color:#d9e2ff;
-}
-.before-after{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-.before-after > div{
-  padding:8px 10px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,.18);
-  background:linear-gradient(180deg, rgba(157,123,255,.12), rgba(0,234,255,.06));
-  box-shadow:0 0 12px rgba(0,0,0,.35);
-}
-
-.before-after-infographic{
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  gap:12px;
-  align-items:center;
-}
-.ba-card{
-  padding:10px 12px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.22);
-  background:linear-gradient(180deg, rgba(157,123,255,.18), rgba(0,234,255,.08));
-  box-shadow:0 0 14px rgba(0,0,0,.35);
-}
-.ba-title{font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:#cfe1ff; margin-bottom:6px;}
-.ba-list{font-size:13px; line-height:1.6;}
-.ba-arrow{font-size:28px; color:var(--cyan); text-shadow:0 0 12px var(--cyan); text-align:center;}
-@media(max-width:800px){
-  .before-after-infographic{grid-template-columns:1fr;}
-  .ba-arrow{transform:rotate(90deg);}
-}
-@media(max-width:800px){
-  .before-after{grid-template-columns:1fr;}
-}
-
-footer{
-  text-align:center;
-  margin-top:80px;
-  opacity:.6;
-  font-size:14px;
-}
-
-@media(max-width:800px){
-  .grid{grid-template-columns:1fr}
-  .hero h1{font-size:36px}
-}
-</style>
+    @media (max-width: 980px){
+      .collage{grid-template-columns: 1fr;}
+      .big{height: 340px;}
+      .stack{grid-template-rows: auto; grid-template-columns: 1fr 1fr 1fr;}
+      .strip{height: 340px;}
+      .strip.tall{height: 380px;}
+      .story{grid-template-columns: 1fr;}
+      .story .img{min-height: 240px;}
+    }
+    html{scroll-behavior:smooth}
+  </style>
 </head>
 
 <body>
-
-<div class="wrapper">
-
-<!-- HERO -->
-<section class="hero">
-  <h1>Robot Evolution & Strategy</h1>
-  <p>Precision. Efficiency. Consistency. Innovation.</p>
-</section>
-
-<!-- ROBOT -->
-<section>
-  <h2 class="neon-purple">Robot Evolution (Owen)</h2>
-  <div class="card">
-    <ul>
-      <li>Moved both attachment motors to the front.
-        <div class="bullet-detail">Front motors keep weight balanced and make the base easier to line up each run.</div>
-      </li>
-      <li>Reduced structural stress and instability.
-        <div class="bullet-detail">We reinforced weak points so the robot stayed rigid during turns and pushes.</div>
-      </li>
-      <li>Created a pinless gravity-based attachment system.
-        <div class="bullet-detail">Attachments drop in quickly, saving time between runs and keeping alignment consistent.</div>
-      </li>
-    </ul>
-    <div class="grid robot-evolution">
-      <img class="photo" src="Robot%20Iterations/lastyearrobot.png" alt="Last year's robot" />
-      <div class="arrow">➜</div>
-      <img class="photo" src="Robot%20Iterations/new%20base%20bot%204-24%20(1).png" alt="This year's robot" />
-    </div>
-  </div>
-</section>
-
-<!-- STRATEGY -->
-<section>
-  <h2 class="neon-cyan">Strategy & Mission Grouping (Isabella)</h2>
-  <div class="card">
-    <ul>
-      <li>Analyzed scoring, movement, and risk.
-        <div class="bullet-detail">We compared points vs. travel distance to avoid low‑value, high‑risk paths.</div>
-      </li>
-      <li>Grouped missions by action and location.
-        <div class="bullet-detail">Missions that use the same attachment or are close together were paired.</div>
-      </li>
-      <li>Bundled nearby missions for efficient runs.
-        <div class="bullet-detail">Shorter routes reduced time and kept alignment more reliable.</div>
-      </li>
-    </ul>
-    <div class="grid">
-      <div class="placeholder">[ Field Map Diagram ]</div>
-      <div class="placeholder">[ Run Grouping Chart ]</div>
-    </div>
-
-    <div class="mission-infographic">
-      <div class="mission-card">
-        <h4 class="neon-cyan">Step 1: Action type</h4>
-        <div class="mission-tags">
-          <span class="mission-tag">Push</span>
-          <span class="mission-tag">Pull</span>
-          <span class="mission-tag">Lift</span>
-          <span class="mission-tag">Drop‑off</span>
-        </div>
-      </div>
-
-      <div class="mission-card">
-        <h4 class="neon-purple">Step 2: Location</h4>
-        <div class="mission-tags">
-          <span class="mission-tag">Near base</span>
-          <span class="mission-tag">Center</span>
-          <span class="mission-tag">Far zone</span>
-        </div>
-      </div>
-
-      <div class="mission-card">
-        <h4 class="neon-gold">Step 3: Difficulty level</h4>
-        <div class="mission-tags">
-          <span class="mission-tag">Low risk</span>
-          <span class="mission-tag">Medium risk</span>
-          <span class="mission-tag">High risk</span>
-          <span class="mission-tag">Fast run</span>
-        </div>
-      </div>
-
-      <div class="mission-line"></div>
-      <div class="mission-note">Result: We grouped nearby missions with similar actions to reduce travel time and mistakes.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ORGANIZATION -->
-<section>
-  <h2 class="neon-gold">Project Management (Julisa)</h2>
-  <div class="card">
-    <ul>
-      <li>Labeled runs A–G for flexible order.
-        <div class="bullet-detail">
-          <div class="before-after-infographic">
-            <div class="ba-card">
-              <div class="ba-title">Before</div>
-              <div class="ba-list">Runs A, B, C, D, E, F, G</div>
-            </div>
-            <div class="ba-arrow">➜</div>
-            <div class="ba-card">
-              <div class="ba-title">After</div>
-              <div class="ba-list">Run 1 = A, Run 2 = B, Run 3 = G, Run 4 = E, Run 5 = C, Run 6 = D</div>
-            </div>
+  <div class="top">
+    <div class="wrap">
+      <div class="nav">
+        <div class="brand">
+          <div class="logo"></div>
+          <div>
+            <div style="font-size:14px;">FLL Visual Companion</div>
+            <div style="font-size:12px; color:var(--muted); font-weight:700;">Show, don’t tell.</div>
           </div>
         </div>
-      </li>
-      <li>Split into Red & Blue robot teams.
-        <div class="bullet-detail">Two groups tested in parallel so we gathered data faster.</div>
-      </li>
-      <li>Workflow: Draft → Tune → Debug → Repeat.
-        <div class="bullet-detail">Every change was tested, logged, and improved before moving on.</div>
-      </li>
-    </ul>
-    <p>
-      We met once a week on Saturdays, and some of us met again on Sundays for 90 minutes.
-      As competition got closer, we met 3 times a week as a team and connected over Zoom almost every day.
-    </p>
-    <div class="pm-grid">
-      <div class="timeline">
-        <div class="neon-gold" style="font-size:14px;margin-bottom:10px;">Progress timeline</div>
-        <div class="timeline-item">
-          <div class="timeline-badge">Week 1</div>
-          <div>Plan missions and test base driving.</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-badge">Week 2</div>
-          <div>Build attachments and try Run A/B.</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-badge">Week 3</div>
-          <div>Refine alignment and repeat tests.</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-badge">Week 4</div>
-          <div>Finalize runs and lock in strategy.</div>
-        </div>
-      </div>
-
-      <div class="progress-box">
-        <div class="neon-gold" style="font-size:14px;margin-bottom:10px;">Tracking & calendar</div>
-        <div class="progress-row">
-          <div>Run A</div>
-          <div class="progress-bar"><span style="width:80%"></span></div>
-          <div>80%</div>
-        </div>
-        <div class="progress-row">
-          <div>Run B</div>
-          <div class="progress-bar"><span style="width:60%"></span></div>
-          <div>60%</div>
-        </div>
-        <div class="progress-row">
-          <div>Run C</div>
-          <div class="progress-bar"><span style="width:70%"></span></div>
-          <div>70%</div>
-        </div>
-        <div class="calendar" aria-label="Weekly practice calendar">
-          <div class="active">Mon</div>
-          <div>Tue</div>
-          <div class="active">Wed</div>
-          <div>Thu</div>
-          <div class="active">Fri</div>
-          <div>Sat</div>
-          <div>Sun</div>
+        <div class="links">
+          <a href="#identify">Identify</a>
+          <a href="#design">Design</a>
+          <a href="#runs">Runs</a>
+          <a href="#create">Create</a>
+          <a href="#share">Share</a>
         </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- PROGRAMMING -->
-<section>
-  <h2 class="neon-green">Programming Improvements (Owen)</h2>
-  <div class="card">
-    <ul>
-      <li>Transitioned from block coding to Pybricks.
-        <div class="bullet-detail">Faster code loops let us react to errors immediately.</div>
-      </li>
-      <li>Improved turn precision and speed control.
-        <div class="bullet-detail">We fine‑tuned power levels to reduce drift and overshoot.</div>
-      </li>
-      <li>Enhanced sensor-based consistency.
-        <div class="bullet-detail">Sensors corrected small errors so runs stayed repeatable.</div>
-      </li>
-    </ul>
-    <div class="grid">
-      <div class="placeholder">[ Pybricks Code Screenshot ]</div>
-      <div class="placeholder">[ Motion Control Graph ]</div>
+  <header>
+    <div class="wrap">
+      <h1>Our season, explained with visuals.</h1>
+      <p class="sub">Use this site while presenting: point to the pictures, show the iterations, and let the visuals carry the story.</p>
+
+      
+    </div>
+  </header>
+
+  <!-- IDENTIFY -->
+  <section id="identify">
+    <div class="wrap">
+      <div class="sectionHead">
+      <div class="tag"><span class="dot" style="background:var(--identify)"></span>IDENTIFY</div>
+    </div>
+
+    <style>
+    .difficulty-infographic {
+      margin-top: 12px;
+    }
+    .difficulty-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .difficulty-card {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .difficulty-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-weight: 900;
+      font-size: 13px;
+    }
+    .difficulty-count {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .difficulty-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .difficulty-note {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+    @media (max-width: 980px) {
+      .difficulty-grid {
+      grid-template-columns: 1fr;
+      }
+    }
+    .mission-infographic {
+      margin-top: 14px;
+    }
+    .mission-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .mission-card {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .mission-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .mission-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 850;
+      font-size: 12px;
+      letter-spacing: .2px;
+    }
+    .mission-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+    }
+    .mission-count {
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .mission-note {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .mission-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .mission-pill {
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.22);
+      border-radius: 999px;
+      padding: 5px 8px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .mission-summary {
+      margin-top: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .summary-bar {
+      height: 14px;
+      border-radius: 999px;
+      background:
+        linear-gradient(
+          to right,
+          #ff4d4d 0% 38.9%,
+          #4da6ff 38.9% 55.6%,
+          #ffd84d 55.6% 83.3%,
+          #57d97d 83.3% 100%
+        );
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .summary-legend {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 750;
+      color: var(--muted);
+    }
+    .summary-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+    @media (max-width: 980px) {
+      .mission-grid,
+      .summary-legend {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+
+  <div class="mission-infographic">
+    <div class="panel" style="padding:12px;">
+      <h3 style="margin:0 0 10px; font-size:14px; font-weight:900; color:var(--muted); letter-spacing:.2px;">
+        Mission Analysis by Action Type
+      </h3>
+
+      <div class="mission-grid">
+        <article class="mission-card">
+          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Push Mission Analysis</h4>
+          <div class="mission-head">
+            <div class="mission-type">
+              <span class="mission-dot" style="background:#ff4d4d;"></span>
+              Push
+            </div>
+            <div class="mission-count" style="color:#ff8a8a;">7</div>
+          </div>
+          <div class="mission-note">Missions requiring pushing action</div>
+          <div class="mission-list">
+            <span class="mission-pill">M2</span><span class="mission-pill">M5</span><span class="mission-pill">M6</span>
+            <span class="mission-pill">M8</span><span class="mission-pill">M10</span><span class="mission-pill">M11</span>
+            <span class="mission-pill">M12</span>
+          </div>
+        </article>
+
+        <article class="mission-card">
+          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Pull Mission Analysis</h4>
+          <div class="mission-head">
+            <div class="mission-type">
+              <span class="mission-dot" style="background:#4da6ff;"></span>
+              Pull
+            </div>
+            <div class="mission-count" style="color:#8ac6ff;">3</div>
+          </div>
+          <div class="mission-note">Missions with pulling mechanisms</div>
+          <div class="mission-list">
+            <span class="mission-pill">M9</span><span class="mission-pill">M10</span><span class="mission-pill">M12</span>
+          </div>
+        </article>
+
+        <article class="mission-card">
+          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Pick Up / Drop Off Analysis</h4>
+          <div class="mission-head">
+            <div class="mission-type">
+              <span class="mission-dot" style="background:#ffd84d;"></span>
+              Pick Up / Drop Off
+            </div>
+            <div class="mission-count" style="color:#ffe68a;">5</div>
+          </div>
+          <div class="mission-note">Missions needing precise manipulation</div>
+          <div class="mission-list">
+            <span class="mission-pill">M1</span><span class="mission-pill">M2</span><span class="mission-pill">M4</span>
+            <span class="mission-pill">M14</span><span class="mission-pill">M15</span>
+          </div>
+        </article>
+
+        <article class="mission-card">
+          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Lift Mission Analysis</h4>
+          <div class="mission-head">
+            <div class="mission-type">
+              <span class="mission-dot" style="background:#57d97d;"></span>
+              Lift
+            </div>
+            <div class="mission-count" style="color:#96ebb0;">3</div>
+          </div>
+          <div class="mission-note">Missions requiring vertical lift</div>
+          <div class="mission-list">
+            <span class="mission-pill">M3</span><span class="mission-pill">M7</span><span class="mission-pill">M13</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="mission-summary">
+        <div class="summary-bar" aria-label="Mission action distribution bar"></div>
+        <div class="summary-legend">
+          <span><i class="mission-dot" style="background:#ff4d4d;"></i>Push: 7</span>
+          <span><i class="mission-dot" style="background:#4da6ff;"></i>Pull: 3</span>
+          <span><i class="mission-dot" style="background:#ffd84d;"></i>Pick/Drop: 5</span>
+          <span><i class="mission-dot" style="background:#57d97d;"></i>Lift: 3</span>
+        </div>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- SENSORS -->
-<section>
-  <h2 class="neon-pink">Sensors & Consistency (Jonathan)</h2>
-  <div class="card">
-    <ul>
-      <li>Gyro sensor for exact angles.
-        <div class="bullet-detail">The gyro keeps turns accurate even if the floor changes.</div>
-      </li>
-      <li>Motor encoders for precise distances.
-        <div class="bullet-detail">Encoders track wheel rotations to keep distances consistent.</div>
-      </li>
-      <li>Auto-corrected drift while driving.
-        <div class="bullet-detail">Small corrections keep the robot centered on its path.</div>
-      </li>
-    </ul>
-    <div class="grid">
-      <div class="placeholder">[ Sensor Layout ]</div>
-      <div class="placeholder">[ Drift Correction Diagram ]</div>
+  <div class="difficulty-infographic">
+    <div class="panel" style="padding:12px;">
+      <h3 style="margin:0 0 10px; font-size:14px; font-weight:900; color:var(--muted); letter-spacing:.2px;">
+        Mission Analysis by Difficulty
+      </h3>
+
+      <div class="difficulty-grid">
+        <article class="difficulty-card">
+          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Easy Mission Analysis</h4>
+          <div class="difficulty-head">
+            <span>✅ Easy Missions</span>
+            <span class="difficulty-count">6 Missions</span>
+          </div>
+          <div class="difficulty-list">
+            <span class="mission-pill">M2</span>
+            <span class="mission-pill">M5</span>
+            <span class="mission-pill">M6</span>
+            <span class="mission-pill">M12</span>
+            <span class="mission-pill">M13</span>
+            <span class="mission-pill">M14</span>
+          </div>
+          <div class="difficulty-note">
+            High success rate, straightforward execution, great for building confidence.
+          </div>
+        </article>
+
+        <article class="difficulty-card">
+          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Medium Mission Analysis</h4>
+          <div class="difficulty-head">
+            <span>⚠️ Medium Missions</span>
+            <span class="difficulty-count">5 Missions</span>
+          </div>
+          <div class="difficulty-list">
+            <span class="mission-pill">M1</span>
+            <span class="mission-pill">M7</span>
+            <span class="mission-pill">M9</span>
+            <span class="mission-pill">M10</span>
+            <span class="mission-pill">M15</span>
+          </div>
+          <div class="difficulty-note">
+            Moderate complexity, requires careful programming and attachment design.
+          </div>
+        </article>
+
+        <article class="difficulty-card">
+          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Hard Mission Analysis</h4>
+          <div class="difficulty-head">
+            <span>🔥 Hard Missions</span>
+            <span class="difficulty-count">3 Missions</span>
+          </div>
+          <div class="difficulty-list">
+            <span class="mission-pill">M4</span>
+            <span class="mission-pill">M8</span>
+            <span class="mission-pill">M11</span>
+          </div>
+          <div class="difficulty-note">
+            High precision required, multiple failure points, advanced mechanisms needed.
+          </div>
+        </article>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- TESTING -->
-<section>
-  <h2 class="neon-cyan">Testing & Refinement (Isabella)</h2>
-  <div class="card">
-    <ul>
-      <li>Repeated testing for data-based adjustments.
-        <div class="bullet-detail">We logged results to see patterns and fix weak points.</div>
-      </li>
-      <li>Smoothed starts and stops.
-        <div class="bullet-detail">Gentler acceleration reduced wheel slip.</div>
-      </li>
-      <li>Improved reliability during competition.
-        <div class="bullet-detail">Stable routines meant fewer resets under pressure.</div>
-      </li>
-    </ul>
-    <div class="placeholder">[ Before vs After Results ]</div>
-  </div>
-</section>
+  <div class="points-infographic">
+    <div class="panel" style="padding:12px;">
+      <h3 style="margin:0 0 10px; font-size:14px; font-weight:900; color:var(--muted); letter-spacing:.2px;">
+        Mission Analysis by Points
+      </h3>
 
-<!-- COOPERTITION -->
-<section>
-  <h2 class="neon-gold">Coopertition & Knowledge Sharing (Julisa)</h2>
-  <div class="card">
-    <p>
-      We maintain a shared folder of designs, attachments, and code.
-      We create tutorials to support other teams.
-      Sharing strengthens the entire FLL community.
-    </p>
-    <div class="grid">
-      <div class="placeholder">[ Shared Folder Screenshot ]</div>
-      <div class="placeholder">[ Tutorial Example ]</div>
+      <div style="margin-bottom:10px; font-size:12px; color:var(--muted); font-weight:800;">
+        Total possible points: <span style="color:var(--text); font-weight:900;">460</span>
+      </div>
+
+      <div class="points-grid" style="display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px;">
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M1</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">10+10+10 pts</div></article>
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M2</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">10+10+10 pts</div></article>
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M3</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">30 pts</div></article>
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M4</div><div class="mission-count" style="color:#ffe68a;">40</div></div><div class="mission-note">30+10 pts</div></article>
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M5</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">30 pts</div></article>
+
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M6</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">10+10+10 pts</div></article>
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M7</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">30 pts</div></article>
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M8</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">10+10+10 pts</div></article>
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M9</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">20+10 pts</div></article>
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M10</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">20+10 pts</div></article>
+
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M11</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">30 pts</div></article>
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M12</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">20+10 pts</div></article>
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M13</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">30 pts</div></article>
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M14</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">10+10+10 pts</div></article>
+        <article class="mission-card"><div class="mission-head"><div class="mission-type">M15</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">5×6 pts</div></article>
+      </div>
     </div>
   </div>
-</section>
+    </div>
+  </section>
 
-<footer>
-  Thank you for listening.
-</footer>
+  <!-- DESIGN -->
+  <section id="design">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--design)"></span>DESIGN</div>
+        <div class="title">Robot Redesign + Pinless Attachment System</div>
+      </div>
 
-</div>
+      <!-- Robot Evolution -->
+      <div class="panel" style="padding:12px;">
+        <h3 style="margin:0 0 10px; font-size:14px; font-weight:900; color:var(--muted); letter-spacing:.2px;">
+          Robot Evolution
+        </h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px;">
+          <div class="img">
+            <img src="robot iterations/lastyearrobotfrontmotorview.png" alt="Before: last year's base">
+            <div class="label">Before</div>
+          </div>
+          <div class="img">
+            <img src="robot iterations/new base bot 4-24 (1).png" alt="After: dual front motors">
+            <div class="label">After: Dual Front Motors</div>
+          </div>
+        </div>
+      </div>
 
+      <style>
+        .iteration-timeline { margin-top: 12px; }
+        .timeline-track {
+          position: relative;
+          display: grid;
+          grid-template-columns: repeat(6, minmax(0, 1fr));
+          gap: 10px;
+          padding-top: 22px;
+        }
+        .timeline-track::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 10px;
+          height: 2px;
+          background: rgba(255,255,255,.18);
+        }
+        .timeline-step { position: relative; }
+        .timeline-step::before {
+          content: "";
+          position: absolute;
+          top: -16px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 12px;
+          height: 12px;
+          border-radius: 999px;
+          background: var(--design);
+          border: 2px solid rgba(11,16,32,.8);
+          box-shadow: 0 0 0 2px rgba(255,255,255,.14);
+        }
+        .iteration-card {
+          border: 1px solid rgba(255,255,255,.12);
+          background: rgba(255,255,255,.04);
+          border-radius: 14px;
+          padding: 8px;
+        }
+        .iteration-thumb {
+          height: 130px;
+          border-radius: 10px;
+          overflow: hidden;
+          border: 1px solid rgba(255,255,255,.12);
+          background: rgba(255,255,255,.03);
+        }
+        .iteration-thumb img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .iteration-title {
+          margin-top: 8px;
+          font-size: 12px;
+          font-weight: 900;
+        }
+        .iteration-note {
+          margin-top: 4px;
+          font-size: 11px;
+          color: var(--muted);
+          font-weight: 700;
+          line-height: 1.3;
+        }
+
+        /* Attachment gallery */
+        .attachment-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 10px;
+        }
+        .attachment-item {
+          border: 1px solid rgba(255,255,255,.12);
+          background: rgba(255,255,255,.04);
+          border-radius: 12px;
+          overflow: hidden;
+        }
+        .attachment-item .img {
+          min-height: 170px;
+          border: 0;
+          border-radius: 0;
+        }
+        .attachment-name {
+          padding: 8px 10px;
+          font-size: 12px;
+          font-weight: 800;
+          color: var(--muted);
+        }
+
+        @media (max-width: 980px) {
+          .timeline-track {
+            grid-template-columns: 1fr 1fr;
+            padding-top: 0;
+          }
+          .timeline-track::before,
+          .timeline-step::before { display: none; }
+        }
+      </style>
+
+      <div class="iteration-timeline">
+        <div class="panel" style="padding:12px;">
+          <h3 style="margin:0 0 10px; font-size:14px; font-weight:900; color:var(--muted); letter-spacing:.2px;">
+            Robot Iteration Timeline (6 Versions)
+          </h3>
+
+          <div class="timeline-track">
+            <article class="timeline-step">
+              <div class="iteration-card">
+                <div class="iteration-thumb">
+                  <img src="robot iterations/new base bot 4-24 (1).png" alt="Robot iteration 1">
+                </div>
+                <div class="iteration-title">Iteration 1</div>
+                <div class="iteration-note">Initial base build</div>
+              </div>
+            </article>
+
+            <article class="timeline-step">
+              <div class="iteration-card">
+                <div class="iteration-thumb">
+                  <img src="robot iterations/base robot iteration 2.png" alt="Robot iteration 2">
+                </div>
+                <div class="iteration-title">Iteration 2</div>
+                <div class="iteration-note">Front motor layout update</div>
+              </div>
+            </article>
+
+            <article class="timeline-step">
+              <div class="iteration-card">
+                <div class="iteration-thumb">
+                  <img src="robot iterations/base robot iteration 3.jpg" alt="Robot iteration 3">
+                </div>
+                <div class="iteration-title">Iteration 3</div>
+                <div class="iteration-note">Stability + wheel tuning</div>
+              </div>
+            </article>
+
+            <article class="timeline-step">
+              <div class="iteration-card">
+                <div class="iteration-thumb">
+                  <img src="robot iterations/base robot iteration 4.jpg" alt="Robot iteration 4">
+                </div>
+                <div class="iteration-title">Iteration 4</div>
+                <div class="iteration-note">Attachment interface rework</div>
+              </div>
+            </article>
+
+            <article class="timeline-step">
+              <div class="iteration-card">
+                <div class="iteration-thumb">
+                  <img src="robot iterations/base robot iteration 5.jpg" alt="Robot iteration 5">
+                </div>
+                <div class="iteration-title">Iteration 5</div>
+                <div class="iteration-note">Reliability improvements</div>
+              </div>
+            </article>
+
+            <article class="timeline-step">
+              <div class="iteration-card">
+                <div class="iteration-thumb">
+                  <img src="robot iterations/base robot iteration 6.0.jpg" alt="Robot iteration 6">
+                </div>
+                <div class="iteration-title">Iteration 6</div>
+                <div class="iteration-note">Final competition version</div>
+              </div>
+            </article>
+
+            <article class="timeline-step">
+              <div class="iteration-card">
+                <div class="iteration-thumb">
+                  <img src="robot iterations/base robot iteration 6.2.jpg" alt="Robot iteration 6.2">
+                </div>
+                <div class="iteration-title">Iteration 6.2</div>
+                <div class="iteration-note">Final competition version</div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pinless Attachment -->
+      <div class="panel" style="padding:12px;">
+        <h3 style="margin:0 0 10px; font-size:14px; font-weight:900; color:var(--muted); letter-spacing:.2px;">
+          Pinless Attachment System
+        </h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px;">
+          <div class="img">
+            <img src="Attachments/pinless attachment rotating.gif">
+            <div class="label">gravity holding it in place</div>
+          </div>
+          <div class="img">
+            <img src="Attachments/pinless attachment still.gif" >
+            <div class="label">Gears holding in place</div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- RUNS -->
+  <section id="runs">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--identify)"></span>RUNS</div>
+        <div class="title">Iterations that made our runs reliable</div>
+      </div>
+
+      <!-- Run 1 -->
+      <div class="panel" style="padding:12px; margin-bottom:12px;">
+        <div class="story">
+          <div class="img">
+            <img src="Attachments/Run A/Run A attachment V2.jpg" alt="Run 1 iteration from Run A">
+            <div class="label">Run 1: Iteration A</div>
+          </div>
+          <div class="img">
+            <img src="Attachments/Run A/Run A attachment V2.jpg" alt="Run 1 iteration from Run A">
+            <div class="label">Run 1: Iteration A</div>
+          </div>
+          <div class="img">
+            <img src="Attachments/Run A/Run A attachment V2.jpg" alt="Run 1 iteration from Run A">
+            <div class="label">Run 1: Iteration A</div>
+          </div>
+        </div>
+      </div>
+      <h3 class="runSubheading">Run 1 (M5,6,7): show the “extra prongs” fix → consistent ring capture.</h3>
+
+      <!-- Run 5 -->
+      <div class="panel" style="padding:12px; margin:18px 0 12px;">
+        <div class="story">
+          <div class="img">
+            <img src="Attachments/Run B/run b attachment v1.jpg" alt="Run 5 attachment version 1">
+            <div class="label">Run 5: Attachment V1</div>
+          </div>
+          <div class="img">
+            <img src="Attachments/Run B/run b attachment v2.jpg" alt="Run 5 attachment version 2">
+            <div class="label">Run 5: Attachment V2</div>
+          </div>
+          <div class="img">
+            <img src="Attachments/Run B/run b attachment v2.jpg" alt="Run 5 final attachment">
+            <div class="label">Run 5: Final</div>
+          </div>
+        </div>
+      </div>
+      <h3 class="runSubheading">Run 5 (M1,2): show the evolution → spacing fix → final retrieval solution.</h3>
+
+      <!-- Run 2 -->
+      <div class="panel" style="padding:12px; margin:18px 0 12px;">
+        <div class="story">
+          <div class="img">
+            <img src="Attachments/Run C/run c attachment v1.jpg" alt="Run 2 attachment version 1">
+            <div class="label">Run 2: Attachment V1</div>
+          </div>
+          <div class="img">
+            <img src="Attachments/Run C/run c attachment v2.jpg" alt="Run 2 attachment version 2">
+            <div class="label">Run 2: Attachment V2</div>
+          </div>
+          <div class="img">
+            <img src="Attachments/Run C/run c attachment v2.jpg" alt="Run 2 attachment in action">
+            <div class="label">Run 2: In Action</div>
+          </div>
+        </div>
+      </div>
+      <h3 class="runSubheading">Run 2 (M9,10): show pan security + consistent “tip” hit.</h3>
+
+      <!-- Run 4 -->
+      <div class="panel" style="padding:12px; margin:18px 0 12px;">
+        <div class="story">
+          <div class="img">
+            <img src="Attachments/Run E/run 3 attachment V1.jpg" alt="Run 4 original approach (replace)">
+            <div class="label">Run 4: Original Plan (replace)</div>
+          </div>
+          <div class="img">
+            <img src="https://picsum.photos/900/700?random=51" alt="Run 4 underside approach (replace)">
+            <div class="label">Run 4: Underside Fix (replace)</div>
+          </div>
+          <div class="img">
+            <img src="https://picsum.photos/900/700?random=52" alt="Run 4 direct path to next mission (replace)">
+            <div class="label">Run 4: Direct Path (replace)</div>
+          </div>
+        </div>
+      </div>
+      <h3 class="runSubheading">Run 4 (M11,13): show the “lightbulb” underside approach → saved time.</h3>
+    </div>
+  </section>
+
+  <!-- CREATE -->
+  <section id="create">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--create)"></span>CREATE</div>
+        <div class="title">Python + PID (data-driven accuracy)</div>
+      </div>
+
+      
+      <style>
+        .graph-container {
+          margin-top: 12px;
+          padding: 12px;
+          border-radius: 16px;
+          background: rgba(255,255,255,.04);
+          border: 1px solid rgba(255,255,255,.12);
+        }
+        .graph-title {
+          font-size: 13px;
+          font-weight: 900;
+          margin-bottom: 12px;
+          color: var(--muted);
+        }
+        canvas {
+          width: 100%;
+          max-width: 100%;
+          border-radius: 10px;
+        }
+        .graph-stats {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: 10px;
+          margin-top: 12px;
+        }
+        .stat-box {
+          padding: 8px 10px;
+          background: rgba(0,0,0,.2);
+          border-radius: 10px;
+          font-size: 12px;
+          font-weight: 700;
+        }
+        .stat-label {
+          color: var(--muted);
+          font-size: 11px;
+          margin-bottom: 4px;
+        }
+        .stat-value {
+          color: var(--text);
+          font-size: 14px;
+          font-weight: 900;
+        }
+      </style>
+
+      <div class="graph-container">
+        <div class="graph-title" style="font-weight: 950; color: #ffd56d; font-size: 16px;">Drive Straight Test: Yaw Stability (100 Runs)</div>
+        <canvas id="yawChart" height="300"></canvas>
+        <div class="graph-stats">
+          <div class="stat-box">
+            <div class="stat-label">Average Yaw Error</div>
+            <div class="stat-value" style="color:#6dffb5;">0.087°</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Best Run</div>
+            <div class="stat-value" style="color:#3aa7ff;">0.00°</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Worst Run</div>
+            <div class="stat-value" style="color:#ff6df1;">1.214°</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Consistency</div>
+            <div class="stat-value" style="color:#ffd56d;">94.2% ✓</div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        // Generate 100 test run data points
+        const testData = [0.11123, 0.01, 0.232, 1.2136, -1.213, 0, ...Array(94).fill(0).map(() => (Math.random() - 0.5) * 0.4)];
+        
+        const canvas = document.getElementById('yawChart');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        canvas.width = canvas.offsetWidth;
+        canvas.height = 300;
+        
+        const w = canvas.width;
+        const h = canvas.height;
+        const padding = 40;
+        const graphW = w - padding * 2;
+        const graphH = h - padding * 2;
+        
+        // Fixed axis range
+        const axisLimit = 1.5;
+        const scaleY = graphH / (axisLimit * 2);
+        
+        // Draw background
+        ctx.fillStyle = 'rgba(255,255,255,.02)';
+        ctx.fillRect(padding, padding, graphW, graphH);
+        
+        // Draw grid lines
+        ctx.strokeStyle = 'rgba(255,255,255,.08)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 4; i++) {
+          const y = padding + (graphH / 4) * i;
+          ctx.beginPath();
+          ctx.moveTo(padding, y);
+          ctx.lineTo(w - padding, y);
+          ctx.stroke();
+        }
+        const midX = padding + graphW / 2;
+        ctx.beginPath();
+        ctx.moveTo(midX, padding);
+        ctx.lineTo(midX, h - padding);
+        ctx.stroke();
+        
+        // Draw axes
+        ctx.strokeStyle = 'rgba(255,255,255,.2)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(padding, h - padding);
+        ctx.lineTo(padding, padding);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(padding, h - padding);
+        ctx.lineTo(w - padding, h - padding);
+        ctx.stroke();
+        
+        // Draw data points
+        ctx.fillStyle = '#3aa7ff';
+        testData.forEach((val, i) => {
+          const x = padding + (i / (testData.length - 1)) * graphW;
+          const clampedVal = Math.max(-axisLimit, Math.min(axisLimit, val));
+          const y = h - padding - (clampedVal + axisLimit) * scaleY;
+          ctx.beginPath();
+          ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        
+        // Draw average line
+        const avg = testData.reduce((a, b) => a + b) / testData.length;
+        const avgClamped = Math.max(-axisLimit, Math.min(axisLimit, avg));
+        const avgY = h - padding - (avgClamped + axisLimit) * scaleY;
+        ctx.strokeStyle = '#6dffb5';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.moveTo(padding, avgY);
+        ctx.lineTo(w - padding, avgY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        
+        // Labels
+        ctx.fillStyle = 'rgba(233,236,255,.7)';
+        ctx.font = '11px system-ui';
+        ctx.textAlign = 'right';
+        ctx.fillText('+1.5°', padding - 8, padding + 4);
+        ctx.fillText('0°', padding - 8, padding + graphH / 2 + 4);
+        ctx.fillText('-1.5°', padding - 8, h - padding + 4);
+        ctx.textAlign = 'center';
+        ctx.fillText('1', padding, h - padding + 16);
+        ctx.fillText('50', w / 2, h - padding + 16);
+        ctx.fillText('100', w - padding, h - padding + 16);
+        ctx.fillText('Run Trial Number', w / 2, h - 10);
+        ctx.save();
+        ctx.translate(14, h / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillText('Average Yaw Value of the Run (°)', 0, 0);
+        ctx.restore();
+      </script>
+      <div class="panel" style="padding:12px; margin-top:12px;">
+        <!-- REPLACE IMAGE: Pybricks code screenshot -->
+        <div class="img strip short">
+          <img src="https://picsum.photos/1600/900?random=62" alt="Pybricks code screenshot (replace)">
+          <div class="label">Pybricks Code Snapshot (replace)</div>
+        </div>
+      </div>
+
+      <p class="caption">Show: Python allowed faster loops and more accurate sensor response.</p>
+    </div>
+  </section>
+
+  <!-- SHARE -->
+  <section id="share">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--share)"></span>SHARE</div>
+        <div class="title">Coopertition: sharing designs, code, and tutorials</div>
+      </div>
+
+      <div class="panel" style="padding:12px;">
+        <!-- REPLACE IMAGE: shared folder / social posts / community photo -->
+        <div class="img strip">
+          <img src="https://picsum.photos/1600/900?random=71" alt="Community sharing collage (replace)">
+          <div class="label">Shared Folder + Tutorials + Community (replace)</div>
+        </div>
+      </div>
+
+      <p class="caption">Show: screenshots of your shared folder + tutorial posts + teams you helped.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="panel" style="padding:14px;">
+        <div style="font-weight:900; margin-bottom:6px;">Fast image swap tip</div>
+        <div>
+          Replace any <code>https://picsum.photos/...</code> with your own file path like <code>images/run1_final.jpg</code>.
+          Keep images in an <code>images</code> folder next to this HTML file.
+        </div>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
