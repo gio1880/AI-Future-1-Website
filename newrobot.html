@@ -196,6 +196,86 @@
     }
     .story .img{min-height: 260px;}
 
+    .pm-title{
+      margin:0 0 10px;
+      font-size:16px;
+      font-weight:900;
+      letter-spacing:.1px;
+    }
+    .pm-grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap:12px;
+    }
+    .pm-card{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .pm-card h4{
+      margin:0 0 8px;
+      font-size:13px;
+      font-weight:900;
+      color:var(--text);
+      letter-spacing:.2px;
+    }
+    .pm-runs{
+      display:grid;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      gap:8px;
+      margin-top:8px;
+    }
+    .pm-badge{
+      text-align:center;
+      padding:8px 6px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      font-size:12px;
+      font-weight:900;
+    }
+    .pm-team{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:8px;
+      margin-top:8px;
+    }
+    .pm-team div{
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      padding:10px;
+      font-size:12px;
+      font-weight:800;
+      text-align:center;
+    }
+    .pm-flow{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:10px;
+    }
+    .pm-step{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius:12px;
+      padding:10px;
+    }
+    .pm-step .k{
+      font-size:11px;
+      font-weight:900;
+      color:var(--muted);
+      letter-spacing:.2px;
+      margin-bottom:4px;
+    }
+    .pm-step .v{
+      font-size:12.5px;
+      font-weight:800;
+      color:var(--text);
+      line-height:1.35;
+    }
+
     footer{
       padding: 24px 0 44px;
       color: var(--muted);
@@ -210,6 +290,9 @@
       .strip.tall{height: 380px;}
       .story{grid-template-columns: 1fr;}
       .story .img{min-height: 240px;}
+      .pm-grid{grid-template-columns: 1fr;}
+      .pm-runs{grid-template-columns: repeat(3, minmax(0,1fr));}
+      .pm-flow{grid-template-columns: 1fr;}
     }
     html{scroll-behavior:smooth}
   </style>
@@ -439,7 +522,7 @@
         </article>
 
         <article class="mission-card">
-          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Pick Up / Drop Off Analysis</h4>
+          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Drop Off Analysis</h4>
           <div class="mission-head">
             <div class="mission-type">
               <span class="mission-dot" style="background:#ffd84d;"></span>
@@ -798,6 +881,45 @@
           </div>
         </div>
       </div>
+
+      <div class="panel" style="padding:12px; margin-top:12px;">
+        <h3 class="pm-title">Project Management &amp; Team Organization</h3>
+        <div class="pm-grid">
+          <div class="pm-card">
+            <h4>Mission Grouping Board</h4>
+            <div class="caption" style="margin:0; font-size:12px;">After grouping missions, we labeled each bundle as Run A through E so we could quickly change run order based on performance.</div>
+            <div class="pm-runs">
+              <div class="pm-badge">Run A</div>
+              <div class="pm-badge">Run B</div>
+              <div class="pm-badge">Run C</div>
+              <div class="pm-badge">Run D</div>
+              <div class="pm-badge">Run E</div>
+            </div>
+          </div>
+          <div class="pm-card">
+            <h4>Two-Team Ownership Model</h4>
+            <div class="caption" style="margin:0; font-size:12px;">We split into two teams with clear ownership for designing, building, and programming runs on each side.</div>
+            <div class="pm-team">
+              <div>Red Side Team</div>
+              <div>Blue Side Team</div>
+            </div>
+          </div>
+        </div>
+        <div class="pm-flow">
+          <div class="pm-step">
+            <div class="k">WEEKLY 90-MIN MEETING</div>
+            <div class="v">Rough Draft: prove the run is possible.</div>
+          </div>
+          <div class="pm-step">
+            <div class="k">ITERATION PHASE</div>
+            <div class="v">Tune and debug alignment, drift, and consistency.</div>
+          </div>
+          <div class="pm-step">
+            <div class="k">NEXT TRANSITION</div>
+            <div class="v">Document attachment issues before reviewing each run problem.</div>
+          </div>
+        </div>
+      </div>
   </section>
 
   <!-- RUNS -->
@@ -812,16 +934,16 @@
       <div class="panel" style="padding:12px; margin-bottom:12px;">
         <div class="story">
           <div class="img">
-            <img src="Attachments/Run A/Run A attachment V2.jpg" alt="Run 1 iteration from Run A">
+            <img src="Attachments/Run A/run a v1.jpg" alt="Run 1 iteration from Run A">
             <div class="label">Run 1: Iteration A</div>
           </div>
           <div class="img">
-            <img src="Attachments/Run A/Run A attachment V2.jpg" alt="Run 1 iteration from Run A">
-            <div class="label">Run 1: Iteration A</div>
+            <img src="Attachments/Run A/run a v2.jpg" alt="Run 1 iteration from Run A">
+            <div class="label">Run 1: Iteration B</div>
           </div>
           <div class="img">
             <img src="Attachments/Run A/Run A attachment V2.jpg" alt="Run 1 iteration from Run A">
-            <div class="label">Run 1: Iteration A</div>
+            <div class="label">Final Snapshot</div>
           </div>
         </div>
       </div>
@@ -831,20 +953,21 @@
       <div class="panel" style="padding:12px; margin:18px 0 12px;">
         <div class="story">
           <div class="img">
-            <img src="Attachments/Run B/run b attachment v1.jpg" alt="Run 5 attachment version 1">
-            <div class="label">Run 5: Attachment V1</div>
+            <img src="Attachments/Run B/run b v1.jpg" alt="Run 2 attachment version 1">
+            <div class="label">Run 2: Attachment V1</div>
           </div>
           <div class="img">
-            <img src="Attachments/Run B/run b attachment v2.jpg" alt="Run 5 attachment version 2">
-            <div class="label">Run 5: Attachment V2</div>
+            <img src="Attachments/Run B/run b v2.jpg" alt="Run 2 attachment version 2">
+            <div class="label">Run 2: Attachment V2</div>
           </div>
           <div class="img">
-            <img src="Attachments/Run B/run b attachment v2.jpg" alt="Run 5 final attachment">
-            <div class="label">Run 5: Final</div>
+            <img src="Attachments/Run B/run b attachment v2.jpg" alt="Run 2 final attachment">
+            <div class="label">Run 2: Final</div>
           </div>
         </div>
       </div>
-      <h3 class="runSubheading">Run 5 (M1,2): show the evolution → spacing fix → final retrieval solution.</h3>
+      <h3 class="runSubheading">Run 2 (M9,10): show pan security + consistent “tip” hit.</h3>
+      
 
       <!-- Run 2 -->
       <div class="panel" style="padding:12px; margin:18px 0 12px;">
@@ -863,22 +986,22 @@
           </div>
         </div>
       </div>
-      <h3 class="runSubheading">Run 2 (M9,10): show pan security + consistent “tip” hit.</h3>
+      <h3 class="runSubheading">Run 5 (M1,2): show the evolution → spacing fix → final retrieval solution.</h3>
 
       <!-- Run 4 -->
       <div class="panel" style="padding:12px; margin:18px 0 12px;">
         <div class="story">
           <div class="img">
-            <img src="Attachments/Run E/run 3 attachment V1.jpg" alt="Run 4 original approach (replace)">
-            <div class="label">Run 4: Original Plan (replace)</div>
+            <img src="Attachments/Run E/run e v2.jpg" alt="Run 4 original approach (replace)">
+            <div class="label">Run 4: Iteration 1 </div>
           </div>
           <div class="img">
-            <img src="https://picsum.photos/900/700?random=51" alt="Run 4 underside approach (replace)">
-            <div class="label">Run 4: Underside Fix (replace)</div>
+            <img src="Attachments/Run E/run e v3.jpg" alt="Run 4 underside approach (replace)">
+            <div class="label">Run 4: Iteration 2</div>
           </div>
           <div class="img">
-            <img src="https://picsum.photos/900/700?random=52" alt="Run 4 direct path to next mission (replace)">
-            <div class="label">Run 4: Direct Path (replace)</div>
+            <img src="Attachments/Run E/run 3 attachment V1.jpg" alt="Run 4 direct path to next mission (replace)">
+            <div class="label">Run 4 Full Snapshot</div>
           </div>
         </div>
       </div>
