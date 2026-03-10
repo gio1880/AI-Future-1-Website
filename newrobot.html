@@ -360,10 +360,10 @@
       gap: 8px;
       margin-bottom: 8px;
       font-weight: 900;
-      font-size: 13px;
+      font-size: 14px;
     }
     .difficulty-count {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--muted);
       font-weight: 800;
     }
@@ -375,7 +375,7 @@
     }
     .difficulty-note {
       color: var(--muted);
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       line-height: 1.35;
     }
@@ -389,14 +389,14 @@
     }
     .mission-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
     }
     .mission-card {
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.04);
       border-radius: 16px;
-      padding: 12px;
+      padding: 14px;
     }
     .mission-head {
       display: flex;
@@ -409,8 +409,8 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-weight: 850;
-      font-size: 12px;
+      font-weight: 900;
+      font-size: 15px;
       letter-spacing: .2px;
     }
     .mission-dot {
@@ -419,14 +419,22 @@
       border-radius: 999px;
     }
     .mission-count {
-      font-size: 22px;
+      font-size: 30px;
       font-weight: 900;
       line-height: 1;
     }
-    .mission-note {
+    .mission-meta {
       color: var(--muted);
       font-size: 12px;
+      font-weight: 800;
+      line-height: 1.4;
+      letter-spacing: .1px;
+    }
+    .mission-note {
+      color: var(--muted);
+      font-size: 13px;
       font-weight: 700;
+      line-height: 1.4;
       margin-bottom: 8px;
     }
     .mission-list {
@@ -438,8 +446,8 @@
       border: 1px solid rgba(255,255,255,.16);
       background: rgba(0,0,0,.22);
       border-radius: 999px;
-      padding: 5px 8px;
-      font-size: 12px;
+      padding: 6px 10px;
+      font-size: 13px;
       font-weight: 800;
     }
     .mission-summary {
@@ -465,9 +473,9 @@
     .summary-legend {
       margin-top: 10px;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
+      grid-template-columns: repeat(2, minmax(0,1fr));
       gap: 8px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 750;
       color: var(--muted);
     }
@@ -479,188 +487,638 @@
     @media (max-width: 980px) {
       .mission-grid,
       .summary-legend {
+        grid-template-columns: 1fr;
+      }
+    }
+    .identify-direct {
+      margin: 0 0 12px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .mission-card h4 {
+      font-size: 15px !important;
+      letter-spacing: .15px;
+    }
+    .mission-action-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(0,0,0,.25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mission-action-icon svg {
+      width: 15px;
+      height: 15px;
+      stroke: rgba(255,255,255,.92);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .mission-action-note {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      margin-top: -2px;
+      margin-bottom: 8px;
+    }
+    .venn-panel {
+      margin-top: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .venn-title {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--text);
+    }
+    .venn-sub {
+      margin: 0 0 10px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .venn-svg {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      background: rgba(0,0,0,.2);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .venn-thumb-frame {
+      fill: rgba(8,12,24,.72);
+      stroke: rgba(255,255,255,.55);
+      stroke-width: 1.2;
+      rx: 8;
+      ry: 8;
+    }
+    .venn-thumb-label {
+      fill: rgba(255,255,255,.98);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .venn-key {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .venn-key-item {
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(0,0,0,.18);
+    }
+    .venn-key-title {
+      font-size: 16px;
+      color: var(--share);
+      font-weight: 950;
+      letter-spacing: .2px;
+      text-transform: uppercase;
+      text-align: center;
+      display: block;
+      width: 100%;
+      -webkit-text-stroke: 0.65px rgba(8,12,24,.92);
+      text-shadow:
+        0 2px 8px rgba(0,0,0,.55),
+        0 0 14px rgba(255,213,109,.45);
+      margin-bottom: 10px;
+      animation: vennTitleGlow 2.4s ease-in-out infinite;
+    }
+    @keyframes vennTitleGlow {
+      0%, 100% {
+        transform: translateY(0);
+        text-shadow:
+          0 2px 8px rgba(0,0,0,.55),
+          0 0 10px rgba(255,213,109,.35);
+      }
+      50% {
+        transform: translateY(-1px);
+        text-shadow:
+          0 3px 10px rgba(0,0,0,.62),
+          0 0 18px rgba(255,213,109,.62);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .venn-key-title {
+        animation: none;
+      }
+    }
+    .venn-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+    }
+    .venn-mini {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 10px;
+      background: rgba(255,255,255,.04);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+    }
+    .venn-mini img {
+      width: 100%;
+      max-height: 95px;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+      background: rgba(0,0,0,.2);
+    }
+    .venn-mini span {
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 900;
+      line-height: 1;
+    }
+    @media (max-width: 980px) {
+      .venn-key {
+        grid-template-columns: 1fr;
+      }
+      .venn-mini-grid {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+    }
+    @media (max-width: 680px) {
+      .venn-key {
+        grid-template-columns: 1fr;
+      }
+      .venn-mini-grid {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+    }
+    .location-panel {
+      margin-top: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(255,255,255,.04);
+    }
+    .location-title {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 950;
+      color: #ffffff;
+      text-align: center;
+      text-shadow: 0 0 18px rgba(255,255,255,.35);
+    }
+    .location-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .location-card {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(0,0,0,.2);
+    }
+    .location-card.red { border-color: rgba(255,138,138,.45); }
+    .location-card.blue { border-color: rgba(138,198,255,.45); }
+    .location-head {
+      font-size: 15px;
+      font-weight: 950;
+      margin-bottom: 8px;
+      text-align: center;
+      letter-spacing: .2px;
+      text-transform: uppercase;
+    }
+    .location-card.red .location-head { color: #ff8a8a; }
+    .location-card.blue .location-head { color: #8ac6ff; }
+    .location-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 8px;
+    }
+    .location-mini {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 10px;
+      background: rgba(255,255,255,.04);
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: center;
+    }
+    .location-mini img {
+      width: 100%;
+      max-height: 88px;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+      background: rgba(0,0,0,.2);
+    }
+    .location-mini span {
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1;
+    }
+    @media (max-width: 980px) {
+      .location-grid { grid-template-columns: 1fr; }
+      .location-mini-grid { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    }
+    @media (max-width: 640px) {
+      .location-mini-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    }
+    .mission-sorter {
+      margin-top: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      padding: 14px;
+    }
+    .sorter-menu {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .sort-btn {
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 10px;
+      background: rgba(0,0,0,.25);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 900;
+      padding: 9px 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: .2px;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .sort-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.32);
+      box-shadow: 0 8px 18px rgba(0,0,0,.28);
+    }
+    .sort-btn.active {
+      border-color: var(--share);
+      box-shadow: 0 0 0 1px rgba(255,213,109,.35) inset, 0 0 16px rgba(255,213,109,.25);
+      color: #fff;
+    }
+    .sorter-status {
+      margin: 0 0 10px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 800;
+      text-align: center;
+    }
+    .sorter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+      align-items: start;
+    }
+    .sort-column {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px;
+      background: rgba(0,0,0,.2);
+      padding: 8px;
+      min-height: 100%;
+    }
+    .sort-column-title {
+      margin: 0 0 8px;
+      font-size: 13px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .25px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 8px;
+      padding: 7px 6px;
+      background: rgba(255,255,255,.05);
+    }
+    .sort-column-body {
+      display: grid;
+      gap: 8px;
+    }
+    .sort-card {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px;
+      background: rgba(0,0,0,.22);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: transform .35s ease, opacity .35s ease;
+    }
+    .sort-card img {
+      width: 100%;
+      height: auto;
+      max-height: 96px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .sort-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .sort-id {
+      font-size: 12px;
+      font-weight: 950;
+      color: #fff;
+    }
+    .sort-badge {
+      font-size: 10px;
+      font-weight: 900;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      padding: 3px 7px;
+      white-space: nowrap;
+      background: rgba(255,255,255,.06);
+    }
+    .sorter-grid.shuffling .sort-card {
+      animation: shufflePulse .35s ease-in-out 2;
+    }
+    @keyframes shufflePulse {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+      25% { transform: translate(2px, -2px) rotate(-1deg); opacity: .86; }
+      50% { transform: translate(-2px, 2px) rotate(1deg); opacity: .82; }
+      100% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+    }
+    @media (max-width: 980px) {
+      .sorter-menu { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .sorter-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 640px) {
+      .sorter-menu { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .sorter-grid { grid-template-columns: 1fr; }
+    }
+    .mission-visual-infographic {
+      margin-top: 12px;
+    }
+    .mission-visual-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .mission-photo-card {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 14px;
+      padding: 10px;
+    }
+    .mission-photo-wrap {
+      width: 100%;
+      min-height: 135px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+    }
+    .mission-photo-wrap img {
+      width: 100%;
+      height: auto;
+      max-height: 180px;
+      object-fit: contain;
+      display: block;
+    }
+    .mission-photo-caption {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 900;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+    }
+    .mission-photo-meta {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 800;
+      line-height: 1.35;
+    }
+    .action-chip {
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 900;
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      white-space: nowrap;
+    }
+    @media (max-width: 980px) {
+      .mission-visual-grid {
         grid-template-columns: 1fr 1fr;
       }
+    }
+    @media (max-width: 720px) {
+      .mission-visual-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .points-snapshot {
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .snapshot-kpi {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--text);
+      margin: 6px 0;
+    }
+    .snapshot-note {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+    @media (max-width: 980px) {
+      .points-snapshot { grid-template-columns: 1fr; }
     }
   </style>
 
   <div class="mission-infographic">
     <div class="panel" style="padding:12px;">
-      <h3 style="margin:0 0 10px; font-size:14px; font-weight:900; color:var(--muted); letter-spacing:.2px;">
-        Mission Analysis by Action Type
+      <h3 style="margin:0 0 10px; font-size:24px; font-weight:950; color:#ffffff; letter-spacing:.2px; text-align:center; text-shadow: 0 0 20px rgba(255,255,255,.4);">
+        Our Mission Analysis
       </h3>
-
-      <div class="mission-grid">
-        <article class="mission-card">
-          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Push Mission Analysis</h4>
-          <div class="mission-head">
-            <div class="mission-type">
-              <span class="mission-dot" style="background:#ff4d4d;"></span>
-              Push
-            </div>
-            <div class="mission-count" style="color:#ff8a8a;">7</div>
-          </div>
-          <div class="mission-note">Missions requiring pushing action</div>
-          <div class="mission-list">
-            <span class="mission-pill">M2</span><span class="mission-pill">M5</span><span class="mission-pill">M6</span>
-            <span class="mission-pill">M8</span><span class="mission-pill">M10</span><span class="mission-pill">M11</span>
-            <span class="mission-pill">M12</span>
-          </div>
-        </article>
-
-        <article class="mission-card">
-          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Pull Mission Analysis</h4>
-          <div class="mission-head">
-            <div class="mission-type">
-              <span class="mission-dot" style="background:#4da6ff;"></span>
-              Pull
-            </div>
-            <div class="mission-count" style="color:#8ac6ff;">3</div>
-          </div>
-          <div class="mission-note">Missions with pulling mechanisms</div>
-          <div class="mission-list">
-            <span class="mission-pill">M9</span><span class="mission-pill">M10</span><span class="mission-pill">M12</span>
-          </div>
-        </article>
-
-        <article class="mission-card">
-          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Drop Off Analysis</h4>
-          <div class="mission-head">
-            <div class="mission-type">
-              <span class="mission-dot" style="background:#ffd84d;"></span>
-              Pick Up / Drop Off
-            </div>
-            <div class="mission-count" style="color:#ffe68a;">5</div>
-          </div>
-          <div class="mission-note">Missions needing precise manipulation</div>
-          <div class="mission-list">
-            <span class="mission-pill">M1</span><span class="mission-pill">M2</span><span class="mission-pill">M4</span>
-            <span class="mission-pill">M14</span><span class="mission-pill">M15</span>
-          </div>
-        </article>
-
-        <article class="mission-card">
-          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Lift Mission Analysis</h4>
-          <div class="mission-head">
-            <div class="mission-type">
-              <span class="mission-dot" style="background:#57d97d;"></span>
-              Lift
-            </div>
-            <div class="mission-count" style="color:#96ebb0;">3</div>
-          </div>
-          <div class="mission-note">Missions requiring vertical lift</div>
-          <div class="mission-list">
-            <span class="mission-pill">M3</span><span class="mission-pill">M7</span><span class="mission-pill">M13</span>
-          </div>
-        </article>
-      </div>
-
-      <div class="mission-summary">
-        <div class="summary-bar" aria-label="Mission action distribution bar"></div>
-        <div class="summary-legend">
-          <span><i class="mission-dot" style="background:#ff4d4d;"></i>Push: 7</span>
-          <span><i class="mission-dot" style="background:#4da6ff;"></i>Pull: 3</span>
-          <span><i class="mission-dot" style="background:#ffd84d;"></i>Pick/Drop: 5</span>
-          <span><i class="mission-dot" style="background:#57d97d;"></i>Lift: 3</span>
+      <p class="identify-direct">One-glance takeaway: Push is dominant, Pull is limited, so we optimize push-first and keep one reliable pull attachment.</p>
+      <div class="mission-sorter" id="missionSorter">
+        <div class="sorter-menu" role="tablist" aria-label="Mission sorting methods">
+          <button class="sort-btn active" data-sort="action">Action Type</button>
+          <button class="sort-btn" data-sort="difficulty">Difficulty</button>
+          <button class="sort-btn" data-sort="points">Points</button>
+          <button class="sort-btn" data-sort="location">Location</button>
+          <button class="sort-btn" data-sort="run">Run Group</button>
+        </div>
+        <p class="sorter-status" id="sorterStatus">Sorted by Action Type: Push → Push/Pull → Pull → Lift → Drop</p>
+        <div class="sorter-grid" id="sorterGrid">
+          <article class="sort-card" data-id="M1" data-action="Drop" data-difficulty="Medium" data-points="30" data-location="Red" data-run="Run C"><img src="Mission Pictures/mission 1.png" alt="Mission 1"><div class="sort-meta"><span class="sort-id">M1</span><span class="sort-badge">Drop</span></div></article>
+          <article class="sort-card" data-id="M2" data-action="Push/Drop" data-difficulty="Easy" data-points="30" data-location="Red" data-run="Run C"><img src="Mission Pictures/mission 2.png" alt="Mission 2"><div class="sort-meta"><span class="sort-id">M2</span><span class="sort-badge">Push/Drop</span></div></article>
+          <article class="sort-card" data-id="M3" data-action="Lift" data-difficulty="Medium" data-points="30" data-location="Red" data-run="Run D"><img src="Mission Pictures/mission 3.png" alt="Mission 3"><div class="sort-meta"><span class="sort-id">M3</span><span class="sort-badge">Lift</span></div></article>
+          <article class="sort-card" data-id="M4" data-action="Drop" data-difficulty="Hard" data-points="40" data-location="Red" data-run="Run D"><img src="Mission Pictures/mission 4.png" alt="Mission 4"><div class="sort-meta"><span class="sort-id">M4</span><span class="sort-badge">Drop</span></div></article>
+          <article class="sort-card" data-id="M5" data-action="Push" data-difficulty="Easy" data-points="30" data-location="Red" data-run="Run A"><img src="Mission Pictures/mission 5.png" alt="Mission 5"><div class="sort-meta"><span class="sort-id">M5</span><span class="sort-badge">Push</span></div></article>
+          <article class="sort-card" data-id="M6" data-action="Push" data-difficulty="Easy" data-points="30" data-location="Red" data-run="Run A"><img src="Mission Pictures/mission 6.png" alt="Mission 6"><div class="sort-meta"><span class="sort-id">M6</span><span class="sort-badge">Push</span></div></article>
+          <article class="sort-card" data-id="M7" data-action="Lift" data-difficulty="Medium" data-points="30" data-location="Red" data-run="Run A"><img src="Mission Pictures/mission 7.png" alt="Mission 7"><div class="sort-meta"><span class="sort-id">M7</span><span class="sort-badge">Lift</span></div></article>
+          <article class="sort-card" data-id="M8" data-action="Push" data-difficulty="Hard" data-points="30" data-location="Red" data-run="Run A"><img src="Mission Pictures/mission 8.png" alt="Mission 8"><div class="sort-meta"><span class="sort-id">M8</span><span class="sort-badge">Push</span></div></article>
+          <article class="sort-card" data-id="M9" data-action="Pull" data-difficulty="Medium" data-points="30" data-location="Blue" data-run="Run B"><img src="Mission Pictures/mission 9.png" alt="Mission 9"><div class="sort-meta"><span class="sort-id">M9</span><span class="sort-badge">Pull</span></div></article>
+          <article class="sort-card" data-id="M10" data-action="Push/Pull" data-difficulty="Medium" data-points="30" data-location="Blue" data-run="Run B"><img src="Mission Pictures/mission 10.png" alt="Mission 10"><div class="sort-meta"><span class="sort-id">M10</span><span class="sort-badge">Push/Pull</span></div></article>
+          <article class="sort-card" data-id="M11" data-action="Push" data-difficulty="Hard" data-points="30" data-location="Blue" data-run="Run E"><img src="Mission Pictures/mission 11.png" alt="Mission 11"><div class="sort-meta"><span class="sort-id">M11</span><span class="sort-badge">Push</span></div></article>
+          <article class="sort-card" data-id="M12" data-action="Push/Pull" data-difficulty="Easy" data-points="30" data-location="Blue" data-run="Run B"><img src="Mission Pictures/mission 12.png" alt="Mission 12"><div class="sort-meta"><span class="sort-id">M12</span><span class="sort-badge">Push/Pull</span></div></article>
+          <article class="sort-card" data-id="M13" data-action="Lift" data-difficulty="Easy" data-points="30" data-location="Blue" data-run="Run E"><img src="Mission Pictures/mission 13.png" alt="Mission 13"><div class="sort-meta"><span class="sort-id">M13</span><span class="sort-badge">Lift</span></div></article>
+          <article class="sort-card" data-id="M14" data-action="Drop" data-difficulty="Easy" data-points="30" data-location="Blue" data-run="Run G"><img src="Mission Pictures/mission 14.png" alt="Mission 14"><div class="sort-meta"><span class="sort-id">M14</span><span class="sort-badge">Drop</span></div></article>
+          <article class="sort-card" data-id="M15" data-action="Drop" data-difficulty="Medium" data-points="30" data-location="Blue" data-run="Run G"><img src="Mission Pictures/mission 15.png" alt="Mission 15"><div class="sort-meta"><span class="sort-id">M15</span><span class="sort-badge">Drop</span></div></article>
         </div>
       </div>
+      <script>
+        (function(){
+          const sorter = document.getElementById('missionSorter');
+          if(!sorter) return;
+          const grid = document.getElementById('sorterGrid');
+          const status = document.getElementById('sorterStatus');
+          const buttons = Array.from(sorter.querySelectorAll('.sort-btn'));
+          const allCards = Array.from(grid.querySelectorAll('.sort-card'));
+
+          const groupOrder = {
+            action: ['Push', 'Push/Pull', 'Pull', 'Lift', 'Push/Drop', 'Drop'],
+            difficulty: ['Easy', 'Medium', 'Hard'],
+            points: ['40', '30'],
+            location: ['Red', 'Blue'],
+            run: ['Run A', 'Run B', 'Run C', 'Run D', 'Run E', 'Run G']
+          };
+
+          const statusText = {
+            action: 'Sorted by Action Type columns',
+            difficulty: 'Sorted by Difficulty: Easy → Medium → Hard',
+            points: 'Sorted by Points: 40 → 30',
+            location: 'Sorted by Location: Red Side → Blue Side',
+            run: 'Sorted by Run Group: Run A → Run B → Run C → Run D → Run E → Run G'
+          };
+
+          const colorMap = {
+            action: {
+              'Push': '#ff8a8a',
+              'Push/Pull': '#ffb56d',
+              'Pull': '#8ac6ff',
+              'Lift': '#96ebb0',
+              'Push/Drop': '#ffd56d',
+              'Drop': '#ffd56d'
+            },
+            difficulty: { 'Easy': '#6dffb5', 'Medium': '#8ac6ff', 'Hard': '#ff8a8a' },
+            points: { '40': '#ffd56d', '30': '#8ac6ff' },
+            location: { 'Red': '#ff8a8a', 'Blue': '#8ac6ff' },
+            run: {
+              'Run A': '#6dffb5',
+              'Run B': '#8ac6ff',
+              'Run C': '#ffd56d',
+              'Run D': '#ff8a8a',
+              'Run E': '#ffb56d',
+              'Run G': '#c4a2ff'
+            }
+          };
+
+          function shuffleArray(arr){
+            const clone = [...arr];
+            for(let i = clone.length - 1; i > 0; i--){
+              const j = Math.floor(Math.random() * (i + 1));
+              [clone[i], clone[j]] = [clone[j], clone[i]];
+            }
+            return clone;
+          }
+
+          function missionNumber(card){
+            return Number(card.dataset.id.replace('M', '')) || 999;
+          }
+
+          function renderGrouped(mode){
+            grid.innerHTML = '';
+            const groups = groupOrder[mode] || [];
+
+            groups.forEach(group => {
+              const column = document.createElement('section');
+              column.className = 'sort-column';
+
+              const color = (colorMap[mode] && colorMap[mode][group]) || '#ffd56d';
+              column.style.borderColor = color + '66';
+
+              const heading = document.createElement('h4');
+              heading.className = 'sort-column-title';
+              heading.textContent = group;
+              heading.style.color = color;
+              heading.style.borderColor = color + '99';
+              heading.style.textShadow = '0 2px 10px rgba(0,0,0,.55), 0 0 14px ' + color + '66';
+
+              const body = document.createElement('div');
+              body.className = 'sort-column-body';
+
+              const cards = allCards
+                .filter(card => card.dataset[mode] === group)
+                .sort((a, b) => missionNumber(a) - missionNumber(b));
+
+              cards.forEach(card => {
+                const badge = card.querySelector('.sort-badge');
+                if (badge) {
+                  badge.textContent = group;
+                }
+                body.appendChild(card);
+              });
+
+              column.appendChild(heading);
+              column.appendChild(body);
+              grid.appendChild(column);
+            });
+          }
+
+          function sortCards(mode){
+            const shuffled = shuffleArray(allCards);
+            grid.classList.add('shuffling');
+            grid.innerHTML = '';
+            shuffled.forEach(card => grid.appendChild(card));
+
+            window.setTimeout(() => {
+              renderGrouped(mode);
+              status.textContent = statusText[mode];
+              grid.classList.remove('shuffling');
+              buttons.forEach(btn => btn.disabled = false);
+            }, 520);
+          }
+
+          buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+              buttons.forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              buttons.forEach(b => b.disabled = true);
+              sortCards(btn.dataset.sort);
+            });
+          });
+
+          renderGrouped('action');
+        })();
+      </script>
     </div>
   </div>
 
-  <div class="difficulty-infographic">
-    <div class="panel" style="padding:12px;">
-      <h3 style="margin:0 0 10px; font-size:14px; font-weight:900; color:var(--muted); letter-spacing:.2px;">
-        Mission Analysis by Difficulty
-      </h3>
-
-      <div class="difficulty-grid">
-        <article class="difficulty-card">
-          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Easy Mission Analysis</h4>
-          <div class="difficulty-head">
-            <span>✅ Easy Missions</span>
-            <span class="difficulty-count">6 Missions</span>
-          </div>
-          <div class="difficulty-list">
-            <span class="mission-pill">M2</span>
-            <span class="mission-pill">M5</span>
-            <span class="mission-pill">M6</span>
-            <span class="mission-pill">M12</span>
-            <span class="mission-pill">M13</span>
-            <span class="mission-pill">M14</span>
-          </div>
-          <div class="difficulty-note">
-            High success rate, straightforward execution, great for building confidence.
-          </div>
-        </article>
-
-        <article class="difficulty-card">
-          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Medium Mission Analysis</h4>
-          <div class="difficulty-head">
-            <span>⚠️ Medium Missions</span>
-            <span class="difficulty-count">5 Missions</span>
-          </div>
-          <div class="difficulty-list">
-            <span class="mission-pill">M1</span>
-            <span class="mission-pill">M7</span>
-            <span class="mission-pill">M9</span>
-            <span class="mission-pill">M10</span>
-            <span class="mission-pill">M15</span>
-          </div>
-          <div class="difficulty-note">
-            Moderate complexity, requires careful programming and attachment design.
-          </div>
-        </article>
-
-        <article class="difficulty-card">
-          <h4 style="margin:0 0 8px; font-size:13px; font-weight:900;">Hard Mission Analysis</h4>
-          <div class="difficulty-head">
-            <span>🔥 Hard Missions</span>
-            <span class="difficulty-count">3 Missions</span>
-          </div>
-          <div class="difficulty-list">
-            <span class="mission-pill">M4</span>
-            <span class="mission-pill">M8</span>
-            <span class="mission-pill">M11</span>
-          </div>
-          <div class="difficulty-note">
-            High precision required, multiple failure points, advanced mechanisms needed.
-          </div>
-        </article>
-      </div>
-    </div>
-  </div>
-
-  <div class="points-infographic">
-    <div class="panel" style="padding:12px;">
-      <h3 style="margin:0 0 10px; font-size:14px; font-weight:900; color:var(--muted); letter-spacing:.2px;">
-        Mission Analysis by Points
-      </h3>
-
-      <div style="margin-bottom:10px; font-size:12px; color:var(--muted); font-weight:800;">
-        Total possible points: <span style="color:var(--text); font-weight:900;">460</span>
-      </div>
-
-      <div class="points-grid" style="display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px;">
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M1</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">10+10+10 pts</div></article>
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M2</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">10+10+10 pts</div></article>
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M3</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">30 pts</div></article>
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M4</div><div class="mission-count" style="color:#ffe68a;">40</div></div><div class="mission-note">30+10 pts</div></article>
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M5</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">30 pts</div></article>
-
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M6</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">10+10+10 pts</div></article>
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M7</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">30 pts</div></article>
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M8</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">10+10+10 pts</div></article>
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M9</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">20+10 pts</div></article>
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M10</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">20+10 pts</div></article>
-
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M11</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">30 pts</div></article>
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M12</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">20+10 pts</div></article>
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M13</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">30 pts</div></article>
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M14</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">10+10+10 pts</div></article>
-        <article class="mission-card"><div class="mission-head"><div class="mission-type">M15</div><div class="mission-count" style="color:#8ac6ff;">30</div></div><div class="mission-note">5×6 pts</div></article>
-      </div>
-    </div>
-  </div>
+  
     </div>
   </section>
 
@@ -886,328 +1344,126 @@
 
       <div class="panel" style="padding:12px; margin-top:12px;">
         <h3 class="pm-title" style="font-size: 20px; text-align: center; margin: 0 0 16px;">Project Management &amp; Team Organization</h3>
-        <div class="pm-grid">
-          <div class="pm-card">
-            <h4>Mission Grouping Board</h4>
-            <div class="caption" scan you tyle="margin:0; font-size:12px;">After analyzing mission types and difficulty, we grouped missions into 5 runs. Each run bundles missions that share similar mechanics, reducing attachment swaps.</div>
-            <!doctype html>
-            <html lang="en">
-            <head>
-              <meta charset="utf-8" />
-              <meta name="viewport" content="width=device-width,initial-scale=1" />
-              <title>FLL Season Visual Companion</title>
-              <meta name="description" content="A minimal, visual-first companion site for our FLL presentation." />
-              <style>
-                :root{
-                  --bg:#0a0e1a;
-                  --panel: rgba(255,255,255,.08);
-                  --line: rgba(255,255,255,.15);
-                  --text:#ffffff;
-                  --muted: rgba(255,255,255,.85);
 
-                  --identify:#00d4ff;
-                  --design:#00ff88;
-                  --create:#ff1493;
-                  --share:#ffaa00;
+        <style>
+          .pm-main-grouping{border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:14px;background:rgba(255,255,255,.04)}
+          .pm-main-heading{font-size:18px;font-weight:950;text-align:center;margin:0 0 8px;color:var(--text)}
+          .pm-main-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+          .pm-run-main{border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px;background:rgba(0,0,0,.2)}
+          .pm-run-main h4{margin:0 0 8px;font-size:13px;font-weight:900;color:var(--text);text-align:center}
+          .pm-run-pics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+          .pm-run-pic{border:1px solid rgba(255,255,255,.14);border-radius:8px;background:rgba(255,255,255,.04);padding:4px;display:flex;flex-direction:column;align-items:center;gap:4px}
+          .pm-run-pic img{width:100%;max-height:72px;object-fit:contain;border-radius:6px;background:rgba(0,0,0,.2)}
+          .pm-run-pic span{font-size:10px;font-weight:900;color:var(--text)}
+          .pm-under-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px}
+          .pm-under-card{border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03))}
+          .pm-under-card h4{margin:0 0 8px;font-size:14px;font-weight:900;color:var(--text)}
+          .pm-under-card .caption{margin:0;font-size:12px}
+          .pm-run-badges{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:10px}
+          .pm-under-card.team-card{border-color: rgba(138,198,255,.45);box-shadow: inset 0 0 0 1px rgba(138,198,255,.18)}
+          .pm-under-card.workflow-card{border-color: rgba(255,109,241,.45);box-shadow: inset 0 0 0 1px rgba(255,109,241,.16)}
+          .pm-under-card.sequence-card{border-color: rgba(255,213,109,.45);box-shadow: inset 0 0 0 1px rgba(255,213,109,.16)}
+          .pm-under-card.team-card h4{color:#8ac6ff;text-shadow:0 0 10px rgba(138,198,255,.35)}
+          .pm-under-card.workflow-card h4{color:#ff9cf3;text-shadow:0 0 10px rgba(255,156,243,.3)}
+          .pm-under-card.sequence-card h4{color:#ffd56d;text-shadow:0 0 10px rgba(255,213,109,.3)}
+          .pm-under-card.team-card .pm-team div:first-child{border-color:rgba(255,138,138,.65);background:rgba(255,138,138,.18);color:#ffb7b7}
+          .pm-under-card.team-card .pm-team div:last-child{border-color:rgba(138,198,255,.7);background:rgba(138,198,255,.18);color:#beddff}
+          .pm-under-card.workflow-card .pm-step:nth-child(1){border-color:rgba(255,213,109,.75);background:rgba(255,213,109,.14)}
+          .pm-under-card.workflow-card .pm-step:nth-child(1) .k{color:#ffd56d}
+          .pm-under-card.workflow-card .pm-step:nth-child(2){border-color:rgba(109,255,181,.75);background:rgba(109,255,181,.14)}
+          .pm-under-card.workflow-card .pm-step:nth-child(2) .k{color:#6dffb5}
+          .pm-under-card.workflow-card .pm-step:nth-child(3){border-color:rgba(255,109,241,.75);background:rgba(255,109,241,.14)}
+          .pm-under-card.workflow-card .pm-step:nth-child(3) .k{color:#ff6df1}
+          @media (max-width: 980px){.pm-main-grid{grid-template-columns:1fr 1fr}.pm-under-grid{grid-template-columns:1fr}.pm-run-badges{grid-template-columns:repeat(3,minmax(0,1fr))}}
+          @media (max-width: 640px){.pm-main-grid{grid-template-columns:1fr}}
+        </style>
 
-                  --max: 1200px;
-                  --r: 24px;
-                  --shadow: 0 20px 60px rgba(0,0,0,.5);
-                }
+        <div class="pm-main-grouping">
+          <h4 class="pm-main-heading">Mission Grouping Board (Main Center)</h4>
+          <div class="caption" style="text-align:center;">Mission grouping is the primary planning view. We grouped missions into runs by similar mechanics and attachment needs.</div>
 
-                *{box-sizing:border-box}
-                body{
-                  margin:0;
-                  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-                  background:
-                    radial-gradient(1000px 600px at 15% 5%, rgba(0,212,255,.25), transparent 50%),
-                    radial-gradient(1000px 600px at 85% 10%, rgba(255,20,147,.2), transparent 50%),
-                    radial-gradient(1000px 600px at 60% 90%, rgba(0,255,136,.2), transparent 50%),
-                    var(--bg);
-                  color:var(--text);
-                  overflow-x:hidden;
-                }
+          <div class="pm-main-grid">
+            <article class="pm-run-main">
+              <h4>Run A • M5 M6 M7 M8</h4>
+              <div class="pm-run-pics">
+                <div class="pm-run-pic"><img src="Mission Pictures/mission 5.png" alt="M5"><span>M5</span></div>
+                <div class="pm-run-pic"><img src="Mission Pictures/mission 6.png" alt="M6"><span>M6</span></div>
+                <div class="pm-run-pic"><img src="Mission Pictures/mission 7.png" alt="M7"><span>M7</span></div>
+                <div class="pm-run-pic"><img src="Mission Pictures/mission 8.png" alt="M8"><span>M8</span></div>
+              </div>
+            </article>
 
-                a{color:inherit; text-decoration:none}
-                .wrap{max-width:var(--max); margin:0 auto; padding: 0 20px;}
-                .top{
-                  position: sticky; top: 0; z-index: 20;
-                  backdrop-filter: blur(16px);
-                  background: rgba(10,14,26,.7);
-                  border-bottom: 2px solid var(--identify);
-                }
-                .nav{
-                  display:flex; align-items:center; justify-content:space-between;
-                  padding: 14px 0;
-                  gap: 16px;
-                  flex-wrap: wrap;
-                }
-                .brand{
-                  display:flex; align-items:center; gap:12px;
-                  font-weight: 950;
-                  letter-spacing:.3px;
-                  font-size: 16px;
-                }
-                .logo{
-                  width:40px; height:40px; border-radius: 14px;
-                  background: conic-gradient(from 210deg, var(--identify), var(--create), var(--design), var(--share), var(--identify));
-                  border:2px solid var(--identify);
-                  box-shadow: 0 0 30px rgba(0,212,255,.4);
-                }
-                .links{
-                  display:flex; gap:10px; flex-wrap:wrap;
-                  font-weight: 800; font-size: 14px;
-                  color: var(--text);
-                }
-                .links a{
-                  padding: 10px 14px;
-                  border-radius: 12px;
-                  border:2px solid rgba(255,255,255,.3);
-                  background: rgba(255,255,255,.05);
-                  transition: all .3s ease;
-                }
-                .links a:hover{
-                  background: var(--identify);
-                  border-color: var(--identify);
-                  color: #000;
-                }
+            <article class="pm-run-main">
+              <h4>Run B • M9 M10</h4>
+              <div class="pm-run-pics">
+                <div class="pm-run-pic"><img src="Mission Pictures/mission 9.png" alt="M9"><span>M9</span></div>
+                <div class="pm-run-pic"><img src="Mission Pictures/mission 10.png" alt="M10"><span>M10</span></div>
+              </div>
+            </article>
 
-                header{
-                  padding: 40px 0 20px;
-                  margin-bottom: 20px;
-                }
-                h1{
-                  margin: 0;
-                  font-size: clamp(32px, 5vw, 52px);
-                  line-height: 1.05;
-                  letter-spacing: -.8px;
-                  background: linear-gradient(135deg, var(--identify), var(--design), var(--create));
-                  -webkit-background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                  background-clip: text;
-                }
-                .sub{
-                  margin: 14px 0 0;
-                  color: var(--muted);
-                  font-weight: 700;
-                  max-width: 70ch;
-                  font-size: 16px;
-                }
+            <article class="pm-run-main">
+              <h4>Run C • M1 M2</h4>
+              <div class="pm-run-pics">
+                <div class="pm-run-pic"><img src="Mission Pictures/mission 1.png" alt="M1"><span>M1</span></div>
+                <div class="pm-run-pic"><img src="Mission Pictures/mission 2.png" alt="M2"><span>M2</span></div>
+              </div>
+            </article>
 
-                section{
-                  padding: 24px 0 36px;
-                  border-top: 2px solid rgba(255,255,255,.1);
-                }
-                .sectionHead{
-                  display:flex; align-items:center; gap:14px;
-                  margin-bottom: 18px;
-                }
-                .tag{
-                  display:inline-flex; align-items:center; gap:10px;
-                  padding: 12px 16px;
-                  border-radius: 999px;
-                  border:2px solid;
-                  background: rgba(255,255,255,.08);
-                  font-weight: 950;
-                  letter-spacing: .4px;
-                  font-size: 13px;
-                  text-transform: uppercase;
-                }
-                .dot{width:12px;height:12px;border-radius:999px;box-shadow: 0 0 12px currentColor;}
-                .title{
-                  font-size: 24px;
-                  font-weight: 950;
-                  letter-spacing: -.3px;
-                }
-                .caption{
-                  margin: 12px 0 0;
-                  color: var(--muted);
-                  font-size: 15px;
-                  font-weight: 700;
-                  max-width: 80ch;
-                }
+            <article class="pm-run-main">
+              <h4>Run D • M3 M4</h4>
+              <div class="pm-run-pics">
+                <div class="pm-run-pic"><img src="Mission Pictures/mission 3.png" alt="M3"><span>M3</span></div>
+                <div class="pm-run-pic"><img src="Mission Pictures/mission 4.png" alt="M4"><span>M4</span></div>
+              </div>
+            </article>
 
-                .panel{
-                  border-radius: var(--r);
-                  background: linear-gradient(135deg, rgba(0,212,255,.05), rgba(255,20,147,.03));
-                  border: 2px solid var(--line);
-                  box-shadow: var(--shadow);
-                  overflow:hidden;
-                  transition: all .3s ease;
-                }
-                .panel:hover{
-                  border-color: var(--identify);
-                  box-shadow: 0 20px 60px rgba(0,212,255,.15);
-                }
+            <article class="pm-run-main">
+              <h4>Run E • M11 M13</h4>
+              <div class="pm-run-pics">
+                <div class="pm-run-pic"><img src="Mission Pictures/mission 11.png" alt="M11"><span>M11</span></div>
+                <div class="pm-run-pic"><img src="Mission Pictures/mission 13.png" alt="M13"><span>M13</span></div>
+              </div>
+            </article>
 
-                .collage{
-                  display:grid;
-                  grid-template-columns: 1.35fr .65fr;
-                  gap: 14px;
-                }
-                .big{
-                  height: 420px;
-                }
-                .stack{
-                  display:grid;
-                  grid-template-rows: 1fr 1fr 1fr;
-                  gap: 14px;
-                }
-                .img{
-                  position:relative;
-                  overflow:hidden;
-                  border-radius: var(--r);
-                  border:2px solid var(--identify);
-                  background: rgba(0,212,255,.08);
-                  min-height: 180px;
-                }
-                .img img{
-                  width:100%; height:100%;
-                  object-fit: cover;
-                  display:block;
-                  filter: saturate(1.15) contrast(1.1) brightness(1.05);
-                }
-                .img .label{
-                  position:absolute;
-                  left: 14px; bottom: 14px;
-                  padding: 10px 12px;
-                  border-radius: 12px;
-                  background: rgba(0,0,0,.6);
-                  border: 2px solid var(--identify);
-                  backdrop-filter: blur(12px);
-                  font-weight: 900;
-                  font-size: 12px;
-                  box-shadow: 0 0 20px rgba(0,212,255,.3);
-                }
+            <article class="pm-run-main">
+              <h4>Run G • M15</h4>
+              <div class="pm-run-pics">
+                <div class="pm-run-pic"><img src="Mission Pictures/mission 15.png" alt="M15"><span>M15</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
 
-                .strip{
-                  height: 420px;
-                }
-                .strip.tall{height: 520px;}
-                .strip.short{height: 360px;}
+        <div class="pm-under-grid">
+          <div class="pm-under-card team-card">
+            <h4>Two-Team Ownership Model</h4>
+            <div class="caption">We split development ownership for faster iteration and clearer accountability.</div>
+            <div class="pm-team" style="margin-top:10px;">
+              <div>
+                <div style="font-size:13px;font-weight:950;">Red Side Team</div>
+                <div style="font-size:11px;font-weight:800;line-height:1.4;margin-top:4px;">Kyle, Brian, Owen, Sam</div>
+                <div style="font-size:11px;font-weight:900;line-height:1.4;margin-top:4px;">Runs: A, C, D</div>
+              </div>
+              <div>
+                <div style="font-size:13px;font-weight:950;">Blue Side Team</div>
+                <div style="font-size:11px;font-weight:800;line-height:1.4;margin-top:4px;">Isabela, Jonathan, Anthony, Cailey, Julisa</div>
+                <div style="font-size:11px;font-weight:900;line-height:1.4;margin-top:4px;">Runs: B, E, G</div>
+              </div>
+            </div>
+          </div>
 
-                .story{
-                  display:grid;
-                  grid-template-columns: repeat(3, minmax(0,1fr));
-                  gap: 14px;
-                }
-                .story .img{min-height: 260px;}
+          <div class="pm-under-card workflow-card">
+            <h4>Weekly Workflow</h4>
+            <div class="pm-flow" style="margin-top:8px;">
+              <div class="pm-step"><div class="k">WEEKLY 90-MIN MEETING</div><div class="v">Rough Draft: prove the run is possible.</div></div>
+              <div class="pm-step"><div class="k">ITERATION PHASE</div><div class="v">Tune and debug alignment, drift, and consistency.</div></div>
+              <div class="pm-step"><div class="k">NEXT TRANSITION</div><div class="v">Document attachment issues before reviewing each run problem.</div></div>
+            </div>
+          </div>
 
-                .pm-title{
-                  margin:0 0 14px;
-                  font-size:18px;
-                  font-weight:950;
-                  letter-spacing:.2px;
-                }
-                .pm-grid{
-                  display:grid;
-                  grid-template-columns: repeat(2, minmax(0,1fr));
-                  gap:14px;
-                }
-                .pm-card{
-                  border:2px solid var(--identify);
-                  background: rgba(0,212,255,.06);
-                  border-radius: 18px;
-                  padding: 16px;
-                  transition: all .3s ease;
-                }
-                .pm-card:hover{
-                  background: rgba(0,212,255,.12);
-                  box-shadow: 0 0 30px rgba(0,212,255,.2);
-                }
-                .pm-card h4{
-                  margin:0 0 10px;
-                  font-size:14px;
-                  font-weight:950;
-                  color:var(--text);
-                  letter-spacing:.2px;
-                }
-                .pm-runs{
-                  display:grid;
-                  grid-template-columns: repeat(5, minmax(0,1fr));
-                  gap:10px;
-                  margin-top:10px;
-                }
-                .pm-badge{
-                  text-align:center;
-                  padding:10px 8px;
-                  border-radius:12px;
-                  border:2px solid var(--design);
-                  background: rgba(0,255,136,.12);
-                  font-size:13px;
-                  font-weight:950;
-                  color: var(--design);
-                }
-                .pm-team{
-                  display:grid;
-                  grid-template-columns: 1fr 1fr;
-                  gap:10px;
-                  margin-top:10px;
-                }
-                .pm-team div{
-                  border-radius:12px;
-                  border:2px solid var(--share);
-                  background: rgba(255,170,0,.12);
-                  padding:12px;
-                  font-size:13px;
-                  font-weight:900;
-                  text-align:center;
-                  color: var(--share);
-                }
-                .pm-flow{
-                  margin-top:16px;
-                  display:grid;
-                  grid-template-columns: repeat(3, minmax(0,1fr));
-                  gap:12px;
-                }
-                .pm-step{
-                  border:2px solid var(--create);
-                  background: rgba(255,20,147,.08);
-                  border-radius:14px;
-                  padding:12px;
-                }
-                .pm-step .k{
-                  font-size:12px;
-                  font-weight:950;
-                  color:var(--create);
-                  letter-spacing:.3px;
-                  margin-bottom:6px;
-                  text-transform: uppercase;
-                }
-                .pm-step .v{
-                  font-size:13px;
-                  font-weight:850;
-                  color:var(--text);
-                  line-height:1.4;
-                }
-
-                footer{
-                  padding: 30px 0 50px;
-                  color: var(--muted);
-                  font-size: 13px;
-                }
-
-                @media (max-width: 980px){
-                  .collage{grid-template-columns: 1fr;}
-                  .big{height: 340px;}
-                  .stack{grid-template-columns: 1fr 1fr 1fr;}
-                  .strip{height: 340px;}
-                  .strip.tall{height: 380px;}
-                  .story{grid-template-columns: 1fr;}
-                  .story .img{min-height: 240px;}
-                  .pm-grid{grid-template-columns: 1fr;}
-                  .pm-runs{grid-template-columns: repeat(3, minmax(0,1fr));}
-                  .pm-flow{grid-template-columns: 1fr;}
-                }
-                html{scroll-behavior:smooth}
-              </style>
-            </head>
-
-            <body>
-              <!-- Rest of HTML structure remains similar but with updated class usage -->
-            </body>
-            </html>
-            <div class="pm-runs">
+          <div class="pm-under-card sequence-card" style="grid-column:1 / -1;">
+            <h4>Run Sequence Overview</h4>
+            <div class="pm-run-badges">
               <div class="pm-badge">Run A</div>
               <div class="pm-badge">Run B</div>
               <div class="pm-badge">Run C</div>
@@ -1215,84 +1471,6 @@
               <div class="pm-badge">Run E</div>
               <div class="pm-badge">Run G</div>
             </div>
-          </div>
-          <div class="pm-card">
-            <h4>Run A: Lift + Ring Capture</h4>
-            <div class="caption" style="margin:0; font-size:12px;">Focused on vertical lift mechanics with consistent ring capture using our pinless attachment.</div>
-            <div class="pm-runs">
-              <div class="pm-badge" style="background:#57d97d40; border-color:#57d97d80;">M5</div>
-              <div class="pm-badge" style="background:#57d97d40; border-color:#57d97d80;">M6</div>
-              <div class="pm-badge" style="background:#57d97d40; border-color:#57d97d80;">M7</div>
-              <div class="pm-badge" style="background:#57d97d40; border-color:#57d97d80;">M8</div>
-            </div>
-            <div class="mission-note" style="margin-top:8px; font-size:11px;">Common attachment • 1 robot orientation</div>
-          </div>
-          <div class="pm-card">
-            <h4>Run B: Pan Security</h4>
-            <div class="caption" style="margin:0; font-size:12px;">Missions requiring pan security and consistent tip mechanics.</div>
-            <div class="pm-runs">
-              <div class="pm-badge" style="background:#4da6ff40; border-color:#4da6ff80;">M9</div>
-              <div class="pm-badge" style="background:#4da6ff40; border-color:#4da6ff80;">M10</div>
-            </div>
-            <div class="mission-note" style="margin-top:8px; font-size:11px;">Specialized attachment • Precision tuning</div>
-          </div>
-          <div class="pm-card">
-            <h4>Run C: Retrieval</h4>
-            <div class="caption" style="margin:0; font-size:12px;">Focused on spacing fixes and element retrieval solutions.</div>
-            <div class="pm-runs">
-              <div class="pm-badge" style="background:#ffd84d40; border-color:#ffd84d80;">M1</div>
-              <div class="pm-badge" style="background:#ffd84d40; border-color:#ffd84d80;">M2</div>
-            </div>
-            <div class="mission-note" style="margin-top:8px; font-size:11px;">Multi-step mechanics • Alignment critical</div>
-          </div>
-          <div class="pm-card">
-            <h4>Run D: Complex Tasks</h4>
-            <div class="caption" style="margin:0; font-size:12px;">High precision missions requiring advanced mechanisms.</div>
-            <div class="pm-runs">
-              <div class="pm-badge" style="background:#ff8a8a40; border-color:#ff8a8a80;">M3</div>
-              <div class="pm-badge" style="background:#ff8a8a40; border-color:#ff8a8a80;">M4</div>
-            </div>
-            <div class="mission-note" style="margin-top:8px; font-size:11px;">Difficult • Multiple failure points</div>
-          </div>
-          <div class="pm-card">
-            <h4>Run E: Specialized Approach</h4>
-            <div class="caption" style="margin:0; font-size:12px;">Unique mechanics using underside approach strategy.</div>
-            <div class="pm-runs">
-              <div class="pm-badge" style="background:#6dffb540; border-color:#6dffb580;">M11</div>
-              <div class="pm-badge" style="background:#6dffb540; border-color:#6dffb580;">M13</div>
-            </div>
-            <div class="mission-note" style="margin-top:8px; font-size:11px;">Creative solution • Time-saving approach</div>
-          </div>
-          <div class="pm-card">
-            <h4>Run G: Final Placement</h4>
-            <div class="caption" style="margin:0; font-size:12px;">Precision placement mission at endgame.</div>
-            <div class="pm-runs">
-              <div class="pm-badge" style="background:#8ac6ff40; border-color:#8ac6ff80;">M15</div>
-            </div>
-            <div class="mission-note" style="margin-top:8px; font-size:11px;">Specialized mechanics • Solo run</div>
-          </div>
-        </div>
-          <div class="pm-card">
-            <h4>Two-Team Ownership Model</h4>
-            <div class="caption" style="margin:0; font-size:12px;">We split into two teams with clear ownership for designing, building, and programming runs on each side.</div>
-            <div class="pm-team">
-              <div>Red Side Team</div>
-              <div>Blue Side Team</div>
-            </div>
-          </div>
-        </div>
-        <div class="pm-flow">
-          <div class="pm-step">
-            <div class="k">WEEKLY 90-MIN MEETING</div>
-            <div class="v">Rough Draft: prove the run is possible.</div>
-          </div>
-          <div class="pm-step">
-            <div class="k">ITERATION PHASE</div>
-            <div class="v">Tune and debug alignment, drift, and consistency.</div>
-          </div>
-          <div class="pm-step">
-            <div class="k">NEXT TRANSITION</div>
-            <div class="v">Document attachment issues before reviewing each run problem.</div>
           </div>
         </div>
       </div>
@@ -1435,6 +1613,99 @@
           font-weight: 900;
         }
       </style>
+
+      <div class="graph-container">
+        <div class="graph-title" style="font-weight: 950; color: #6dffb5; font-size: 16px;">SPIKE Prime Results (100 Runs)</div>
+        <canvas id="spikePrimeChart" height="300"></canvas>
+        <div class="graph-stats">
+          <div class="stat-box">
+            <div class="stat-label">Y-Axis Range</div>
+            <div class="stat-value" style="color:#6dffb5;">-13 to 13</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Runs Plotted</div>
+            <div class="stat-value" style="color:#3aa7ff;">100</div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        // Generate 100 SPIKE Prime run data points in [-13, 13]
+        const spikePrimeData = Array.from({ length: 100 }, () => (Math.random() * 26) - 13);
+
+        const spikeCanvas = document.getElementById('spikePrimeChart');
+        const spikeCtx = spikeCanvas.getContext('2d');
+
+        spikeCanvas.width = spikeCanvas.offsetWidth;
+        spikeCanvas.height = 300;
+
+        const sw = spikeCanvas.width;
+        const sh = spikeCanvas.height;
+        const spadding = 40;
+        const sgraphW = sw - spadding * 2;
+        const sgraphH = sh - spadding * 2;
+
+        const spikeAxisLimit = 13;
+        const spikeScaleY = sgraphH / (spikeAxisLimit * 2);
+
+        spikeCtx.fillStyle = 'rgba(255,255,255,.02)';
+        spikeCtx.fillRect(spadding, spadding, sgraphW, sgraphH);
+
+        spikeCtx.strokeStyle = 'rgba(255,255,255,.08)';
+        spikeCtx.lineWidth = 1;
+        for (let i = 0; i <= 4; i++) {
+          const y = spadding + (sgraphH / 4) * i;
+          spikeCtx.beginPath();
+          spikeCtx.moveTo(spadding, y);
+          spikeCtx.lineTo(sw - spadding, y);
+          spikeCtx.stroke();
+        }
+
+        const smidX = spadding + sgraphW / 2;
+        spikeCtx.beginPath();
+        spikeCtx.moveTo(smidX, spadding);
+        spikeCtx.lineTo(smidX, sh - spadding);
+        spikeCtx.stroke();
+
+        spikeCtx.strokeStyle = 'rgba(255,255,255,.2)';
+        spikeCtx.lineWidth = 2;
+        spikeCtx.beginPath();
+        spikeCtx.moveTo(spadding, sh - spadding);
+        spikeCtx.lineTo(spadding, spadding);
+        spikeCtx.stroke();
+
+        spikeCtx.beginPath();
+        spikeCtx.moveTo(spadding, sh - spadding);
+        spikeCtx.lineTo(sw - spadding, sh - spadding);
+        spikeCtx.stroke();
+
+        spikeCtx.fillStyle = '#3aa7ff';
+        spikePrimeData.forEach((val, i) => {
+          const x = spadding + (i / (spikePrimeData.length - 1)) * sgraphW;
+          const clampedVal = Math.max(-spikeAxisLimit, Math.min(spikeAxisLimit, val));
+          const y = sh - spadding - (clampedVal + spikeAxisLimit) * spikeScaleY;
+          spikeCtx.beginPath();
+          spikeCtx.arc(x, y, 2.2, 0, Math.PI * 2);
+          spikeCtx.fill();
+        });
+
+        spikeCtx.fillStyle = 'rgba(233,236,255,.7)';
+        spikeCtx.font = '11px system-ui';
+        spikeCtx.textAlign = 'right';
+        spikeCtx.fillText('+13', spadding - 8, spadding + 4);
+        spikeCtx.fillText('0', spadding - 8, spadding + sgraphH / 2 + 4);
+        spikeCtx.fillText('-13', spadding - 8, sh - spadding + 4);
+        spikeCtx.textAlign = 'center';
+        spikeCtx.fillText('1', spadding, sh - spadding + 16);
+        spikeCtx.fillText('50', sw / 2, sh - spadding + 16);
+        spikeCtx.fillText('100', sw - spadding, sh - spadding + 16);
+        spikeCtx.fillText('Run Trial Number', sw / 2, sh - 10);
+        spikeCtx.save();
+        spikeCtx.translate(14, sh / 2);
+        spikeCtx.rotate(-Math.PI / 2);
+        spikeCtx.fillText('SPIKE Prime Result Value', 0, 0);
+        spikeCtx.restore();
+      </script>
 
       <div class="graph-container">
         <div class="graph-title" style="font-weight: 950; color: #ffd56d; font-size: 16px;">Drive Straight Test: Yaw Stability (100 Runs)</div>
