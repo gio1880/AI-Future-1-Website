@@ -346,6 +346,123 @@
       color: #f8fffb;
     }
 
+    /* Reusable attachment iteration timeline */
+    .iter-block{
+      margin: 14px 0;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: 0 12px 30px rgba(0,0,0,.24);
+    }
+    .iter-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .iter-title{
+      margin:0;
+      font-size:16px;
+      font-weight:950;
+      letter-spacing:.15px;
+      color:var(--text);
+    }
+    .iter-takeaway{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:12.5px;
+      font-weight:760;
+    }
+    .iter-result{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid color-mix(in srgb, var(--iter-accent, var(--design)) 55%, white 22%);
+      background: color-mix(in srgb, var(--iter-accent, var(--design)) 18%, transparent);
+      color:#f8fffd;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.25px;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+    .iter-track{
+      display:flex;
+      gap:12px;
+      align-items:stretch;
+    }
+    .iter-step{
+      position:relative;
+      flex:1;
+      min-width:0;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      border-radius: 14px;
+      padding:8px;
+      overflow:visible;
+    }
+    .iter-step:not(:last-child)::after{
+      content:"\279C";
+      position:absolute;
+      right:-17px;
+      top:50%;
+      transform:translateY(-50%);
+      width:22px;
+      height:22px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      color: color-mix(in srgb, var(--iter-accent, var(--design)) 75%, white 15%);
+      background: rgba(11,16,32,.92);
+      border:1px solid rgba(255,255,255,.2);
+      box-shadow: 0 6px 16px rgba(0,0,0,.35);
+      font-size:13px;
+      font-weight:900;
+      z-index:2;
+    }
+    .iter-thumb{
+      position:relative;
+      aspect-ratio: 4 / 3;
+      border-radius: 10px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.03);
+    }
+    .iter-thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter: saturate(1.06) contrast(1.05);
+    }
+    .iter-meta{
+      margin-top:8px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:6px;
+    }
+    .iter-label{
+      font-size:11.5px;
+      font-weight:900;
+      color:#f7fbff;
+      letter-spacing:.2px;
+      text-transform:uppercase;
+    }
+    .iter-note{
+      font-size:11px;
+      font-weight:900;
+      color: color-mix(in srgb, var(--iter-accent, var(--design)) 72%, white 18%);
+      letter-spacing:.2px;
+      white-space:nowrap;
+      text-transform:uppercase;
+    }
+
     .pm-title{
       margin:0 0 10px;
       font-size:16px;
@@ -446,6 +563,14 @@
       .pm-grid{grid-template-columns: 1fr;}
       .pm-runs{grid-template-columns: repeat(3, minmax(0,1fr));}
       .pm-flow{grid-template-columns: 1fr;}
+      .iter-track{flex-direction:column;gap:16px;}
+      .iter-step:not(:last-child)::after{
+        right:auto;
+        left:50%;
+        top:auto;
+        bottom:-15px;
+        transform:translateX(-50%) rotate(90deg);
+      }
     }
     @media (max-width: 640px){
       .run1-story{grid-template-columns: 1fr;}
@@ -1659,140 +1784,145 @@
         </div>
       </div>
 
-      <!-- Run 1 -->
-      <div class="panel" style="padding:12px; margin-bottom:12px;">
-        <div class="story run1-story">
-          <div class="img">
-            <img src="Attachments/Run A/run a v1.jpg" alt="Run 1 iteration from Run A">
-            <div class="label">Run 1: Iteration A</div>
+      <div class="iter-block" style="--iter-accent:#6dffb5;">
+        <div class="iter-head">
+          <div>
+            <h3 class="iter-title">Run A (M5,6,7,8)</h3>
+            <p class="iter-takeaway">Passive mechanism progression for cleaner trigger flow.</p>
           </div>
-          <div class="img">
-            <img src="Attachments/Run A/run a v2.jpg" alt="Run 1 iteration from Run A">
-            <div class="label">Run 1: Iteration B</div>
-          </div>
-          <div class="img">
-            <img src="Attachments/Run A/Run A attachment V2.jpg" alt="Run 1 iteration from Run A">
-            <div class="label">Final Snapshot</div>
-          </div>
-          <div class="img">
-            <img src="Attachments/Run A/run a iteration 4.jpg" alt="Run A iteration 4 attachment">
-            <div class="label">Run A: Iteration 4</div>
-          </div>
+          <span class="iter-result">Final Result: Stable Cycle</span>
+        </div>
+        <div class="iter-track" aria-label="Run A attachment evolution timeline">
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run A/run a v1.jpg" alt="Run A prototype version 1"></div>
+            <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">Base Fit</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run A/run a v2.jpg" alt="Run A improvement version"></div>
+            <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Wider Intake</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run A/Run A attachment V2.jpg" alt="Run A refinement version"></div>
+            <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Added Support</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run A/run a iteration 4.jpg" alt="Run A final version"></div>
+            <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Final Tuned</span></div>
+          </article>
         </div>
       </div>
-      <div class="run-iteration-change">
-        <div class="run-iteration-grid">
-          <div class="run-iteration-card">
-            <h4>Before (Iteration A)</h4>
-            <p>Mission 5 and Mission 6 needed an active attachment to trigger and finish reliably, which made this run more complex.</p>
-          </div>
-          <div class="run-iteration-card">
-            <h4>After (Iteration B / Final)</h4>
-            <p>A new passive attachment now solves Mission 5 and Mission 6, and the leftover motor is used to solve Mission 8 while keeping Mission 7 in the same run.</p>
-          </div>
-        </div>
-        <div class="run-iteration-missions">
-          <span class="label">Run 1 Mission Coverage</span>
-          <span class="run-chip">M5</span>
-          <span class="run-chip">M6</span>
-          <span class="run-chip">M7</span>
-          <span class="run-chip">M8</span>
-        </div>
-      </div>
-      <h3 class="runSubheading">Run A (M5,6,7,8): all-black attachment set + passive attachment upgrade + leftover motor use improved consistency.</h3>
 
-      <!-- Run B -->
-      <div class="panel" style="padding:12px; margin:18px 0 12px;">
-        <div class="story run1-story">
-          <div class="img">
-            <img src="Attachments/Run B/run b v1.jpg" alt="Run B attachment version 1">
-            <div class="label">Run B: Attachment V1</div>
+      <div class="iter-block" style="--iter-accent:#3aa7ff;">
+        <div class="iter-head">
+          <div>
+            <h3 class="iter-title">Run B (M9,10)</h3>
+            <p class="iter-takeaway">Tip control evolution for repeatable pan contact.</p>
           </div>
-          <div class="img">
-            <img src="Attachments/Run B/run b v2.jpg" alt="Run B attachment version 2">
-            <div class="label">Run B: Attachment V2</div>
-          </div>
-          <div class="img">
-            <img src="Attachments/Run B/run b attachment v2.jpg" alt="Run B final attachment">
-            <div class="label">Run B: Final</div>
-          </div>
-          <div class="img">
-            <img src="Attachments/Run B/run b iteration 4.jpg" alt="Run B iteration 4 attachment">
-            <div class="label">Run B: Iteration 4</div>
-          </div>
+          <span class="iter-result">Final Result: Cleaner Release</span>
+        </div>
+        <div class="iter-track" aria-label="Run B attachment evolution timeline">
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run B/run b v1.jpg" alt="Run B prototype version 1"></div>
+            <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">Early Reach</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run B/run b v2.jpg" alt="Run B improvement version"></div>
+            <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Better Angle</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run B/run b attachment v2.jpg" alt="Run B refinement version"></div>
+            <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Lower Friction</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run B/run b iteration 4.jpg" alt="Run B final version"></div>
+            <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Final Tuned</span></div>
+          </article>
         </div>
       </div>
-      <h3 class="runSubheading">Run B (M9,10): blue/grey/yellow attachment set improved pan security and consistent tip hit.</h3>
-      
 
-      <!-- Run C -->
-      <div class="panel" style="padding:12px; margin:18px 0 12px;">
-        <div class="story run1-story">
-          <div class="img">
-            <img src="Attachments/Run C/run c attachment v1.jpg" alt="Run C attachment version 1">
-            <div class="label">Run C: Attachment V1</div>
+      <div class="iter-block" style="--iter-accent:#ffd56d;">
+        <div class="iter-head">
+          <div>
+            <h3 class="iter-title">Run C (M1,2)</h3>
+            <p class="iter-takeaway">Pickup geometry tuned for more reliable retrieval.</p>
           </div>
-          <div class="img">
-            <img src="Attachments/Run C/run c attachment v2.jpg" alt="Run C attachment version 2">
-            <div class="label">Run C: Attachment V2</div>
-          </div>
-          <div class="img">
-            <img src="Attachments/Run C/run c v3.1.jpg" alt="Run C attachment in action">
-            <div class="label">Run C: In Action</div>
-          </div>
-          <div class="img">
-            <img src="Attachments/Run C/run c iteration 4.jpg" alt="Run C iteration 4 attachment">
-            <div class="label">Run C: Iteration 4</div>
-          </div>
+          <span class="iter-result">Final Result: Better Alignment</span>
+        </div>
+        <div class="iter-track" aria-label="Run C attachment evolution timeline">
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run C/run c attachment v1.jpg" alt="Run C prototype version 1"></div>
+            <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">First Grip</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run C/run c attachment v2.jpg" alt="Run C improvement version"></div>
+            <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Added Support</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run C/run c v3.1.jpg" alt="Run C refinement version"></div>
+            <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Cleaner Contact</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run C/run c iteration 4.jpg" alt="Run C final version"></div>
+            <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Final Tuned</span></div>
+          </article>
         </div>
       </div>
-      <h3 class="runSubheading">Run C (M1,2): black/yellow attachment set evolved for spacing and final retrieval consistency.</h3>
 
-      <!-- Run D -->
-      <div class="panel" style="padding:12px; margin:18px 0 12px;">
-        <div class="story run1-story">
-          <div class="img">
-            <img src="Attachments/Run D/run d attachment v1.jpg" alt="Run D attachment version 1">
-            <div class="label">Run D: Attachment V1</div>
+      <div class="iter-block" style="--iter-accent:#ff8a8a;">
+        <div class="iter-head">
+          <div>
+            <h3 class="iter-title">Run D (M3,4)</h3>
+            <p class="iter-takeaway">Lift geometry evolved toward stable drop positioning.</p>
           </div>
-          <div class="img placeholder">
-            <div class="placeholder-text">Placeholder<br>Run D Iteration 2<br>(Missing Image)</div>
-            <div class="label">Run D: Iteration 2</div>
-          </div>
-          <div class="img placeholder">
-            <div class="placeholder-text">Placeholder<br>Run D Final Snapshot<br>(Missing Image)</div>
-            <div class="label">Run D: Final</div>
-          </div>
-          <div class="img">
-            <img src="Attachments/Run D/run d iteration 4.JPG" alt="Run D iteration 4 attachment">
-            <div class="label">Run D: Iteration 4</div>
-          </div>
+          <span class="iter-result">Final Result: Locked Geometry</span>
+        </div>
+        <div class="iter-track" aria-label="Run D attachment evolution timeline">
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run D/run d attachment v1.jpg" alt="Run D prototype version 1"></div>
+            <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">Base Lift</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run D/run d attachment v1.jpg" alt="Run D improvement pass"></div>
+            <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Angle Test</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run D/run d iteration 4.JPG" alt="Run D refinement version"></div>
+            <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Added Support</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run D/run d iteration 4.JPG" alt="Run D final version"></div>
+            <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Final Tuned</span></div>
+          </article>
         </div>
       </div>
-      <h3 class="runSubheading">Run D (M3,4): all-black attachment set, with placeholders shown where photos are missing.</h3>
 
-      <!-- Run E -->
-      <div class="panel" style="padding:12px; margin:18px 0 12px;">
-        <div class="story run1-story">
-          <div class="img">
-            <img src="Attachments/Run E/run e v2.jpg" alt="Run E original approach">
-            <div class="label">Run E: Iteration 1</div>
+      <div class="iter-block" style="--iter-accent:#3aa7ff;">
+        <div class="iter-head">
+          <div>
+            <h3 class="iter-title">Run E (M11,13)</h3>
+            <p class="iter-takeaway">Underside approach refined for faster transitions.</p>
           </div>
-          <div class="img">
-            <img src="Attachments/Run E/run e v2.1.jpg" alt="Run E second iteration">
-            <div class="label">Run E: Iteration 2</div>
-          </div>
-          <div class="img">
-            <img src="Attachments/Run E/run e v3.jpg" alt="Run E final snapshot">
-            <div class="label">Run E: Final Snapshot</div>
-          </div>
-          <div class="img">
-            <img src="Attachments/Run E/run 3 attachment V1.jpg" alt="Run E underside attachment detail">
-            <div class="label">Run E: Underside Detail</div>
-          </div>
+          <span class="iter-result">Final Result: Faster Swap</span>
+        </div>
+        <div class="iter-track" aria-label="Run E attachment evolution timeline">
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run E/run e v2.jpg" alt="Run E prototype version 1"></div>
+            <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">Initial Pass</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run E/run e v2.1.jpg" alt="Run E improvement version"></div>
+            <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Lower Friction</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run E/run 3 attachment V1.jpg" alt="Run E refinement version"></div>
+            <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Underside Guide</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run E/run e v3.jpg" alt="Run E final version"></div>
+            <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Cleaner Release</span></div>
+          </article>
         </div>
       </div>
-      <h3 class="runSubheading">Run E (M11,13): all-blue attachment set and underside approach reduced transition time.</h3>
     </div>
   </section>
 
