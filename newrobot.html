@@ -132,6 +132,97 @@
       font-weight: 900;
       letter-spacing: -.2px;
     }
+    .attachment-system-note{
+      margin: 10px 0 14px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: linear-gradient(130deg, rgba(58,167,255,.16), rgba(109,255,181,.10));
+    }
+    .attachment-system-title{
+      margin: 0;
+      font-size: 14px;
+      font-weight: 950;
+      letter-spacing: .2px;
+      color: #f4fffb;
+    }
+    .attachment-system-copy{
+      margin: 6px 0 0;
+      font-size: 12.5px;
+      font-weight: 760;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .attachment-color-legend{
+      margin-top: 9px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .attach-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.1);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .25px;
+    }
+    .attach-dot{
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.32);
+    }
+    .run-material-map{
+      margin-top: 10px;
+      display:grid;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      gap:8px;
+    }
+    .run-material-card{
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      border-radius: 10px;
+      padding: 8px;
+      text-align:center;
+    }
+    .run-material-card .k{
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: .25px;
+      color: #f7fbff;
+      margin-bottom: 3px;
+    }
+    .run-material-card .v{
+      font-size: 11px;
+      font-weight: 780;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .img.placeholder{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 230px;
+      background:
+        repeating-linear-gradient(-45deg, rgba(255,255,255,.08) 0 10px, rgba(255,255,255,.03) 10px 20px),
+        rgba(0,0,0,.16);
+      border:1px dashed rgba(255,255,255,.28);
+    }
+    .img.placeholder .placeholder-text{
+      max-width: 85%;
+      text-align:center;
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.45;
+      color: rgba(233,236,255,.9);
+      text-transform: uppercase;
+      letter-spacing: .35px;
+    }
 
     .panel{
       border-radius: var(--r);
@@ -195,6 +286,65 @@
       gap: 12px;
     }
     .story .img{min-height: 260px;}
+    .run1-story{grid-template-columns: repeat(4, minmax(0,1fr));}
+    .run1-story .img{min-height: 230px;}
+
+    .run-iteration-change{
+      margin: 10px 0 14px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(109,255,181,.35);
+      background: linear-gradient(135deg, rgba(109,255,181,.10), rgba(58,167,255,.10));
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .run-iteration-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .run-iteration-card{
+      border:1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.07);
+      border-radius: 12px;
+      padding: 10px;
+    }
+    .run-iteration-card h4{
+      margin: 0 0 6px;
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: .2px;
+      color: var(--text);
+    }
+    .run-iteration-card p{
+      margin: 0;
+      font-size: 12.5px;
+      font-weight: 780;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .run-iteration-missions{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap: wrap;
+      gap:8px;
+      align-items:center;
+    }
+    .run-iteration-missions .label{
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--muted);
+      letter-spacing: .3px;
+      text-transform: uppercase;
+    }
+    .run-chip{
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.11);
+      font-size: 11.5px;
+      font-weight: 900;
+      color: #f8fffb;
+    }
 
     .pm-title{
       margin:0 0 10px;
@@ -290,9 +440,16 @@
       .strip.tall{height: 380px;}
       .story{grid-template-columns: 1fr;}
       .story .img{min-height: 240px;}
+      .run1-story{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .run-material-map{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .run-iteration-grid{grid-template-columns: 1fr;}
       .pm-grid{grid-template-columns: 1fr;}
       .pm-runs{grid-template-columns: repeat(3, minmax(0,1fr));}
       .pm-flow{grid-template-columns: 1fr;}
+    }
+    @media (max-width: 640px){
+      .run1-story{grid-template-columns: 1fr;}
+      .run-material-map{grid-template-columns: 1fr;}
     }
     html{scroll-behavior:smooth}
   </style>
@@ -1483,10 +1640,28 @@
         <div class="tag"><span class="dot" style="background:var(--identify)"></span>RUNS</div>
         <div class="title">Iterations that made our runs reliable</div>
       </div>
+      <div class="attachment-system-note">
+        <h3 class="attachment-system-title">Attachment System Upgrade: Color-Coordinated Across All Runs</h3>
+        <p class="attachment-system-copy">Beyond improving each attachment, we color-coordinated all attachments by run so setup is faster, swaps are cleaner, and teammates can identify the correct tool instantly.</p>
+        <div class="attachment-color-legend" aria-label="Attachment color key by run">
+          <span class="attach-chip"><span class="attach-dot" style="background:#111111"></span>Run A: All Black</span>
+          <span class="attach-chip"><span class="attach-dot" style="background:linear-gradient(90deg,#3aa7ff 0 33%, #b7bcc8 33% 66%, #ffd56d 66% 100%)"></span>Run B: Blue/Grey/Yellow</span>
+          <span class="attach-chip"><span class="attach-dot" style="background:linear-gradient(90deg,#111111 0 50%, #ffd56d 50% 100%)"></span>Run C: Black/Yellow</span>
+          <span class="attach-chip"><span class="attach-dot" style="background:#111111"></span>Run D: All Black</span>
+          <span class="attach-chip"><span class="attach-dot" style="background:#3aa7ff"></span>Run E: All Blue</span>
+        </div>
+        <div class="run-material-map" aria-label="Run material listing">
+          <div class="run-material-card"><div class="k">RUN A</div><div class="v">All black pieces</div></div>
+          <div class="run-material-card"><div class="k">RUN B</div><div class="v">Blue, grey, and yellow pieces</div></div>
+          <div class="run-material-card"><div class="k">RUN C</div><div class="v">Black and yellow pieces</div></div>
+          <div class="run-material-card"><div class="k">RUN D</div><div class="v">All black pieces</div></div>
+          <div class="run-material-card"><div class="k">RUN E</div><div class="v">All blue pieces</div></div>
+        </div>
+      </div>
 
       <!-- Run 1 -->
       <div class="panel" style="padding:12px; margin-bottom:12px;">
-        <div class="story">
+        <div class="story run1-story">
           <div class="img">
             <img src="Attachments/Run A/run a v1.jpg" alt="Run 1 iteration from Run A">
             <div class="label">Run 1: Iteration A</div>
@@ -1499,67 +1674,125 @@
             <img src="Attachments/Run A/Run A attachment V2.jpg" alt="Run 1 iteration from Run A">
             <div class="label">Final Snapshot</div>
           </div>
+          <div class="img placeholder">
+            <div class="placeholder-text">Placeholder<br>Run A Action Photo<br>(Missing Image)</div>
+            <div class="label">Mission 8 Added (Leftover Motor)</div>
+          </div>
         </div>
       </div>
-      <h3 class="runSubheading">Run 1 (M5,6,7): show the “extra prongs” fix → consistent ring capture.</h3>
+      <div class="run-iteration-change">
+        <div class="run-iteration-grid">
+          <div class="run-iteration-card">
+            <h4>Before (Iteration A)</h4>
+            <p>Mission 5 and Mission 6 needed an active attachment to trigger and finish reliably, which made this run more complex.</p>
+          </div>
+          <div class="run-iteration-card">
+            <h4>After (Iteration B / Final)</h4>
+            <p>A new passive attachment now solves Mission 5 and Mission 6, and the leftover motor is used to solve Mission 8 while keeping Mission 7 in the same run.</p>
+          </div>
+        </div>
+        <div class="run-iteration-missions">
+          <span class="label">Run 1 Mission Coverage</span>
+          <span class="run-chip">M5</span>
+          <span class="run-chip">M6</span>
+          <span class="run-chip">M7</span>
+          <span class="run-chip">M8</span>
+        </div>
+      </div>
+      <h3 class="runSubheading">Run A (M5,6,7,8): all-black attachment set + passive attachment upgrade + leftover motor use improved consistency.</h3>
 
-      <!-- Run 5 -->
+      <!-- Run B -->
       <div class="panel" style="padding:12px; margin:18px 0 12px;">
-        <div class="story">
+        <div class="story run1-story">
           <div class="img">
-            <img src="Attachments/Run B/run b v1.jpg" alt="Run 2 attachment version 1">
-            <div class="label">Run 2: Attachment V1</div>
+            <img src="Attachments/Run B/run b v1.jpg" alt="Run B attachment version 1">
+            <div class="label">Run B: Attachment V1</div>
           </div>
           <div class="img">
-            <img src="Attachments/Run B/run b v2.jpg" alt="Run 2 attachment version 2">
-            <div class="label">Run 2: Attachment V2</div>
+            <img src="Attachments/Run B/run b v2.jpg" alt="Run B attachment version 2">
+            <div class="label">Run B: Attachment V2</div>
           </div>
           <div class="img">
-            <img src="Attachments/Run B/run b attachment v2.jpg" alt="Run 2 final attachment">
-            <div class="label">Run 2: Final</div>
+            <img src="Attachments/Run B/run b attachment v2.jpg" alt="Run B final attachment">
+            <div class="label">Run B: Final</div>
+          </div>
+          <div class="img">
+            <img src="Attachments/Run B/run b attachment v1.jpg" alt="Run B alternate attachment view">
+            <div class="label">Run B: Alternate View</div>
           </div>
         </div>
       </div>
-      <h3 class="runSubheading">Run 2 (M9,10): show pan security + consistent “tip” hit.</h3>
+      <h3 class="runSubheading">Run B (M9,10): blue/grey/yellow attachment set improved pan security and consistent tip hit.</h3>
       
 
-      <!-- Run 2 -->
+      <!-- Run C -->
       <div class="panel" style="padding:12px; margin:18px 0 12px;">
-        <div class="story">
+        <div class="story run1-story">
           <div class="img">
-            <img src="Attachments/Run C/run c attachment v1.jpg" alt="Run 2 attachment version 1">
-            <div class="label">Run 2: Attachment V1</div>
+            <img src="Attachments/Run C/run c attachment v1.jpg" alt="Run C attachment version 1">
+            <div class="label">Run C: Attachment V1</div>
           </div>
           <div class="img">
-            <img src="Attachments/Run C/run c attachment v2.jpg" alt="Run 2 attachment version 2">
-            <div class="label">Run 2: Attachment V2</div>
+            <img src="Attachments/Run C/run c attachment v2.jpg" alt="Run C attachment version 2">
+            <div class="label">Run C: Attachment V2</div>
           </div>
           <div class="img">
-            <img src="Attachments/Run C/run c attachment v2.jpg" alt="Run 2 attachment in action">
-            <div class="label">Run 2: In Action</div>
+            <img src="Attachments/Run C/run c v3.1.jpg" alt="Run C attachment in action">
+            <div class="label">Run C: In Action</div>
+          </div>
+          <div class="img">
+            <img src="Attachments/Run C/run c v3.jpg" alt="Run C final alignment pass">
+            <div class="label">Run C: Final Alignment</div>
           </div>
         </div>
       </div>
-      <h3 class="runSubheading">Run 5 (M1,2): show the evolution → spacing fix → final retrieval solution.</h3>
+      <h3 class="runSubheading">Run C (M1,2): black/yellow attachment set evolved for spacing and final retrieval consistency.</h3>
 
-      <!-- Run 4 -->
+      <!-- Run D -->
       <div class="panel" style="padding:12px; margin:18px 0 12px;">
-        <div class="story">
+        <div class="story run1-story">
           <div class="img">
-            <img src="Attachments/Run E/run e v2.jpg" alt="Run 4 original approach (replace)">
-            <div class="label">Run 4: Iteration 1 </div>
+            <img src="Attachments/Run D/run d attachment v1.jpg" alt="Run D attachment version 1">
+            <div class="label">Run D: Attachment V1</div>
           </div>
-          <div class="img">
-            <img src="Attachments/Run E/run e v3.jpg" alt="Run 4 underside approach (replace)">
-            <div class="label">Run 4: Iteration 2</div>
+          <div class="img placeholder">
+            <div class="placeholder-text">Placeholder<br>Run D Iteration 2<br>(Missing Image)</div>
+            <div class="label">Run D: Iteration 2</div>
           </div>
-          <div class="img">
-            <img src="Attachments/Run E/run 3 attachment V1.jpg" alt="Run 4 direct path to next mission (replace)">
-            <div class="label">Run 4 Full Snapshot</div>
+          <div class="img placeholder">
+            <div class="placeholder-text">Placeholder<br>Run D Final Snapshot<br>(Missing Image)</div>
+            <div class="label">Run D: Final</div>
+          </div>
+          <div class="img placeholder">
+            <div class="placeholder-text">Placeholder<br>Run D In Action<br>(Missing Image)</div>
+            <div class="label">Run D: In Action</div>
           </div>
         </div>
       </div>
-      <h3 class="runSubheading">Run 4 (M11,13): show the “lightbulb” underside approach → saved time.</h3>
+      <h3 class="runSubheading">Run D (M3,4): all-black attachment set, with placeholders shown where photos are missing.</h3>
+
+      <!-- Run E -->
+      <div class="panel" style="padding:12px; margin:18px 0 12px;">
+        <div class="story run1-story">
+          <div class="img">
+            <img src="Attachments/Run E/run e v2.jpg" alt="Run E original approach">
+            <div class="label">Run E: Iteration 1</div>
+          </div>
+          <div class="img">
+            <img src="Attachments/Run E/run e v2.1.jpg" alt="Run E second iteration">
+            <div class="label">Run E: Iteration 2</div>
+          </div>
+          <div class="img">
+            <img src="Attachments/Run E/run e v3.jpg" alt="Run E final snapshot">
+            <div class="label">Run E: Final Snapshot</div>
+          </div>
+          <div class="img">
+            <img src="Attachments/Run E/run 3 attachment V1.jpg" alt="Run E underside attachment detail">
+            <div class="label">Run E: Underside Detail</div>
+          </div>
+        </div>
+      </div>
+      <h3 class="runSubheading">Run E (M11,13): all-blue attachment set and underside approach reduced transition time.</h3>
     </div>
   </section>
 
@@ -1678,6 +1911,16 @@
         spikeCtx.moveTo(spadding, sh - spadding);
         spikeCtx.lineTo(sw - spadding, sh - spadding);
         spikeCtx.stroke();
+
+        const zeroY = sh - spadding - (0 + spikeAxisLimit) * spikeScaleY;
+        spikeCtx.strokeStyle = 'rgba(109,255,181,.9)';
+        spikeCtx.lineWidth = 1.5;
+        spikeCtx.setLineDash([7, 5]);
+        spikeCtx.beginPath();
+        spikeCtx.moveTo(spadding, zeroY);
+        spikeCtx.lineTo(sw - spadding, zeroY);
+        spikeCtx.stroke();
+        spikeCtx.setLineDash([]);
 
         spikeCtx.fillStyle = '#3aa7ff';
         spikePrimeData.forEach((val, i) => {
