@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FLL Innovation Project — Archaeology Rover Mapping</title>
+  <meta name="description" content="A professional FLL Innovation Project site documenting an archaeology rover concept for safer mapping of dark, unstable sites." />
+  <style>
+    :root{
+      --bg: #f6f1e6;         /* warm beige */
+      --panel: rgba(255,255,255,.70);
+      --panel-strong: rgba(255,255,255,.88);
+      --ink: #0b1220;
+      --muted: rgba(11,18,32,.68);
+      --line: rgba(11,18,32,.12);
+      --shadow: 0 18px 60px rgba(7,62,119,.14);
+      --shadow-soft: 0 10px 30px rgba(11,18,32,.10);
+
+      /* Your brand colors (from earlier) */
+      --blue: #073e77;
+      --yellow: #fece00;
+      --lime: #d9da26;
+
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body{
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--ink);
+      background:
+        radial-gradient(1100px 600px at 80% 10%, rgba(254,206,0,.25), transparent 60%),
+        radial-gradient(900px 500px at 10% 20%, rgba(217,218,38,.22), transparent 58%),
+        radial-gradient(900px 600px at 50% 100%, rgba(7,62,119,.18), transparent 55%),
+        var(--bg);
+      overflow-x: hidden;
+    }
+
+    /* Top progress bar */
+    .progress{
+      position: fixed; inset: 0 0 auto 0;
+      height: 4px; z-index: 9999;
+      background: transparent;
+    }
+    .progress > div{
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--blue), var(--yellow), var(--lime));
+      border-radius: 999px;
+      box-shadow: 0 8px 18px rgba(7,62,119,.25);
+    }
+
+    /* Decorative blobs */
+    .blob{
+      position: absolute;
+      filter: blur(30px);
+      opacity: .55;
+      transform: translateZ(0);
+      pointer-events: none;
+    }
+    .blob.b1{
+      width: 420px; height: 420px;
+      left: -120px; top: 120px;
+      background: radial-gradient(circle at 30% 30%, rgba(254,206,0,.85), transparent 55%),
+                  radial-gradient(circle at 70% 70%, rgba(7,62,119,.65), transparent 55%);
+      border-radius: 42% 58% 52% 48% / 52% 44% 56% 48%;
+      animation: float1 16s ease-in-out infinite;
+    }
+    .blob.b2{
+      width: 520px; height: 520px;
+      right: -180px; top: 540px;
+      background: radial-gradient(circle at 30% 30%, rgba(217,218,38,.75), transparent 60%),
+                  radial-gradient(circle at 70% 60%, rgba(7,62,119,.55), transparent 62%);
+      border-radius: 50% 50% 40% 60% / 55% 45% 55% 45%;
+      animation: float2 18s ease-in-out infinite;
+    }
+    @keyframes float1{
+      0%,100%{ transform: translate(0,0) rotate(0deg); }
+      50%{ transform: translate(28px, -20px) rotate(8deg); }
+    }
+    @keyframes float2{
+      0%,100%{ transform: translate(0,0) rotate(0deg); }
+      50%{ transform: translate(-30px, 24px) rotate(-8deg); }
+    }
+
+    /* Layout */
+    .wrap{ width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+    .section{ padding: 88px 0; position: relative; }
+    .grid{
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 22px;
+      align-items: start;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    /* Top Nav */
+    header{
+      position: sticky; top: 0;
+      z-index: 9998;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(246,241,230,.84), rgba(246,241,230,.55));
+      border-bottom: 1px solid var(--line);
+    }
+    .nav{
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0;
+      gap: 14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap: 10px;
+      text-decoration:none; color: inherit;
+      min-width: 220px;
+    }
+    .logo{
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      background: conic-gradient(from 210deg, var(--blue), var(--yellow), var(--lime), var(--blue));
+      box-shadow: 0 10px 25px rgba(7,62,119,.25);
+    }
+    .brand strong{ font-size: 14px; letter-spacing: .2px; }
+    .brand span{ display:block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    nav ul{
+      list-style: none; margin: 0; padding: 0;
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: flex-end;
+    }
+    nav a{
+      display:inline-flex; align-items:center; gap: 8px;
+      font-size: 13px;
+      color: rgba(11,18,32,.78);
+      text-decoration:none;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease;
+      background: rgba(255,255,255,.35);
+    }
+    nav a:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.68);
+      border-color: rgba(7,62,119,.18);
+    }
+    .nav-cta{
+      display:flex; align-items:center; gap: 10px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      border: 1px solid rgba(7,62,119,.18);
+      background: rgba(255,255,255,.70);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform .15s ease, background .2s ease;
+      color: rgba(11,18,32,.82);
+      user-select: none;
+      text-decoration:none;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.88); }
+    .btn.primary{
+      border-color: rgba(7,62,119,.25);
+      background: linear-gradient(135deg, rgba(7,62,119,.92), rgba(7,62,119,.78));
+      color: rgba(255,255,255,.95);
+      box-shadow: 0 18px 45px rgba(7,62,119,.22);
+    }
+
+    /* Cards */
+    .card{
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+    .card.strong{ background: var(--panel-strong); box-shadow: var(--shadow); }
+    .card h3{ margin: 0 0 10px; font-size: 16px; letter-spacing: .2px; }
+    .card p{ margin: 0 0 12px; color: var(--muted); line-height: 1.6; font-size: 14px; }
+    .card p:last-child{ margin-bottom: 0; }
+
+    .pill-row{ display:flex; flex-wrap:wrap; gap: 10px; margin-top: 14px; }
+    .pill{
+      display:inline-flex; align-items:center; gap: 8px;
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(11,18,32,.12);
+      background: rgba(255,255,255,.55);
+      color: rgba(11,18,32,.78);
+      white-space: nowrap;
+    }
+    .dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--blue); box-shadow: 0 8px 18px rgba(7,62,119,.25); }
+    .dot.y{ background: var(--yellow); }
+    .dot.g{ background: var(--lime); }
+
+    /* Headings */
+    .kicker{
+      display:inline-flex; align-items:center; gap: 10px;
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(7,62,119,.78);
+      margin-bottom: 14px;
+    }
+    .kicker .bar{
+      width: 42px; height: 2px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue), var(--yellow), var(--lime));
+    }
+    h1{
+      margin: 0 0 14px;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+    h2{
+      margin: 0 0 14px;
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .lead{
+      font-size: 15px;
+      color: rgba(11,18,32,.78);
+      line-height: 1.7;
+      max-width: 70ch;
+      margin: 0;
+    }
+    .meta{
+      margin-top: 18px;
+      display:flex; flex-wrap:wrap; gap: 10px;
+      color: rgba(11,18,32,.75);
+      font-size: 13px;
+    }
+    .meta .tag{
+      border: 1px solid rgba(11,18,32,.12);
+      border-radius: 999px;
+      padding: 8px 10px;
+      background: rgba(255,255,255,.55);
+    }
+
+    /* Hero */
+    .hero{
+      padding: 54px 0 28px;
+      position: relative;
+    }
+    .hero .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+    @media (max-width: 980px){
+      .hero .hero-grid{ grid-template-columns: 1fr; }
+    }
+    .hero-art{
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.42));
+      border: 1px solid rgba(11,18,32,.12);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      min-height: 340px;
+    }
+    .hero-art::before{
+      content:"";
+      position:absolute; inset:-30%;
+      background:
+        radial-gradient(closest-side at 35% 35%, rgba(254,206,0,.70), transparent 60%),
+        radial-gradient(closest-side at 70% 65%, rgba(7,62,119,.55), transparent 60%),
+        radial-gradient(closest-side at 55% 60%, rgba(217,218,38,.55), transparent 60%);
+      transform: rotate(8deg);
+      animation: shimmer 10s ease-in-out infinite;
+    }
+    @keyframes shimmer{
+      0%,100%{ transform: rotate(8deg) translate(0,0) scale(1); }
+      50%{ transform: rotate(2deg) translate(12px,-10px) scale(1.05); }
+    }
+    .hero-art .overlay{
+      position:absolute; inset: 0;
+      padding: 20px;
+      display:flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(180deg, rgba(246,241,230,.0), rgba(246,241,230,.55));
+    }
+    .hero-art .mini{
+      display:flex; gap: 12px; flex-wrap: wrap;
+    }
+    .mini-card{
+      flex: 1;
+      min-width: 160px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(11,18,32,.12);
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 18px 45px rgba(7,62,119,.10);
+    }
+    .mini-card .big{
+      font-size: 22px; font-weight: 800; letter-spacing: -0.02em;
+    }
+    .mini-card .small{
+      font-size: 12px; color: rgba(11,18,32,.68); margin-top: 6px; line-height: 1.35;
+    }
+
+    /* Feature list */
+    .bullets{ margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+    .bullets li{
+      display:flex; gap: 10px; align-items:flex-start;
+      padding: 12px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(11,18,32,.10);
+    }
+    .check{
+      width: 18px; height: 18px; border-radius: 6px;
+      background: rgba(7,62,119,.10);
+      border: 1px solid rgba(7,62,119,.20);
+      position: relative;
+      flex: 0 0 auto;
+      margin-top: 2px;
+    }
+    .check:after{
+      content:"";
+      position:absolute; left: 5px; top: 2px;
+      width: 6px; height: 10px;
+      border-right: 2px solid var(--blue);
+      border-bottom: 2px solid var(--blue);
+      transform: rotate(40deg);
+    }
+    .bullets b{ display:block; font-size: 13px; }
+    .bullets span{ display:block; font-size: 12px; color: rgba(11,18,32,.70); margin-top: 2px; line-height: 1.45; }
+
+    /* Media placeholders */
+    .media{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 760px){ .media{ grid-template-columns: 1fr; } }
+    .ph{
+      border-radius: 18px;
+      border: 1px dashed rgba(11,18,32,.25);
+      background: rgba(255,255,255,.50);
+      padding: 16px;
+      min-height: 150px;
+      position: relative;
+      overflow: hidden;
+    }
+    .ph:before{
+      content:"";
+      position:absolute; inset: -40%;
+      background: radial-gradient(circle at 30% 30%, rgba(7,62,119,.14), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(254,206,0,.14), transparent 60%);
+      transform: rotate(12deg);
+    }
+    .ph .label{
+      position: relative;
+      font-size: 12px; color: rgba(11,18,32,.78);
+      display:flex; align-items:center; justify-content: space-between; gap: 10px;
+    }
+    .ph .hint{
+      position: relative;
+      margin-top: 10px;
+      color: rgba(11,18,32,.62);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .ph code{
+      position: relative;
+      font-size: 11px;
+      background: rgba(255,255,255,.65);
+      padding: 2px 6px;
+      border: 1px solid rgba(11,18,32,.12);
+      border-radius: 999px;
+    }
+
+    /* Stats cards */
+    .stats{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 980px){ .stats{ grid-template-columns: 1fr; } }
+    .stat{
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(11,18,32,.12);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .stat .n{
+      font-size: 26px; font-weight: 900; letter-spacing: -0.03em;
+    }
+    .stat .t{
+      margin-top: 6px;
+      font-size: 12px; color: rgba(11,18,32,.70); line-height: 1.45;
+    }
+    .stat sup a{ color: var(--blue); text-decoration: none; }
+
+    /* Timeline */
+    .timeline{
+      display:grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .step{
+      display:flex; gap: 12px; align-items:flex-start;
+      border-radius: 18px;
+      border: 1px solid rgba(11,18,32,.10);
+      background: rgba(255,255,255,.55);
+      padding: 14px;
+    }
+    .badge{
+      width: 34px; height: 34px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(7,62,119,.95), rgba(7,62,119,.70));
+      color: rgba(255,255,255,.95);
+      display:flex; align-items:center; justify-content:center;
+      font-weight: 800;
+      box-shadow: 0 18px 40px rgba(7,62,119,.22);
+      flex: 0 0 auto;
+    }
+    .step b{ display:block; font-size: 13px; }
+    .step span{ display:block; font-size: 12px; color: rgba(11,18,32,.70); margin-top: 3px; line-height: 1.45; }
+
+    /* Chart container */
+    .chart{
+      border-radius: 22px;
+      border: 1px solid rgba(11,18,32,.10);
+      background: rgba(255,255,255,.60);
+      padding: 14px;
+      margin-top: 14px;
+      overflow: hidden;
+    }
+    .chart .cap{
+      display:flex; align-items:baseline; justify-content: space-between;
+      gap: 12px; padding: 4px 6px 12px;
+    }
+    .chart .cap b{ font-size: 13px; }
+    .chart .cap span{ font-size: 12px; color: rgba(11,18,32,.65); }
+
+    /* References */
+    .refs{
+      margin-top: 10px;
+      padding-left: 18px;
+      color: rgba(11,18,32,.78);
+      line-height: 1.6;
+      font-size: 13px;
+    }
+    .refs li{ margin: 10px 0; }
+    .refs a{ color: var(--blue); text-decoration: none; }
+    .refs a:hover{ text-decoration: underline; }
+
+    /* Footer */
+    footer{
+      padding: 28px 0 60px;
+      border-top: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(246,241,230,.0), rgba(246,241,230,.75));
+    }
+    .foot{
+      display:flex; align-items:flex-start; justify-content: space-between; gap: 14px;
+      flex-wrap: wrap;
+      color: rgba(11,18,32,.70);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* Reveal animations */
+    .reveal{
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .7s ease, transform .7s ease;
+      will-change: opacity, transform;
+    }
+    .reveal.in{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Subtle hover tilt */
+    .tilt{
+      transform: translateZ(0);
+      transition: transform .15s ease;
+    }
+    .tilt:hover{
+      transform: translateY(-2px);
+    }
+
+    /* Small utilities */
+    .row{ display:flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .spacer{ height: 10px; }
+    sup a{ text-decoration:none; }
+    .sr-only{
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+      clip: rect(0,0,0,0); white-space:nowrap; border:0;
+    }
+
+    /* ── Enhanced animations (shared-style additions) ── */
+    body { animation: pageIn .5s ease both; }
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo { animation: logoPulse 4s ease-in-out infinite; }
+    @keyframes logoPulse {
+      0%, 100% { box-shadow: 0 10px 25px rgba(7,62,119,.25); }
+      50%       { box-shadow: 0 0 26px rgba(254,206,0,.40), 0 0 10px rgba(7,62,119,.20); }
+    }
+
+    /* h2 gradient underline (matches ROBOTDESIGN style) */
+    h2 { position: relative; padding-bottom: 8px; }
+    h2::after {
+      content: ""; position: absolute; left: 0; bottom: 0;
+      width: 64px; height: 3px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue), var(--yellow), var(--lime));
+    }
+
+    /* Stagger delays for grouped reveals */
+    .reveal[data-delay="1"] { transition-delay: .10s; }
+    .reveal[data-delay="2"] { transition-delay: .20s; }
+    .reveal[data-delay="3"] { transition-delay: .30s; }
+    .reveal[data-delay="4"] { transition-delay: .40s; }
+    .reveal[data-delay="5"] { transition-delay: .50s; }
+
+    /* Richer interactive feedback */
+    .step { transition: transform .18s ease, background .2s; }
+    .step:hover { transform: translateX(4px); background: rgba(255,255,255,.82); }
+
+    .stat { transition: transform .18s ease; }
+    .stat:hover { transform: translateY(-2px); }
+
+    .bullets li { transition: transform .15s ease, background .2s; }
+    .bullets li:hover { transform: translateY(-1px); background: rgba(255,255,255,.84); }
+
+    .seg button { transition: background .2s, transform .15s, box-shadow .15s; }
+    .seg button:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(7,62,119,.12); }
+
+    .card { transition: transform .22s ease, box-shadow .22s ease; }
+    .card:hover { transform: translateY(-3px); }
+
+    nav a { transition: transform .15s ease, background .2s, border-color .2s; }
+    nav a:hover { transform: translateY(-1px); }
+  </style>
+</head>
+
+<body>
+  <div class="progress" aria-hidden="true"><div id="progressBar"></div></div>
+  <div class="blob b1" aria-hidden="true"></div>
+  <div class="blob b2" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="#top">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>FLL Innovation Project</strong>
+            <span>Archaeology Rover Mapping Concept</span>
+          </div>
+        </a>
+
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="#identify">Identify</a></li>
+            <li><a href="#plan">Plan</a></li>
+            <li><a href="#create">Create</a></li>
+            <li><a href="#iterate">Iterate</a></li>
+            <li><a href="#communicate">Communicate</a></li>
+            <li><a href="#research">Evidence</a></li>
+            <li><a href="#gallery">Prototypes</a></li>
+            <li><a href="#refs">References</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-cta">
+          <a class="btn" href="#gallery" title="Jump to prototype placeholders">Add Photos</a>
+          <a class="btn primary" href="#contact" title="Share this project">Share</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main id="top" class="hero">
+    <div class="wrap hero-grid">
+      <section class="reveal">
+        <div class="kicker"><span class="bar"></span> Innovation Project Overview</div>
+        <h1>Safer Mapping for Fragile, Hard-to-Reach Archaeological Sites</h1>
+        <p class="lead">
+          Our team designed a rover concept that helps archaeologists document dark, unstable environments—like caves and ancient
+          structures—without putting people or artifacts at risk. We combined field research, rapid prototyping, CAD iteration,
+          and expert feedback to build a solution that feels ready for real-world testing.
+        </p>
+
+        <div class="meta">
+          <div class="tag">Prototype Platforms: LEGO + CAD</div>
+          <div class="tag">CAD Tools: Tinkercad → Onshape</div>
+          <div class="tag">Fabrication: Bambu Lab P1S (planned)</div>
+          <div class="tag">Expert Input: Archaeologist Interview</div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="row">
+          <a class="btn primary" href="#identify">Start the Story</a>
+          <a class="btn" href="#research">View the Evidence</a>
+          <a class="btn" href="#gallery">Prototype Gallery</a>
+        </div>
+
+        <ul class="bullets">
+          <li class="tilt">
+            <span class="check" aria-hidden="true"></span>
+            <div>
+              <b>Remote operation to reduce risk</b>
+              <span>We designed for safer documentation when visibility is limited and terrain is unpredictable.</span>
+            </div>
+          </li>
+          <li class="tilt">
+            <span class="check" aria-hidden="true"></span>
+            <div>
+              <b>Modular components for field repairs</b>
+              <span>Attachments and camera mounts can swap quickly to adapt to different spaces and mission goals.</span>
+            </div>
+          </li>
+          <li class="tilt">
+            <span class="check" aria-hidden="true"></span>
+            <div>
+              <b>Mapping-ready sensor placement</b>
+              <span>We prioritized camera height and blind-spot reduction based on expert feedback.</span>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <aside class="hero-art reveal">
+        <div class="overlay">
+          <div>
+            <div class="kicker"><span class="bar"></span> Project Highlights</div>
+            <div class="mini">
+              <div class="mini-card tilt">
+                <div class="big">5</div>
+                <div class="small">Phases documented end-to-end (Identify → Communicate)</div>
+              </div>
+              <div class="mini-card tilt">
+                <div class="big">3+</div>
+                <div class="small">Prototype iterations (cardboard → LEGO → CAD updates)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini">
+            <div class="mini-card tilt">
+              <div class="big">2</div>
+              <div class="small">Drive concepts tested: tracks for loose terrain, wheels for tight turns</div>
+            </div>
+            <div class="mini-card tilt">
+              <div class="big">1</div>
+              <div class="small">Expert archaeologist feedback loop built into iteration</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- IDENTIFY -->
+  <section id="identify" class="section">
+    <div class="wrap grid">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Identify — Anthony</div>
+        <h2>We started by learning what can go wrong in real archaeology.</h2>
+        <p>
+          Before building anything, we investigated the biggest challenges archaeologists face when documenting fragile history.
+          We reviewed documentaries, read articles, studied artifacts at the Metropolitan Museum of Art, and discussed how
+          excavation and documentation can unintentionally damage objects.
+        </p>
+        <p>
+          We found that artifacts are extremely sensitive to environmental changes. Conservation guidance commonly emphasizes
+          stable conditions and warns that higher humidity can increase the risk of mould growth in collections
+          <sup><a href="#ref-cci-mould">[2]</a></sup>. Professional conservation groups also recommend
+          “middle range” humidity targets for mixed materials to reduce long-term deterioration
+          <sup><a href="#ref-iic-icom">[1]</a></sup>.
+        </p>
+        <p>
+          One challenge stood out as both urgent and solvable: <b>mapping dark, unstable, and hard-to-reach spaces</b> such as caves
+          and ancient structures. In robotics research, cave surveying is often described as a “total darkness” problem that
+          requires specialized sensors and lighting <sup><a href="#ref-tabib">[5]</a></sup>. That evidence helped us define our
+          Innovation Project goal:
+        </p>
+
+        <div class="pill-row">
+          <span class="pill"><span class="dot"></span> Safer exploration</span>
+          <span class="pill"><span class="dot y"></span> Better visibility</span>
+          <span class="pill"><span class="dot g"></span> Reduced artifact impact</span>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="card" style="padding:16px;border-radius:22px;background:rgba(255,255,255,.62);">
+          <h3 style="margin:0 0 8px;">Problem Statement</h3>
+          <p style="margin:0;">
+            Archaeologists need a safer way to document and map dark, unstable, tight spaces—without increasing the risk to people
+            or causing accidental damage to fragile cultural heritage.
+          </p>
+        </div>
+      </div>
+
+      <aside class="card reveal tilt">
+        <h3>Discovery Methods</h3>
+        <p>How we avoided “guessing” and built our problem choice on real evidence.</p>
+        <div class="timeline">
+          <div class="step">
+            <div class="badge">1</div>
+            <div><b>Observe</b><span>Artifacts up close (museum visit) to understand fragility and preservation needs.</span></div>
+          </div>
+          <div class="step">
+            <div class="badge">2</div>
+            <div><b>Research</b><span>Reading + videos to find recurring risks: access limits, low visibility, and site safety.</span></div>
+          </div>
+          <div class="step">
+            <div class="badge">3</div>
+            <div><b>Define</b><span>We narrowed the focus to mapping challenges in dark and unstable environments.</span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  
+
+  <!-- PLAN -->
+  <section id="plan" class="section">
+    <div class="wrap grid">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Project Plan & Team Collaboration — Kyle</div>
+        <h2>We planned like an engineering team—clear roles, fast brainstorming, tight organization.</h2>
+        <p>
+          We built a detailed project plan for a rover-based solution and brainstormed using IDEO-style rules: defer judgment,
+          build on others’ ideas, stay visual, and go for quantity. We sketched multiple rover layouts, discussed tradeoffs,
+          and tracked tasks in a shared spreadsheet so deadlines and responsibilities stayed visible.
+        </p>
+
+        <div class="media">
+          <div class="ph tilt" style="padding:12px;">
+            <div class="label"><b>Project Plan — Snapshot</b><code style="margin-left:8px;color:rgba(11,18,32,.56);">Generated infographic</code></div>
+            <div style="margin-top:10px;">
+              <svg viewBox="0 0 600 200" width="100%" height="160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kanban style project plan infographic" style="border-radius:8px;">
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#073e77" stop-opacity="0.18"/><stop offset="1" stop-color="#fece00" stop-opacity="0.08"/></linearGradient>
+                </defs>
+                <rect x="0" y="0" width="600" height="200" rx="12" fill="url(#g1)" />
+                <!-- Columns -->
+                <g font-family="system-ui,Segoe UI,Roboto,Arial" font-size="12" fill="#072b55" opacity="0.95">
+                  <text x="40" y="24" font-weight="700">To Do</text>
+                  <text x="240" y="24" font-weight="700">In Progress</text>
+                  <text x="440" y="24" font-weight="700">Done</text>
+                </g>
+                <!-- Cards -->
+                <g>
+                  <rect x="20" y="36" width="160" height="36" rx="6" fill="#fff" stroke="rgba(11,18,32,.06)" />
+                  <text x="30" y="58" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Define scope & interview expert</text>
+
+                  <rect x="220" y="36" width="160" height="36" rx="6" fill="#fff" stroke="rgba(11,18,32,.06)" />
+                  <text x="230" y="58" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Build cardboard mockup</text>
+
+                  <rect x="420" y="36" width="160" height="36" rx="6" fill="#e9f5ff" stroke="#bcd9ff" />
+                  <text x="430" y="58" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#073e77">Finalize camera placement</text>
+
+                  <rect x="20" y="84" width="160" height="36" rx="6" fill="#fff" stroke="rgba(11,18,32,.06)" />
+                  <text x="30" y="106" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Prepare test plan</text>
+
+                  <rect x="220" y="84" width="160" height="36" rx="6" fill="#fff" stroke="rgba(11,18,32,.06)" />
+                  <text x="230" y="106" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">LEGO stability tests</text>
+
+                  <rect x="420" y="84" width="160" height="36" rx="6" fill="#e9f5ff" stroke="#bcd9ff" />
+                  <text x="430" y="106" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#073e77">CAD sync + iterate</text>
+                </g>
+                <!-- Timeline bar -->
+                <g>
+                  <rect x="40" y="140" width="520" height="12" rx="6" fill="#fff" opacity="0.85" stroke="rgba(11,18,32,.06)" />
+                  <rect x="40" y="140" width="320" height="12" rx="6" fill="#073e77" opacity="0.14" />
+                  <text x="40" y="172" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Timeline: Weeks 1–4 (progress shown)</text>
+                </g>
+              </svg>
+            </div>
+            <div class="hint" style="margin-top:10px;">Visual summary of assignments, current status, and short timeline — generated infographic.</div>
+          </div>
+
+          <div class="ph tilt" style="padding:12px;">
+            <div class="label"><b>Ideation Wall — Sketches</b><code style="margin-left:8px;color:rgba(11,18,32,.56);">Generated infographic</code></div>
+            <div style="margin-top:10px;">
+              <svg viewBox="0 0 600 200" width="100%" height="160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sketches sticky note infographic">
+                <rect x="0" y="0" width="600" height="200" rx="12" fill="rgba(255,255,255,0.02)" />
+                <!-- sticky notes -->
+                <g>
+                  <rect x="28" y="32" width="140" height="88" rx="8" fill="#fff7d6" stroke="#f2d98a" />
+                  <text x="38" y="56" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="12" fill="#073e77" font-weight="700">Camera Height</text>
+                  <text x="38" y="74" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Raise 10–15 cm to capture walls</text>
+
+                  <rect x="196" y="28" width="140" height="76" rx="8" fill="#e6fff0" stroke="#bfe9c7" />
+                  <text x="206" y="50" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="12" fill="#095a2e" font-weight="700">Modularity</text>
+                  <text x="206" y="68" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Quick-swap mounts for field repairs</text>
+
+                  <rect x="364" y="36" width="200" height="96" rx="8" fill="#eef6ff" stroke="#cddcf6" />
+                  <text x="374" y="60" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="12" fill="#073e77" font-weight="700">Lighting & Sensors</text>
+                  <text x="374" y="78" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="11" fill="#0b1220">Integrate LED ring + distance mapping</text>
+                </g>
+              </svg>
+            </div>
+            <div class="hint" style="margin-top:10px;">Quick visual summary of early ideas and decisions — generated from your project notes.</div>
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="card" style="padding:16px;border-radius:22px;background:rgba(255,255,255,.62);">
+          <h3 style="margin:0 0 8px;">Team Roles</h3>
+          <p style="margin:0;color:rgba(11,18,32,.72);line-height:1.65;">
+            <b>Mobility:</b> stability for uneven terrain • <b>Sensing:</b> camera/sensor ideas for mapping •
+            <b>Durability & Safety:</b> protective bumpers + repairability • <b>Documentation:</b> engineering notebook + media
+          </p>
+        </div>
+      </div>
+
+      <aside class="card reveal tilt">
+        <h3>Why this matters (real-world fit)</h3>
+        <p>
+          Field documentation often happens in challenging environments. Research on remote, rugged field scenarios highlights why
+          teams use robotics and aerial systems to document areas that are dispersed or difficult to capture by traditional methods
+          <sup><a href="#ref-klehm">[4]</a></sup>.
+        </p>
+        <div class="pill-row">
+          <span class="pill"><span class="dot"></span> Clear responsibilities</span>
+          <span class="pill"><span class="dot y"></span> Fast iteration</span>
+          <span class="pill"><span class="dot g"></span> Evidence-driven decisions</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CREATE -->
+  <section id="create" class="section">
+    <div class="wrap grid">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Create — Julissa</div>
+        <h2>We built multiple rover versions—physical + digital—to prove the idea is real.</h2>
+        <p>
+          We began with a cardboard model to lock in size, layout, and component placement quickly. Then we built LEGO prototypes
+          to test stability, turning radius, and how the rover behaves on different “field-like” surfaces.
+        </p>
+        <p>
+          In parallel, we created CAD models—first in Tinkercad for fast revisions, then in Onshape for a more detailed, assembly-style
+          layout. This let us experiment with camera placement and proportions before finalizing our concept.
+        </p>
+
+        <div class="card" style="padding:16px;border-radius:22px;background:rgba(255,255,255,.62);">
+          <h3 style="margin:0 0 8px;">Design Priorities</h3>
+          <div class="pill-row" style="margin-top:0;">
+            <span class="pill"><span class="dot"></span> Compact & agile</span>
+            <span class="pill"><span class="dot y"></span> Camera + sensor integration</span>
+            <span class="pill"><span class="dot g"></span> Remote operation</span>
+            <span class="pill"><span class="dot"></span> Modular attachments</span>
+          </div>
+        </div>
+
+        <div class="media">
+          <div class="ph tilt">
+            <img src="Rover%20Iterations/cardboard%20models.png" alt="Cardboard / top view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <div class="label">
+              <b>Cardboard / Top View</b>
+              <code>Rover Iterations/cardboard models.png</code>
+            </div>
+            <div class="hint">Show top + side views with labeled components (camera, hub, motors, protective bumper).</div>
+          </div>
+          <div class="ph tilt">
+            <img src="Rover%20Iterations/innovation%20lego%20prototype.jpg" alt="LEGO tracked prototype" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <div class="label">
+              <b>LEGO Tracked Prototype</b>
+              <code>Rover Iterations/innovation lego prototype.jpg</code>
+            </div>
+            <div class="hint">Angled (3/4) photo showing terrain and stability testing.</div>
+          </div>
+          <div class="ph tilt">
+            <img src="Rover%20Iterations/innovation%203d%20assembled%20v1.jpg" alt="LEGO wheeled prototype / assembled view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <div class="label">
+              <b>LEGO Wheeled / Assembled View</b>
+              <code>Rover Iterations/innovation 3d assembled v1.jpg</code>
+            </div>
+            <div class="hint">Capture tight turns and turning radius. Add a quick note: “smooth surface maneuvering.”</div>
+          </div>
+          <div class="ph tilt">
+            <img src="Rover%20Iterations/innovation%203d%20left%20side%20v1.jpg" alt="CAD / left side" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <div class="label">
+              <b>CAD / Left Side View</b>
+              <code>Rover Iterations/innovation 3d left side v1.jpg</code>
+            </div>
+            <div class="hint">Use an isometric view + an exploded view if you have one.</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="card reveal tilt">
+        <h3>Research alignment</h3>
+        <p>
+          Robotics research in archaeology highlights how sensors like LiDAR, 3D modeling, and mapping tools can help document
+          inaccessible spaces with higher precision <sup><a href="#ref-robotics-arch">[3]</a></sup>. That’s why our rover concept
+          centers on <b>sensor placement</b> and <b>stable movement</b>.
+        </p>
+        <div class="timeline">
+          <div class="step">
+            <div class="badge">A</div>
+            <div><b>Cardboard</b><span>Fast layout decisions (size, wiring paths, camera location).</span></div>
+          </div>
+          <div class="step">
+            <div class="badge">B</div>
+            <div><b>LEGO</b><span>Movement + stability tests, and quick mechanical changes.</span></div>
+          </div>
+          <div class="step">
+            <div class="badge">C</div>
+            <div><b>CAD</b><span>Proportions, mounts, and a “real build” preview before printing parts.</span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ITERATE -->
+  <section id="iterate" class="section">
+    <div class="wrap grid">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Iterate — Brian</div>
+        <h2>We used feedback like professionals: collect → prioritize → update → re-test.</h2>
+        <p>
+          After our early prototypes and CAD models were ready, we shared them with other teams, mentors, family members, and two
+          key reviewers: <b>Grace Howe</b> (archaeologist) and <b>Rawlins</b> (NYC event organizer). Grace recommended raising the camera
+          to capture wall and ceiling detail, and Rawlins pushed for modularity so repairs would be easier in the field.
+        </p>
+        <p>
+          Based on that feedback, we improved terrain handling, reduced blind spots by repositioning sensors, and updated our CAD
+          models so the design matched our real revisions.
+        </p>
+
+        <div class="card" style="padding:16px;border-radius:22px;background:rgba(255,255,255,.62);">
+          <h3 style="margin:0 0 8px;">Key Improvements</h3>
+          <ul style="margin:0;padding-left:18px;color:rgba(11,18,32,.72);line-height:1.7;font-size:14px;">
+            <li>Adjusted wheel/track placement for stability on uneven terrain</li>
+            <li>Raised and repositioned camera to reduce blind spots</li>
+            <li>Improved modular attachments for faster swaps and repairs</li>
+            <li>Synced Tinkercad + Onshape models to match the newest version</li>
+          </ul>
+        </div>
+
+        <div class="ph tilt" style="margin-top:14px;min-height:170px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <video controls style="width:100%;height:160px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.08);">
+              <source src="Rover%20Iterations/Left%20Side%20Rover%20Test.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <video controls style="width:100%;height:160px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.08);">
+              <source src="Rover%20Iterations/Left%20Side%20Rover%20Test%202.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="label" style="margin-top:8px;">
+            <b>Before vs After: Left-side tests</b>
+            <code>Rover Iterations/Left Side Rover Test.mp4, Rover Iterations/Left Side Rover Test 2.mp4</code>
+          </div>
+          <div class="hint">
+            Two test runs showing adjustments to camera height/placement. Use the videos to demonstrate behavior differences.
+          </div>
+        </div>
+      </div>
+
+      <aside class="card reveal tilt">
+        <h3>Why camera height matters</h3>
+        <p>
+          In cave surveying research, systems often rely on sensors plus lighting to map in total darkness
+          <sup><a href="#ref-tabib">[5]</a></sup>. Raising the camera increases visible surface area per frame, which can improve
+          how well walls/ceilings are documented.
+        </p>
+
+        <div class="chart">
+                  <div class="cap">
+            <b>Iteration Timeline (Example)</b>
+            <span>Timeline (example)</span>
+          </div>
+          <canvas id="timelineChart" height="170" aria-label="Iteration timeline chart" role="img"></canvas>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CODE & GRAPHS -->
+  <section id="code" class="section">
+    <div class="wrap grid">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Code & Graphs — Data Visualization</div>
+        <h2>Scan-processing Python code and a browser graph of the same data</h2>
+        <p class="lead" style="margin-top:0;">Below is the Python script used to turn range scans into a point cloud, a browser-rendered scatter plot that reproduces the output, and a Tinkercad screenshot showing the CAD layout.</p>
+
+        <div class="spacer"></div>
+
+        <div class="card" style="padding:12px;border-radius:14px;background:rgba(255,255,255,.72);">
+          <h3 style="margin:0 0 8px;">Python: <a href="innovationextension.py">download</a></h3>
+          <pre style="white-space:pre-wrap;max-height:320px;overflow:auto;padding:12px;background:#0b1220;color:#eef6ff;border-radius:10px;border:1px solid rgba(255,255,255,.06);">
+import math
+import matplotlib.pyplot as plt
+
+scan = [
+    {'back_mm': 2000, 'angle_index': 0, 'front_mm': 2000},
+    {'back_mm': 2000, 'angle_index': -1, 'front_mm': 2000},
+    {'back_mm': 2000, 'angle_index': -2, 'front_mm': 402},
+    {'back_mm': 2000, 'angle_index': -3, 'front_mm': 428},
+    {'back_mm': 2000, 'angle_index': -4, 'front_mm': 2000},
+    {'back_mm': 2000, 'angle_index': -5, 'front_mm': 1149},
+    {'back_mm': 2000, 'angle_index': -6, 'front_mm': 150},
+    {'back_mm': 296,  'angle_index': 0, 'front_mm': 2000},
+    {'back_mm': 2000, 'angle_index': 1, 'front_mm': 2000},
+    {'back_mm': 2000, 'angle_index': 2, 'front_mm': 333},
+    {'back_mm': 2000, 'angle_index': 3, 'front_mm': 2000},
+    {'back_mm': 2000, 'angle_index': 4, 'front_mm': 1141},
+    {'back_mm': 2000, 'angle_index': 5, 'front_mm': 1124},
+    {'back_mm': 2000, 'angle_index': 6, 'front_mm': 190},
+]
+
+# --- TUNE THIS ---
+# angle_index isn't degrees; it's a step counter.
+ANGLE_STEP_DEG = 15
+NO_HIT_MM = 2000
+
+front_x, front_y = [], []
+back_x, back_y = [], []
+
+for s in scan:
+    a_deg = s["angle_index"] * ANGLE_STEP_DEG
+    rf = s["front_mm"]
+    if rf is not None and rf < NO_HIT_MM:
+        th = math.radians(a_deg)
+        front_x.append(rf * math.cos(th))
+        front_y.append(rf * math.sin(th))
+    rb = s["back_mm"]
+    if rb is not None and rb < NO_HIT_MM:
+        th = math.radians(a_deg + 180)
+        back_x.append(rb * math.cos(th))
+        back_y.append(rb * math.sin(th))
+
+plt.figure()
+plt.scatter(front_x, front_y, marker="o", label="Front sensor hits")
+plt.scatter(back_x, back_y, marker="x", label="Back sensor hits")
+plt.scatter([0], [0], marker="s", label="Robot (0,0)")
+plt.axis("equal")
+plt.grid(True)
+plt.xlabel("mm forward (x)")
+plt.ylabel("mm sideways (y)")
+plt.title("Distance Scan Point Cloud")
+plt.legend()
+plt.show()
+          </pre>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="card" style="padding:12px;border-radius:14px;background:rgba(255,255,255,.60);margin-top:12px;">
+          <h3 style="margin:0 0 8px;">Browser Graph (replicates the Python point cloud)</h3>
+          <p style="margin:0 0 10px;color:rgba(11,18,32,.68);">Interactive scatter plot rendered with Chart.js — front/back sensor hits.</p>
+          <canvas id="pyScatter" height="300" aria-label="Scan point cloud scatter plot" role="img"></canvas>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="card" style="padding:12px;border-radius:14px;background:rgba(255,255,255,.60);margin-top:12px;">
+          <h3 style="margin:0 0 8px;">Tinkercad Screenshot</h3>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start;">
+            <img src="Rover%20Iterations/tinkercadscreenshot.png" alt="Tinkercad screenshot" style="max-width:420px;width:100%;height:auto;border-radius:10px;border:1px solid rgba(11,18,32,.08);" />
+            <div style="flex:1;min-width:220px;">
+              <p style="margin:0;color:rgba(11,18,32,.72);">Screenshot showing the CAD layout used for measuring camera height and mount positions.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="card reveal tilt">
+        <h3>Python script</h3>
+        <p>Reference implementation included: <code>innovationextension.py</code>.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- COMMUNICATE -->
+  <section id="communicate" class="section">
+    <div class="wrap grid">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Communicate — Jonathan</div>
+        <h2>We explained the “why” and the “how,” not just the build.</h2>
+        <p>
+          We focused on telling a clear story: what problem we chose, what evidence supports it, how our rover works, and why our
+          design choices reduce risk to people and artifacts. Our presentation included physical LEGO prototypes, CAD models from
+          Tinkercad and Onshape, sketches, and drawings so reviewers could see our thinking at every step.
+        </p>
+
+        <div class="media">
+          <div class="ph tilt">
+            <img src="Rover%20Iterations/innovation%203d%20assembled%20v1.jpg" alt="Presentation slide" style="width:100%;height:180px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <div class="label">
+              <b>Presentation Slide</b>
+              <code>Rover Iterations/innovation 3d assembled v1.jpg</code>
+            </div>
+            <div class="hint">Include the one slide that best summarizes your solution (problem → rover → impact).</div>
+          </div>
+          <div class="ph tilt">
+            <video controls style="width:100%;height:180px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);">
+              <source src="Rover%20Iterations/Final%20Innovation%20Project%20Moving.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="label">
+              <b>Demo Video</b>
+              <code>Rover Iterations/Final Innovation Project Moving.mp4</code>
+            </div>
+            <div class="hint">Use a still frame from your best demo video (or embed a video link later).</div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:16px;border-radius:22px;background:rgba(255,255,255,.62);margin-top:14px;">
+          <h3 style="margin:0 0 8px;">Impact Summary</h3>
+          <p style="margin:0;color:rgba(11,18,32,.72);line-height:1.65;">
+            Our rover concept supports safer documentation by keeping people at a distance, improving visibility with deliberate camera placement,
+            and enabling modular repairs so the work can continue without risky improvisation inside sensitive sites.
+          </p>
+        </div>
+      </div>
+
+      <aside class="card reveal tilt" id="contact">
+        <h3>Share-ready description</h3>
+        <p>
+          Copy this into an email, flyer, or judge handout:
+        </p>
+        <div class="card" style="padding:14px;border-radius:18px;background:rgba(255,255,255,.60);">
+          <p style="margin:0;font-size:13px;color:rgba(11,18,32,.74);line-height:1.7;">
+            <b>We designed an archaeology rover concept</b> that helps map dark, unstable spaces without risking people or artifacts.
+            Using prototypes (cardboard + LEGO) and CAD (Tinkercad → Onshape), we iterated with expert feedback to improve camera coverage,
+            modularity, and terrain handling.
+          </p>
+        </div>
+        <div class="pill-row">
+          <span class="pill"><span class="dot"></span> Judges</span>
+          <span class="pill"><span class="dot y"></span> Sponsors</span>
+          <span class="pill"><span class="dot g"></span> Community</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- RESEARCH / EVIDENCE -->
+  <section id="research" class="section">
+    <div class="wrap grid">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Evidence & Research</div>
+        <h2>We anchored our design in conservation and robotics research.</h2>
+        <p>
+          Our project sits at the intersection of <b>heritage preservation</b> and <b>robotic mapping</b>. Conservation guidance commonly
+          recommends mid-range humidity targets for many cultural materials <sup><a href="#ref-iic-icom">[1]</a></sup>, and warns that
+          high humidity can increase the risk of mould growth <sup><a href="#ref-cci-mould">[2]</a></sup>. That supports our emphasis on
+          minimizing unnecessary exposure and handling.
+        </p>
+        <p>
+          On the robotics side, cave surveying research explicitly addresses mapping in “total darkness” using lights and sensors
+          <sup><a href="#ref-tabib">[5]</a></sup>, and surveys of robotics in archaeology describe how tools like LiDAR and 3D modeling
+          help reach inaccessible sites and improve documentation precision <sup><a href="#ref-robotics-arch">[3]</a></sup>.
+        </p>
+
+        <div class="stats">
+          <div class="stat tilt">
+            <div class="n">45–55% RH</div>
+            <div class="t">
+              A commonly recommended museum target range for many mixed cultural materials
+              <sup><a href="#ref-iic-icom">[1]</a></sup>.
+            </div>
+          </div>
+          <div class="stat tilt">
+            <div class="n">65%+ RH</div>
+            <div class="t">
+              Canadian conservation guidance notes mould growth is promoted in higher humidity ranges (e.g., 65–100%)
+              <sup><a href="#ref-cci-mould">[2]</a></sup>.
+            </div>
+          </div>
+          <div class="stat tilt">
+            <div class="n">Total darkness</div>
+            <div class="t">
+              Cave surveying research describes darkness as a core challenge requiring sensors + lighting
+              <sup><a href="#ref-tabib">[5]</a></sup>.
+            </div>
+          </div>
+        </div>
+
+        <div class="chart">
+          <div class="cap">
+            <b>Humidity Risk Bands (Illustrative from published guidance)</b>
+            <span>Illustrative humidity guideline ranges</span>
+          </div>
+          <canvas id="rhChart" height="210" aria-label="Relative humidity guideline chart" role="img"></canvas>
+          <p style="margin:10px 6px 2px;color:rgba(11,18,32,.62);font-size:12px;line-height:1.5;">
+            Note: This chart visualizes guideline ranges, not a prediction model. Always follow the policies of the museum/site you work with.
+          </p>
+        </div>
+      </div>
+
+      <aside class="card reveal tilt">
+        <h3>What makes this “professional”</h3>
+        <p>Judges can see the full engineering process — not just a final build.</p>
+        <div class="timeline">
+          <div class="step">
+            <div class="badge">R</div>
+            <div><b>Research-backed</b><span>Claims connect to conservation and robotics literature.</span></div>
+          </div>
+          <div class="step">
+            <div class="badge">I</div>
+            <div><b>Iterative</b><span>Feedback → changes → updated CAD and prototype comparisons.</span></div>
+          </div>
+          <div class="step">
+            <div class="badge">D</div>
+            <div><b>Documented</b><span>Placeholders encourage you to show evidence: photos, sketches, screenshots.</span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- PROTOTYPE GALLERY -->
+  <section id="gallery" class="section">
+    <div class="wrap">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Prototype Gallery</div>
+        <h2>Drop in your best visuals to make the project “judge-ready.”</h2>
+          <p class="lead" style="margin-top:0;">
+          Project visuals and screenshots are shown below — placeholders have been replaced with project images and generated infographics.
+        </p>
+
+        <div class="media" style="margin-top:18px;">
+          <div class="ph tilt" style="min-height:220px;">
+            <img src="Rover%20Iterations/innovation%20lego%20prototype%20top%20view.jpg" alt="Prototype 1: Top view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <div class="label">
+              <b>Prototype 1: Cardboard / Top View</b>
+              <code>Rover Iterations/innovation lego prototype top view.jpg</code>
+            </div>
+            <div class="hint">Layout decisions: size, mounts, camera position.</div>
+          </div>
+          <div class="ph tilt" style="min-height:220px;">
+            <img src="Rover%20Iterations/innovation%20lego%20prototype.jpg" alt="Prototype 2: Tracked rover" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <div class="label">
+              <b>Prototype 2: LEGO Tracked Rover</b>
+              <code>Rover Iterations/innovation lego prototype.jpg</code>
+            </div>
+            <div class="hint">Stability test: loose terrain + slope.</div>
+          </div>
+          <div class="ph tilt" style="min-height:220px;">
+            <img src="Rover%20Iterations/innovation%203d%20assembled%20v1.jpg" alt="Prototype 3: Wheeled / assembled" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <div class="label">
+              <b>Prototype 3: Wheeled / Assembled</b>
+              <code>Rover Iterations/innovation 3d assembled v1.jpg</code>
+            </div>
+            <div class="hint">Turning test: tight spaces + pivot.</div>
+          </div>
+          <div class="ph tilt" style="min-height:220px;">
+            <img src="Rover%20Iterations/innovation%203d%20left%20side%20v1.jpg" alt="CAD: left side view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <div class="label">
+              <b>CAD: Left Side View</b>
+              <code>Rover Iterations/innovation 3d left side v1.jpg</code>
+            </div>
+            <div class="hint">Camera height and modular mount revision.</div>
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="card" style="padding:16px;border-radius:22px;background:rgba(255,255,255,.62);margin-top:14px;">
+          <h3 style="margin:0 0 8px;">Additional materials</h3>
+          <p style="margin:0;color:rgba(11,18,32,.72);line-height:1.65;">Supporting materials in the project folder include demo video files, CAD views, and test documentation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFERENCES -->
+  <section id="refs" class="section">
+    <div class="wrap">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> References</div>
+        <h2>Sources cited on this page</h2>
+        <ol class="refs">
+          <li id="ref-iic-icom">
+            International Institute for Conservation (IIC) & ICOM-CC. <i>Environmental Guidelines (Declaration)</i>.
+            <a href="https://www.iiconservation.org/archives/about/policy-statements/environmental-guidelines" target="_blank" rel="noreferrer">Link</a>
+          </li>
+          <li id="ref-cci-mould">
+            Canadian Conservation Institute (CCI). <i>Mould Growth on Textiles</i> (notes that RH 65–100% promotes mould growth).
+            <a href="https://www.canada.ca/en/conservation-institute/services/conservation-preservation-publications/canadian-conservation-institute-notes/mould-growth-textiles.html" target="_blank" rel="noreferrer">Link</a>
+          </li>
+          <li id="ref-robotics-arch">
+            Kyriakoulia, P. (2025). <i>Survey on the Application of Robotics in Archaeology</i> (Open Access, PMC).
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12349394/" target="_blank" rel="noreferrer">Link</a>
+          </li>
+          <li id="ref-klehm">
+            Klehm, C. et al. (2024). <i>Remote, Rugged Field Scenarios for Archaeology and the Field Sciences</i> (NSF-hosted PDF).
+            <a href="https://par.nsf.gov/servlets/purl/10527625" target="_blank" rel="noreferrer">Link</a>
+          </li>
+          <li id="ref-tabib">
+            Tabib, W. et al. (2020/2021). <i>Autonomous Cave Surveying with an Aerial Robot</i> (mapping in total darkness; arXiv/IEEE T-RO).
+            <a href="https://arxiv.org/pdf/2003.13883" target="_blank" rel="noreferrer">Link</a>
+          </li>
+        </ol>
+        <p style="margin:14px 0 0;color:rgba(11,18,32,.66);font-size:12px;line-height:1.6;">
+          Additional sources are listed in the project repository.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <b>FLL Innovation Project Website</b><br/>
+        Built as a single-file site (HTML + CSS + JS). Image placeholders have been replaced; images are sourced from the project folders.
+      </div>
+      <div>
+        <b>Tools mentioned:</b> Tinkercad • Onshape • Bambu Lab P1S<br/>
+        <b>Credits:</b> Team members (Identify/Plan/Create/Iterate/Communicate) + expert feedback (Grace).
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+    // Scroll progress bar
+    const progressBar = document.getElementById("progressBar");
+    const onScroll = () => {
+      const h = document.documentElement;
+      const scrollTop = h.scrollTop || document.body.scrollTop;
+      const scrollHeight = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+      const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      progressBar.style.width = pct.toFixed(2) + "%";
+    };
+    document.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add("in");
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+    // Charts
+    // 1) RH guideline bands chart (visualizes cited guidance; not a predictive model)
+    const rhCtx = document.getElementById("rhChart");
+    new Chart(rhCtx, {
+      type: "bar",
+      data: {
+        labels: ["Lower risk target", "Acceptable range", "Mould risk zone"],
+        datasets: [{
+          label: "Relative Humidity (RH) bands",
+          data: [45, 55, 65],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                const i = ctx.dataIndex;
+                if (i === 0) return "Around 45% RH is often used as a museum set point (example guidelines).";
+                if (i === 1) return "45–55% RH is commonly recommended for many cultural materials.";
+                return "65%+ RH is associated with increased mould risk in conservation guidance.";
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 80,
+            title: { display: true, text: "RH (%)" }
+          }
+        }
+      }
+    });
+
+    // 2) Iteration timeline (replace the labels/dates with your real calendar)
+    const tlCtx = document.getElementById("timelineChart");
+    new Chart(tlCtx, {
+      type: "line",
+      data: {
+        labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
+        datasets: [{
+          label: "Prototype maturity",
+          data: [10, 25, 45, 70, 85],
+          tension: 0.35,
+          fill: false,
+          borderWidth: 2,
+          pointRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: {
+            label: (ctx) => `Maturity score: ${ctx.parsed.y}/100 (example)`
+          }}
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            title: { display: true, text: "Iteration progress (example scale)" }
+          }
+        }
+      }
+    });
+      // 3) Python-scan replica: scatter plot for front/back hits
+      const pyCtx = document.getElementById("pyScatter");
+      // Data copied from innovationextension.py
+      const scan = [
+        { back_mm: 2000, angle_index: 0, front_mm: 2000 },
+        { back_mm: 2000, angle_index: -1, front_mm: 2000 },
+        { back_mm: 2000, angle_index: -2, front_mm: 402 },
+        { back_mm: 2000, angle_index: -3, front_mm: 428 },
+        { back_mm: 2000, angle_index: -4, front_mm: 2000 },
+        { back_mm: 2000, angle_index: -5, front_mm: 1149 },
+        { back_mm: 2000, angle_index: -6, front_mm: 150 },
+        { back_mm: 296,  angle_index: 0, front_mm: 2000 },
+        { back_mm: 2000, angle_index: 1, front_mm: 2000 },
+        { back_mm: 2000, angle_index: 2, front_mm: 333 },
+        { back_mm: 2000, angle_index: 3, front_mm: 2000 },
+        { back_mm: 2000, angle_index: 4, front_mm: 1141 },
+        { back_mm: 2000, angle_index: 5, front_mm: 1124 },
+        { back_mm: 2000, angle_index: 6, front_mm: 190 },
+      ];
+      const ANGLE_STEP_DEG = 15;
+      const NO_HIT_MM = 2000;
+      const frontPoints = [];
+      const backPoints = [];
+      scan.forEach(s => {
+        const a_deg = s.angle_index * ANGLE_STEP_DEG;
+        const rf = s.front_mm;
+        if (rf != null && rf < NO_HIT_MM) {
+          const th = a_deg * Math.PI / 180;
+          frontPoints.push({ x: rf * Math.cos(th), y: rf * Math.sin(th) });
+        }
+        const rb = s.back_mm;
+        if (rb != null && rb < NO_HIT_MM) {
+          const th = (a_deg + 180) * Math.PI / 180;
+          backPoints.push({ x: rb * Math.cos(th), y: rb * Math.sin(th) });
+        }
+      });
+
+      new Chart(pyCtx, {
+        type: 'scatter',
+        data: {
+          datasets: [
+            { label: 'Front sensor hits', data: frontPoints, backgroundColor: '#073e77' },
+            { label: 'Back sensor hits', data: backPoints, backgroundColor: '#fece00' },
+            { label: 'Robot (0,0)', data: [{ x: 0, y: 0 }], backgroundColor: '#0b1220', pointStyle: 'rect', radius: 6 }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { position: 'top' } },
+          scales: {
+            x: { title: { display: true, text: 'mm forward (x)' } },
+            y: { title: { display: true, text: 'mm sideways (y)' } }
+          }
+        }
+      });
+  </script>
+</body>
+</html>

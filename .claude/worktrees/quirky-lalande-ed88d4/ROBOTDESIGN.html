@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Robot Design & Programming</title>
+  <link rel="stylesheet" href="shared.css" />
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><div id="progressBar"></div></div>
+  <div class="blob b1" aria-hidden="true"></div>
+  <div class="blob b2" aria-hidden="true"></div>
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="#top">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Robot Design & Programming</strong>
+            <span>Simple overview • clear results • beginner friendly</span>
+          </div>
+        </a>
+
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="index.html">Innovation Page</a></li>
+            <li><a href="#evolution">Build</a></li>
+            <li><a href="#strategy">Strategy</a></li>
+            <li><a href="#management">Planning</a></li>
+            <li><a href="#pybricks">Programming</a></li>
+            <li><a href="#sensors">Sensors</a></li>
+            <li><a href="#pid">Tuning</a></li>
+            <li><a href="#coop">Sharing</a></li>
+            <li><a href="#refs">References</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-cta">
+          <a class="btn primary" href="#evolution">Start here</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="section">
+    <div class="wrap">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Robot Design Overview</div>
+        <h1>How we built a robot that works the same way every time</h1>
+        <p class="lead">We explain our build, strategy, and programming in simple steps so anyone can understand our process.</p>
+        <div class="takeaway"><b>Key takeaway:</b> We focused on repeatable results, not just one good run.</div>
+
+        <div class="simple-grid">
+          <div class="card">
+            <h3 class="section-title">What we built</h3>
+            <p>A stable base, reliable attachments, and clean wiring for quick fixes.</p>
+          </div>
+          <div class="card">
+            <h3 class="section-title">How it works</h3>
+            <p>Sensors guide turns and distance so the robot stays accurate.</p>
+          </div>
+          <div class="card">
+            <h3 class="section-title">How we improved</h3>
+            <p>We tested, measured, and tuned until the robot was consistent.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <section id="evolution" class="section">
+    <div class="wrap">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Build Evolution</div>
+        <h2>From an uneven base to a stable robot</h2>
+        <p class="lead">We simplified the motor layout and attachments so the robot is easier to build, check, and repair.</p>
+        <div class="takeaway"><b>Key takeaway:</b> A simple, stable base made every run more reliable.</div>
+
+        <div class="image-grid">
+          <figure class="ph" style="padding:10px;">
+            <div class="label"><b>Old layout</b></div>
+            <img src="Robot%20Iterations/lastyearrobotfrontmotorview.png" alt="Old motor layout" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);margin-top:8px;">
+          </figure>
+          <figure class="ph" style="padding:10px;">
+            <div class="label"><b>New layout</b></div>
+            <img src="Robot%20Iterations/new%20base%20bot%204-24%20(1).png" alt="New motor layout" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);margin-top:8px;">
+          </figure>
+          <figure class="ph" style="padding:10px;">
+            <div class="label"><b>Pinless attachment</b></div>
+            <img src="Attachments/pinless%20attachment%20still.gif" alt="Pinless attachment" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);margin-top:8px;">
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="strategy" class="section">
+    <div class="wrap">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Strategy</div>
+        <h2>We grouped missions to save time and reduce risk</h2>
+        <p class="lead">Instead of many long runs, we combined nearby missions into short, safe runs.</p>
+        <div class="takeaway"><b>Key takeaway:</b> Fewer, smarter runs = fewer errors.</div>
+
+        <div class="simple-grid">
+          <div class="card">
+            <h3 class="section-title">Run A (short)</h3>
+            <img src="Attachments/Run%20A/Run%20A%20attachment%20V2.jpg" alt="Run A" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+            <p>Quick missions near home base with a low risk attachment.</p>
+          </div>
+          <div class="card">
+            <h3 class="section-title">Run B (medium)</h3>
+            <img src="Attachments/Run%20B/run%20b%20attachment%20v1.jpg" alt="Run B" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+            <p>Mid‑range mission group with careful alignment.</p>
+          </div>
+          <div class="card">
+            <h3 class="section-title">Run C (short)</h3>
+            <img src="Attachments/Run%20C/run%20c%20attachment%20v1.jpg" alt="Run C" style="width:100%;height:130px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);">
+            <p>Quick collection and return with a light attachment.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="management" class="section">
+    <div class="wrap">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Planning & Tracking</div>
+        <h2>We used photos and schedules to stay organized</h2>
+        <p class="lead">Simple tracking helped us see what worked and what needed fixing.</p>
+        <div class="takeaway"><b>Key takeaway:</b> Good planning saved time during testing.</div>
+
+        <div class="two-col">
+          <div class="ph" style="padding:10px;">
+            <div class="label"><b>Build photos</b></div>
+            <img src="Robot%20Iterations/base%20robot%20iteration%206.2.jpg" alt="Build gallery" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);margin-top:8px;">
+            <div class="hint" style="margin-top:8px;">We take photos after every big change.</div>
+          </div>
+          <div class="ph" style="padding:10px;">
+            <div class="label"><b>Weekly plan</b></div>
+            <img src="Robot%20Iterations/base%20robot%20iteration%206.0.jpg" alt="Weekly plan" style="width:100%;border-radius:10px;border:1px solid rgba(11,18,32,.06);margin-top:8px;">
+            <div class="hint" style="margin-top:8px;">We track goals, tests, and fixes each week.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pybricks" class="section">
+    <div class="wrap">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Programming (Pybricks)</div>
+        <h2>Simple code loops keep the robot on track</h2>
+        <p class="lead">We use fast code loops so the robot can correct small errors quickly.</p>
+        <div class="takeaway"><b>Key takeaway:</b> Faster loops = faster corrections.</div>
+
+        <div class="two-col">
+          <div class="ph" style="padding:12px;">
+            <div class="label"><b>Short code example</b></div>
+            <pre style="background:rgba(255,255,255,.7);padding:10px;border-radius:8px;border:1px solid rgba(11,18,32,.06);margin-top:10px;font-size:13px;line-height:1.35;overflow:auto;">
+# simple loop (example)
+while True:
+  error = target - gyro.angle()
+  power = kp * error
+  drive.dc(power, power)
+  wait(10)
+            </pre>
+          </div>
+          <div class="ph" style="padding:12px;">
+            <div class="label"><b>Test snapshot</b></div>
+            <img src="Attachments/pybricks/gyro-trial-1.jpg" alt="Pybricks test" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);margin-top:10px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sensors" class="section">
+    <div class="wrap">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Sensors</div>
+        <h2>Gyro and encoders keep distance and turns accurate</h2>
+        <p class="lead">These sensors help the robot know where it is and how far it moved.</p>
+        <div class="takeaway"><b>Key takeaway:</b> Sensors make runs consistent, even if the battery changes.</div>
+
+        <div class="image-grid">
+          <img src="gyrosensor.jpg" alt="Gyro sensor" style="width:100%;height:140px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+          <img src="encodersensor.jpg" alt="Encoder sensor" style="width:100%;height:140px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+          <img src="Robot%20Iterations/new%20base%20bot%204-24%20(1).png" alt="Sensor mounting" style="width:100%;height:140px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pid" class="section">
+    <div class="wrap">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Tuning</div>
+        <h2>We adjusted values until the robot drove straight</h2>
+        <p class="lead">We tested different values and kept the ones that made the robot smooth and stable.</p>
+        <div class="takeaway"><b>Key takeaway:</b> Small tuning changes made a big difference.</div>
+
+        <div class="two-col">
+          <div class="ph" style="padding:12px;">
+            <div class="label"><b>Replace with: Kp chart</b></div>
+            <div class="hint" style="margin-top:10px;">Use a simple chart or screenshot from your tests.</div>
+          </div>
+          <div class="ph" style="padding:12px;">
+            <div class="label"><b>Replace with: Kd chart</b></div>
+            <div class="hint" style="margin-top:10px;">Show which value was the smoothest.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="coop" class="section">
+    <div class="wrap">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Sharing</div>
+        <h2>We share our work so other teams can learn faster</h2>
+        <p class="lead">We post photos, code, and short tutorials for other teams to use.</p>
+        <div class="takeaway"><b>Key takeaway:</b> Sharing helps the whole community improve.</div>
+
+        <div class="image-grid">
+          <img src="Robot%20Iterations/base%20robot%20iteration%202.png" alt="Shared build" style="width:100%;height:140px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+          <img src="Robot%20Iterations/lastyearrobot.png" alt="Shared robot" style="width:100%;height:140px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+          <img src="Robot%20Iterations/base%20robot%20iteration%206.2.jpg" alt="Shared photos" style="width:100%;height:140px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+        </div>
+
+        <div class="callout" style="margin-top:12px;">
+          <b>Links to add</b>
+          <p>Replace these with your real links.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;">
+            <a class="btn" href="#" target="_blank" rel="noreferrer">YouTube</a>
+            <a class="btn" href="#" target="_blank" rel="noreferrer">TikTok</a>
+            <a class="btn" href="#" target="_blank" rel="noreferrer">Instagram</a>
+            <a class="btn" href="#" target="_blank" rel="noreferrer">Shared folder</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="refs" class="section">
+    <div class="wrap">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> References</div>
+        <h2>Sources used</h2>
+        <ol class="refs">
+          <li>Pybricks Prime Hub docs — <a href="https://docs.pybricks.com/en/latest/hubs/primehub.html" target="_blank" rel="noreferrer">Link</a></li>
+          <li>Pybricks Motor docs — <a href="https://docs.pybricks.com/en/latest/pupdevices/motor.html" target="_blank" rel="noreferrer">Link</a></li>
+          <li>PID theory overview — <a href="https://www.ni.com/en/shop/labview/pid-theory-explained.html" target="_blank" rel="noreferrer">Link</a></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <b>FLL Robot Design Page</b><br/>
+        Simplified layout for clear, beginner‑friendly explanation.
+      </div>
+      <div>
+        <b>Next step:</b> Add your final photos and real links.
+      </div>
+    </div>
+  </footer>
+</body>
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> Julisa — Knowledge Sharing & Coopertition</div>
+        <h2>We share designs and code so more teams improve together.</h2>
+        <p>
+          We keep a shared folder where teams upload designs, attachments, code, and videos. This helps everyone learn faster.
+        </p>
+
+        <div class="takeaway">
+          <b>Key takeaway:</b> Sharing resources helps more teams succeed.
+        </div>
+
+        <p>
+          We also share short tutorials on YouTube, TikTok, and Instagram so other teams can copy our best ideas.
+        </p>
+
+        <div class="media" id="gallery" style="grid-template-columns: repeat(3, 1fr); gap:12px;">
+          <figure class="ph tilt" style="margin:0;">
+            <img src="Robot%20Iterations/base%20robot%20iteration%202.png" alt="Base robot iteration 2" style="width:100%;border-radius:12px;border:1px solid rgba(11,18,32,.06);">
+            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Base robot iteration 2</figcaption>
+          </figure>
+          <figure class="ph tilt" style="margin:0;">
+            <img src="Robot%20Iterations/lastyearrobot.png" alt="Last year robot" style="width:100%;border-radius:12px;border:1px solid rgba(11,18,32,.06);">
+            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Last year robot</figcaption>
+          </figure>
+          <figure class="ph tilt" style="margin:0;">
+            <img src="Robot%20Iterations/lastyearrobotfrontmotorview.png" alt="Last year front motor view" style="width:100%;border-radius:12px;border:1px solid rgba(11,18,32,.06);">
+            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Front motor view</figcaption>
+          </figure>
+          <figure class="ph tilt" style="margin:0;">
+            <img src="Robot%20Iterations/base%20robot%20iteration%206.2.jpg" alt="Assembled view" style="width:100%;border-radius:12px;border:1px solid rgba(11,18,32,.06);">
+            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Assembled view</figcaption>
+          </figure>
+          <figure class="ph tilt" style="margin:0;">
+            <img src="Attachments/Run%20B/run%20b%20attachment%20v1.jpg" alt="Prototype top view" style="width:100%;border-radius:12px;border:1px solid rgba(11,18,32,.06);">
+            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Prototype (top)</figcaption>
+          </figure>
+          <figure class="ph tilt" style="margin:0;">
+            <img src="Robot%20Iterations/base%20robot%20iteration%206.0.jpg" alt="Left side view" style="width:100%;border-radius:12px;border:1px solid rgba(11,18,32,.06);">
+            <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Left side view</figcaption>
+          </figure>
+        </div>
+
+        <!-- Social & embeds -->
+        <div style="margin-top:16px; display:flex; flex-direction:column; gap:12px;">
+          <div class="callout" style="display:flex;flex-direction:column;gap:8px;">
+            <b>Social & shared resources</b>
+            <p style="margin:0;color:var(--muted);">
+              Quick access to our public channel and the student shared folder. Replace src/hrefs with your real links.
+            </p>
+
+            <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;">
+              <a class="btn" href="#" target="_blank" rel="noreferrer">YouTube channel</a>
+              <a class="btn" href="#" target="_blank" rel="noreferrer">TikTok</a>
+              <a class="btn" href="#" target="_blank" rel="noreferrer">Instagram</a>
+              <a class="btn" href="#" target="_blank" rel="noreferrer">Shared folder (students)</a>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+            <!-- Embedded video / playlist (placeholder) -->
+            <div class="ph tilt" style="padding:10px;">
+              <div class="label"><b>Featured social screenshots</b></div>
+              <div style="margin-top:10px; display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <a href="#" target="_blank" rel="noreferrer" style="display:block;">
+                  <img src="youtube%20screenshot.png" alt="YouTube channel screenshot" style="width:100%;height:140px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);" />
+                </a>
+                <a href="#" target="_blank" rel="noreferrer" style="display:block;">
+                  <img src="tiktok%20screenshot.png" alt="TikTok profile screenshot" style="width:100%;height:140px;object-fit:cover;border-radius:8px;border:1px solid rgba(11,18,32,.06);" />
+                </a>
+              </div>
+              <div class="hint" style="margin-top:8px;">These are static screenshots—replace the <code>href</code> values with your social links.</div>
+            </div>
+
+            <!-- Embedded folder preview (placeholder, e.g., Google Drive preview URL) -->
+            <div class="ph tilt" style="padding:10px;">
+              <div class="label"><b>Student shared folder (embed)</b></div>
+              <div style="margin-top:10px;">
+                <iframe src="https://drive.google.com/drive/u/0/folders/1B6XECwAZmHYZJ98tYbxKaUwV0gmVvS7Z" style="width:100%;height:200px;border:0;border-radius:12px;" frameborder="0" title="Shared folder"></iframe>
+              </div>
+              <div class="hint" style="margin-top:8px;">Replace FOLDER_ID with your folder id (or use another embed)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Teams placeholders: 2 Manhattan, 3 Queens, 4 Hudson Valley -->
+        <div style="margin-top:16px;">
+          <h4 style="margin:0 0 8px;">Student teams</h4>
+          <div class="media" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:12px; margin-top:8px;">
+            <!-- Manhattan (2) -->
+            <figure class="ph tilt" style="text-align:center;">
+              <img src="Robot%20Iterations/base%20robot%20iteration%206.2.jpg" alt="Manhattan Team 1" style="width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Manhattan — Team A</figcaption>
+            </figure>
+
+            <figure class="ph tilt" style="text-align:center;">
+              <img src="Robot%20Iterations/base%20robot%20iteration%206.1.jpg" alt="Manhattan Team 2" style="width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Manhattan — Team B</figcaption>
+            </figure>
+
+            <!-- Queens (3) -->
+            <figure class="ph tilt" style="text-align:center;">
+              <img src="Robot%20Iterations/base%20robot%20iteration%206.0.jpg" alt="Queens Team 1" style="width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Queens — Team 1</figcaption>
+            </figure>
+
+            <figure class="ph tilt" style="text-align:center;">
+              <img src="Robot%20Iterations/base%20robot%20iteration%205.jpg" alt="Queens Team 2" style="width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Queens — Team 2</figcaption>
+            </figure>
+
+            <figure class="ph tilt" style="text-align:center;">
+              <img src="Robot%20Iterations/base%20robot%20iteration%204.jpg" alt="Queens Team 3" style="width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Queens — Team 3</figcaption>
+            </figure>
+
+            <!-- Hudson Valley (4) -->
+            <figure class="ph tilt" style="text-align:center;">
+              <img src="Robot%20Iterations/base%20robot%20iteration%203.jpg" alt="Hudson Valley Team 1" style="width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Hudson Valley — Team 1</figcaption>
+            </figure>
+
+            <figure class="ph tilt" style="text-align:center;">
+              <img src="Robot%20Iterations/base%20robot%20iteration%202.png" alt="Hudson Valley Team 2" style="width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Hudson Valley — Team 2</figcaption>
+            </figure>
+
+            <figure class="ph tilt" style="text-align:center;">
+              <img src="Robot%20Iterations/new%20base%20bot%204-24%20(1).png" alt="Hudson Valley Team 3" style="width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Hudson Valley — Team 3</figcaption>
+            </figure>
+
+            <figure class="ph tilt" style="text-align:center;">
+              <img src="Robot%20Iterations/lastyearrobot.png" alt="Hudson Valley Team 4" style="width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.06);">
+              <figcaption style="font-size:12px;color:rgba(11,18,32,.62);margin-top:8px;">Hudson Valley — Team 4</figcaption>
+            </figure>
+          </div>
+
+          <div style="margin-top:10px;font-size:12px;color:var(--muted);">
+            Team photos shown above are taken from the project folder.
+          </div>
+        </div>
+
+        <div class="callout" style="margin-top:12px;">
+          <b>Why this matters</b>
+          <p>
+            Teaching others strengthens our own understanding and reflects the FIRST Core Value of Coopertition.
+          </p>
+        </div>
+      </div>
+
+      <aside class="card reveal tilt">
+        <h3>Thank you</h3>
+        <p>
+          This concludes our Robot Design story—how we built hardware stability, created strategy, and used sensor-based control to improve performance.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- REFERENCES -->
+  <section id="refs" class="section">
+    <div class="wrap">
+      <div class="card strong reveal">
+        <div class="kicker"><span class="bar"></span> References</div>
+        <h2>Sources cited on this page</h2>
+        <ol class="refs">
+          <li>
+            Pybricks Prime Hub docs — heading angle (gyro-based orientation). 
+            <a href="https://docs.pybricks.com/en/latest/hubs/primehub.html" target="_blank" rel="noreferrer">Link</a>
+          </li>
+          <li>
+            Pybricks Motor docs — motor angle/rotation (encoder-based motion control).
+            <a href="https://docs.pybricks.com/en/latest/pupdevices/motor.html" target="_blank" rel="noreferrer">Link</a>
+          </li>
+          <li>
+            National Instruments — PID theory overview (P/I/D roles).
+            <a href="https://www.ni.com/en/shop/labview/pid-theory-explained.html" target="_blank" rel="noreferrer">Link</a>
+          </li>
+          <li>
+            PID controller reference (general definition and behavior).
+            <a href="https://en.wikipedia.org/wiki/Proportional%E2%80%93integral%E2%80%93derivative_controller" target="_blank" rel="noreferrer">Link</a>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <b>FLL Robot Design Page</b><br/>
+        Single-file HTML + CSS + JS. Images on this page were sourced from the project folder and placeholders removed.
+      </div>
+      <div>
+        <b>Next build step:</b> a main homepage that links Innovation + Robot Design + Core Values.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+    // Progress bar
+    const progressBar = document.getElementById("progressBar");
+    const onScroll = () => {
+      const h = document.documentElement;
+      const scrollTop = h.scrollTop || document.body.scrollTop;
+      const scrollHeight = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+      const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      progressBar.style.width = pct.toFixed(2) + "%";
+    };
+    document.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    // Reveal animation
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("in"); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+    // ---------- Synthetic dataset generator (replace later with real logs) ----------
+    // Dimensions:
+    // rotations: 1..4
+    // speeds: 30, 40, 50, 60
+    // For each Kp, we store heading error (deg). Lower is better.
+    const kpValues = [0.6,0.8,1.0,1.2,1.4,1.6];
+    const kdValues = [0.0,0.2,0.4,0.6,0.8];
+    const rotations = [1,2,3,4];
+    const speeds = [30,40,50,60];
+
+    // Helpers for consistent “shape”:
+    function clamp(x, a, b){ return Math.max(a, Math.min(b, x)); }
+    function pseudoNoise(seed){
+      // deterministic-ish noise
+      const x = Math.sin(seed * 999) * 10000;
+      return x - Math.floor(x);
+    }
+
+    // Create Kp dataset: best around 1.2, worse on extremes, and error grows with speed+distance
+    const kpData = new Map();
+    kpValues.forEach(kp=>{
+      const points = [];
+      rotations.forEach(r=>{
+        speeds.forEach(s=>{
+          const base = (r * 0.9) + ((s-30) * 0.06); // harder at higher speed + distance
+          const kpPenalty = Math.abs(kp - 1.2) * 2.2; // best near 1.2
+          const n = (pseudoNoise(kp*100 + r*10 + s) - 0.5) * 0.9;
+          const err = clamp(base + kpPenalty + n, 0.2, 12);
+          points.push({ r, s, err });
+        });
+      });
+      kpData.set(kp, points);
+    });
+
+    // Create Kd dataset: best around 0.4 for wobble reduction, too high can reintroduce jitter
+    const kdData = new Map();
+    kdValues.forEach(kd=>{
+      const points = [];
+      rotations.forEach(r=>{
+        speeds.forEach(s=>{
+          const base = (r * 1.0) + ((s-30) * 0.07);
+          const sweet = Math.abs(kd - 0.4) * 3.0; // best near 0.4
+          const over = kd > 0.6 ? (kd - 0.6) * 2.0 : 0; // too much D can look twitchy
+          const n = (pseudoNoise(kd*100 + r*10 + s) - 0.5) * 0.8;
+          const wobble = clamp(base + sweet + over + n, 0.3, 14);
+          points.push({ r, s, wobble });
+        });
+      });
+      kdData.set(kd, points);
+    });
+
+    // ---------- Charts ----------
+    // Kp bar chart (clickable)
+    const kpBarCtx = document.getElementById("kpBar");
+    const kpChosenEl = document.getElementById("kpChosen");
+
+    // Compute average error per Kp for bar chart
+    const kpAvg = kpValues.map(kp=>{
+      const pts = kpData.get(kp);
+      const mean = pts.reduce((a,p)=>a+p.err,0)/pts.length;
+      return Number(mean.toFixed(2));
+    });
+
+    // Kp scatter chart
+    const kpScatterCtx = document.getElementById("kpScatter");
+    let selectedKp = 1.2;
+
+    function makeKpScatterPoints(kp){
+      const pts = kpData.get(kp);
+      // We'll plot x = "trial index" grouped by (rot,speed), y = heading error
+      // Tooltip will reveal rotation+speed.
+      return pts.map((p, i)=>({
+        x: i+1,
+        y: p.err,
+        r: p.r,
+        s: p.s
+      }));
+    }
+
+    const kpScatter = new Chart(kpScatterCtx, {
+      type: "scatter",
+      data: {
+        datasets: [{
+          label: "Heading error (deg)",
+          data: makeKpScatterPoints(selectedKp),
+          pointRadius: 4,
+          pointHoverRadius: 6,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                const p = ctx.raw;
+                return `Err ${p.y.toFixed(2)}° • ${p.r} rot • ${p.s}% speed`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: { title: { display: true, text: "Test points (rotations × speeds)" }, ticks: { maxTicksLimit: 8 } },
+          y: { title: { display: true, text: "Heading error (deg)" }, beginAtZero: true, suggestedMax: 12 }
+        }
+      }
+    });
+
+    const kpBar = new Chart(kpBarCtx, {
+      type: "bar",
+      data: {
+        labels: kpValues.map(String),
+        datasets: [{
+          label: "Avg heading error (deg)",
+          data: kpAvg,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false }, tooltip: { callbacks: {
+          label: (ctx) => `Avg error: ${ctx.parsed.y.toFixed(2)}°`
+        }}},
+        scales: {
+          y: { beginAtZero: true, title: { display: true, text: "Avg heading error (lower is better)" } },
+          x: { title: { display: true, text: "Kp value (click to select)" } }
+        },
+        onClick: (evt, elements) => {
+          if (!elements.length) return;
+          const idx = elements[0].index;
+          selectedKp = kpValues[idx];
+          kpChosenEl.innerHTML = `Selected Kp: <b style="margin-left:6px;">${selectedKp}</b>`;
+          kpScatter.data.datasets[0].data = makeKpScatterPoints(selectedKp);
+          kpScatter.update();
+        }
+      }
+    });
+
+    // Kd bar chart + scatter chart
+    const kdBarCtx = document.getElementById("kdBar");
+    const kdScatterCtx = document.getElementById("kdScatter");
+    const kdChosenEl = document.getElementById("kdChosen");
+    let selectedKd = 0.4;
+
+    const kdAvg = kdValues.map(kd=>{
+      const pts = kdData.get(kd);
+      const mean = pts.reduce((a,p)=>a+p.wobble,0)/pts.length;
+      return Number(mean.toFixed(2));
+    });
+
+    function makeKdScatterPoints(kd){
+      const pts = kdData.get(kd);
+      return pts.map((p, i)=>({
+        x: i+1,
+        y: p.wobble,
+        r: p.r,
+        s: p.s
+      }));
+    }
+
+    const kdScatter = new Chart(kdScatterCtx, {
+      type: "scatter",
+      data: {
+        datasets: [{
+          label: "Wobble amplitude (arb.)",
+          data: makeKdScatterPoints(selectedKd),
+          pointRadius: 4,
+          pointHoverRadius: 6,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                const p = ctx.raw;
+                return `Wobble ${p.y.toFixed(2)} • ${p.r} rot • ${p.s}% speed`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: { title: { display: true, text: "Test points (rotations × speeds)" }, ticks: { maxTicksLimit: 8 } },
+          y: { title: { display: true, text: "Wobble amplitude (lower is smoother)" }, beginAtZero: true, suggestedMax: 14 }
+        }
+      }
+    });
+
+    const kdBar = new Chart(kdBarCtx, {
+      type: "bar",
+      data: {
+        labels: kdValues.map(String),
+        datasets: [{
+          label: "Avg wobble",
+          data: kdAvg,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false }, tooltip: { callbacks: {
+          label: (ctx) => `Avg wobble: ${ctx.parsed.y.toFixed(2)}`
+        }}},
+        scales: {
+          y: { beginAtZero: true, title: { display: true, text: "Avg wobble (lower is better)" } },
+          x: { title: { display: true, text: "Kd value (click to select)" } }
+        },
+        onClick: (evt, elements) => {
+          if (!elements.length) return;
+          const idx = elements[0].index;
+          selectedKd = kdValues[idx];
+          kdChosenEl.innerHTML = `Selected Kd: <b style="margin-left:6px;">${selectedKd}</b>`;
+          kdScatter.data.datasets[0].data = makeKdScatterPoints(selectedKd);
+          kdScatter.update();
+        }
+      }
+    });
+
+    // Accel/Decel speed profile
+    const speedCtx = document.getElementById("speedProfile");
+    const profiles = {
+      1: { labels: ["0%","10%","25%","50%","75%","90%","100%"], data: [0, 24, 42, 58, 58, 34, 0] },
+      2: { labels: ["0%","10%","25%","50%","70%","85%","100%"], data: [0, 22, 40, 62, 70, 40, 0] },
+      3: { labels: ["0%","10%","25%","50%","65%","80%","100%"], data: [0, 20, 38, 64, 74, 46, 0] },
+      4: { labels: ["0%","10%","25%","50%","60%","78%","100%"], data: [0, 18, 36, 66, 78, 52, 0] }
+    };
+
+    let currentRot = 1;
+    const speedChart = new Chart(speedCtx, {
+      type: "line",
+      data: {
+        labels: profiles[currentRot].labels,
+        datasets: [{
+          label: "Speed (%)",
+          data: profiles[currentRot].data,
+          tension: 0.38,
+          borderWidth: 2,
+          pointRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false }, tooltip: { callbacks: {
+          label: (ctx) => `Speed: ${ctx.parsed.y}%`
+        }}},
+        scales: {
+          y: { beginAtZero: true, max: 100, title: { display: true, text: "Speed (%)" } },
+          x: { title: { display: true, text: "Progress through the move" } }
+        }
+      }
+    });
+
+    document.querySelectorAll('.seg button').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.seg button').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const rot = Number(btn.dataset.rot);
+        currentRot = rot;
+        speedChart.data.labels = profiles[rot].labels;
+        speedChart.data.datasets[0].data = profiles[rot].data;
+        speedChart.update();
+      });
+    });
+  </script>
+</body>
+</html>

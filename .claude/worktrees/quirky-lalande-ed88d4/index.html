@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>AI Future — Unearthed (Team Homepage)</title>
+	<link rel="stylesheet" href="shared.css" />
+	<style>
+		/* ── Index-page specific ── */
+		.hero-home {
+			padding: 60px 0 24px;
+			position: relative;
+		}
+		.hero-home .kicker { margin-bottom: 10px; }
+		.hero-home h1 { margin-bottom: 10px; }
+
+		.badges {
+			display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0 28px;
+		}
+		.badge-pill {
+			background: rgba(255,255,255,.82); border: 1px solid rgba(11,18,32,.10);
+			padding: 8px 12px; border-radius: 999px; font-size: 13px;
+			color: rgba(11,18,32,.78);
+			transition: transform .15s ease, background .2s;
+		}
+		.badge-pill:hover { transform: translateY(-1px); background: #fff; }
+
+		.page-grid {
+			display: grid;
+			grid-template-columns: 1fr 320px;
+			gap: 20px;
+			align-items: start;
+		}
+		@media (max-width: 760px) { .page-grid { grid-template-columns: 1fr; } }
+
+		.divider { width: 1px; background: var(--line); height: 80px; margin: 0 10px; flex-shrink: 0; }
+
+		.featured-card {
+			grid-column: 1 / -1;
+			display: flex; gap: 16px; align-items: center; justify-content: space-between;
+		}
+		@media (max-width: 760px) { .featured-card { flex-direction: column; } .divider { display: none; } }
+
+		.featured-img {
+			width: 220px; height: 140px; object-fit: cover;
+			border-radius: 14px; border: 1px solid rgba(11,18,32,.08);
+			flex-shrink: 0;
+			transition: transform .35s cubic-bezier(.22,.68,0,1.2);
+		}
+		.featured-img:hover { transform: scale(1.03); }
+
+		ul.team { margin: 8px 0 0 18px; color: var(--muted); line-height: 1.8; }
+		ul.team li::marker { color: var(--blue); }
+
+		.explore-btn {
+			display: block; margin-top: 10px; padding: 11px 14px;
+			border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 14px;
+			transition: transform .15s ease, box-shadow .15s ease;
+		}
+		.explore-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(7,62,119,.18); }
+		.explore-btn.yellow { color: #072b55; background: var(--yellow); }
+		.explore-btn.blue   { color: #fff; background: var(--blue); margin-top: 8px; }
+
+		footer { margin-top: 12px; }
+
+		/* ── Team Structure ── */
+		.captain-banner {
+			display: flex; align-items: center; gap: 14px;
+			padding: 18px 22px; border-radius: 18px; margin-bottom: 28px;
+			background: linear-gradient(135deg, var(--blue), rgba(7,62,119,.78));
+			color: #fff; box-shadow: 0 14px 40px rgba(7,62,119,.22);
+		}
+		.captain-crown {
+			width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+			background: linear-gradient(135deg, var(--yellow), rgba(254,206,0,.7));
+			display: flex; align-items: center; justify-content: center;
+			font-size: 22px; box-shadow: 0 6px 18px rgba(254,206,0,.35);
+		}
+		.captain-name { font-size: 18px; font-weight: 800; letter-spacing: .1px; }
+		.captain-label { font-size: 12px; opacity: .78; margin-top: 2px; letter-spacing: .12em; text-transform: uppercase; }
+
+		.team-cols {
+			display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+		}
+		@media (max-width: 760px) { .team-cols { grid-template-columns: 1fr; } }
+
+		.role-group { margin-top: 20px; }
+		.role-group:first-child { margin-top: 0; }
+		.role-label {
+			display: inline-flex; align-items: center; gap: 8px;
+			font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+			color: var(--blue); margin-bottom: 10px;
+		}
+		.role-label::before {
+			content: ""; display: inline-block;
+			width: 8px; height: 8px; border-radius: 50%;
+			background: linear-gradient(135deg, var(--blue), var(--yellow));
+		}
+		.member-list { display: flex; flex-wrap: wrap; gap: 8px; }
+		.member-chip {
+			display: inline-flex; align-items: center; gap: 6px;
+			padding: 6px 11px; border-radius: 999px; font-size: 13px;
+			border: 1px solid rgba(11,18,32,.10); background: rgba(255,255,255,.62);
+			color: var(--ink); transition: transform .15s ease, background .2s;
+		}
+		.member-chip:hover { transform: translateY(-1px); background: #fff; }
+		.member-chip.lead {
+			border-color: rgba(7,62,119,.28); background: rgba(7,62,119,.08);
+			color: var(--blue); font-weight: 700;
+		}
+		.member-chip.lead::before {
+			content: "★"; font-size: 10px; color: var(--yellow); filter: drop-shadow(0 0 4px rgba(254,206,0,.5));
+		}
+	</style>
+</head>
+<body>
+	<!-- Progress bar -->
+	<div class="progress" aria-hidden="true"><div id="progressBar"></div></div>
+	<!-- Decorative blobs -->
+	<div class="blob b1" aria-hidden="true"></div>
+	<div class="blob b2" aria-hidden="true"></div>
+
+	<header>
+		<div class="wrap">
+			<div class="nav">
+				<a class="brand" href="#top">
+					<div class="logo" aria-hidden="true"></div>
+					<div>
+						<strong>AI Future</strong>
+						<span>Unearthed Season</span>
+					</div>
+				</a>
+
+				<nav aria-label="Primary">
+					<ul>
+						<li><a href="#about">About</a></li>
+						<li><a href="#team-structure">Team</a></li>
+						<li><a href="#achievements">Achievements</a></li>
+						<li><a href="Rover Iterations/updatedinnovation.html">Innovation Project</a></li>
+						<li><a href="newrobot.html">Robot Design</a></li>
+					</ul>
+				</nav>
+
+				<div class="nav-cta">
+					<a class="btn primary" href="Rover Iterations/updatedinnovation.html">Start Exploring</a>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<main id="top">
+		<div class="wrap">
+			<!-- Hero -->
+			<section class="hero-home reveal">
+				<div class="kicker"><span class="bar"></span> FLL Unearthed Season</div>
+				<h1>AI Future — Unearthed (Season)</h1>
+				<p class="lead">Welcome — learn about our robot and innovation project. This site documents our Unearthed season work — choose a topic below to explore our robot design, programming, and Innovation Project.</p>
+
+				<div class="badges">
+					<div class="badge-pill">Season: Unearthed</div>
+					<div class="badge-pill">Last season: Submerged — 3rd Place, Championship Award</div>
+					<div class="badge-pill">NYC Championship — 3rd Place, Robot Performance</div>
+				</div>
+			</section>
+
+			<div class="page-grid" role="main">
+
+				<!-- Featured visual card -->
+				<div class="card strong featured-card reveal" data-delay="1">
+					<div style="flex:1; display:flex; gap:12px; align-items:center;">
+						<img class="featured-img" src="Robot%20Iterations/base%20robot%20iteration%206.2.jpg" alt="Base robot iteration 6.2" />
+						<div>
+							<h3 style="margin:0 0 6px;">Our Competition Robot</h3>
+							<p>A quick visual highlight of the robot used for Unearthed — add your best photo here to hook viewers.</p>
+						</div>
+					</div>
+
+					<div class="divider" aria-hidden="true"></div>
+
+					<div style="flex:1; display:flex; gap:12px; align-items:center; justify-content:flex-end;">
+						<div>
+							<h3 style="margin:0 0 6px;">Innovation Rover Update</h3>
+							<p>We built a wooden rover version and now use camera-based logic to map surroundings instead of relying on distance sensors.</p>
+						</div>
+						<img class="featured-img" src="Rover Iterations/final prototype corner view.jpg" alt="Innovation assembled prototype" />
+					</div>
+				</div>
+
+				<!-- Left column -->
+				<div>
+					<div id="about" class="card reveal" data-delay="2">
+						<div class="kicker"><span class="bar"></span> The Team</div>
+						<h2>About the Team</h2>
+						<p style="margin:6px 0 0;">Team members and contributors named across this site:</p>
+						<ul class="team">
+							<li>Kyle</li>
+							<li>Anthony</li>
+							<li>Julisa</li>
+							<li>Brian</li>
+							<li>Jonathan</li>
+							<li>Isabella</li>
+							<li>Owen</li>
+							<li>Cayle</li>
+							<li>Sam</li>
+							<li>Jasper</li>
+							<li>Harry</li>
+						</ul>
+						<p style="margin:10px 0 0;">Expert contributors: Grace Howe (archaeologist), Rawlins (event organizer).</p>
+					</div>
+
+					<div id="achievements" class="card reveal" data-delay="3" style="margin-top:16px;">
+						<div class="kicker"><span class="bar"></span> Results</div>
+						<h2>Achievements</h2>
+						<ul style="color:var(--muted); line-height:1.8; padding-left:18px;">
+							<li>Submerged (last season): 3rd Place — Championship Award</li>
+							<li>NYC Championship: 3rd Place — Robot Performance</li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Right column -->
+				<aside>
+					<div class="card reveal" data-delay="2">
+						<div class="kicker"><span class="bar"></span> Navigate</div>
+						<h3>Explore</h3>
+						<p style="margin:6px 0 10px;">Learn about our two main projects:</p>
+						<a class="explore-btn yellow" href="Rover Iterations/updatedinnovation.html">Innovation Project</a>
+						<a class="explore-btn blue" href="newrobot.html">Robot Design &amp; Programming</a>
+					</div>
+
+					<div class="card reveal" data-delay="3" style="margin-top:14px;">
+						<h3>Quick Info</h3>
+						<p style="margin:6px 0;">This homepage is an introduction. Each project page contains sections credited to team members and project photos/charts.</p>
+					</div>
+				</aside>
+			</div>
+
+			<!-- Team Structure -->
+			<section id="team-structure" class="section" style="padding-top:48px;">
+				<div class="kicker reveal"><span class="bar"></span> Team Structure</div>
+				<h2 class="reveal" data-delay="1">Roles &amp; Responsibilities</h2>
+
+				<!-- Captain -->
+				<div class="captain-banner reveal" data-delay="2">
+					<div class="captain-crown" aria-hidden="true">★</div>
+					<div>
+						<div class="captain-name">Isabella</div>
+						<div class="captain-label">Team Captain</div>
+					</div>
+				</div>
+
+				<div class="team-cols">
+
+					<!-- Robot Design -->
+					<div class="card strong reveal" data-delay="2">
+						<div class="kicker"><span class="bar"></span> Robot Design</div>
+						<h3 style="margin-bottom:18px;">Robot Design Team</h3>
+
+						<div class="role-group">
+							<div class="role-label">Builder</div>
+							<div class="member-list">
+								<span class="member-chip lead">Kyle</span>
+								<span class="member-chip">Cailey</span>
+								<span class="member-chip">Owen</span>
+								<span class="member-chip">Sam</span>
+								<span class="member-chip">Jasper</span>
+							</div>
+						</div>
+
+						<div class="role-group">
+							<div class="role-label">Coder</div>
+							<div class="member-list">
+								<span class="member-chip lead">Anthony</span>
+								<span class="member-chip">Jonathan</span>
+								<span class="member-chip">Brian</span>
+								<span class="member-chip">Julisa</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Innovation Design -->
+					<div class="card strong reveal" data-delay="3">
+						<div class="kicker"><span class="bar"></span> Innovation Design</div>
+						<h3 style="margin-bottom:18px;">Innovation Design Team</h3>
+
+						<div class="role-group">
+							<div class="role-label">Research</div>
+							<div class="member-list">
+								<span class="member-chip lead">Isabella</span>
+								<span class="member-chip">Sam</span>
+								<span class="member-chip">Jasper</span>
+								<span class="member-chip">Julisa</span>
+							</div>
+						</div>
+
+						<div class="role-group">
+							<div class="role-label">Builder</div>
+							<div class="member-list">
+								<span class="member-chip lead">Anthony</span>
+								<span class="member-chip">Owen</span>
+								<span class="member-chip">Kyle</span>
+							</div>
+						</div>
+
+						<div class="role-group">
+							<div class="role-label">CAD</div>
+							<div class="member-list">
+								<span class="member-chip lead">Isabella</span>
+								<span class="member-chip">Cailey</span>
+								<span class="member-chip">Anthony</span>
+							</div>
+						</div>
+
+						<div class="role-group">
+							<div class="role-label">Programmer</div>
+							<div class="member-list">
+								<span class="member-chip lead">Anthony</span>
+								<span class="member-chip">Jonathan</span>
+								<span class="member-chip">Brian</span>
+							</div>
+						</div>
+
+						<div class="role-group">
+							<div class="role-label">Outreach</div>
+							<div class="member-list">
+								<span class="member-chip">Julisa</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</section>
+
+			<footer>
+				<div class="foot" style="padding-top:20px; border-top: 1px solid var(--line);">
+					<div>Built for the Unearthed season — update team names or achievements by editing the project pages.</div>
+				</div>
+			</footer>
+		</div>
+	</main>
+
+	<script src="shared-animations.js"></script>
+</body>
+</html>

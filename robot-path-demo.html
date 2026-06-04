@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Robot Path Menu Demo</title>
+  <style>
+    :root{
+      --bg:#09131a;
+      --panel:#101f2a;
+      --line:rgba(255,255,255,.16);
+      --text:#f5f8ff;
+      --muted:rgba(245,248,255,.68);
+      --path:#ff3030;
+      --path2:#ffd56d;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:linear-gradient(180deg,#081018,#132633);
+      color:var(--text);
+    }
+
+    .page{
+      width:min(1180px,100%);
+      margin:0 auto;
+      padding:18px;
+    }
+
+    header{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:14px;
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(24px,3vw,38px);
+      line-height:1.05;
+    }
+
+    .meta{
+      margin-top:6px;
+      color:var(--muted);
+      font-weight:750;
+      font-size:14px;
+    }
+
+    .run-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 13px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.07);
+      font-size:13px;
+      font-weight:950;
+      white-space:nowrap;
+    }
+
+    .run-pill::before{
+      content:"";
+      width:11px;
+      height:11px;
+      border-radius:999px;
+      background:var(--path);
+      box-shadow:0 0 18px var(--path);
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:210px 1fr;
+      gap:14px;
+      align-items:start;
+    }
+
+    .menu{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.05);
+      padding:10px;
+      box-shadow:0 20px 60px rgba(0,0,0,.24);
+    }
+
+    .menu-title{
+      margin:2px 4px 10px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:950;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+    }
+
+    .path-button{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-top:8px;
+      padding:11px 10px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      font:900 13px system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      cursor:pointer;
+      text-align:left;
+    }
+
+    .path-button:hover,
+    .path-button.active{
+      border-color:color-mix(in srgb,var(--path) 68%,white 10%);
+      background:color-mix(in srgb,var(--path) 22%,rgba(255,255,255,.07));
+    }
+
+    .path-button span:last-child{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:850;
+    }
+
+    .strategy-button{
+      border-color:rgba(255,213,109,.55);
+      background:rgba(255,213,109,.12);
+    }
+
+    .strategy-button:hover,
+    .strategy-button.active{
+      border-color:#ffd56d;
+      background:rgba(255,213,109,.22);
+    }
+
+    .board-shell{
+      border:1px solid var(--line);
+      border-radius:14px;
+      overflow:hidden;
+      background:var(--panel);
+      box-shadow:0 20px 60px rgba(0,0,0,.35);
+    }
+
+    .board{
+      position:relative;
+      aspect-ratio:798 / 466;
+      background:#111;
+    }
+
+    .board img,
+    .board svg{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      display:block;
+    }
+
+    .board img{
+      object-fit:cover;
+      filter:saturate(1.05) contrast(1.04) brightness(.82);
+    }
+
+    .board svg{
+      z-index:2;
+      overflow:visible;
+    }
+
+    .path-glow,
+    .path-line,
+    .path-progress{
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .path-glow{
+      stroke:var(--path);
+      stroke-width:24;
+      opacity:.22;
+      filter:blur(1px);
+    }
+
+    .path-line{
+      stroke:var(--path);
+      stroke-width:9;
+      stroke-dasharray:18 14;
+      filter:drop-shadow(0 4px 8px rgba(0,0,0,.78));
+      animation:pathMarch 1.15s linear infinite;
+    }
+
+    .path-progress{
+      stroke:var(--path2);
+      stroke-width:5;
+      stroke-dasharray:1 1300;
+      filter:drop-shadow(0 0 8px rgba(255,213,109,.8));
+      animation:pathReveal 8s ease-in-out infinite;
+    }
+
+    .mission-dot{
+      fill:#07131c;
+      stroke:var(--path);
+      stroke-width:4;
+      filter:drop-shadow(0 4px 8px rgba(0,0,0,.72));
+    }
+
+    .mission-label{
+      fill:#fff;
+      font:900 22px system-ui,-apple-system,Segoe UI,sans-serif;
+      paint-order:stroke;
+      stroke:rgba(0,0,0,.78);
+      stroke-width:5;
+      stroke-linejoin:round;
+    }
+
+    .base{
+      fill:rgba(8,18,27,.82);
+      stroke:rgba(255,255,255,.86);
+      stroke-width:3;
+    }
+
+    .robot{
+      filter:drop-shadow(0 7px 12px rgba(0,0,0,.82));
+    }
+
+    .robot .body{
+      fill:#f7fbff;
+      stroke:#07131c;
+      stroke-width:4;
+    }
+
+    .robot .top{
+      fill:#fece00;
+      stroke:#07131c;
+      stroke-width:2;
+    }
+
+    .robot .eye{
+      fill:#3aa7ff;
+    }
+
+    .footer-bar{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+      padding:12px;
+      border-top:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+    }
+
+    .note{
+      min-height:42px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:9px;
+      border:1px solid var(--line);
+      border-radius:9px;
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      font-size:13px;
+      font-weight:850;
+      text-align:center;
+    }
+
+    @keyframes pathMarch{
+      to{stroke-dashoffset:-32}
+    }
+
+    @keyframes pathReveal{
+      0%{stroke-dasharray:1 1300}
+      58%,100%{stroke-dasharray:1300 1300}
+    }
+
+    @media (max-width:820px){
+      .page{padding:10px}
+      header{align-items:start; flex-direction:column}
+      .layout{grid-template-columns:1fr}
+      .menu{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px}
+      .menu-title{grid-column:1 / -1}
+      .path-button{margin-top:0}
+      .footer-bar{grid-template-columns:1fr}
+      .mission-label{font-size:18px}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div>
+        <h1>Robot Path Prototype</h1>
+        <div class="meta">Use the menu to test each path separately before adding them to the real website.</div>
+      </div>
+      <div class="run-pill" id="runPill">Path 1: Right Top Loop</div>
+    </header>
+
+    <div class="layout">
+      <nav class="menu" aria-label="Robot path menu">
+        <div class="menu-title">Choose A Path</div>
+        <button class="path-button strategy-button" type="button" data-strategy="all"><span>Full Strategy</span><span>1-6</span></button>
+        <button class="path-button active" type="button" data-path="rightTop"><span>Path 1</span><span>Right top</span></button>
+        <button class="path-button" type="button" data-path="rightDiagonal"><span>Path 2</span><span>Right diagonal</span></button>
+        <button class="path-button" type="button" data-path="centerCross"><span>Path 3</span><span>Across center</span></button>
+        <button class="path-button" type="button" data-path="leftLoop"><span>Path 4</span><span>Left loop</span></button>
+        <button class="path-button" type="button" data-path="leftTopCenter"><span>Path 5</span><span>Left to middle</span></button>
+        <button class="path-button" type="button" data-path="bottomLeft"><span>Path 6</span><span>Bottom left</span></button>
+      </nav>
+
+      <section class="board-shell" aria-label="Robot path animation demo">
+        <div class="board">
+          <img src="Mission Pictures/fll unearthed map.png" alt="FLL Unearthed mission map">
+
+          <svg id="pathSvg" viewBox="0 0 798 466" role="img" aria-label="Animated selected robot path">
+            <defs>
+              <path id="run-path" d="" />
+            </defs>
+
+            <path class="path-glow" id="pathGlow" d="" />
+            <path class="path-line" id="pathLine" d="" />
+            <path class="path-progress" id="pathProgress" d="" />
+
+            <g id="baseLayer"></g>
+            <g id="missionLayer"></g>
+
+            <g class="robot" id="robotMarker">
+              <animateMotion id="robotMotion" dur="8s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#run-path" />
+              </animateMotion>
+              <rect class="body" x="-18" y="-14" width="36" height="28" rx="5" />
+              <rect class="top" x="-11" y="-20" width="22" height="9" rx="3" />
+              <circle class="eye" cx="11" cy="0" r="4" />
+              <circle fill="#07131c" cx="-9" cy="15" r="4" />
+              <circle fill="#07131c" cx="9" cy="15" r="4" />
+            </g>
+          </svg>
+        </div>
+
+        <div class="footer-bar">
+          <div class="note" id="startNote">Start: right launch area</div>
+          <div class="note" id="targetNote">Targets: M5, M6, M7, M8</div>
+          <div class="note" id="modeNote">Each menu item is one separate path draft</div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const paths = {
+      rightTop: {
+        title: "Path 1: Right Top Loop",
+        color: "#ff3030",
+        start: "Start: right launch area",
+        targets: "Targets: M5, M6, M7, M8",
+        duration: "4.4s",
+        d: "M724 410 L724 300 L674 185 L650 91 L603 67 L692 69 L730 128 L714 219 L724 410",
+        bases: [{ label: "R", x: 724, y: 410 }],
+        markers: [
+          { label: "5", x: 603, y: 67 },
+          { label: "6", x: 650, y: 91 },
+          { label: "7", x: 692, y: 69 },
+          { label: "8", x: 714, y: 219 }
+        ]
+      },
+      rightDiagonal: {
+        title: "Path 2: Right Diagonal",
+        color: "#ff3030",
+        start: "Start: right launch area",
+        targets: "Targets: M9, M10, then return",
+        duration: "3.6s",
+        d: "M724 410 L562 212 L646 309 L724 410",
+        bases: [{ label: "R", x: 724, y: 410 }],
+        markers: [
+          { label: "9", x: 562, y: 212 },
+          { label: "10", x: 646, y: 309 }
+        ]
+      },
+      centerCross: {
+        title: "Path 3: Across Center",
+        color: "#ff3030",
+        start: "Start: right launch area",
+        targets: "Targets: M11, M12, M13",
+        duration: "9s",
+        d: "M724 410 C656 408 589 397 512 380 C446 343 393 276 346 207 C333 186 316 178 295 198 C253 255 205 315 151 376 C119 391 88 395 56 389",
+        bases: [
+          { label: "R", x: 724, y: 410 },
+          { label: "L", x: 56, y: 389 }
+        ],
+        markers: [
+          { label: "11", x: 512, y: 380 },
+          { label: "12", x: 346, y: 407 },
+          { label: "13", x: 316, y: 178 }
+        ]
+      },
+      leftLoop: {
+        title: "Path 4: Left Loop",
+        color: "#ff3030",
+        start: "Start: left side of the path",
+        targets: "Targets: M1, M2, M15",
+        duration: "4.8s",
+        d: "M61 160 L88 46 L126 331 L76 384 L94 260 L61 160",
+        bases: [{ label: "S", x: 61, y: 160 }],
+        markers: [
+          { label: "1", x: 61, y: 160 },
+          { label: "2", x: 88, y: 46 },
+          { label: "15", x: 94, y: 260 }
+        ]
+      },
+      leftTopCenter: {
+        title: "Path 5: Left To Middle",
+        color: "#ff3030",
+        start: "Start: left launch area",
+        targets: "Targets: M3, M4, M13, M14",
+        duration: "9s",
+        d: "M56 389 C89 358 106 313 105 254 C104 186 96 116 108 43 C139 30 179 24 223 29 C186 58 157 82 134 113 C177 141 225 161 297 168 C268 148 221 128 154 105 C122 134 105 177 109 235 C112 293 96 346 56 389",
+        bases: [{ label: "L", x: 56, y: 389 }],
+        markers: [
+          { label: "3", x: 223, y: 29 },
+          { label: "4", x: 154, y: 105 },
+          { label: "13", x: 297, y: 168 },
+          { label: "14", x: 225, y: 185 }
+        ]
+      },
+      bottomLeft: {
+        title: "Path 6: Bottom Left",
+        color: "#ff3030",
+        start: "Start: left launch area",
+        targets: "Targets: M12, then return",
+        duration: "3.2s",
+        d: "M56 389 L297 390 L56 389",
+        bases: [{ label: "L", x: 56, y: 389 }],
+        markers: [
+          { label: "12", x: 297, y: 390 }
+        ]
+      }
+    };
+
+    const svg = document.getElementById("pathSvg");
+    const runPath = document.getElementById("run-path");
+    const pathGlow = document.getElementById("pathGlow");
+    const pathLine = document.getElementById("pathLine");
+    const pathProgress = document.getElementById("pathProgress");
+    const robotMotion = document.getElementById("robotMotion");
+    const runPill = document.getElementById("runPill");
+    const startNote = document.getElementById("startNote");
+    const targetNote = document.getElementById("targetNote");
+    const modeNote = document.getElementById("modeNote");
+    const baseLayer = document.getElementById("baseLayer");
+    const missionLayer = document.getElementById("missionLayer");
+    const buttons = [...document.querySelectorAll(".path-button")];
+    const strategyButton = document.querySelector("[data-strategy='all']");
+    const strategyOrder = ["rightTop", "rightDiagonal", "centerCross", "leftLoop", "leftTopCenter", "bottomLeft"];
+    let strategyTimer = null;
+    let strategyIndex = 0;
+
+    function node(name, attrs = {}, text = "") {
+      const el = document.createElementNS("http://www.w3.org/2000/svg", name);
+      Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
+      if (text) el.textContent = text;
+      return el;
+    }
+
+    function drawBases(items) {
+      baseLayer.replaceChildren();
+      items.forEach((item) => {
+        baseLayer.append(
+          node("circle", { class: "base", cx: item.x, cy: item.y, r: 24 }),
+          node("text", { class: "mission-label", x: item.x, y: item.y + 8, "text-anchor": "middle" }, item.label)
+        );
+      });
+    }
+
+    function drawMarkers(items) {
+      missionLayer.replaceChildren();
+      items.forEach((item) => {
+        missionLayer.append(
+          node("circle", { class: "mission-dot", cx: item.x, cy: item.y, r: 13 }),
+          node("text", { class: "mission-label", x: item.x, y: item.y + 8, "text-anchor": "middle" }, item.label)
+        );
+      });
+    }
+
+    function stopStrategy() {
+      if (strategyTimer) {
+        window.clearTimeout(strategyTimer);
+        strategyTimer = null;
+      }
+      strategyButton.classList.remove("active");
+    }
+
+    function selectPath(key, isStrategy = false) {
+      const data = paths[key];
+      document.documentElement.style.setProperty("--path", data.color);
+      runPill.textContent = isStrategy ? `Full Strategy: ${strategyIndex + 1}/6 - ${data.title}` : data.title;
+      startNote.textContent = data.start;
+      targetNote.textContent = data.targets;
+      modeNote.textContent = isStrategy ? "Auto-playing the full strategy in order" : "Each menu item is one separate path draft";
+      runPath.setAttribute("d", data.d);
+      pathGlow.setAttribute("d", data.d);
+      pathLine.setAttribute("d", data.d);
+      pathProgress.setAttribute("d", data.d);
+      robotMotion.setAttribute("dur", data.duration);
+      drawBases(data.bases);
+      drawMarkers(data.markers);
+      robotMotion.beginElement();
+      buttons.forEach((button) => button.classList.toggle("active", button.dataset.path === key));
+      if (isStrategy) strategyButton.classList.add("active");
+    }
+
+    buttons.forEach((button) => {
+      if (button.dataset.path) {
+        button.addEventListener("click", () => {
+          stopStrategy();
+          selectPath(button.dataset.path);
+        });
+      }
+    });
+
+    strategyButton.addEventListener("click", () => {
+      stopStrategy();
+      strategyIndex = 0;
+
+      function playNextPath() {
+        const key = strategyOrder[strategyIndex];
+        selectPath(key, true);
+        const seconds = parseFloat(paths[key].duration) || 5;
+        strategyIndex = (strategyIndex + 1) % strategyOrder.length;
+        strategyTimer = window.setTimeout(playNextPath, seconds * 1000 + 450);
+      }
+
+      playNextPath();
+    });
+
+    selectPath("rightTop");
+  </script>
+</body>
+</html>
