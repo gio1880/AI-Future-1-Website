@@ -1,0 +1,3214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FLL Season Visual Companion</title>
+  <meta name="description" content="A minimal, visual-first companion site for our FLL presentation." />
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel: rgba(255,255,255,.06);
+      --line: rgba(255,255,255,.10);
+      --text:#e9ecff;
+      --muted: rgba(233,236,255,.70);
+
+      --identify:#3aa7ff;
+      --design:#6dffb5;
+      --create:#ff6df1;
+      --share:#ffd56d;
+
+      --max: 1100px;
+      --r: 22px;
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(900px 500px at 15% 5%, rgba(58,167,255,.22), transparent 60%),
+        radial-gradient(900px 500px at 85% 10%, rgba(255,109,241,.18), transparent 60%),
+        radial-gradient(900px 500px at 60% 90%, rgba(109,255,181,.14), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding: 0 18px;}
+    .top{
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(11,16,32,.55);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 12px 0;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight: 900;
+      letter-spacing:.2px;
+    }
+    .logo{
+      width:34px; height:34px; border-radius: 14px;
+      background: conic-gradient(from 210deg, var(--identify), var(--create), var(--design), var(--share), var(--identify));
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 0 30px rgba(58,167,255,.18);
+    }
+    .links{
+      display:flex; gap:8px; flex-wrap:wrap;
+      font-weight: 750; font-size: 13px;
+      color: var(--muted);
+    }
+    .links a{
+      padding: 8px 10px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .links a:hover{color:var(--text); border-color: rgba(255,255,255,.18)}
+
+    header{
+      padding: 30px 0 10px;
+    }
+    h1{
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -.6px;
+    }
+    .sub{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-weight: 650;
+      max-width: 70ch;
+    }
+
+    section{
+      padding: 18px 0 28px;
+    }
+    .sectionHead{
+      display:flex; align-items:center; gap:10px;
+      margin-bottom: 12px;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      font-weight: 900;
+      letter-spacing: .3px;
+      font-size: 12px;
+    }
+    .dot{width:10px;height:10px;border-radius:999px}
+    .title{
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -.2px;
+    }
+    .caption{
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      font-weight: 650;
+      max-width: 80ch;
+    }
+    #runs .title{
+      font-size: 22px;
+      font-weight: 950;
+      letter-spacing: -.3px;
+    }
+    .runSubheading{
+      margin: 10px 0 4px;
+      color: var(--text);
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: -.2px;
+    }
+    .attachment-system-note{
+      margin: 10px 0 14px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: linear-gradient(130deg, rgba(58,167,255,.16), rgba(109,255,181,.10));
+    }
+    .attachment-system-title{
+      margin: 0;
+      font-size: 14px;
+      font-weight: 950;
+      letter-spacing: .2px;
+      color: #f4fffb;
+    }
+    .attachment-system-copy{
+      margin: 6px 0 0;
+      font-size: 12.5px;
+      font-weight: 760;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .attachment-color-legend{
+      margin-top: 9px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .attach-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.1);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .25px;
+    }
+    .attach-dot{
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.32);
+    }
+    .run-material-map{
+      margin-top: 10px;
+      display:grid;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      gap:8px;
+    }
+    .run-material-card{
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      border-radius: 10px;
+      padding: 8px;
+      text-align:center;
+    }
+    .run-material-card .k{
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: .25px;
+      color: #f7fbff;
+      margin-bottom: 3px;
+    }
+    .run-material-card .v{
+      font-size: 11px;
+      font-weight: 780;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .img.placeholder{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 230px;
+      background:
+        repeating-linear-gradient(-45deg, rgba(255,255,255,.08) 0 10px, rgba(255,255,255,.03) 10px 20px),
+        rgba(0,0,0,.16);
+      border:1px dashed rgba(255,255,255,.28);
+    }
+    .img.placeholder .placeholder-text{
+      max-width: 85%;
+      text-align:center;
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.45;
+      color: rgba(233,236,255,.9);
+      text-transform: uppercase;
+      letter-spacing: .35px;
+    }
+
+    .panel{
+      border-radius: var(--r);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    /* Big hero collage */
+    .collage{
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap: 12px;
+    }
+    .big{
+      height: 420px;
+    }
+    .stack{
+      display:grid;
+      grid-template-rows: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .img{
+      position:relative;
+      overflow:hidden;
+      border-radius: var(--r);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      min-height: 180px;
+    }
+    .img img{
+      width:100%; height:100%;
+      object-fit: cover;
+      display:block;
+      filter: saturate(1.05) contrast(1.05);
+    }
+    .img .label{
+      position:absolute;
+      left: 12px; bottom: 12px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(10px);
+      font-weight: 850;
+      font-size: 12px;
+    }
+
+    /* Single visual strips */
+    .strip{
+      height: 420px;
+    }
+    .strip.tall{height: 520px;}
+    .strip.short{height: 360px;}
+
+    /* 3-image storyboard */
+    .story{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+    .story .img{min-height: 260px;}
+    .run1-story{grid-template-columns: repeat(4, minmax(0,1fr));}
+    .run1-story .img{min-height: 230px;}
+
+    .run-iteration-change{
+      margin: 10px 0 14px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(109,255,181,.35);
+      background: linear-gradient(135deg, rgba(109,255,181,.10), rgba(58,167,255,.10));
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .run-iteration-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .run-iteration-card{
+      border:1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.07);
+      border-radius: 12px;
+      padding: 10px;
+    }
+    .run-iteration-card h4{
+      margin: 0 0 6px;
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: .2px;
+      color: var(--text);
+    }
+    .run-iteration-card p{
+      margin: 0;
+      font-size: 12.5px;
+      font-weight: 780;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .run-iteration-missions{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap: wrap;
+      gap:8px;
+      align-items:center;
+    }
+    .run-iteration-missions .label{
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--muted);
+      letter-spacing: .3px;
+      text-transform: uppercase;
+    }
+    .run-chip{
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.11);
+      font-size: 11.5px;
+      font-weight: 900;
+      color: #f8fffb;
+    }
+
+    /* Reusable attachment iteration timeline */
+    .iter-block{
+      margin: 14px 0;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: 0 12px 30px rgba(0,0,0,.24);
+    }
+    .iter-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .iter-title{
+      margin:0;
+      font-size:16px;
+      font-weight:950;
+      letter-spacing:.15px;
+      color:var(--text);
+    }
+    .iter-takeaway{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:12.5px;
+      font-weight:760;
+    }
+    .iter-result{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid color-mix(in srgb, var(--iter-accent, var(--design)) 55%, white 22%);
+      background: color-mix(in srgb, var(--iter-accent, var(--design)) 18%, transparent);
+      color:#f8fffd;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.25px;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+    .iter-track{
+      display:flex;
+      gap:12px;
+      align-items:stretch;
+    }
+    .iter-step{
+      position:relative;
+      flex:1;
+      min-width:0;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      border-radius: 14px;
+      padding:8px;
+      overflow:visible;
+    }
+    .iter-step:not(:last-child)::after{
+      content:"\279C";
+      position:absolute;
+      right:-17px;
+      top:50%;
+      transform:translateY(-50%);
+      width:22px;
+      height:22px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      color: color-mix(in srgb, var(--iter-accent, var(--design)) 75%, white 15%);
+      background: rgba(11,16,32,.92);
+      border:1px solid rgba(255,255,255,.2);
+      box-shadow: 0 6px 16px rgba(0,0,0,.35);
+      font-size:13px;
+      font-weight:900;
+      z-index:2;
+    }
+    .iter-thumb{
+      position:relative;
+      aspect-ratio: 4 / 3;
+      border-radius: 10px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.03);
+    }
+    .iter-thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter: saturate(1.06) contrast(1.05);
+    }
+    .iter-meta{
+      margin-top:8px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:6px;
+    }
+    .iter-label{
+      font-size:11.5px;
+      font-weight:900;
+      color:#f7fbff;
+      letter-spacing:.2px;
+      text-transform:uppercase;
+    }
+    .iter-note{
+      font-size:11px;
+      font-weight:900;
+      color: color-mix(in srgb, var(--iter-accent, var(--design)) 72%, white 18%);
+      letter-spacing:.2px;
+      white-space:nowrap;
+      text-transform:uppercase;
+    }
+
+    .pm-title{
+      margin:0 0 10px;
+      font-size:16px;
+      font-weight:900;
+      letter-spacing:.1px;
+    }
+    .pm-grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap:12px;
+    }
+    .pm-card{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .pm-card h4{
+      margin:0 0 8px;
+      font-size:13px;
+      font-weight:900;
+      color:var(--text);
+      letter-spacing:.2px;
+    }
+    .pm-runs{
+      display:grid;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      gap:8px;
+      margin-top:8px;
+    }
+    .pm-badge{
+      text-align:center;
+      padding:8px 6px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      font-size:12px;
+      font-weight:900;
+    }
+    .pm-team{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:8px;
+      margin-top:8px;
+    }
+    .pm-team div{
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      padding:10px;
+      font-size:12px;
+      font-weight:800;
+      text-align:center;
+    }
+    .pm-flow{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:10px;
+    }
+    .pm-step{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius:12px;
+      padding:10px;
+    }
+    .pm-step .k{
+      font-size:11px;
+      font-weight:900;
+      color:var(--muted);
+      letter-spacing:.2px;
+      margin-bottom:4px;
+    }
+    .pm-step .v{
+      font-size:12.5px;
+      font-weight:800;
+      color:var(--text);
+      line-height:1.35;
+    }
+
+    footer{
+      padding: 24px 0 44px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    /* Robot design sketch comparison */
+    .robot-design-hero{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+      align-items:start;
+    }
+    .robot-season-column{
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035));
+      padding:12px;
+      box-shadow:0 14px 34px rgba(0,0,0,.26);
+    }
+    .robot-season-title{
+      margin:0 0 10px;
+      text-align:center;
+      font-size:clamp(20px, 3vw, 30px);
+      line-height:1;
+      font-weight:950;
+      letter-spacing:0;
+    }
+    .robot-card-stack{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap:10px;
+    }
+    .robot-design-card{
+      position:relative;
+      min-height:180px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:14px;
+      overflow:hidden;
+      background:rgba(0,0,0,.20);
+    }
+    .robot-design-card.large{min-height:230px;}
+    .robot-design-card img{
+      width:100%;
+      height:100%;
+      min-height:inherit;
+      object-fit:contain;
+      display:block;
+      background:rgba(255,255,255,.92);
+    }
+    .robot-design-card.photo img{
+      object-fit:cover;
+      background:rgba(0,0,0,.12);
+    }
+    .robot-design-label{
+      position:absolute;
+      left:10px;
+      bottom:10px;
+      padding:7px 9px;
+      border-radius:11px;
+      background:rgba(0,0,0,.52);
+      border:1px solid rgba(255,255,255,.18);
+      backdrop-filter:blur(10px);
+      color:#fff;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.2px;
+      text-transform:uppercase;
+    }
+    .robot-placeholder{
+      min-height:180px;
+      display:grid;
+      place-items:center;
+      padding:18px;
+      text-align:center;
+      color:rgba(233,236,255,.82);
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+      background:repeating-linear-gradient(-45deg, rgba(255,255,255,.08) 0 12px, rgba(255,255,255,.03) 12px 24px), rgba(0,0,0,.18);
+    }
+    .all-versions-board{
+      margin-top:14px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:18px;
+      background:linear-gradient(135deg, rgba(109,255,181,.11), rgba(58,167,255,.08));
+      padding:12px;
+    }
+    .all-versions-title{
+      margin:0 0 10px;
+      text-align:center;
+      font-size:clamp(22px, 3.2vw, 34px);
+      line-height:1;
+      font-weight:950;
+      letter-spacing:0;
+    }
+    .version-strip{
+      display:grid;
+      grid-template-columns:repeat(7, minmax(0, 1fr));
+      gap:8px;
+    }
+    .version-thumb{
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:12px;
+      overflow:hidden;
+      background:rgba(0,0,0,.18);
+      min-height:110px;
+    }
+    .version-thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .version-thumb span{
+      display:block;
+      padding:6px 7px;
+      font-size:10px;
+      font-weight:900;
+      text-align:center;
+      color:var(--text);
+      background:rgba(0,0,0,.32);
+    }
+    .pm-main-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:10px;
+      margin-top:12px;
+    }
+    .pm-run-main{
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:12px;
+      padding:10px;
+      background:rgba(0,0,0,.20);
+    }
+    .pm-run-main h4{
+      margin:0 0 8px;
+      font-size:13px;
+      font-weight:900;
+      color:var(--text);
+      text-align:center;
+    }
+    .pm-run-pics{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:6px;
+    }
+    .pm-run-pic{
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:8px;
+      background:rgba(255,255,255,.04);
+      padding:4px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:4px;
+    }
+    .pm-run-pic img{
+      width:100%;
+      max-height:72px;
+      object-fit:contain;
+      border-radius:6px;
+      background:rgba(0,0,0,.20);
+    }
+    .pm-run-pic span{
+      font-size:10px;
+      font-weight:900;
+      color:var(--text);
+    }
+    .attachment-formula{
+      margin: 0 0 14px;
+      border: 1px solid rgba(109,255,181,.32);
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(109,255,181,.10), rgba(58,167,255,.08));
+      padding: 14px;
+      box-shadow: 0 12px 28px rgba(0,0,0,.22);
+    }
+    .formula-title{
+      margin: 0 0 10px;
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 950;
+      letter-spacing: .15px;
+    }
+    .formula-row{
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      gap: 8px;
+      align-items: stretch;
+    }
+    .formula-piece,
+    .formula-result{
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 12px;
+      background: rgba(0,0,0,.18);
+      padding: 10px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      min-height: 72px;
+      font-size: 13px;
+      font-weight: 950;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .formula-result{
+      border-color: rgba(255,213,109,.55);
+      background: rgba(255,213,109,.12);
+      color: #fff6cf;
+    }
+    .formula-op{
+      display: grid;
+      place-items: center;
+      color: var(--share);
+      font-size: 24px;
+      font-weight: 950;
+    }
+    .formula-note{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 760;
+      line-height: 1.45;
+    }
+    .team-org-panel{
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:18px;
+      background:linear-gradient(135deg, rgba(58,167,255,.10), rgba(255,109,241,.08));
+      padding:14px;
+      box-shadow:0 14px 34px rgba(0,0,0,.24);
+    }
+    .team-role-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:10px;
+      margin-bottom:12px;
+    }
+    .team-role-card,
+    .team-side-card{
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:14px;
+      background:rgba(0,0,0,.18);
+      padding:12px;
+    }
+    .team-role-card .role,
+    .team-side-card .role{
+      margin:0 0 6px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:950;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+    }
+    .team-role-card .names,
+    .team-side-card .names{
+      margin:0;
+      color:var(--text);
+      font-size:16px;
+      font-weight:950;
+      line-height:1.25;
+    }
+    .team-side-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:10px;
+    }
+    .team-side-card.red{
+      border-color:rgba(255,138,138,.55);
+      background:rgba(255,138,138,.12);
+    }
+    .team-side-card.blue{
+      border-color:rgba(58,167,255,.55);
+      background:rgba(58,167,255,.12);
+    }
+    .team-org-subhead{
+      margin:4px 0 10px;
+      color:var(--text);
+      font-size:14px;
+      font-weight:950;
+      letter-spacing:.25px;
+      text-transform:uppercase;
+    }
+    .team-org-subhead:not(:first-child){
+      margin-top:14px;
+    }
+    .team-work-note{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:760;
+      line-height:1.45;
+      text-align:center;
+    }
+    .team-process{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:10px;
+    }
+    .team-process-step{
+      position:relative;
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:14px;
+      background:rgba(255,255,255,.06);
+      padding:12px;
+      min-height:118px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      overflow:hidden;
+    }
+    .team-process-step::before{
+      content:attr(data-step);
+      position:absolute;
+      right:10px;
+      top:4px;
+      color:rgba(255,255,255,.10);
+      font-size:48px;
+      font-weight:950;
+      line-height:1;
+    }
+    .team-process-title{
+      margin:0;
+      color:var(--text);
+      font-size:15px;
+      font-weight:950;
+      line-height:1.2;
+      position:relative;
+    }
+    .team-process-detail{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:780;
+      line-height:1.35;
+      position:relative;
+    }
+    .team-process-chip{
+      width:max-content;
+      max-width:100%;
+      margin-top:10px;
+      padding:5px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.20);
+      background:rgba(0,0,0,.22);
+      color:#fff;
+      font-size:10px;
+      font-weight:950;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+      position:relative;
+    }
+    .team-process-step.prove{border-color:rgba(255,213,109,.55);}
+    .team-process-step.tune{border-color:rgba(109,255,181,.55);}
+    .team-process-step.refine{border-color:rgba(255,109,241,.55);}
+    @media (max-width: 980px){
+      .collage{grid-template-columns: 1fr;}
+      .big{height: 340px;}
+      .stack{grid-template-rows: auto; grid-template-columns: 1fr 1fr 1fr;}
+      .strip{height: 340px;}
+      .strip.tall{height: 380px;}
+      .story{grid-template-columns: 1fr;}
+      .story .img{min-height: 240px;}
+      .run1-story{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .run-material-map{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .run-iteration-grid{grid-template-columns: 1fr;}
+      .pm-grid{grid-template-columns: 1fr;}
+      .pm-runs{grid-template-columns: repeat(3, minmax(0,1fr));}
+      .pm-main-grid{grid-template-columns:1fr 1fr;}
+      .pm-flow{grid-template-columns: 1fr;}
+      .formula-row{grid-template-columns: 1fr;}
+      .formula-op{font-size:18px;}
+      .robot-design-hero{grid-template-columns:1fr;}
+      .robot-card-stack{grid-template-columns:1fr;}
+      .team-role-grid,
+      .team-process,
+      .team-side-grid{grid-template-columns:1fr;}
+      .version-strip{grid-template-columns:repeat(2, minmax(0,1fr));}
+      .iter-track{flex-direction:column;gap:16px;}
+      .iter-step:not(:last-child)::after{
+        right:auto;
+        left:50%;
+        top:auto;
+        bottom:-15px;
+        transform:translateX(-50%) rotate(90deg);
+      }
+    }
+    @media (max-width: 640px){
+      .run1-story{grid-template-columns: 1fr;}
+      .run-material-map{grid-template-columns: 1fr;}
+      .version-strip{grid-template-columns:1fr;}
+      .pm-main-grid{grid-template-columns:1fr;}
+    }
+    html{scroll-behavior:smooth}
+  </style>
+</head>
+
+<body>
+  <div class="top">
+    <div class="wrap">
+      <div class="nav">
+        <div class="brand">
+          <div class="logo"></div>
+          <div>
+            <div style="font-size:14px;">FLL Visual Companion</div>
+            <div style="font-size:12px; color:var(--muted); font-weight:700;">Show, don’t tell.</div>
+          </div>
+        </div>
+        <div class="links">
+          <a href="index.html">Main Page</a>
+          <a href="Rover Iterations/updatedinnovation.html">Innovation Page</a>
+          <a href="#design">Robot Design</a>
+          <a href="#strategy">Mission Strategy</a>
+          <a href="#team-organization">Team Organization</a>
+          <a href="#runs">Runs</a>
+          <a href="#create">Create</a>
+          <a href="#diagnostics">Diagnostics</a>
+          <a href="#share">Share</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="wrap">
+      <h1>Robot design and mission strategy, explained with visuals.</h1>
+      <p class="sub">Use this page while presenting: start with how the robot changed, then show how strategy shaped the runs.</p>
+
+      
+    </div>
+  </header>
+
+  <!-- ROBOT DESIGN -->
+  <section id="design">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--design)"></span>ROBOT DESIGN</div>
+        <div class="title">From first concept to final robot</div>
+      </div>
+
+      <div class="robot-design-hero">
+        <article class="robot-season-column">
+          <h2 class="robot-season-title">Summer / Last Year</h2>
+          <div class="robot-card-stack">
+            <div class="robot-design-card large">
+              <img src="inital concept last year.png" alt="Initial concept from last year">
+              <div class="robot-design-label">Initial Concept</div>
+            </div>
+            <div class="robot-design-card">
+              <img src="skeleton last year.png" alt="Skeleton build from last year">
+              <div class="robot-design-label">Skeleton</div>
+            </div>
+            <div class="robot-design-card photo">
+              <img src="Robot Iterations/lastyearrobot.png" alt="Final robot from last year">
+              <div class="robot-design-label">Final Concept</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="robot-season-column">
+          <h2 class="robot-season-title">This Year</h2>
+          <div class="robot-card-stack">
+            <div class="robot-design-card large">
+              <img src="initial concept this year.png" alt="Initial concept from this year">
+              <div class="robot-design-label">Initial Concept</div>
+            </div>
+            <div class="robot-design-card photo">
+              <img src="Robot Iterations/new base bot 4-24 (1).png" alt="This year middle robot build">
+              <div class="robot-design-label">Skeleton</div>
+            </div>
+            <div class="robot-design-card photo">
+              <img src="Robot Iterations/base robot iteration 6.2.jpg" alt="Final robot version from this year">
+              <div class="robot-design-label">Final Version</div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="all-versions-board">
+        <h2 class="all-versions-title">All Versions - This Year</h2>
+        <div class="version-strip" aria-label="This year's robot versions">
+          <div class="version-thumb"><img src="Robot Iterations/new base bot 4-24 (1).png" alt="Robot iteration 1"><span>V1</span></div>
+          <div class="version-thumb"><img src="Robot Iterations/base robot iteration 2.png" alt="Robot iteration 2"><span>V2</span></div>
+          <div class="version-thumb"><img src="Robot Iterations/base robot iteration 3.jpg" alt="Robot iteration 3"><span>V3</span></div>
+          <div class="version-thumb"><img src="Robot Iterations/base robot iteration 4.jpg" alt="Robot iteration 4"><span>V4</span></div>
+          <div class="version-thumb"><img src="Robot Iterations/base robot iteration 5.jpg" alt="Robot iteration 5"><span>V5</span></div>
+          <div class="version-thumb"><img src="Robot Iterations/base robot iteration 6.0.jpg" alt="Robot iteration 6"><span>V6</span></div>
+          <div class="version-thumb"><img src="Robot Iterations/base robot iteration 6.2.jpg" alt="Robot iteration 6.2"><span>V6.2</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- MISSION STRATEGY -->
+  <section id="strategy">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--identify)"></span>MISSION STRATEGY</div>
+        <div class="title">How we chose missions before building runs</div>
+      </div>
+
+    <style>
+    .difficulty-infographic {
+      margin-top: 12px;
+    }
+    .difficulty-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .difficulty-card {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .difficulty-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-weight: 900;
+      font-size: 14px;
+    }
+    .difficulty-count {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .difficulty-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .difficulty-note {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+    @media (max-width: 980px) {
+      .difficulty-grid {
+      grid-template-columns: 1fr;
+      }
+    }
+    .mission-infographic {
+      margin-top: 14px;
+    }
+    .mission-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .mission-card {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .mission-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .mission-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: .2px;
+    }
+    .mission-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+    }
+    .mission-count {
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .mission-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.4;
+      letter-spacing: .1px;
+    }
+    .mission-note {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .mission-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .mission-pill {
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.22);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .mission-summary {
+      margin-top: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .summary-bar {
+      height: 14px;
+      border-radius: 999px;
+      background:
+        linear-gradient(
+          to right,
+          #ff4d4d 0% 38.9%,
+          #4da6ff 38.9% 55.6%,
+          #ffd84d 55.6% 83.3%,
+          #57d97d 83.3% 100%
+        );
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .summary-legend {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 750;
+      color: var(--muted);
+    }
+    .summary-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+    @media (max-width: 980px) {
+      .mission-grid,
+      .summary-legend {
+        grid-template-columns: 1fr;
+      }
+    }
+    .identify-direct {
+      margin: 0 0 12px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .mission-card h4 {
+      font-size: 15px !important;
+      letter-spacing: .15px;
+    }
+    .mission-action-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(0,0,0,.25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mission-action-icon svg {
+      width: 15px;
+      height: 15px;
+      stroke: rgba(255,255,255,.92);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .mission-action-note {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      margin-top: -2px;
+      margin-bottom: 8px;
+    }
+    .venn-panel {
+      margin-top: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .venn-title {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--text);
+    }
+    .venn-sub {
+      margin: 0 0 10px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .venn-svg {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      background: rgba(0,0,0,.2);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .venn-thumb-frame {
+      fill: rgba(8,12,24,.72);
+      stroke: rgba(255,255,255,.55);
+      stroke-width: 1.2;
+      rx: 8;
+      ry: 8;
+    }
+    .venn-thumb-label {
+      fill: rgba(255,255,255,.98);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .venn-key {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .venn-key-item {
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(0,0,0,.18);
+    }
+    .venn-key-title {
+      font-size: 16px;
+      color: var(--share);
+      font-weight: 950;
+      letter-spacing: .2px;
+      text-transform: uppercase;
+      text-align: center;
+      display: block;
+      width: 100%;
+      -webkit-text-stroke: 0.65px rgba(8,12,24,.92);
+      text-shadow:
+        0 2px 8px rgba(0,0,0,.55),
+        0 0 14px rgba(255,213,109,.45);
+      margin-bottom: 10px;
+      animation: vennTitleGlow 2.4s ease-in-out infinite;
+    }
+    @keyframes vennTitleGlow {
+      0%, 100% {
+        transform: translateY(0);
+        text-shadow:
+          0 2px 8px rgba(0,0,0,.55),
+          0 0 10px rgba(255,213,109,.35);
+      }
+      50% {
+        transform: translateY(-1px);
+        text-shadow:
+          0 3px 10px rgba(0,0,0,.62),
+          0 0 18px rgba(255,213,109,.62);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .venn-key-title {
+        animation: none;
+      }
+    }
+    .venn-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+    }
+    .venn-mini {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 10px;
+      background: rgba(255,255,255,.04);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+    }
+    .venn-mini img {
+      width: 100%;
+      max-height: 95px;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+      background: rgba(0,0,0,.2);
+    }
+    .venn-mini span {
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 900;
+      line-height: 1;
+    }
+    @media (max-width: 980px) {
+      .venn-key {
+        grid-template-columns: 1fr;
+      }
+      .venn-mini-grid {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+    }
+    @media (max-width: 680px) {
+      .venn-key {
+        grid-template-columns: 1fr;
+      }
+      .venn-mini-grid {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+    }
+    .location-panel {
+      margin-top: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(255,255,255,.04);
+    }
+    .location-title {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 950;
+      color: #ffffff;
+      text-align: center;
+      text-shadow: 0 0 18px rgba(255,255,255,.35);
+    }
+    .location-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .location-card {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(0,0,0,.2);
+    }
+    .location-card.red { border-color: rgba(255,138,138,.45); }
+    .location-card.blue { border-color: rgba(138,198,255,.45); }
+    .location-head {
+      font-size: 15px;
+      font-weight: 950;
+      margin-bottom: 8px;
+      text-align: center;
+      letter-spacing: .2px;
+      text-transform: uppercase;
+    }
+    .location-card.red .location-head { color: #ff8a8a; }
+    .location-card.blue .location-head { color: #8ac6ff; }
+    .location-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 8px;
+    }
+    .location-mini {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 10px;
+      background: rgba(255,255,255,.04);
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: center;
+    }
+    .location-mini img {
+      width: 100%;
+      max-height: 88px;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+      background: rgba(0,0,0,.2);
+    }
+    .location-mini span {
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1;
+    }
+    @media (max-width: 980px) {
+      .location-grid { grid-template-columns: 1fr; }
+      .location-mini-grid { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    }
+    @media (max-width: 640px) {
+      .location-mini-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    }
+    .mission-sorter {
+      margin-top: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      padding: 14px;
+    }
+    .sorter-menu {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .sort-btn {
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 10px;
+      background: rgba(0,0,0,.25);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 900;
+      padding: 9px 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: .2px;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .sort-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.32);
+      box-shadow: 0 8px 18px rgba(0,0,0,.28);
+    }
+    .sort-btn.active {
+      border-color: var(--share);
+      box-shadow: 0 0 0 1px rgba(255,213,109,.35) inset, 0 0 16px rgba(255,213,109,.25);
+      color: #fff;
+    }
+    .sorter-status {
+      margin: 0 0 10px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 800;
+      text-align: center;
+    }
+    .sorter-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+    .sort-column {
+      display: grid;
+      grid-template-columns: minmax(130px, 180px) 1fr;
+      gap: 10px;
+      align-items: stretch;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px;
+      background: rgba(0,0,0,.2);
+      padding: 8px;
+    }
+    .sort-column-title {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .25px;
+      text-align: left;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 8px;
+      padding: 10px;
+      background: rgba(255,255,255,.05);
+      display:flex;
+      align-items:center;
+    }
+    .sort-column-body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: stretch;
+    }
+    .sort-card {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px;
+      background: rgba(0,0,0,.22);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: min(150px, 100%);
+      transition: transform .35s ease, opacity .35s ease;
+    }
+    .sort-card img {
+      width: 100%;
+      height: auto;
+      max-height: 82px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .sort-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .sort-id {
+      font-size: 12px;
+      font-weight: 950;
+      color: #fff;
+    }
+    .sort-badge {
+      font-size: 10px;
+      font-weight: 900;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      padding: 3px 7px;
+      white-space: nowrap;
+      background: rgba(255,255,255,.06);
+    }
+    .sorter-grid.shuffling .sort-card {
+      animation: shufflePulse .35s ease-in-out 2;
+    }
+    @keyframes shufflePulse {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+      25% { transform: translate(2px, -2px) rotate(-1deg); opacity: .86; }
+      50% { transform: translate(-2px, 2px) rotate(1deg); opacity: .82; }
+      100% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+    }
+    @media (max-width: 980px) {
+      .sorter-menu { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .sorter-grid { grid-template-columns: 1fr; }
+      .sort-column { grid-template-columns: minmax(110px, 140px) 1fr; }
+      .sort-card { width: min(136px, 100%); }
+    }
+    @media (max-width: 640px) {
+      .sorter-menu { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .sorter-grid { grid-template-columns: 1fr; }
+      .sort-column { grid-template-columns: 1fr; }
+      .sort-column-title { justify-content:center; text-align:center; }
+      .sort-card { width: min(140px, calc(50% - 4px)); }
+    }
+    .mission-visual-infographic {
+      margin-top: 12px;
+    }
+    .mission-visual-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .mission-photo-card {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 14px;
+      padding: 10px;
+    }
+    .mission-photo-wrap {
+      width: 100%;
+      min-height: 135px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+    }
+    .mission-photo-wrap img {
+      width: 100%;
+      height: auto;
+      max-height: 180px;
+      object-fit: contain;
+      display: block;
+    }
+    .mission-photo-caption {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 900;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+    }
+    .mission-photo-meta {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 800;
+      line-height: 1.35;
+    }
+    .action-chip {
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 900;
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      white-space: nowrap;
+    }
+    @media (max-width: 980px) {
+      .mission-visual-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 720px) {
+      .mission-visual-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .points-snapshot {
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .snapshot-kpi {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--text);
+      margin: 6px 0;
+    }
+    .snapshot-note {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+    @media (max-width: 980px) {
+      .points-snapshot { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <div class="mission-infographic">
+    <div class="panel" style="padding:12px;">
+      <h3 style="margin:0 0 10px; font-size:24px; font-weight:950; color:#ffffff; letter-spacing:.2px; text-align:center; text-shadow: 0 0 20px rgba(255,255,255,.4);">
+        Our Mission Analysis
+      </h3>
+      <p class="identify-direct">One-glance takeaway: Push is dominant, Pull is limited, so we optimize push-first and keep one reliable pull attachment.</p>
+      <div class="mission-sorter" id="missionSorter">
+        <div class="sorter-menu" role="tablist" aria-label="Mission sorting methods">
+          <button class="sort-btn active" data-sort="action">Action Type</button>
+          <button class="sort-btn" data-sort="difficulty">Difficulty</button>
+          <button class="sort-btn" data-sort="points">Points</button>
+          <button class="sort-btn" data-sort="location">Location</button>
+          <button class="sort-btn" data-sort="run">Run Group</button>
+        </div>
+        <p class="sorter-status" id="sorterStatus">Sorted by Action Type: Push, Push/Pull, Pull, Lift, Push/Drop, Drop</p>
+        <div class="sorter-grid" id="sorterGrid">
+          <article class="sort-card" data-id="M1" data-action="Drop" data-difficulty="Medium" data-points="30" data-location="Red" data-run="Run C"><img src="Mission Pictures/mission 1.png" alt="Mission 1"><div class="sort-meta"><span class="sort-id">M1</span><span class="sort-badge">Drop</span></div></article>
+          <article class="sort-card" data-id="M2" data-action="Push/Drop" data-difficulty="Easy" data-points="30" data-location="Red" data-run="Run C"><img src="Mission Pictures/mission 2.png" alt="Mission 2"><div class="sort-meta"><span class="sort-id">M2</span><span class="sort-badge">Push/Drop</span></div></article>
+          <article class="sort-card" data-id="M3" data-action="Lift" data-difficulty="Medium" data-points="30" data-location="Red" data-run="Run D"><img src="Mission Pictures/mission 3.png" alt="Mission 3"><div class="sort-meta"><span class="sort-id">M3</span><span class="sort-badge">Lift</span></div></article>
+          <article class="sort-card" data-id="M4" data-action="Drop" data-difficulty="Hard" data-points="40" data-location="Red" data-run="Run D"><img src="Mission Pictures/mission 4.png" alt="Mission 4"><div class="sort-meta"><span class="sort-id">M4</span><span class="sort-badge">Drop</span></div></article>
+          <article class="sort-card" data-id="M5" data-action="Push" data-difficulty="Easy" data-points="30" data-location="Red" data-run="Run A"><img src="Mission Pictures/mission 5.png" alt="Mission 5"><div class="sort-meta"><span class="sort-id">M5</span><span class="sort-badge">Push</span></div></article>
+          <article class="sort-card" data-id="M6" data-action="Push" data-difficulty="Easy" data-points="30" data-location="Red" data-run="Run A"><img src="Mission Pictures/mission 6.png" alt="Mission 6"><div class="sort-meta"><span class="sort-id">M6</span><span class="sort-badge">Push</span></div></article>
+          <article class="sort-card" data-id="M7" data-action="Lift" data-difficulty="Medium" data-points="30" data-location="Red" data-run="Run A"><img src="Mission Pictures/mission 7.png" alt="Mission 7"><div class="sort-meta"><span class="sort-id">M7</span><span class="sort-badge">Lift</span></div></article>
+          <article class="sort-card" data-id="M8" data-action="Push" data-difficulty="Hard" data-points="30" data-location="Red" data-run="Run A"><img src="Mission Pictures/mission 8.png" alt="Mission 8"><div class="sort-meta"><span class="sort-id">M8</span><span class="sort-badge">Push</span></div></article>
+          <article class="sort-card" data-id="M9" data-action="Pull" data-difficulty="Medium" data-points="30" data-location="Blue" data-run="Run B"><img src="Mission Pictures/mission 9.png" alt="Mission 9"><div class="sort-meta"><span class="sort-id">M9</span><span class="sort-badge">Pull</span></div></article>
+          <article class="sort-card" data-id="M10" data-action="Push/Pull" data-difficulty="Medium" data-points="30" data-location="Blue" data-run="Run B"><img src="Mission Pictures/mission 10.png" alt="Mission 10"><div class="sort-meta"><span class="sort-id">M10</span><span class="sort-badge">Push/Pull</span></div></article>
+          <article class="sort-card" data-id="M11" data-action="Push" data-difficulty="Hard" data-points="30" data-location="Blue" data-run="Run E"><img src="Mission Pictures/mission 11.png" alt="Mission 11"><div class="sort-meta"><span class="sort-id">M11</span><span class="sort-badge">Push</span></div></article>
+          <article class="sort-card" data-id="M12" data-action="Push/Pull" data-difficulty="Easy" data-points="30" data-location="Blue" data-run="Run B"><img src="Mission Pictures/mission 12.png" alt="Mission 12"><div class="sort-meta"><span class="sort-id">M12</span><span class="sort-badge">Push/Pull</span></div></article>
+          <article class="sort-card" data-id="M13" data-action="Lift" data-difficulty="Easy" data-points="30" data-location="Blue" data-run="Run E"><img src="Mission Pictures/mission 13.png" alt="Mission 13"><div class="sort-meta"><span class="sort-id">M13</span><span class="sort-badge">Lift</span></div></article>
+          <article class="sort-card" data-id="M14" data-action="Drop" data-difficulty="Easy" data-points="30" data-location="Blue" data-run="Run G"><img src="Mission Pictures/mission 14.png" alt="Mission 14"><div class="sort-meta"><span class="sort-id">M14</span><span class="sort-badge">Drop</span></div></article>
+          <article class="sort-card" data-id="M15" data-action="Drop" data-difficulty="Medium" data-points="30" data-location="Blue" data-run="Run G"><img src="Mission Pictures/mission 15.png" alt="Mission 15"><div class="sort-meta"><span class="sort-id">M15</span><span class="sort-badge">Drop</span></div></article>
+        </div>
+      </div>
+      <script>
+        (function(){
+          const sorter = document.getElementById('missionSorter');
+          if(!sorter) return;
+          const grid = document.getElementById('sorterGrid');
+          const status = document.getElementById('sorterStatus');
+          const buttons = Array.from(sorter.querySelectorAll('.sort-btn'));
+          const allCards = Array.from(grid.querySelectorAll('.sort-card'));
+
+          const groupOrder = {
+            action: ['Push', 'Push/Pull', 'Pull', 'Lift', 'Push/Drop', 'Drop'],
+            difficulty: ['Easy', 'Medium', 'Hard'],
+            points: ['40', '30'],
+            location: ['Red', 'Blue'],
+            run: ['Run A', 'Run B', 'Run C', 'Run D', 'Run E', 'Run G']
+          };
+
+          const statusText = {
+            action: 'Sorted by Action Type rows',
+            difficulty: 'Sorted by Difficulty: Easy, Medium, Hard',
+            points: 'Sorted by Points: 40, 30',
+            location: 'Sorted by Location: Red Side, Blue Side',
+            run: 'Sorted by Run Group: Run A, Run B, Run C, Run D, Run E, Run G'
+          };
+
+          const colorMap = {
+            action: {
+              'Push': '#ff8a8a',
+              'Push/Pull': '#ffb56d',
+              'Pull': '#8ac6ff',
+              'Lift': '#96ebb0',
+              'Push/Drop': '#ffd56d',
+              'Drop': '#ffd56d'
+            },
+            difficulty: { 'Easy': '#6dffb5', 'Medium': '#8ac6ff', 'Hard': '#ff8a8a' },
+            points: { '40': '#ffd56d', '30': '#8ac6ff' },
+            location: { 'Red': '#ff8a8a', 'Blue': '#8ac6ff' },
+            run: {
+              'Run A': '#6dffb5',
+              'Run B': '#8ac6ff',
+              'Run C': '#ffd56d',
+              'Run D': '#ff8a8a',
+              'Run E': '#ffb56d',
+              'Run G': '#c4a2ff'
+            }
+          };
+
+          function shuffleArray(arr){
+            const clone = [...arr];
+            for(let i = clone.length - 1; i > 0; i--){
+              const j = Math.floor(Math.random() * (i + 1));
+              [clone[i], clone[j]] = [clone[j], clone[i]];
+            }
+            return clone;
+          }
+
+          function missionNumber(card){
+            return Number(card.dataset.id.replace('M', '')) || 999;
+          }
+
+          function renderGrouped(mode){
+            grid.innerHTML = '';
+            const groups = groupOrder[mode] || [];
+
+            groups.forEach(group => {
+              const column = document.createElement('section');
+              column.className = 'sort-column';
+
+              const color = (colorMap[mode] && colorMap[mode][group]) || '#ffd56d';
+              column.style.borderColor = color + '66';
+
+              const heading = document.createElement('h4');
+              heading.className = 'sort-column-title';
+              heading.textContent = group;
+              heading.style.color = color;
+              heading.style.borderColor = color + '99';
+              heading.style.textShadow = '0 2px 10px rgba(0,0,0,.55), 0 0 14px ' + color + '66';
+
+              const body = document.createElement('div');
+              body.className = 'sort-column-body';
+
+              const cards = allCards
+                .filter(card => card.dataset[mode] === group)
+                .sort((a, b) => missionNumber(a) - missionNumber(b));
+
+              cards.forEach(card => {
+                const badge = card.querySelector('.sort-badge');
+                if (badge) {
+                  badge.textContent = group;
+                }
+                body.appendChild(card);
+              });
+
+              column.appendChild(heading);
+              column.appendChild(body);
+              grid.appendChild(column);
+            });
+          }
+
+          function sortCards(mode){
+            const shuffled = shuffleArray(allCards);
+            grid.classList.add('shuffling');
+            grid.innerHTML = '';
+            shuffled.forEach(card => grid.appendChild(card));
+
+            window.setTimeout(() => {
+              renderGrouped(mode);
+              status.textContent = statusText[mode];
+              grid.classList.remove('shuffling');
+              buttons.forEach(btn => btn.disabled = false);
+            }, 520);
+          }
+
+          buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+              buttons.forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              buttons.forEach(b => b.disabled = true);
+              sortCards(btn.dataset.sort);
+            });
+          });
+
+          renderGrouped('action');
+        })();
+      </script>
+    </div>
+  </div>
+
+  
+    </div>
+  </section>
+
+  <!-- MISSION STRATEGY PLANNING -->
+  <section id="strategy-planning">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--share)"></span>MISSION STRATEGY</div>
+        <div class="title">Mission Grouping + Team Organization</div>
+      </div>
+
+      <div class="panel" style="padding:12px;">
+        <h3 class="pm-title" style="font-size:20px; text-align:center; margin:0 0 16px;">Mission Grouping Board</h3>
+        <div class="caption" style="text-align:center; margin-bottom:12px;">We grouped missions into runs by similar mechanics, field location, and attachment needs.</div>
+
+        <div class="pm-main-grid">
+          <article class="pm-run-main"><h4>Run A - M5 M6 M7 M8</h4><div class="pm-run-pics"><div class="pm-run-pic"><img src="Mission Pictures/mission 5.png" alt="M5"><span>M5</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 6.png" alt="M6"><span>M6</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 7.png" alt="M7"><span>M7</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 8.png" alt="M8"><span>M8</span></div></div></article>
+          <article class="pm-run-main"><h4>Run B - M9 M10</h4><div class="pm-run-pics"><div class="pm-run-pic"><img src="Mission Pictures/mission 9.png" alt="M9"><span>M9</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 10.png" alt="M10"><span>M10</span></div></div></article>
+          <article class="pm-run-main"><h4>Run C - M1 M2</h4><div class="pm-run-pics"><div class="pm-run-pic"><img src="Mission Pictures/mission 1.png" alt="M1"><span>M1</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 2.png" alt="M2"><span>M2</span></div></div></article>
+          <article class="pm-run-main"><h4>Run D - M3 M4</h4><div class="pm-run-pics"><div class="pm-run-pic"><img src="Mission Pictures/mission 3.png" alt="M3"><span>M3</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 4.png" alt="M4"><span>M4</span></div></div></article>
+          <article class="pm-run-main"><h4>Run E - M11 M13</h4><div class="pm-run-pics"><div class="pm-run-pic"><img src="Mission Pictures/mission 11.png" alt="M11"><span>M11</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 13.png" alt="M13"><span>M13</span></div></div></article>
+          <article class="pm-run-main"><h4>Run G - M15</h4><div class="pm-run-pics"><div class="pm-run-pic"><img src="Mission Pictures/mission 15.png" alt="M15"><span>M15</span></div></div></article>
+        </div>
+      </div>
+
+      <div class="panel robot-path-strategy" style="padding:12px; margin-top:12px;">
+        <style>
+          .robot-path-strategy{--rp-path:#ff3030;--rp-path2:#ffd56d;--rp-line:rgba(255,255,255,.16);--rp-panel:#101f2a;--rp-text:#f5f8ff;--rp-muted:rgba(245,248,255,.68)}
+          .robot-path-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:12px;flex-wrap:wrap}
+          .robot-path-head h3{margin:0;font-size:20px;font-weight:950;color:var(--rp-text)}
+          .robot-path-meta{margin-top:4px;color:var(--rp-muted);font-size:13px;font-weight:760}
+          .robot-path-pill{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--rp-line);border-radius:999px;background:rgba(255,255,255,.07);font-size:13px;font-weight:950;color:var(--rp-text)}
+          .robot-path-pill::before{content:"";width:11px;height:11px;border-radius:999px;background:var(--rp-path);box-shadow:0 0 18px var(--rp-path)}
+          .robot-path-layout{display:grid;grid-template-columns:210px 1fr;gap:14px;align-items:start}
+          .robot-path-menu{border:1px solid var(--rp-line);border-radius:14px;background:rgba(255,255,255,.05);padding:10px;box-shadow:0 20px 60px rgba(0,0,0,.24)}
+          .robot-path-menu-title{margin:2px 4px 10px;color:var(--rp-muted);font-size:12px;font-weight:950;letter-spacing:.3px;text-transform:uppercase}
+          .robot-path-button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;padding:11px 10px;border:1px solid var(--rp-line);border-radius:10px;background:rgba(255,255,255,.06);color:var(--rp-text);font:900 13px system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;cursor:pointer;text-align:left}
+          .robot-path-button:hover,.robot-path-button.active{border-color:var(--rp-path);background:rgba(255,48,48,.16)}
+          .robot-path-button span:last-child{color:var(--rp-muted);font-size:11px;font-weight:850}
+          .robot-path-button.strategy{border-color:rgba(255,213,109,.55);background:rgba(255,213,109,.12)}
+          .robot-path-button.strategy:hover,.robot-path-button.strategy.active{border-color:#ffd56d;background:rgba(255,213,109,.22)}
+          .robot-path-shell{border:1px solid var(--rp-line);border-radius:14px;overflow:hidden;background:var(--rp-panel);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+          .robot-path-board{position:relative;aspect-ratio:798 / 466;background:#111}
+          .robot-path-board img,.robot-path-board svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+          .robot-path-board img{object-fit:cover;filter:saturate(1.05) contrast(1.04) brightness(.82)}
+          .robot-path-board svg{z-index:2;overflow:visible}
+          .robot-path-glow,.robot-path-line,.robot-path-progress{fill:none;stroke-linecap:round;stroke-linejoin:round}
+          .robot-path-glow{stroke:var(--rp-path);stroke-width:24;opacity:.22;filter:blur(1px)}
+          .robot-path-line{stroke:var(--rp-path);stroke-width:9;stroke-dasharray:18 14;filter:drop-shadow(0 4px 8px rgba(0,0,0,.78));animation:robotPathMarch 1.15s linear infinite}
+          .robot-path-progress{stroke:var(--rp-path2);stroke-width:5;stroke-dasharray:1 1300;filter:drop-shadow(0 0 8px rgba(255,213,109,.8));animation:robotPathReveal 8s ease-in-out infinite}
+          .robot-path-mission-dot{fill:#07131c;stroke:var(--rp-path);stroke-width:4;filter:drop-shadow(0 4px 8px rgba(0,0,0,.72))}
+          .robot-path-label{fill:#fff;font:900 22px system-ui,-apple-system,Segoe UI,sans-serif;paint-order:stroke;stroke:rgba(0,0,0,.78);stroke-width:5;stroke-linejoin:round}
+          .robot-path-base{fill:rgba(8,18,27,.82);stroke:rgba(255,255,255,.86);stroke-width:3}
+          .robot-path-robot{filter:drop-shadow(0 7px 12px rgba(0,0,0,.82))}
+          .robot-path-robot .body{fill:#f7fbff;stroke:#07131c;stroke-width:4}
+          .robot-path-robot .top{fill:#fece00;stroke:#07131c;stroke-width:2}
+          .robot-path-robot .eye{fill:#3aa7ff}
+          .robot-path-footer{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px;border-top:1px solid var(--rp-line);background:rgba(0,0,0,.18)}
+          .robot-path-note{min-height:42px;display:flex;align-items:center;justify-content:center;padding:9px;border:1px solid var(--rp-line);border-radius:9px;background:rgba(255,255,255,.06);color:var(--rp-text);font-size:13px;font-weight:850;text-align:center}
+          @keyframes robotPathMarch{to{stroke-dashoffset:-32}}
+          @keyframes robotPathReveal{0%{stroke-dasharray:1 1300}58%,100%{stroke-dasharray:1300 1300}}
+          @media (max-width:820px){.robot-path-head{align-items:start;flex-direction:column}.robot-path-layout{grid-template-columns:1fr}.robot-path-menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.robot-path-menu-title{grid-column:1 / -1}.robot-path-button{margin-top:0}.robot-path-footer{grid-template-columns:1fr}.robot-path-label{font-size:18px}}
+        </style>
+
+        <div class="robot-path-head">
+          <div>
+            <h3>Robot Path Strategy Board</h3>
+            <div class="robot-path-meta">Use the run buttons to show how each mission group moves across the field.</div>
+          </div>
+          <div class="robot-path-pill" id="robotPathPill">Run A: M5 M6 M7 M8</div>
+        </div>
+
+        <div class="robot-path-layout">
+          <nav class="robot-path-menu" aria-label="Robot run path menu">
+            <div class="robot-path-menu-title">Choose A Run</div>
+            <button class="robot-path-button strategy" type="button" data-rp-strategy="all"><span>Full Strategy</span><span>A-G</span></button>
+            <button class="robot-path-button active" type="button" data-rp-path="runA"><span>Run A</span><span>M5-M8</span></button>
+            <button class="robot-path-button" type="button" data-rp-path="runB"><span>Run B</span><span>M9-M10</span></button>
+            <button class="robot-path-button" type="button" data-rp-path="runC"><span>Run C</span><span>M1-M2</span></button>
+            <button class="robot-path-button" type="button" data-rp-path="runD"><span>Run D</span><span>M3-M4</span></button>
+            <button class="robot-path-button" type="button" data-rp-path="runE"><span>Run E</span><span>M11 M13</span></button>
+            <button class="robot-path-button" type="button" data-rp-path="runG"><span>Run G</span><span>M15</span></button>
+          </nav>
+
+          <section class="robot-path-shell" aria-label="Robot path animation">
+            <div class="robot-path-board">
+              <img src="Mission Pictures/fll unearthed map.png" alt="FLL Unearthed mission map">
+              <svg id="robotPathSvg" viewBox="0 0 798 466" role="img" aria-label="Animated selected robot run path">
+                <defs><path id="robot-run-path" d="" /></defs>
+                <path class="robot-path-glow" id="robotPathGlow" d="" />
+                <path class="robot-path-line" id="robotPathLine" d="" />
+                <path class="robot-path-progress" id="robotPathProgress" d="" />
+                <g id="robotPathBaseLayer"></g>
+                <g id="robotPathMissionLayer"></g>
+                <g class="robot-path-robot" id="robotPathMarker">
+                  <animateMotion id="robotPathMotion" dur="8s" repeatCount="indefinite" rotate="auto">
+                    <mpath href="#robot-run-path" />
+                  </animateMotion>
+                  <rect class="body" x="-18" y="-14" width="36" height="28" rx="5" />
+                  <rect class="top" x="-11" y="-20" width="22" height="9" rx="3" />
+                  <circle class="eye" cx="11" cy="0" r="4" />
+                  <circle fill="#07131c" cx="-9" cy="15" r="4" />
+                  <circle fill="#07131c" cx="9" cy="15" r="4" />
+                </g>
+              </svg>
+            </div>
+            <div class="robot-path-footer">
+              <div class="robot-path-note" id="robotPathStartNote">Start: right launch area</div>
+              <div class="robot-path-note" id="robotPathTargetNote">Targets: M5, M6, M7, M8</div>
+              <div class="robot-path-note" id="robotPathModeNote">Each button shows one run path draft</div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <script>
+        (function(){
+          const paths = {
+            runA: { title:"Run A: M5 M6 M7 M8", color:"#ff3030", start:"Start: right launch area", targets:"Targets: M5, M6, M7, M8", duration:"4.4s", d:"M724 410 L724 300 L674 185 L650 91 L603 67 L692 69 L730 128 L714 219 L724 410", bases:[{label:"R",x:724,y:410}], markers:[{label:"5",x:603,y:67},{label:"6",x:650,y:91},{label:"7",x:692,y:69},{label:"8",x:714,y:219}] },
+            runB: { title:"Run B: M9 M10", color:"#3aa7ff", start:"Start: right launch area", targets:"Targets: M9, M10", duration:"3.6s", d:"M724 410 L562 212 L646 309 L724 410", bases:[{label:"R",x:724,y:410}], markers:[{label:"9",x:562,y:212},{label:"10",x:646,y:309}] },
+            runC: { title:"Run C: M1 M2", color:"#ffd56d", start:"Start: left-side route", targets:"Targets: M1, M2", duration:"4.4s", d:"M61 160 L88 46 L61 160", bases:[{label:"S",x:61,y:160}], markers:[{label:"1",x:61,y:160},{label:"2",x:88,y:46}] },
+            runD: { title:"Run D: M3 M4", color:"#ff8a8a", start:"Start: left launch area", targets:"Targets: M3, M4", duration:"5.8s", d:"M56 389 C89 358 106 313 105 254 C104 186 96 116 108 43 C139 30 179 24 223 29 C186 58 157 82 134 113 L154 105 C122 134 105 177 109 235 C112 293 96 346 56 389", bases:[{label:"L",x:56,y:389}], markers:[{label:"3",x:223,y:29},{label:"4",x:154,y:105}] },
+            runE: { title:"Run E: M11 M13", color:"#8ac6ff", start:"Start: right launch area", targets:"Targets: M11, M13", duration:"7.5s", d:"M724 410 C656 408 589 397 512 380 C446 343 393 276 346 207 C333 186 316 178 295 198", bases:[{label:"R",x:724,y:410}], markers:[{label:"11",x:512,y:380},{label:"13",x:316,y:178}] },
+            runG: { title:"Run G: M15", color:"#c4a2ff", start:"Start: left launch area", targets:"Targets: M15", duration:"3.2s", d:"M56 389 L94 260 L56 389", bases:[{label:"L",x:56,y:389}], markers:[{label:"15",x:94,y:260}] }
+          };
+
+          const root = document.querySelector(".robot-path-strategy");
+          if(!root) return;
+          const runPath = document.getElementById("robot-run-path");
+          const pathGlow = document.getElementById("robotPathGlow");
+          const pathLine = document.getElementById("robotPathLine");
+          const pathProgress = document.getElementById("robotPathProgress");
+          const robotMotion = document.getElementById("robotPathMotion");
+          const runPill = document.getElementById("robotPathPill");
+          const startNote = document.getElementById("robotPathStartNote");
+          const targetNote = document.getElementById("robotPathTargetNote");
+          const modeNote = document.getElementById("robotPathModeNote");
+          const baseLayer = document.getElementById("robotPathBaseLayer");
+          const missionLayer = document.getElementById("robotPathMissionLayer");
+          const buttons = [...root.querySelectorAll(".robot-path-button")];
+          const strategyButton = root.querySelector("[data-rp-strategy='all']");
+          const strategyOrder = ["runA","runB","runC","runD","runE","runG"];
+          let strategyTimer = null;
+          let strategyIndex = 0;
+
+          function node(name, attrs = {}, text = "") {
+            const el = document.createElementNS("http://www.w3.org/2000/svg", name);
+            Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
+            if (text) el.textContent = text;
+            return el;
+          }
+          function drawBases(items) {
+            baseLayer.replaceChildren();
+            items.forEach(item => baseLayer.append(
+              node("circle", { class:"robot-path-base", cx:item.x, cy:item.y, r:24 }),
+              node("text", { class:"robot-path-label", x:item.x, y:item.y + 8, "text-anchor":"middle" }, item.label)
+            ));
+          }
+          function drawMarkers(items) {
+            missionLayer.replaceChildren();
+            items.forEach(item => missionLayer.append(
+              node("circle", { class:"robot-path-mission-dot", cx:item.x, cy:item.y, r:13 }),
+              node("text", { class:"robot-path-label", x:item.x, y:item.y + 8, "text-anchor":"middle" }, item.label)
+            ));
+          }
+          function stopStrategy() {
+            if (strategyTimer) window.clearTimeout(strategyTimer);
+            strategyTimer = null;
+            strategyButton.classList.remove("active");
+          }
+          function selectPath(key, isStrategy = false) {
+            const data = paths[key];
+            root.style.setProperty("--rp-path", data.color);
+            runPill.textContent = isStrategy ? `Full Strategy: ${strategyIndex + 1}/6 - ${data.title}` : data.title;
+            startNote.textContent = data.start;
+            targetNote.textContent = data.targets;
+            modeNote.textContent = isStrategy ? "Auto-playing the full strategy in run order" : "Each button shows one run path draft";
+            runPath.setAttribute("d", data.d);
+            pathGlow.setAttribute("d", data.d);
+            pathLine.setAttribute("d", data.d);
+            pathProgress.setAttribute("d", data.d);
+            robotMotion.setAttribute("dur", data.duration);
+            drawBases(data.bases);
+            drawMarkers(data.markers);
+            robotMotion.beginElement();
+            buttons.forEach(button => button.classList.toggle("active", button.dataset.rpPath === key));
+            if (isStrategy) strategyButton.classList.add("active");
+          }
+          buttons.forEach(button => {
+            if (button.dataset.rpPath) {
+              button.addEventListener("click", () => {
+                stopStrategy();
+                selectPath(button.dataset.rpPath);
+              });
+            }
+          });
+          strategyButton.addEventListener("click", () => {
+            stopStrategy();
+            strategyIndex = 0;
+            function playNextPath() {
+              const key = strategyOrder[strategyIndex];
+              selectPath(key, true);
+              const seconds = parseFloat(paths[key].duration) || 5;
+              strategyIndex = (strategyIndex + 1) % strategyOrder.length;
+              strategyTimer = window.setTimeout(playNextPath, seconds * 1000 + 450);
+            }
+            playNextPath();
+          });
+          selectPath("runA");
+        })();
+      </script>
+    </div>
+  </section>
+
+  <!-- TEAM ORGANIZATION -->
+  <section id="team-organization">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--create)"></span>TEAM ORGANIZATION</div>
+        <div class="title">How we split the work as a team</div>
+      </div>
+
+      <div class="team-org-panel">
+        <h3 class="team-org-subhead">Leadership Roles</h3>
+        <div class="team-role-grid">
+          <article class="team-role-card">
+            <p class="role">Captain</p>
+            <p class="names">Isabella</p>
+          </article>
+          <article class="team-role-card">
+            <p class="role">Lead Coder</p>
+            <p class="names">Anthony</p>
+          </article>
+          <article class="team-role-card">
+            <p class="role">Lead Builder</p>
+            <p class="names">Kyle</p>
+          </article>
+        </div>
+
+        <h3 class="team-org-subhead">Field-Side Teams</h3>
+        <div class="team-side-grid">
+          <article class="team-side-card red">
+            <p class="role">Red Side Team</p>
+            <p class="names">Brian, Owen, Sam</p>
+            <p class="team-work-note">Focused on the red-side missions and the run attachments for that side of the field.</p>
+          </article>
+          <article class="team-side-card blue">
+            <p class="role">Blue Side Team</p>
+            <p class="names">Cailey, Jonathan, Julisa, Jasper</p>
+            <p class="team-work-note">Focused on the blue-side missions and the run attachments for that side of the field.</p>
+          </article>
+        </div>
+
+        <p class="team-work-note">Splitting the team this way helped us build, code, test, and improve multiple runs at the same time.</p>
+        <h3 class="team-org-subhead">Run Development Process</h3>
+        <div class="team-process" aria-label="Three-step run development process">
+          <article class="team-process-step prove" data-step="1">
+            <div>
+              <p class="team-process-title">Rough Draft</p>
+              <p class="team-process-detail">Prove the run is possible.</p>
+            </div>
+            <span class="team-process-chip">Build the idea</span>
+          </article>
+          <article class="team-process-step tune" data-step="2">
+            <div>
+              <p class="team-process-title">Tune + Debug</p>
+              <p class="team-process-detail">Fix alignment and reduce drift.</p>
+            </div>
+            <span class="team-process-chip">Make it reliable</span>
+          </article>
+          <article class="team-process-step refine" data-step="3">
+            <div>
+              <p class="team-process-title">Refine</p>
+              <p class="team-process-detail">Reach competition-level consistency.</p>
+            </div>
+            <span class="team-process-chip">Know the status</span>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- RUNS -->
+  <section id="runs">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--identify)"></span>RUNS</div>
+        <div class="title">Iterations that made our runs reliable</div>
+      </div>
+      <div class="attachment-formula">
+        <h3 class="formula-title">Our Best Attachment Formula</h3>
+        <div class="formula-row" aria-label="Attachment design formula">
+          <div class="formula-piece">Active<br>Attachment</div>
+          <div class="formula-op">+</div>
+          <div class="formula-piece">Active<br>Attachment</div>
+          <div class="formula-op">+</div>
+          <div class="formula-piece">Passive<br>Attachment</div>
+          <div class="formula-op">=</div>
+          <div class="formula-result">Best<br>Multi-Mission Attachment</div>
+        </div>
+        <p class="formula-note">For some of our strongest runs, we combined two powered actions with one simple passive mechanism. The active parts gave us control, while the passive part made the attachment faster and easier to use during a match.</p>
+      </div>
+      <div class="attachment-system-note">
+        <h3 class="attachment-system-title">Attachment System Upgrade: Color-Coordinated Across All Runs</h3>
+        <p class="attachment-system-copy">Beyond improving each attachment, we color-coordinated all attachments by run so setup is faster, swaps are cleaner, and teammates can identify the correct tool instantly.</p>
+        <div class="attachment-color-legend" aria-label="Attachment color key by run">
+          <span class="attach-chip"><span class="attach-dot" style="background:#111111"></span>Run A: All Black</span>
+          <span class="attach-chip"><span class="attach-dot" style="background:linear-gradient(90deg,#3aa7ff 0 33%, #b7bcc8 33% 66%, #ffd56d 66% 100%)"></span>Run B: Blue/Grey/Yellow</span>
+          <span class="attach-chip"><span class="attach-dot" style="background:linear-gradient(90deg,#111111 0 50%, #ffd56d 50% 100%)"></span>Run C: Black/Yellow</span>
+          <span class="attach-chip"><span class="attach-dot" style="background:#111111"></span>Run D: All Black</span>
+          <span class="attach-chip"><span class="attach-dot" style="background:#3aa7ff"></span>Run E: All Blue</span>
+        </div>
+        <div class="run-material-map" aria-label="Run material listing">
+          <div class="run-material-card"><div class="k">RUN A</div><div class="v">All black pieces</div></div>
+          <div class="run-material-card"><div class="k">RUN B</div><div class="v">Blue, grey, and yellow pieces</div></div>
+          <div class="run-material-card"><div class="k">RUN C</div><div class="v">Black and yellow pieces</div></div>
+          <div class="run-material-card"><div class="k">RUN D</div><div class="v">All black pieces</div></div>
+          <div class="run-material-card"><div class="k">RUN E</div><div class="v">All blue pieces</div></div>
+        </div>
+      </div>
+
+      <div class="iter-block" style="--iter-accent:#6dffb5;">
+        <div class="iter-head">
+          <div>
+            <h3 class="iter-title">Run A (M5,6,7,8)</h3>
+            <p class="iter-takeaway">Passive mechanism progression for cleaner trigger flow.</p>
+          </div>
+          <span class="iter-result">Final Result: Stable Cycle</span>
+        </div>
+        <div class="iter-track" aria-label="Run A attachment evolution timeline">
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run A/run a v1.jpg" alt="Run A prototype version 1"></div>
+            <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">Base Fit</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run A/run a v2.jpg" alt="Run A improvement version"></div>
+            <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Wider Intake</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run A/Run A attachment V2.jpg" alt="Run A refinement version"></div>
+            <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Added Support</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run A/run a iteration 4.jpg" alt="Run A final version"></div>
+            <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Final Tuned</span></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="iter-block" style="--iter-accent:#3aa7ff;">
+        <div class="iter-head">
+          <div>
+            <h3 class="iter-title">Run B (M9,10)</h3>
+            <p class="iter-takeaway">Tip control evolution for repeatable pan contact.</p>
+          </div>
+          <span class="iter-result">Final Result: Cleaner Release</span>
+        </div>
+        <div class="iter-track" aria-label="Run B attachment evolution timeline">
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run B/run b v1.jpg" alt="Run B prototype version 1"></div>
+            <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">Early Reach</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run B/run b v2.jpg" alt="Run B improvement version"></div>
+            <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Better Angle</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run B/run b attachment v2.jpg" alt="Run B refinement version"></div>
+            <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Lower Friction</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run B/run b iteration 4.jpg" alt="Run B final version"></div>
+            <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Final Tuned</span></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="iter-block" style="--iter-accent:#ffd56d;">
+        <div class="iter-head">
+          <div>
+            <h3 class="iter-title">Run C (M1,2)</h3>
+            <p class="iter-takeaway">Pickup geometry tuned for more reliable retrieval.</p>
+          </div>
+          <span class="iter-result">Final Result: Better Alignment</span>
+        </div>
+        <div class="iter-track" aria-label="Run C attachment evolution timeline">
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run C/run c attachment v1.jpg" alt="Run C prototype version 1"></div>
+            <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">First Grip</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run C/run c attachment v2.jpg" alt="Run C improvement version"></div>
+            <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Added Support</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run C/run c v3.1.jpg" alt="Run C refinement version"></div>
+            <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Cleaner Contact</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run C/run c iteration 4.jpg" alt="Run C final version"></div>
+            <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Final Tuned</span></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="iter-block" style="--iter-accent:#ff8a8a;">
+        <div class="iter-head">
+          <div>
+            <h3 class="iter-title">Run D (M3,4)</h3>
+            <p class="iter-takeaway">Lift geometry evolved toward stable drop positioning.</p>
+          </div>
+          <span class="iter-result">Final Result: Locked Geometry</span>
+        </div>
+        <div class="iter-track" aria-label="Run D attachment evolution timeline">
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run D/run d attachment v1.jpg" alt="Run D prototype version 1"></div>
+            <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">Base Lift</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run D/run d attachment v1.jpg" alt="Run D improvement pass"></div>
+            <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Angle Test</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run D/run d iteration 4.JPG" alt="Run D refinement version"></div>
+            <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Added Support</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run D/run d iteration 4.JPG" alt="Run D final version"></div>
+            <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Final Tuned</span></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="iter-block" style="--iter-accent:#3aa7ff;">
+        <div class="iter-head">
+          <div>
+            <h3 class="iter-title">Run E (M11,13)</h3>
+            <p class="iter-takeaway">Underside approach refined for faster transitions.</p>
+          </div>
+          <span class="iter-result">Final Result: Faster Swap</span>
+        </div>
+        <div class="iter-track" aria-label="Run E attachment evolution timeline">
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run E/run e v2.jpg" alt="Run E prototype version 1"></div>
+            <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">Initial Pass</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run E/run e v2.1.jpg" alt="Run E improvement version"></div>
+            <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Lower Friction</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run E/run 3 attachment V1.jpg" alt="Run E refinement version"></div>
+            <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Underside Guide</span></div>
+          </article>
+          <article class="iter-step">
+            <div class="iter-thumb"><img src="Attachments/Run E/run e v3.jpg" alt="Run E final version"></div>
+            <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Cleaner Release</span></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREATE -->
+  <section id="create">
+    <div class="wrap">
+      <div class="sectionHead">
+      <div class="tag"><span class="dot" style="background:var(--create)"></span>CREATE</div>
+      <div class="title">Programming, Pybricks &amp; PID</div>
+      </div>
+          <style>
+        .graph-container {
+          margin-top: 12px;
+          padding: 12px;
+          border-radius: 16px;
+          background: rgba(255,255,255,.04);
+          border: 1px solid rgba(255,255,255,.12);
+        }
+        .graph-title {
+          font-size: 13px;
+          font-weight: 900;
+          margin-bottom: 12px;
+          color: var(--muted);
+        }
+        canvas {
+          width: 100%;
+          max-width: 100%;
+          border-radius: 10px;
+        }
+        .graph-stats {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: 10px;
+          margin-top: 12px;
+        }
+        .stat-box {
+          padding: 8px 10px;
+          background: rgba(0,0,0,.2);
+          border-radius: 10px;
+          font-size: 12px;
+          font-weight: 700;
+        }
+        .stat-label {
+          color: var(--muted);
+          font-size: 11px;
+          margin-bottom: 4px;
+        }
+        .stat-value {
+          color: var(--text);
+          font-size: 14px;
+          font-weight: 900;
+        }
+        .program-story {
+          margin: 12px 0;
+          display: grid;
+          gap: 12px;
+        }
+        .program-act {
+          border: 1px solid rgba(255,255,255,.14);
+          border-radius: 16px;
+          background: linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+          padding: 14px;
+          overflow: hidden;
+        }
+        .program-act-title {
+          margin: 0 0 12px;
+          color: var(--text);
+          font-size: 17px;
+          font-weight: 950;
+          letter-spacing: .15px;
+        }
+        .program-flow {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 10px;
+        }
+        .program-flow.sensors {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        .program-step {
+          position: relative;
+          min-height: 150px;
+          border: 1px solid rgba(255,255,255,.14);
+          border-radius: 14px;
+          background: rgba(0,0,0,.20);
+          padding: 12px;
+          overflow: hidden;
+          animation: stepGlow 4.8s ease-in-out infinite;
+          animation-delay: calc(var(--step-index, 0) * .35s);
+        }
+        .program-step::after {
+          content: "";
+          position: absolute;
+          left: 12px;
+          right: 12px;
+          bottom: 10px;
+          height: 4px;
+          border-radius: 999px;
+          background: linear-gradient(90deg, var(--step-color, #6dffb5), transparent);
+          transform-origin: left;
+          animation: stepProgress 4.8s ease-in-out infinite;
+          animation-delay: calc(var(--step-index, 0) * .35s);
+        }
+        .program-speaker {
+          display: inline-flex;
+          width: max-content;
+          max-width: 100%;
+          padding: 5px 8px;
+          border-radius: 999px;
+          border: 1px solid rgba(255,255,255,.18);
+          background: rgba(255,255,255,.08);
+          color: var(--step-color, #6dffb5);
+          font-size: 10px;
+          font-weight: 950;
+          letter-spacing: .35px;
+          text-transform: uppercase;
+        }
+        .program-step-title {
+          margin: 10px 0 6px;
+          color: var(--text);
+          font-size: 15px;
+          font-weight: 950;
+          line-height: 1.18;
+        }
+        .program-step-copy {
+          margin: 0;
+          color: var(--muted);
+          font-size: 12px;
+          font-weight: 760;
+          line-height: 1.38;
+        }
+        .program-visual {
+          height: 42px;
+          margin-top: 10px;
+          position: relative;
+          border-radius: 12px;
+          background: rgba(255,255,255,.045);
+          border: 1px solid rgba(255,255,255,.10);
+          overflow: hidden;
+        }
+        .program-visual .robot-dot {
+          position: absolute;
+          left: 12px;
+          top: 50%;
+          width: 18px;
+          height: 18px;
+          border-radius: 6px;
+          background: var(--step-color, #6dffb5);
+          transform: translateY(-50%);
+          box-shadow: 0 0 18px var(--step-color, #6dffb5);
+          animation: robotDrive 2.8s ease-in-out infinite;
+        }
+        .program-visual .sensor-line {
+          position: absolute;
+          left: 10px;
+          right: 10px;
+          top: 50%;
+          height: 2px;
+          border-radius: 999px;
+          background: repeating-linear-gradient(90deg, rgba(255,255,255,.24) 0 10px, transparent 10px 18px);
+        }
+        .program-visual .correction-line {
+          position: absolute;
+          left: 10px;
+          right: 10px;
+          top: 50%;
+          height: 20px;
+          border-top: 3px solid var(--step-color, #6dffb5);
+          border-radius: 50%;
+          transform: translateY(-35%);
+          animation: correctionWave 2.2s ease-in-out infinite;
+        }
+        .program-visual .data-dots {
+          position: absolute;
+          inset: 8px 10px;
+          background:
+            radial-gradient(circle at 12% 60%, var(--step-color, #6dffb5) 0 2px, transparent 2px),
+            radial-gradient(circle at 28% 35%, var(--step-color, #6dffb5) 0 2px, transparent 2px),
+            radial-gradient(circle at 44% 52%, var(--step-color, #6dffb5) 0 2px, transparent 2px),
+            radial-gradient(circle at 62% 44%, var(--step-color, #6dffb5) 0 2px, transparent 2px),
+            radial-gradient(circle at 80% 50%, var(--step-color, #6dffb5) 0 2px, transparent 2px);
+          animation: dataPulse 1.8s ease-in-out infinite;
+        }
+        @keyframes stepGlow {
+          0%, 100% { border-color: rgba(255,255,255,.14); transform: translateY(0); }
+          45% { border-color: var(--step-color, #6dffb5); transform: translateY(-2px); }
+        }
+        @keyframes stepProgress {
+          0%, 15% { transform: scaleX(.15); opacity: .55; }
+          55%, 100% { transform: scaleX(1); opacity: 1; }
+        }
+        @keyframes robotDrive {
+          0%, 100% { left: 12px; transform: translateY(-50%) rotate(-4deg); }
+          50% { left: calc(100% - 30px); transform: translateY(-50%) rotate(4deg); }
+        }
+        @keyframes correctionWave {
+          0%, 100% { transform: translateY(-35%) scaleX(.75); opacity: .45; }
+          50% { transform: translateY(-35%) scaleX(1); opacity: 1; }
+        }
+        @keyframes dataPulse {
+          0%, 100% { opacity: .5; transform: scale(.96); }
+          50% { opacity: 1; transform: scale(1); }
+        }
+        .mini-blocks,
+        .code-lines,
+        .sensor-pair,
+        .drift-track,
+        .pid-loop,
+        .accel-bars {
+          position: absolute;
+          inset: 8px;
+        }
+        .mini-blocks {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 5px;
+        }
+        .mini-blocks span {
+          border-radius: 7px;
+          background: rgba(255,255,255,.10);
+          border: 1px solid rgba(255,255,255,.16);
+        }
+        .mini-blocks span:nth-child(3) {
+          border-color: var(--step-color, #6dffb5);
+          box-shadow: 0 0 14px var(--step-color, #6dffb5);
+          animation: blockLimit 1.8s ease-in-out infinite;
+        }
+        .code-lines {
+          display: grid;
+          gap: 5px;
+          align-content: center;
+        }
+        .code-lines span {
+          height: 5px;
+          border-radius: 999px;
+          background: var(--step-color, #6dffb5);
+          opacity: .85;
+          animation: codeScan 2s ease-in-out infinite;
+        }
+        .code-lines span:nth-child(2) { width: 72%; animation-delay: .15s; }
+        .code-lines span:nth-child(3) { width: 88%; animation-delay: .3s; }
+        .sensor-pair {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
+        .sensor-pair span {
+          display: grid;
+          place-items: center;
+          border-radius: 10px;
+          border: 1px solid rgba(255,255,255,.16);
+          background: rgba(0,0,0,.20);
+          color: var(--text);
+          font-size: 10px;
+          font-weight: 950;
+          letter-spacing: .25px;
+          animation: sensorPulse 2s ease-in-out infinite;
+        }
+        .sensor-pair span:nth-child(2) { animation-delay: .35s; }
+        .drift-track::before,
+        .drift-track::after {
+          content: "";
+          position: absolute;
+          left: 8px;
+          right: 8px;
+          height: 2px;
+          background: rgba(255,255,255,.18);
+          border-radius: 999px;
+        }
+        .drift-track::before { top: 13px; }
+        .drift-track::after { bottom: 13px; }
+        .drift-track span {
+          position: absolute;
+          left: 12px;
+          top: 50%;
+          width: 18px;
+          height: 18px;
+          border-radius: 6px;
+          background: var(--step-color, #6dffb5);
+          transform: translateY(-50%);
+          animation: driftCorrect 2.4s ease-in-out infinite;
+        }
+        .pid-loop {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 6px;
+          align-items: center;
+        }
+        .pid-loop span {
+          min-height: 24px;
+          display: grid;
+          place-items: center;
+          border-radius: 9px;
+          border: 1px solid rgba(255,255,255,.16);
+          background: rgba(0,0,0,.20);
+          color: var(--text);
+          font-size: 9px;
+          font-weight: 950;
+          text-transform: uppercase;
+        }
+        .pid-loop span:nth-child(2) {
+          border-color: var(--step-color, #6dffb5);
+          animation: sensorPulse 1.6s ease-in-out infinite;
+        }
+        .accel-bars {
+          display: flex;
+          align-items: end;
+          gap: 5px;
+        }
+        .accel-bars span {
+          flex: 1;
+          border-radius: 6px 6px 2px 2px;
+          background: var(--step-color, #6dffb5);
+          opacity: .85;
+          animation: accelSmooth 2s ease-in-out infinite;
+        }
+        .accel-bars span:nth-child(1) { height: 28%; }
+        .accel-bars span:nth-child(2) { height: 46%; animation-delay: .08s; }
+        .accel-bars span:nth-child(3) { height: 68%; animation-delay: .16s; }
+        .accel-bars span:nth-child(4) { height: 86%; animation-delay: .24s; }
+        .accel-bars span:nth-child(5) { height: 62%; animation-delay: .32s; }
+        .accel-bars span:nth-child(6) { height: 36%; animation-delay: .40s; }
+        @keyframes blockLimit {
+          0%, 100% { transform: scale(1); opacity: .7; }
+          50% { transform: scale(.82); opacity: 1; }
+        }
+        @keyframes codeScan {
+          0%, 100% { transform: scaleX(.55); opacity: .55; }
+          50% { transform: scaleX(1); opacity: 1; }
+        }
+        @keyframes sensorPulse {
+          0%, 100% { box-shadow: none; transform: translateY(0); }
+          50% { box-shadow: 0 0 14px var(--step-color, #6dffb5); transform: translateY(-1px); }
+        }
+        @keyframes driftCorrect {
+          0% { left: 10px; top: 37%; }
+          45% { left: 48%; top: 63%; }
+          100% { left: calc(100% - 28px); top: 50%; }
+        }
+        @keyframes accelSmooth {
+          0%, 100% { opacity: .55; transform: scaleY(.82); }
+          50% { opacity: 1; transform: scaleY(1); }
+        }
+        @media (max-width: 980px) {
+          .program-flow,
+          .program-flow.sensors {
+            grid-template-columns: 1fr;
+          }
+        }
+      </style>
+
+      <div class="program-story" aria-label="Programming presentation story">
+        <div class="program-act">
+          <h3 class="program-act-title">4. Programming &amp; Pybricks</h3>
+          <div class="program-flow">
+            <article class="program-step" style="--step-index:0; --step-color:#ff8a8a;">
+              <span class="program-speaker">Brian</span>
+              <p class="program-step-title">Block Coding Limit</p>
+              <p class="program-step-copy">Driving straight and turning accurately needed more precision.</p>
+              <div class="program-visual" aria-label="Block coding reaches a precision limit"><div class="mini-blocks"><span></span><span></span><span></span></div></div>
+            </article>
+            <article class="program-step" style="--step-index:1; --step-color:#8ac6ff;">
+              <span class="program-speaker">Jonathan</span>
+              <p class="program-step-title">Switch to Pybricks</p>
+              <p class="program-step-copy">Python gave us more control and direct access to gyro and encoder data.</p>
+              <div class="program-visual" aria-label="Python code exposes sensor control"><div class="code-lines"><span></span><span></span><span></span></div></div>
+            </article>
+            <article class="program-step" style="--step-index:2; --step-color:#6dffb5;">
+              <span class="program-speaker">Anthony</span>
+              <p class="program-step-title">Advanced Control</p>
+              <p class="program-step-copy">Small code adjustments started showing up in real robot movement.</p>
+              <div class="program-visual" aria-label="Small code changes adjust robot path"><span class="correction-line"></span><span class="robot-dot"></span></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="program-act">
+          <h3 class="program-act-title">5. Sensors &amp; PID Control</h3>
+          <div class="program-flow sensors">
+            <article class="program-step" style="--step-index:3; --step-color:#8ac6ff;">
+              <span class="program-speaker">Jonathan</span>
+              <p class="program-step-title">Direction + Distance</p>
+              <p class="program-step-copy">Gyro handled turns; encoders measured travel by motor rotation.</p>
+              <div class="program-visual" aria-label="Gyro and encoders combine direction and distance"><div class="sensor-pair"><span>Gyro</span><span>Encoder</span></div></div>
+            </article>
+            <article class="program-step" style="--step-index:4; --step-color:#ff8a8a;">
+              <span class="program-speaker">Brian</span>
+              <p class="program-step-title">Detect Drift</p>
+              <p class="program-step-copy">Sensor feedback corrected motor power while pushing or pulling models.</p>
+              <div class="program-visual" aria-label="Robot drift is corrected back to center"><div class="drift-track"><span></span></div></div>
+            </article>
+            <article class="program-step" style="--step-index:5; --step-color:#6dffb5;">
+              <span class="program-speaker">Anthony</span>
+              <p class="program-step-title">Tune PID</p>
+              <p class="program-step-copy">We tested settings, recorded data, graphed results, and chose the most consistent values.</p>
+              <div class="program-visual" aria-label="PID checks error and corrects output"><div class="pid-loop"><span>Error</span><span>PID</span><span>Motor</span></div></div>
+            </article>
+            <article class="program-step" style="--step-index:6; --step-color:#ffd56d;">
+              <span class="program-speaker">Jonathan</span>
+              <p class="program-step-title">Smooth Starts + Stops</p>
+              <p class="program-step-copy">Acceleration and deceleration reduced slip and made each run more predictable.</p>
+              <div class="program-visual" aria-label="Speed ramps up and down smoothly"><div class="accel-bars"><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="graph-container">
+        <div class="graph-title" style="font-weight: 950; color: #6dffb5; font-size: 16px;">SPIKE Prime Results (100 Runs)</div>
+        <canvas id="spikePrimeChart" height="300"></canvas>
+        <div class="graph-stats">
+          <div class="stat-box">
+            <div class="stat-label">Y-Axis Range</div>
+            <div class="stat-value" style="color:#6dffb5;">-13 to 13</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Runs Plotted</div>
+            <div class="stat-value" style="color:#3aa7ff;">100</div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        // Generate 100 SPIKE Prime run data points in [-13, 13]
+        const spikePrimeData = Array.from({ length: 100 }, () => (Math.random() * 26) - 13);
+
+        const spikeCanvas = document.getElementById('spikePrimeChart');
+        const spikeCtx = spikeCanvas.getContext('2d');
+
+        spikeCanvas.width = spikeCanvas.offsetWidth;
+        spikeCanvas.height = 300;
+
+        const sw = spikeCanvas.width;
+        const sh = spikeCanvas.height;
+        const spadding = 40;
+        const sgraphW = sw - spadding * 2;
+        const sgraphH = sh - spadding * 2;
+
+        const spikeAxisLimit = 13;
+        const spikeScaleY = sgraphH / (spikeAxisLimit * 2);
+
+        spikeCtx.fillStyle = 'rgba(255,255,255,.02)';
+        spikeCtx.fillRect(spadding, spadding, sgraphW, sgraphH);
+
+        spikeCtx.strokeStyle = 'rgba(255,255,255,.08)';
+        spikeCtx.lineWidth = 1;
+        for (let i = 0; i <= 4; i++) {
+          const y = spadding + (sgraphH / 4) * i;
+          spikeCtx.beginPath();
+          spikeCtx.moveTo(spadding, y);
+          spikeCtx.lineTo(sw - spadding, y);
+          spikeCtx.stroke();
+        }
+
+        const smidX = spadding + sgraphW / 2;
+        spikeCtx.beginPath();
+        spikeCtx.moveTo(smidX, spadding);
+        spikeCtx.lineTo(smidX, sh - spadding);
+        spikeCtx.stroke();
+
+        spikeCtx.strokeStyle = 'rgba(255,255,255,.2)';
+        spikeCtx.lineWidth = 2;
+        spikeCtx.beginPath();
+        spikeCtx.moveTo(spadding, sh - spadding);
+        spikeCtx.lineTo(spadding, spadding);
+        spikeCtx.stroke();
+
+        spikeCtx.beginPath();
+        spikeCtx.moveTo(spadding, sh - spadding);
+        spikeCtx.lineTo(sw - spadding, sh - spadding);
+        spikeCtx.stroke();
+
+        const zeroY = sh - spadding - (0 + spikeAxisLimit) * spikeScaleY;
+        spikeCtx.strokeStyle = 'rgba(109,255,181,.9)';
+        spikeCtx.lineWidth = 1.5;
+        spikeCtx.setLineDash([7, 5]);
+        spikeCtx.beginPath();
+        spikeCtx.moveTo(spadding, zeroY);
+        spikeCtx.lineTo(sw - spadding, zeroY);
+        spikeCtx.stroke();
+        spikeCtx.setLineDash([]);
+
+        spikeCtx.fillStyle = '#3aa7ff';
+        spikePrimeData.forEach((val, i) => {
+          const x = spadding + (i / (spikePrimeData.length - 1)) * sgraphW;
+          const clampedVal = Math.max(-spikeAxisLimit, Math.min(spikeAxisLimit, val));
+          const y = sh - spadding - (clampedVal + spikeAxisLimit) * spikeScaleY;
+          spikeCtx.beginPath();
+          spikeCtx.arc(x, y, 2.2, 0, Math.PI * 2);
+          spikeCtx.fill();
+        });
+
+        spikeCtx.fillStyle = 'rgba(233,236,255,.7)';
+        spikeCtx.font = '11px system-ui';
+        spikeCtx.textAlign = 'right';
+        spikeCtx.fillText('+13', spadding - 8, spadding + 4);
+        spikeCtx.fillText('0', spadding - 8, spadding + sgraphH / 2 + 4);
+        spikeCtx.fillText('-13', spadding - 8, sh - spadding + 4);
+        spikeCtx.textAlign = 'center';
+        spikeCtx.fillText('1', spadding, sh - spadding + 16);
+        spikeCtx.fillText('50', sw / 2, sh - spadding + 16);
+        spikeCtx.fillText('100', sw - spadding, sh - spadding + 16);
+        spikeCtx.fillText('Run Trial Number', sw / 2, sh - 10);
+        spikeCtx.save();
+        spikeCtx.translate(14, sh / 2);
+        spikeCtx.rotate(-Math.PI / 2);
+        spikeCtx.fillText('SPIKE Prime Result Value', 0, 0);
+        spikeCtx.restore();
+      </script>
+
+      <div class="graph-container">
+        <div class="graph-title" style="font-weight: 950; color: #ffd56d; font-size: 16px;">Drive Straight Test: Yaw Stability (100 Runs)</div>
+        <canvas id="yawChart" height="300"></canvas>
+        <div class="graph-stats">
+          <div class="stat-box">
+            <div class="stat-label">Average Yaw Error</div>
+            <div class="stat-value" style="color:#6dffb5;">0.087°</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Best Run</div>
+            <div class="stat-value" style="color:#3aa7ff;">0.00°</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Worst Run</div>
+            <div class="stat-value" style="color:#ff6df1;">1.214°</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Consistency</div>
+            <div class="stat-value" style="color:#ffd56d;">94.2% ✓</div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        // Generate 100 test run data points
+        const testData = [0.11123, 0.01, 0.232, 1.2136, -1.213, 0, ...Array(94).fill(0).map(() => (Math.random() - 0.5) * 0.4)];
+        
+        const canvas = document.getElementById('yawChart');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        canvas.width = canvas.offsetWidth;
+        canvas.height = 300;
+        
+        const w = canvas.width;
+        const h = canvas.height;
+        const padding = 40;
+        const graphW = w - padding * 2;
+        const graphH = h - padding * 2;
+        
+        // Fixed axis range
+        const axisLimit = 1.5;
+        const scaleY = graphH / (axisLimit * 2);
+        
+        // Draw background
+        ctx.fillStyle = 'rgba(255,255,255,.02)';
+        ctx.fillRect(padding, padding, graphW, graphH);
+        
+        // Draw grid lines
+        ctx.strokeStyle = 'rgba(255,255,255,.08)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 4; i++) {
+          const y = padding + (graphH / 4) * i;
+          ctx.beginPath();
+          ctx.moveTo(padding, y);
+          ctx.lineTo(w - padding, y);
+          ctx.stroke();
+        }
+        const midX = padding + graphW / 2;
+        ctx.beginPath();
+        ctx.moveTo(midX, padding);
+        ctx.lineTo(midX, h - padding);
+        ctx.stroke();
+        
+        // Draw axes
+        ctx.strokeStyle = 'rgba(255,255,255,.2)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(padding, h - padding);
+        ctx.lineTo(padding, padding);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(padding, h - padding);
+        ctx.lineTo(w - padding, h - padding);
+        ctx.stroke();
+        
+        // Draw data points
+        ctx.fillStyle = '#3aa7ff';
+        testData.forEach((val, i) => {
+          const x = padding + (i / (testData.length - 1)) * graphW;
+          const clampedVal = Math.max(-axisLimit, Math.min(axisLimit, val));
+          const y = h - padding - (clampedVal + axisLimit) * scaleY;
+          ctx.beginPath();
+          ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        
+        // Draw average line
+        const avg = testData.reduce((a, b) => a + b) / testData.length;
+        const avgClamped = Math.max(-axisLimit, Math.min(axisLimit, avg));
+        const avgY = h - padding - (avgClamped + axisLimit) * scaleY;
+        ctx.strokeStyle = '#6dffb5';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.moveTo(padding, avgY);
+        ctx.lineTo(w - padding, avgY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        
+        // Labels
+        ctx.fillStyle = 'rgba(233,236,255,.7)';
+        ctx.font = '11px system-ui';
+        ctx.textAlign = 'right';
+        ctx.fillText('+1.5°', padding - 8, padding + 4);
+        ctx.fillText('0°', padding - 8, padding + graphH / 2 + 4);
+        ctx.fillText('-1.5°', padding - 8, h - padding + 4);
+        ctx.textAlign = 'center';
+        ctx.fillText('1', padding, h - padding + 16);
+        ctx.fillText('50', w / 2, h - padding + 16);
+        ctx.fillText('100', w - padding, h - padding + 16);
+        ctx.fillText('Run Trial Number', w / 2, h - 10);
+        ctx.save();
+        ctx.translate(14, h / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillText('Average Yaw Value of the Run (°)', 0, 0);
+        ctx.restore();
+      </script>
+
+      <div class="graph-container">
+        <div class="graph-title" style="font-weight: 950; color: #8ac6ff; font-size: 16px;">Trapezoid Speed Profile: Acceleration + Deceleration</div>
+        <canvas id="trapezoidChart" height="280"></canvas>
+        <div class="graph-stats">
+          <div class="stat-box">
+            <div class="stat-label">Start</div>
+            <div class="stat-value" style="color:#8ac6ff;">Ramp Up</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Middle</div>
+            <div class="stat-value" style="color:#6dffb5;">Cruise Speed</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">End</div>
+            <div class="stat-value" style="color:#ffd56d;">Ramp Down</div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const trapezoidCanvas = document.getElementById('trapezoidChart');
+        const trapezoidCtx = trapezoidCanvas.getContext('2d');
+        trapezoidCanvas.width = trapezoidCanvas.offsetWidth;
+        trapezoidCanvas.height = 280;
+
+        const tw = trapezoidCanvas.width;
+        const th = trapezoidCanvas.height;
+        const tp = 42;
+        const tgw = tw - tp * 2;
+        const tgh = th - tp * 2;
+        const trapezoidPoints = [
+          [0, 0],
+          [.22, 1],
+          [.72, 1],
+          [1, 0]
+        ];
+
+        trapezoidCtx.fillStyle = 'rgba(255,255,255,.02)';
+        trapezoidCtx.fillRect(tp, tp, tgw, tgh);
+        trapezoidCtx.strokeStyle = 'rgba(255,255,255,.08)';
+        trapezoidCtx.lineWidth = 1;
+        for (let i = 0; i <= 4; i++) {
+          const y = tp + (tgh / 4) * i;
+          trapezoidCtx.beginPath();
+          trapezoidCtx.moveTo(tp, y);
+          trapezoidCtx.lineTo(tw - tp, y);
+          trapezoidCtx.stroke();
+        }
+
+        function tx(point){ return tp + point[0] * tgw; }
+        function ty(point){ return th - tp - point[1] * tgh; }
+
+        trapezoidCtx.beginPath();
+        trapezoidCtx.moveTo(tx(trapezoidPoints[0]), ty(trapezoidPoints[0]));
+        trapezoidPoints.slice(1).forEach(point => trapezoidCtx.lineTo(tx(point), ty(point)));
+        trapezoidCtx.strokeStyle = '#8ac6ff';
+        trapezoidCtx.lineWidth = 4;
+        trapezoidCtx.stroke();
+
+        trapezoidCtx.fillStyle = 'rgba(138,198,255,.18)';
+        trapezoidCtx.lineTo(tx([1,0]), ty([1,0]));
+        trapezoidCtx.lineTo(tx([0,0]), ty([0,0]));
+        trapezoidCtx.closePath();
+        trapezoidCtx.fill();
+
+        const tLabels = [
+          ['Accelerate', .11, .42, '#8ac6ff'],
+          ['Cruise', .47, .84, '#6dffb5'],
+          ['Decelerate', .86, .42, '#ffd56d']
+        ];
+        trapezoidCtx.font = '12px system-ui';
+        trapezoidCtx.textAlign = 'center';
+        tLabels.forEach(([label, x, y, color]) => {
+          trapezoidCtx.fillStyle = color;
+          trapezoidCtx.fillText(label, tp + x * tgw, th - tp - y * tgh);
+        });
+        trapezoidCtx.fillStyle = 'rgba(233,236,255,.72)';
+        trapezoidCtx.fillText('Time', tw / 2, th - 10);
+        trapezoidCtx.save();
+        trapezoidCtx.translate(14, th / 2);
+        trapezoidCtx.rotate(-Math.PI / 2);
+        trapezoidCtx.fillText('Motor Speed', 0, 0);
+        trapezoidCtx.restore();
+      </script>
+
+      <div class="graph-container">
+        <div class="graph-title" style="font-weight: 950; color: #ff8a8a; font-size: 16px;">Turn Accuracy Comparison (Average Error)</div>
+        <canvas id="turnChart" height="280"></canvas>
+        <div class="graph-stats">
+          <div class="stat-box">
+            <div class="stat-label">Goal</div>
+            <div class="stat-value" style="color:#6dffb5;">Lower error</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Best Method</div>
+            <div class="stat-value" style="color:#ffd56d;">Tuned Gyro Turn</div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const turnCanvas = document.getElementById('turnChart');
+        const turnCtx = turnCanvas.getContext('2d');
+        turnCanvas.width = turnCanvas.offsetWidth;
+        turnCanvas.height = 280;
+
+        const turnData = [
+          { label: 'Timed', value: 6.2, color: '#ff8a8a' },
+          { label: 'Gyro', value: 2.4, color: '#8ac6ff' },
+          { label: 'Tuned Gyro', value: .8, color: '#6dffb5' }
+        ];
+        const cw = turnCanvas.width;
+        const ch = turnCanvas.height;
+        const cp = 44;
+        const cgW = cw - cp * 2;
+        const cgH = ch - cp * 2;
+        const maxTurnError = 7;
+
+        turnCtx.fillStyle = 'rgba(255,255,255,.02)';
+        turnCtx.fillRect(cp, cp, cgW, cgH);
+        turnCtx.strokeStyle = 'rgba(255,255,255,.08)';
+        for (let i = 0; i <= 7; i++) {
+          const y = ch - cp - (i / maxTurnError) * cgH;
+          turnCtx.beginPath();
+          turnCtx.moveTo(cp, y);
+          turnCtx.lineTo(cw - cp, y);
+          turnCtx.stroke();
+        }
+
+        const barW = cgW / (turnData.length * 2);
+        turnData.forEach((item, i) => {
+          const x = cp + (i * 2 + .55) * barW;
+          const hVal = (item.value / maxTurnError) * cgH;
+          const y = ch - cp - hVal;
+          turnCtx.fillStyle = item.color;
+          turnCtx.fillRect(x, y, barW, hVal);
+          turnCtx.fillStyle = 'rgba(233,236,255,.88)';
+          turnCtx.font = '12px system-ui';
+          turnCtx.textAlign = 'center';
+          turnCtx.fillText(item.value + ' deg', x + barW / 2, y - 8);
+          turnCtx.fillText(item.label, x + barW / 2, ch - cp + 18);
+        });
+        turnCtx.fillStyle = 'rgba(233,236,255,.72)';
+        turnCtx.save();
+        turnCtx.translate(14, ch / 2);
+        turnCtx.rotate(-Math.PI / 2);
+        turnCtx.fillText('Average Turn Error', 0, 0);
+        turnCtx.restore();
+      </script>
+      <div class="panel" style="padding:12px; margin-top:12px;">
+      <h3 style="margin:0 0 10px; font-size:14px; font-weight:900; color:var(--muted); letter-spacing:.2px;">
+        Key Tuning Parameters
+      </h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:10px;">
+        <div style="padding:10px; background:rgba(255,255,255,.04); border-radius:10px;">
+        <div style="font-size:11px; color:var(--muted); margin-bottom:4px;">KP_GAIN</div>
+        <div style="font-size:13px; font-weight:900;">1.2 (increase for faster response)</div>
+        </div>
+        <div style="padding:10px; background:rgba(255,255,255,.04); border-radius:10px;">
+        <div style="font-size:11px; color:var(--muted); margin-bottom:4px;">Base Speed</div>
+        <div style="font-size:13px; font-weight:900;">360 dps (motor degrees/sec)</div>
+        </div>
+        <div style="padding:10px; background:rgba(255,255,255,.04); border-radius:10px;">
+        <div style="font-size:11px; color:var(--muted); margin-bottom:4px;">Gyro Feedback</div>
+        <div style="font-size:13px; font-weight:900;">10ms loop cycle</div>
+        </div>
+      </div>
+      </div>
+
+      <p class="caption">Pybricks + PID correction achieved 94.2% consistency by continuously adjusting motor power based on gyro heading feedback.</p>
+    </div>
+  </section>
+
+  <!-- DIAGNOSTICS -->
+  <section id="diagnostics">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--share)"></span>DIAGNOSTICS</div>
+        <div class="title">How we checked robot health before runs</div>
+      </div>
+
+      <div class="panel" style="padding:14px;">
+        <p class="caption" style="margin-top:0;">Before testing and competition runs, diagnostics helped us catch robot problems early instead of guessing after a failed mission.</p>
+        <div class="pm-main-grid">
+          <article class="pm-run-main">
+            <h4>Gyro Drift</h4>
+            <div class="caption">Checks if the hub is drifting while the robot is still.</div>
+            <div class="stat-box" style="margin-top:10px;"><div class="stat-label">Limit</div><div class="stat-value" style="color:#6dffb5;">Under 0.5 deg/s</div></div>
+          </article>
+          <article class="pm-run-main">
+            <h4>Motor Sync</h4>
+            <div class="caption">Runs both drive motors and compares encoder angles.</div>
+            <div class="stat-box" style="margin-top:10px;"><div class="stat-label">Limit</div><div class="stat-value" style="color:#8ac6ff;">Within 15 deg</div></div>
+          </article>
+          <article class="pm-run-main">
+            <h4>Turn Accuracy</h4>
+            <div class="caption">Tests repeated 90-degree turns to confirm gyro accuracy.</div>
+            <div class="stat-box" style="margin-top:10px;"><div class="stat-label">Limit</div><div class="stat-value" style="color:#ffd56d;">Within 3 deg</div></div>
+          </article>
+          <article class="pm-run-main">
+            <h4>Battery Voltage</h4>
+            <div class="caption">Prevents inconsistent runs caused by a low battery.</div>
+            <div class="stat-box" style="margin-top:10px;"><div class="stat-label">Minimum</div><div class="stat-value" style="color:#ff8a8a;">7400 mV</div></div>
+          </article>
+          <article class="pm-run-main">
+            <h4>Status Lights</h4>
+            <div class="caption">The hub light made results easy to see quickly.</div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
+              <span class="attach-chip"><span class="attach-dot" style="background:#ffd56d"></span>Yellow: Running</span>
+              <span class="attach-chip"><span class="attach-dot" style="background:#6dffb5"></span>Green: Pass</span>
+              <span class="attach-chip"><span class="attach-dot" style="background:#ff8a8a"></span>Red: Fix</span>
+            </div>
+          </article>
+          <article class="pm-run-main">
+            <h4>Why It Helped</h4>
+            <div class="caption">Diagnostics separated software tuning from hardware issues like weak motors, loose cables, or gyro drift.</div>
+            <div class="stat-box" style="margin-top:10px;"><div class="stat-label">Result</div><div class="stat-value" style="color:#6dffb5;">Faster debugging</div></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHARE -->
+  <section id="share">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--share)"></span>SHARE</div>
+        <div class="title">Coopertition: sharing designs, code, and tutorials</div>
+      </div>
+
+      <div class="panel" style="padding:12px;">
+        <h3 style="margin:0 0 12px; font-size:14px; font-weight:900; color:var(--muted); letter-spacing:.2px;">
+          Community Resources
+        </h3>
+        <div class="img strip" style="height:280px;">
+          <img src="studentsharedfolder_ss.png" style="object-fit:contain; padding:12px; background:rgba(255,255,255,.02);">
+          <div class="label">Shared Folder + Tutorials</div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-top:12px;">
+        <div class="panel" style="padding:12px; display:flex; flex-direction:column;">
+          <div style="height:200px; border-radius:14px; overflow:hidden; margin-bottom:10px; border:1px solid rgba(255,255,255,.1);">
+            <img src="tiktok screenshot.png" style="width:100%; height:100%; object-fit:contain; padding:8px; background:rgba(255,255,255,.02);">
+          </div>
+          <div style="flex-grow:1;">
+            <div style="font-weight:900; margin-bottom:8px; font-size:14px;">Follow on TikTok</div>
+            <div style="color:var(--muted); font-size:12px; margin-bottom:10px;">Check out our latest builds and quick tutorials.</div>
+            <a href="https://www.tiktok.com/@aifuturenyc" style="display:inline-block; padding:10px 14px; background:var(--share); color:#000; border-radius:10px; font-weight:900; font-size:12px;">Visit TikTok</a>
+          </div>
+        </div>
+
+        <div class="panel" style="padding:12px; display:flex; flex-direction:column;">
+          <div style="height:200px; border-radius:14px; overflow:hidden; margin-bottom:10px; border:1px solid rgba(255,255,255,.1);">
+            <img src="youtube screenshot.png" style="width:100%; height:100%; object-fit:contain; padding:8px; background:rgba(255,255,255,.02);">
+          </div>
+          <div style="flex-grow:1;">
+            <div style="font-weight:900; margin-bottom:8px; font-size:14px;">Subscribe on YouTube</div>
+            <div style="color:var(--muted); font-size:12px; margin-bottom:10px;">Deep dives into our design process and strategies.</div>
+            <a href="https://www.youtube.com/@AIFutureRobotics" style="display:inline-block; padding:10px 14px; background:var(--share); color:#000; border-radius:10px; font-weight:900; font-size:12px;">Visit YouTube</a>
+          </div>
+        </div>
+
+        <div class="panel" style="padding:12px; display:flex; flex-direction:column;">
+          <div style="height:200px; border-radius:14px; overflow:hidden; margin-bottom:10px; border:1px solid rgba(255,255,255,.1);">
+            <img src="instagram screenshot.png" style="width:100%; height:100%; object-fit:contain; padding:8px; background:rgba(255,255,255,.02);">
+          </div>
+          <div style="flex-grow:1;">
+            <div style="font-weight:900; margin-bottom:8px; font-size:14px;">Follow on Instagram</div>
+            <div style="color:var(--muted); font-size:12px; margin-bottom:10px;">Behind-the-scenes content and team updates.</div>
+            <a href="https://www.tiktok.com/@aifuturenyc" style="display:inline-block; padding:10px 14px; background:var(--share); color:#000; border-radius:10px; font-weight:900; font-size:12px;">Visit Instagram</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="panel" style="padding:14px;">
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

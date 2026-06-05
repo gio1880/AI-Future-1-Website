@@ -92,7 +92,10 @@
 
     section{
       padding: 18px 0 28px;
+      content-visibility:auto;
+      contain-intrinsic-size: 1px 760px;
     }
+    header,.top{content-visibility:visible}
     .sectionHead{
       display:flex; align-items:center; gap:10px;
       margin-bottom: 12px;
@@ -939,6 +942,439 @@
     }
     html{scroll-behavior:smooth}
   </style>
+
+  <!-- ============================================================= -->
+  <!-- NEW INFOGRAPHIC ADDITIONS  (interactive widgets + infographics) -->
+  <!-- ============================================================= -->
+  <style>
+    /* ---------- shared range / control styling ---------- */
+    .cl-range{
+      -webkit-appearance:none; appearance:none;
+      width:100%; height:6px; border-radius:999px; margin:0;
+      background:linear-gradient(90deg, color-mix(in srgb, var(--cl-accent,#6dffb5) 55%, transparent) 0%, color-mix(in srgb, var(--cl-accent,#6dffb5) 55%, transparent) var(--cl-fill,50%), rgba(255,255,255,.12) var(--cl-fill,50%), rgba(255,255,255,.12) 100%);
+      outline:none; cursor:pointer;
+    }
+    .cl-range::-webkit-slider-thumb{
+      -webkit-appearance:none; appearance:none;
+      width:20px; height:20px; border-radius:999px;
+      background:var(--cl-accent,#6dffb5); border:2px solid #0b1020;
+      box-shadow:0 0 0 1px rgba(255,255,255,.30), 0 0 14px color-mix(in srgb, var(--cl-accent,#6dffb5) 70%, transparent);
+      cursor:pointer; transition:transform .12s ease;
+    }
+    .cl-range::-webkit-slider-thumb:hover{transform:scale(1.12)}
+    .cl-range::-moz-range-thumb{
+      width:20px; height:20px; border-radius:999px;
+      background:var(--cl-accent,#6dffb5); border:2px solid #0b1020;
+      box-shadow:0 0 0 1px rgba(255,255,255,.30), 0 0 14px color-mix(in srgb, var(--cl-accent,#6dffb5) 70%, transparent);
+      cursor:pointer;
+    }
+    .cl-range:focus-visible{box-shadow:0 0 0 3px color-mix(in srgb, var(--cl-accent,#6dffb5) 35%, transparent)}
+
+    /* ---------- widget shell ---------- */
+    .cl-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+      margin-top:12px;
+    }
+    .cl-widget{
+      --cl-accent:#6dffb5;
+      border-radius:var(--r);
+      border:1px solid var(--line);
+      background:linear-gradient(160deg, rgba(255,255,255,.065), rgba(255,255,255,.03));
+      box-shadow:var(--shadow);
+      padding:16px;
+      display:flex; flex-direction:column; gap:12px;
+      position:relative; overflow:hidden;
+    }
+    .cl-widget.inline-widget{margin-top:14px}
+    .cl-widget::before{
+      content:""; position:absolute; inset:0 0 auto 0; height:3px;
+      background:linear-gradient(90deg, var(--cl-accent), transparent 70%);
+      opacity:.9;
+    }
+    .cl-whead{display:flex; flex-direction:column; gap:4px}
+    .cl-kicker{
+      display:inline-flex; align-items:center; gap:7px; width:max-content;
+      font-size:11px; font-weight:950; letter-spacing:.4px; text-transform:uppercase;
+      color:var(--cl-accent);
+    }
+    .cl-kicker::before{content:""; width:9px; height:9px; border-radius:999px; background:var(--cl-accent); box-shadow:0 0 12px var(--cl-accent)}
+    .cl-title{font-size:18px; font-weight:950; letter-spacing:-.2px; color:var(--text)}
+    .cl-teach{font-size:13px; font-weight:720; color:var(--muted); line-height:1.4; text-wrap:pretty}
+
+    .cl-stage{
+      position:relative; width:100%;
+      border-radius:14px; overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background:radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,.05), rgba(0,0,0,.28));
+    }
+    .cl-stage canvas, .cl-stage svg{display:block; width:100%; height:auto}
+    .cl-live{
+      position:absolute; top:9px; right:9px; z-index:3;
+      display:inline-flex; align-items:center; gap:6px;
+      padding:4px 9px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.16); background:rgba(7,12,24,.66);
+      backdrop-filter:blur(6px);
+      font-size:10px; font-weight:900; letter-spacing:.3px; text-transform:uppercase; color:var(--muted);
+      font-family:inherit; cursor:pointer;
+      transition:transform .12s ease, border-color .12s ease, color .12s ease;
+    }
+    button.cl-live:hover{transform:translateY(-1px); border-color:color-mix(in srgb, var(--cl-accent) 55%, rgba(255,255,255,.16)); color:#fff}
+    button.cl-live:focus-visible{outline:2px solid var(--cl-accent); outline-offset:2px}
+    .cl-live.is-running{color:#fff; border-color:color-mix(in srgb, var(--cl-accent) 55%, rgba(255,255,255,.16))}
+    .cl-live .cl-livedot{width:7px; height:7px; border-radius:999px; background:var(--cl-accent); box-shadow:0 0 10px var(--cl-accent); animation:clBlink 1.6s ease-in-out 8}
+    .cl-live svg{width:10px; height:10px; fill:currentColor}
+    @keyframes clBlink{0%,100%{opacity:.35}50%{opacity:1}}
+
+    .cl-controls{display:flex; flex-direction:column; gap:11px}
+    .cl-slider{display:grid; grid-template-columns:1fr auto; align-items:center; gap:6px 12px}
+    .cl-slabel{font-size:12px; font-weight:850; color:var(--text); letter-spacing:.1px}
+    .cl-sval{
+      font-size:12px; font-weight:950; color:var(--cl-accent);
+      font-variant-numeric:tabular-nums; min-width:54px; text-align:right;
+    }
+    .cl-slider .cl-range{grid-column:1 / -1}
+
+    .cl-readout{
+      display:flex; flex-wrap:wrap; gap:8px; align-items:stretch;
+    }
+    .cl-chip{
+      flex:1 1 120px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.22);
+      border-radius:12px; padding:9px 11px;
+      display:flex; flex-direction:column; gap:3px;
+    }
+    .cl-chip .k{font-size:10px; font-weight:900; letter-spacing:.3px; text-transform:uppercase; color:var(--muted)}
+    .cl-chip .v{font-size:16px; font-weight:950; color:var(--text); font-variant-numeric:tabular-nums; line-height:1.05}
+    .cl-verdict{
+      border:1px solid color-mix(in srgb, var(--cl-accent) 45%, transparent);
+      background:color-mix(in srgb, var(--cl-accent) 12%, transparent);
+      border-radius:12px; padding:10px 12px;
+      font-size:12.5px; font-weight:850; line-height:1.4; color:#f3fff9; text-wrap:pretty;
+      display:flex; align-items:center; gap:9px;
+    }
+    .cl-verdict .cl-vdot{flex:none; width:10px; height:10px; border-radius:999px; background:var(--cl-accent); box-shadow:0 0 12px var(--cl-accent)}
+    .cl-preset-row{display:flex; flex-wrap:wrap; gap:7px}
+    .cl-preset{
+      border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05);
+      color:var(--text); border-radius:999px; padding:6px 11px;
+      font-size:11px; font-weight:900; letter-spacing:.2px; cursor:pointer;
+      transition:transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .cl-preset:hover{transform:translateY(-1px); border-color:color-mix(in srgb, var(--cl-accent) 60%, transparent)}
+    .cl-preset.active{
+      border-color:var(--cl-accent);
+      background:color-mix(in srgb, var(--cl-accent) 16%, transparent);
+      box-shadow:0 0 0 1px color-mix(in srgb, var(--cl-accent) 40%, transparent) inset;
+      color:#fff;
+    }
+
+    /* concept lab intro band */
+    .cl-intro{
+      margin-top:4px;
+      border:1px solid rgba(255,213,109,.30);
+      border-radius:16px;
+      background:linear-gradient(130deg, rgba(255,213,109,.10), rgba(255,109,241,.07));
+      padding:14px 16px;
+    }
+    .cl-intro p{margin:0; font-size:13.5px; font-weight:760; color:var(--text); line-height:1.5; text-wrap:pretty}
+    .cl-intro strong{color:#fff7df}
+
+    @media (max-width:980px){
+      .cl-grid{grid-template-columns:1fr}
+    }
+
+    /* ---------- New Team Learning Mode ---------- */
+    .ntg-panel{
+      border:1px solid rgba(58,167,255,.28);
+      border-radius:20px;
+      background:linear-gradient(160deg, rgba(58,167,255,.12), rgba(109,255,181,.06) 60%, rgba(255,255,255,.02));
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+    .ntg-h{margin:0; font-size:clamp(22px,3.2vw,30px); font-weight:950; letter-spacing:-.4px; color:var(--text)}
+    .ntg-sub{margin:8px 0 0; color:var(--muted); font-weight:720; font-size:14px}
+    .ntg-stepper{
+      max-width:820px; margin:16px auto 0;
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .ntg-step{
+      position:relative;
+      display:grid; grid-template-columns:auto 1fr auto; gap:16px; align-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      border-radius:16px; padding:16px 18px;
+      opacity:0; transform:translateY(14px);
+    }
+    .ntg-step.in{animation:ntgIn .55s cubic-bezier(.22,.9,.3,1) forwards; animation-delay:var(--d,0s)}
+    .ntg-num{
+      position:relative; width:54px; flex:none; text-align:center;
+      font-size:30px; font-weight:950; letter-spacing:-1px; color:var(--ntg-accent,var(--identify));
+      line-height:1;
+    }
+    .ntg-num::before{
+      content:attr(data-big); position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+      font-size:62px; font-weight:950; color:rgba(255,255,255,.06); z-index:0; white-space:nowrap;
+    }
+    .ntg-num span{position:relative; z-index:1}
+    .ntg-body{min-width:0}
+    .ntg-body h3{margin:0 0 5px; font-size:17px; font-weight:950; letter-spacing:-.2px; color:var(--text)}
+    .ntg-body p{margin:0; font-size:13px; font-weight:720; color:var(--muted); line-height:1.45; text-wrap:pretty}
+    .ntg-jump{
+      margin-top:9px; display:inline-flex; align-items:center; gap:7px;
+      border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.06);
+      color:var(--text); border-radius:999px; padding:6px 12px;
+      font-size:11.5px; font-weight:900; letter-spacing:.2px; cursor:pointer;
+      transition:transform .12s ease, border-color .12s ease;
+    }
+    .ntg-jump:hover{transform:translateY(-1px); border-color:var(--ntg-accent,var(--identify)); color:#fff}
+    .ntg-ill{width:96px; height:72px; flex:none}
+    .ntg-ill svg{width:100%; height:100%; display:block; overflow:visible}
+    @keyframes ntgIn{to{opacity:1; transform:translateY(0)}}
+    @media (max-width:640px){
+      .ntg-step{grid-template-columns:auto 1fr; padding:14px}
+      .ntg-ill{display:none}
+      .ntg-num{width:42px; font-size:24px}
+      .ntg-num::before{font-size:48px}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .ntg-step{opacity:1; transform:none; animation:none}
+    }
+
+    /* ---------- Robot Evolution Timeline ---------- */
+    .evo{
+      margin-top:14px;
+      border:1px solid rgba(109,255,181,.26);
+      border-radius:18px;
+      background:linear-gradient(135deg, rgba(109,255,181,.08), rgba(58,167,255,.06));
+      padding:16px;
+    }
+    .evo-title{margin:0 0 4px; text-align:center; font-size:clamp(20px,3vw,28px); font-weight:950; letter-spacing:-.3px; color:var(--text)}
+    .evo-cap{margin:0 auto 14px; text-align:center; max-width:60ch; color:var(--muted); font-size:13px; font-weight:720}
+    .evo-rail{position:relative; padding:14px 6px 4px}
+    .evo-svgline{position:absolute; left:0; right:0; top:32px; height:8px; width:100%; overflow:visible; z-index:0}
+    .evo-nodes{position:relative; z-index:1; display:grid; grid-template-columns:repeat(7,1fr); gap:6px}
+    .evo-node{
+      appearance:none; border:none; background:none; cursor:pointer;
+      display:flex; flex-direction:column; align-items:center; gap:8px; padding:4px 0;
+      opacity:0; transform:translateY(8px); animation:evoNodeIn .5s ease forwards; animation-delay:var(--nd,0s);
+    }
+    .evo-dot{
+      width:42px; height:42px; border-radius:999px;
+      display:grid; place-items:center;
+      border:2px solid rgba(255,255,255,.22); background:rgba(11,16,32,.9);
+      font-size:12px; font-weight:950; color:var(--text); letter-spacing:-.2px;
+      transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .evo-node:hover .evo-dot, .evo-node:focus-visible .evo-dot, .evo-node.active .evo-dot{
+      transform:scale(1.12); border-color:var(--design);
+      background:rgba(109,255,181,.16);
+      box-shadow:0 0 18px rgba(109,255,181,.32);
+    }
+    .evo-node .evo-tick{font-size:10px; font-weight:850; color:var(--muted); letter-spacing:.2px}
+    .evo-node.active .evo-tick{color:var(--design)}
+    .evo-detail{
+      margin-top:14px;
+      display:grid; grid-template-columns:1.1fr 1fr; gap:14px; align-items:stretch;
+    }
+    .evo-photo{
+      position:relative; border-radius:14px; overflow:hidden; min-height:200px;
+      border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.25);
+    }
+    .evo-photo img{width:100%; height:100%; object-fit:cover; display:block; min-height:200px}
+    .evo-photo .evo-ptag{
+      position:absolute; left:12px; bottom:12px;
+      padding:7px 11px; border-radius:11px;
+      background:rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.18);
+      backdrop-filter:blur(8px);
+      font-size:13px; font-weight:950; letter-spacing:.2px;
+    }
+    .evo-info{display:flex; flex-direction:column; gap:10px; justify-content:center}
+    .evo-row .el{font-size:10px; font-weight:900; letter-spacing:.35px; text-transform:uppercase; color:var(--muted); margin-bottom:3px}
+    .evo-row .ev{font-size:14.5px; font-weight:850; color:var(--text); line-height:1.35; text-wrap:pretty}
+    .evo-badge{
+      width:max-content; display:inline-flex; align-items:center; gap:7px;
+      border:1px solid color-mix(in srgb, var(--design) 50%, transparent);
+      background:color-mix(in srgb, var(--design) 14%, transparent);
+      border-radius:999px; padding:7px 12px;
+      font-size:12px; font-weight:950; color:#effff8; letter-spacing:.2px;
+    }
+    .evo-principles{
+      margin-top:16px;
+      display:grid; grid-template-columns:repeat(4,1fr); gap:10px;
+    }
+    .evo-pcard{
+      border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.2);
+      border-radius:14px; padding:12px; display:flex; flex-direction:column; gap:7px;
+    }
+    .evo-pic{
+      width:38px; height:38px; border-radius:11px; display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.05);
+    }
+    .evo-pic svg{width:20px; height:20px; stroke:var(--design); stroke-width:1.9; fill:none; stroke-linecap:round; stroke-linejoin:round}
+    .evo-pcard h4{margin:0; font-size:13.5px; font-weight:950; color:var(--text)}
+    .evo-pcard p{margin:0; font-size:12px; font-weight:720; color:var(--muted); line-height:1.4; text-wrap:pretty}
+    .evo-dash{stroke:var(--design); stroke-width:3; fill:none; stroke-linecap:round;
+      stroke-dasharray:100; stroke-dashoffset:100; animation:evoDraw 1.2s ease forwards .2s}
+    .evo-dashbg{stroke:rgba(255,255,255,.14); stroke-width:3; fill:none; stroke-linecap:round; stroke-dasharray:2 7}
+    @keyframes evoDraw{to{stroke-dashoffset:0}}
+    @keyframes evoNodeIn{to{opacity:1; transform:translateY(0)}}
+    @media (max-width:780px){
+      .evo-detail{grid-template-columns:1fr}
+      .evo-principles{grid-template-columns:repeat(2,1fr)}
+      .evo-dot{width:38px; height:38px; font-size:11px}
+      .evo-nodes{gap:3px}
+    }
+    @media (max-width:420px){
+      .evo-dot{width:32px; height:32px}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .evo-node{opacity:1; transform:none; animation:none}
+      .evo-dash{stroke-dashoffset:0; animation:none}
+    }
+
+    /* ---------- shared scroll reveal ---------- */
+    .reveal{opacity:0; transform:translateY(16px)}
+    .reveal.in{animation:revealUp .55s cubic-bezier(.22,.9,.3,1) forwards; animation-delay:var(--d,0s)}
+    @keyframes revealUp{to{opacity:1; transform:translateY(0)}}
+    @media (prefers-reduced-motion: reduce){
+      .reveal{opacity:1; transform:none}
+      .reveal.in{animation:none}
+    }
+
+    /* ---------- Action-type comparison (Push / Pull / Lift) ---------- */
+    .cmp-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:12px}
+    .cmp-card{--c:var(--design); position:relative; overflow:hidden;
+      border:1px solid var(--line); border-radius:18px;
+      background:linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow:var(--shadow); padding:16px}
+    .cmp-card::before{content:""; position:absolute; inset:0 0 auto 0; height:3px; background:linear-gradient(90deg,var(--c),transparent 70%)}
+    .cmp-kick{display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:950; letter-spacing:.3px; text-transform:uppercase; color:var(--c)}
+    .cmp-kick::before{content:""; width:9px; height:9px; border-radius:999px; background:var(--c); box-shadow:0 0 12px var(--c)}
+    .cmp-stage{margin:12px 0; height:104px; border-radius:12px; border:1px solid rgba(255,255,255,.10); background:radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,.05), rgba(0,0,0,.26))}
+    .cmp-stage svg{width:100%; height:100%; display:block}
+    .cmp-label{font-size:14.5px; font-weight:900; color:var(--text); margin:2px 0 5px}
+    .cmp-why{font-size:12.5px; font-weight:720; color:var(--muted); line-height:1.42; text-wrap:pretty; margin:0}
+    .cmp-tag{display:inline-block; margin-top:9px; font-size:11px; font-weight:900; color:var(--c);
+      border:1px solid color-mix(in srgb,var(--c) 45%,transparent); background:color-mix(in srgb,var(--c) 12%,transparent);
+      border-radius:999px; padding:4px 10px}
+    .cmp-bot{fill:rgba(11,16,32,.92)}
+    .cmp-model{fill:none}
+    .cmp-pusharrow{animation:cmpPush 1.7s ease-in-out 7}
+    @keyframes cmpPush{0%,100%{transform:translateX(0)}50%{transform:translateX(11px)}}
+    .cmp-hook{transform-box:fill-box; transform-origin:center; animation:cmpHook 2s ease-in-out 6}
+    @keyframes cmpHook{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+    .cmp-arm{transform-box:fill-box; transform-origin:bottom left; animation:cmpArm 2.6s ease-in-out 5}
+    @keyframes cmpArm{0%,100%{transform:rotate(0)}45%{transform:rotate(-46deg)}}
+    @media (max-width:880px){.cmp-grid{grid-template-columns:1fr}}
+    @media (prefers-reduced-motion:reduce){.cmp-pusharrow,.cmp-hook,.cmp-arm{animation:none}}
+
+    /* ---------- Attachment mechanism diagrams ---------- */
+    .am-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:4px}
+    .am-card{--c:var(--design); position:relative; overflow:hidden;
+      border:1px solid var(--line); border-radius:18px;
+      background:linear-gradient(160deg, rgba(255,255,255,.055), rgba(255,255,255,.025));
+      box-shadow:var(--shadow); padding:14px}
+    .am-card::before{content:""; position:absolute; inset:0 0 auto 0; height:3px; background:linear-gradient(90deg,var(--c),transparent 70%)}
+    .am-stage{height:140px; border-radius:12px; border:1px solid rgba(255,255,255,.10); background:radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,.05), rgba(0,0,0,.26)); overflow:hidden}
+    .am-stage svg{width:100%; height:100%; display:block}
+    .am-meta{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:11px; flex-wrap:wrap}
+    .am-name{font-size:15px; font-weight:950; color:var(--text)}
+    .am-type{font-size:11px; font-weight:900; color:var(--c); border:1px solid color-mix(in srgb,var(--c) 45%,transparent); background:color-mix(in srgb,var(--c) 12%,transparent); border-radius:999px; padding:4px 10px; white-space:nowrap}
+    .am-ex{margin:7px 0 0; font-size:12px; font-weight:720; color:var(--muted); line-height:1.4; text-wrap:pretty}
+    .am-bot{fill:rgba(11,16,32,.92); stroke:rgba(255,255,255,.5); stroke-width:2}
+    .am-flow{stroke-dasharray:5 7; animation:amFlow 1s linear 12}
+    @keyframes amFlow{to{stroke-dashoffset:-24}}
+    .am-slide{animation:amSlide 2.6s ease-in-out 5}
+    @keyframes amSlide{0%,100%{transform:translateX(0)}50%{transform:translateX(34px)}}
+    .am-rotdown{transform-box:fill-box; transform-origin:top right; animation:amRotDown 2.8s ease-in-out 5}
+    @keyframes amRotDown{0%,100%{transform:rotate(0)}50%{transform:rotate(34deg)}}
+    .am-lift{transform-box:fill-box; transform-origin:bottom left; animation:amLift 2.8s ease-in-out 5}
+    @keyframes amLift{0%,100%{transform:rotate(0)}50%{transform:rotate(-58deg)}}
+    .am-drop{animation:amDrop 3s ease-in-out 4}
+    @keyframes amDrop{0%,55%{transform:translateY(0); opacity:1}72%{transform:translateY(46px); opacity:1}73%,100%{transform:translateY(46px); opacity:0}}
+    .am-combo{transform-box:fill-box; transform-origin:bottom left; animation:amCombo 3.2s ease-in-out 4}
+    @keyframes amCombo{0%,100%{transform:translateX(0) rotate(0)}50%{transform:translateX(20px) rotate(-40deg)}}
+    @media (max-width:820px){.am-grid{grid-template-columns:1fr}}
+    @media (prefers-reduced-motion:reduce){.am-flow,.am-slide,.am-rotdown,.am-lift,.am-drop,.am-combo{animation:none}}
+
+    /* ---------- Testing & Iteration Loop ---------- */
+    .tl-panel{border:1px solid rgba(255,255,255,.12); border-radius:20px; background:linear-gradient(160deg, rgba(109,255,181,.08), rgba(58,167,255,.05)); padding:18px; box-shadow:var(--shadow)}
+    .tl-top{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:18px; align-items:center}
+    .tl-loopwrap{position:relative}
+    .tl-loop{width:100%; height:auto; display:block; overflow:visible}
+    .tl-node rect{fill:rgba(11,16,32,.92); stroke:var(--nc,#6dffb5); stroke-width:2}
+    .tl-node text{fill:#eef2ff; font-size:12px; font-weight:850}
+    .tl-node{animation:tlGlow 7.2s ease-in-out 2; animation-delay:var(--pd,0s)}
+    @keyframes tlGlow{0%,6%{opacity:1}15%,100%{opacity:.74}}
+    .tl-track{fill:none; stroke:rgba(255,255,255,.16); stroke-width:2.5; stroke-dasharray:6 8}
+    .tl-dot{fill:#6dffb5; filter:drop-shadow(0 0 10px #6dffb5)}
+    .tl-copy h3{margin:0 0 6px; font-size:20px; font-weight:950; letter-spacing:-.3px; color:var(--text)}
+    .tl-copy p{margin:0 0 12px; font-size:13.5px; font-weight:720; color:var(--muted); line-height:1.5; text-wrap:pretty}
+    .tl-dash{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .tl-stat{border:1px solid rgba(255,255,255,.12); border-radius:16px; background:rgba(0,0,0,.2); padding:14px; display:flex; flex-direction:column; gap:10px; align-items:center; text-align:center}
+    .tl-stat .lab{font-size:11px; font-weight:900; letter-spacing:.3px; text-transform:uppercase; color:var(--muted)}
+    .tl-ring{position:relative; width:104px; height:104px}
+    .tl-ring svg{width:100%; height:100%; transform:rotate(-90deg)}
+    .tl-ring .rbg{fill:none; stroke:rgba(255,255,255,.10); stroke-width:9}
+    .tl-ring .rfg{fill:none; stroke:var(--design); stroke-width:9; stroke-linecap:round; stroke-dasharray:283; stroke-dashoffset:283; transition:stroke-dashoffset 1.4s cubic-bezier(.3,.8,.3,1)}
+    .tl-ring .rval{position:absolute; inset:0; display:grid; place-items:center; font-size:24px; font-weight:950; color:var(--text); font-variant-numeric:tabular-nums}
+    .tl-bars{display:flex; align-items:flex-end; gap:7px; height:104px; width:100%; justify-content:center; padding:0 4px}
+    .tl-bar{width:15px; border-radius:6px 6px 3px 3px; background:linear-gradient(180deg,var(--identify),color-mix(in srgb,var(--identify) 40%,transparent)); height:6px; transition:height 1s cubic-bezier(.3,.8,.3,1)}
+    .tl-spark{width:100%; height:104px}
+    .tl-spark svg{width:100%; height:100%; display:block; overflow:visible}
+    .tl-spark .sline{fill:none; stroke:var(--share); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:400; stroke-dashoffset:400; transition:stroke-dashoffset 1.6s ease}
+    .tl-spark .sdot{fill:var(--share); opacity:0; transition:opacity .4s ease .9s}
+    @media (max-width:880px){.tl-top{grid-template-columns:1fr}}
+    @media (prefers-reduced-motion:reduce){.tl-node{animation:none}.tl-dot{display:none}}
+
+    /* ---------- Diagnostics problem / fix cards ---------- */
+    .dx-panel{border:1px solid rgba(255,255,255,.12); border-radius:18px; background:rgba(255,255,255,.03); padding:16px; margin-bottom:12px}
+    .dx-h{margin:0 0 4px; font-size:18px; font-weight:950; letter-spacing:-.2px; color:var(--text)}
+    .dx-sub{margin:0 0 14px; font-size:13px; font-weight:720; color:var(--muted)}
+    .dx-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .dx-card{position:relative; border:1px solid rgba(255,255,255,.12); border-left:3px solid #ff8a8a; border-radius:14px; background:rgba(0,0,0,.22); padding:13px; display:flex; flex-direction:column; gap:10px}
+    .dx-cardhead{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
+    .dx-ill{width:100%; height:64px; border-radius:10px; border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.03); overflow:hidden}
+    .dx-ill svg{width:100%; height:100%; display:block}
+    .dx-sev{font-size:9.5px; font-weight:950; letter-spacing:.3px; text-transform:uppercase; padding:3px 8px; border-radius:999px; white-space:nowrap; border:1px solid currentColor}
+    .dx-sev.critical{color:#ff8a8a}
+    .dx-sev.common{color:#ffd56d}
+    .dx-sev.minor{color:#8ac6ff}
+    .dx-prob{font-size:13px; font-weight:900; color:var(--text); line-height:1.35}
+    .dx-prob .pl{display:block; font-size:10px; font-weight:900; letter-spacing:.3px; text-transform:uppercase; color:#ff8a8a; margin-bottom:3px}
+    .dx-div{height:1px; background:rgba(255,255,255,.12); margin:1px 0}
+    .dx-fix{font-size:12.5px; font-weight:760; color:var(--muted); line-height:1.4; text-wrap:pretty}
+    .dx-fix .fl{display:inline-flex; align-items:center; gap:5px; font-size:10px; font-weight:950; letter-spacing:.3px; text-transform:uppercase; color:#6dffb5; margin-bottom:3px}
+    .dx-pulse{animation:dxPulse 3s ease-in-out 4}
+    @keyframes dxPulse{0%,100%{opacity:.55}50%{opacity:1}}
+    .dx-drift{animation:dxDrift 3s ease-in-out 4}
+    @keyframes dxDrift{0%,100%{transform:translate(0,0)}50%{transform:translate(7px,-5px)}}
+    .dx-shake{animation:dxShake 3s ease-in-out 4}
+    @keyframes dxShake{0%,92%,100%{transform:translate(0,0)}94%{transform:translate(-1.5px,1px)}96%{transform:translate(1.5px,-1px)}98%{transform:translate(-1px,0)}}
+    @media (max-width:980px){.dx-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.dx-grid{grid-template-columns:1fr}}
+    @media (prefers-reduced-motion:reduce){.dx-pulse,.dx-drift,.dx-shake{animation:none}}
+
+    /* ---------- Student shared folder teams ---------- */
+    .student-results{margin-top:14px}
+    .student-results-head{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:12px; flex-wrap:wrap}
+    .student-results-head h3{margin:0; font-size:22px; line-height:1.1; letter-spacing:-.3px}
+    .student-results-head p{margin:6px 0 0; color:var(--muted); font-size:13px; font-weight:680; max-width:72ch}
+    .region-block{margin-top:12px}
+    .region-title{margin:0 0 10px; font-size:13px; color:var(--share); letter-spacing:.35px; text-transform:uppercase; font-weight:950}
+    .student-team-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px}
+    .student-team-card{display:flex; flex-direction:column; min-height:100%; border:1px solid rgba(255,255,255,.11); border-radius:18px; background:rgba(0,0,0,.22); overflow:hidden}
+    .student-team-card img{width:100%; height:160px; object-fit:cover; display:block; background:rgba(255,255,255,.03)}
+    .student-team-card.folder img{object-fit:contain; padding:12px}
+    .student-team-body{padding:13px}
+    .student-region{display:inline-flex; margin-bottom:7px; padding:4px 8px; border-radius:999px; background:rgba(255,213,109,.12); color:var(--share); border:1px solid rgba(255,213,109,.22); font-size:10px; font-weight:950; letter-spacing:.3px; text-transform:uppercase}
+    .student-team-body h4{margin:0 0 8px; font-size:15px; line-height:1.2}
+    .student-awards{margin:0; padding-left:17px; color:var(--muted); font-size:12.5px; line-height:1.45; font-weight:680}
+    .student-awards li+li{margin-top:5px}
+  </style>
 </head>
 
 <body>
@@ -955,11 +1391,14 @@
         <div class="links">
           <a href="index.html">Main Page</a>
           <a href="Rover Iterations/updatedinnovation.html">Innovation Page</a>
+          <a href="#new-team-guide">New Team Guide</a>
           <a href="#design">Robot Design</a>
           <a href="#strategy">Mission Strategy</a>
           <a href="#team-organization">Team Organization</a>
           <a href="#runs">Runs</a>
           <a href="#create">Create</a>
+          <a href="#concept-lab" style="border-color:rgba(255,213,109,.45); background:rgba(255,213,109,.10); color:#ffe9b0;">Concept Lab</a>
+          <a href="#testing">Testing</a>
           <a href="#diagnostics">Diagnostics</a>
           <a href="#share">Share</a>
         </div>
@@ -976,6 +1415,83 @@
     </div>
   </header>
 
+  <!-- NEW: New Team Learning Mode (beginner on-ramp) -->
+  <section id="new-team-guide">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--identify)"></span>NEW TEAM GUIDE</div>
+        <div class="title">New to FLL? Start here</div>
+      </div>
+
+      <div class="ntg-panel">
+        <h2 class="ntg-h">5 steps to understanding this robot</h2>
+        <p class="ntg-sub">Brand new to the team? Read these in order. Each step links straight to the part of the page that goes deeper.</p>
+
+        <div class="ntg-stepper" id="ntgStepper">
+          <article class="ntg-step" style="--ntg-accent:var(--identify); --d:0s">
+            <div class="ntg-num" data-big="01"><span>01</span></div>
+            <div class="ntg-body">
+              <h3>Look at a mission</h3>
+              <p>A mission is a task on the FLL table that scores points. Each mission has a model you interact with using your robot.</p>
+              <a class="ntg-jump" href="#strategy">Jump to Mission Strategy &rarr;</a>
+            </div>
+            <div class="ntg-ill" aria-hidden="true" style="color:var(--identify)">
+              <svg viewBox="0 0 96 72"><rect x="6" y="10" width="84" height="52" rx="6" fill="none" stroke="currentColor" stroke-width="2.4" opacity=".5"/><rect x="58" y="30" width="22" height="22" rx="4" fill="currentColor" opacity=".22" stroke="currentColor" stroke-width="2.4"/><circle cx="69" cy="41" r="4" fill="currentColor"/><path d="M14 22h26M14 32h18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity=".55"/></svg>
+            </div>
+          </article>
+
+          <article class="ntg-step" style="--ntg-accent:var(--design); --d:.12s">
+            <div class="ntg-num" data-big="02"><span>02</span></div>
+            <div class="ntg-body">
+              <h3>Decide the action type</h3>
+              <p>Every mission is either push, pull, lift, or drop. The action type tells you how hard the mission is and what attachment you need.</p>
+              <a class="ntg-jump" href="#strategy">Jump to Mission Strategy &rarr;</a>
+            </div>
+            <div class="ntg-ill" aria-hidden="true" style="color:var(--design)">
+              <svg viewBox="0 0 96 72"><g stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M10 36h14M19 31l5 5-5 5"/><path d="M34 36h14M34 31l-5 5 5 5" opacity=".8"/><path d="M58 46V30M53 35l5-5 5 5" opacity=".8"/><path d="M82 30v16M77 41l5 5 5-5"/></g></svg>
+            </div>
+          </article>
+
+          <article class="ntg-step" style="--ntg-accent:var(--share); --d:.24s">
+            <div class="ntg-num" data-big="03"><span>03</span></div>
+            <div class="ntg-body">
+              <h3>Group missions into a run</h3>
+              <p>A run is a sequence of missions your robot finishes in one trip. Group missions that sit physically close together on the table.</p>
+              <a class="ntg-jump" href="#runs">Jump to Runs &rarr;</a>
+            </div>
+            <div class="ntg-ill" aria-hidden="true" style="color:var(--share)">
+              <svg viewBox="0 0 96 72"><rect x="6" y="8" width="84" height="56" rx="6" fill="none" stroke="currentColor" stroke-width="2" opacity=".4"/><circle cx="20" cy="52" r="5" fill="currentColor" opacity=".25" stroke="currentColor" stroke-width="2"/><circle cx="50" cy="24" r="5" fill="currentColor" opacity=".25" stroke="currentColor" stroke-width="2"/><circle cx="78" cy="46" r="5" fill="currentColor" opacity=".25" stroke="currentColor" stroke-width="2"/><path d="M20 52C30 40 40 30 50 24M50 24c12 4 20 12 28 22" stroke="currentColor" stroke-width="2.4" fill="none" stroke-dasharray="4 4" stroke-linecap="round"/></svg>
+            </div>
+          </article>
+
+          <article class="ntg-step" style="--ntg-accent:var(--create); --d:.36s">
+            <div class="ntg-num" data-big="04"><span>04</span></div>
+            <div class="ntg-body">
+              <h3>Choose or build an attachment</h3>
+              <p>Attachments connect to your robot and do the actual work. Each attachment is designed for one specific action type.</p>
+              <a class="ntg-jump" href="#runs">Jump to Attachments &rarr;</a>
+            </div>
+            <div class="ntg-ill" aria-hidden="true" style="color:var(--create)">
+              <svg viewBox="0 0 96 72"><rect x="30" y="26" width="36" height="24" rx="5" fill="currentColor" opacity=".2" stroke="currentColor" stroke-width="2.4"/><circle cx="38" cy="54" r="5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="58" cy="54" r="5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M66 32h12M72 30v8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M30 38H16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M48 26V14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+            </div>
+          </article>
+
+          <article class="ntg-step" style="--ntg-accent:var(--identify); --d:.48s">
+            <div class="ntg-num" data-big="05"><span>05</span></div>
+            <div class="ntg-body">
+              <h3>Test, record, improve</h3>
+              <p>Run the mission, write down what happened, fix one thing at a time, then test again. Repeat until the result is consistent.</p>
+              <a class="ntg-jump" href="#concept-lab">Jump to Concept Lab &rarr;</a>
+            </div>
+            <div class="ntg-ill" aria-hidden="true" style="color:var(--identify)">
+              <svg viewBox="0 0 96 72"><g stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M48 16a20 20 0 1 1-16 8" /><path d="M30 18l2 8 8-2"/></g><circle cx="48" cy="36" r="4" fill="currentColor"/></svg>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ROBOT DESIGN -->
   <section id="design">
     <div class="wrap">
@@ -989,15 +1505,15 @@
           <h2 class="robot-season-title">Summer / Last Year</h2>
           <div class="robot-card-stack">
             <div class="robot-design-card large">
-              <img src="inital concept last year.png" alt="Initial concept from last year">
+              <img loading="lazy" decoding="async" src="inital concept last year.png" alt="Initial concept from last year">
               <div class="robot-design-label">Initial Concept</div>
             </div>
             <div class="robot-design-card">
-              <img src="skeleton last year.png" alt="Skeleton build from last year">
+              <img loading="lazy" decoding="async" src="skeleton last year.png" alt="Skeleton build from last year">
               <div class="robot-design-label">Skeleton</div>
             </div>
             <div class="robot-design-card photo">
-              <img src="Robot Iterations/lastyearrobot.png" alt="Final robot from last year">
+              <img loading="lazy" decoding="async" src="Robot Iterations/lastyearrobot.png" alt="Final robot from last year">
               <div class="robot-design-label">Final Concept</div>
             </div>
           </div>
@@ -1007,15 +1523,15 @@
           <h2 class="robot-season-title">This Year</h2>
           <div class="robot-card-stack">
             <div class="robot-design-card large">
-              <img src="initial concept this year.png" alt="Initial concept from this year">
+              <img loading="lazy" decoding="async" src="initial concept this year.png" alt="Initial concept from this year">
               <div class="robot-design-label">Initial Concept</div>
             </div>
             <div class="robot-design-card photo">
-              <img src="Robot Iterations/new base bot 4-24 (1).png" alt="This year middle robot build">
+              <img loading="lazy" decoding="async" src="Robot Iterations/new base bot 4-24 (1).png" alt="This year middle robot build">
               <div class="robot-design-label">Skeleton</div>
             </div>
             <div class="robot-design-card photo">
-              <img src="Robot Iterations/base robot iteration 6.2.jpg" alt="Final robot version from this year">
+              <img loading="lazy" decoding="async" src="Robot Iterations/base robot iteration 6.2.jpg" alt="Final robot version from this year">
               <div class="robot-design-label">Final Version</div>
             </div>
           </div>
@@ -1025,15 +1541,107 @@
       <div class="all-versions-board">
         <h2 class="all-versions-title">All Versions - This Year</h2>
         <div class="version-strip" aria-label="This year's robot versions">
-          <div class="version-thumb"><img src="Robot Iterations/new base bot 4-24 (1).png" alt="Robot iteration 1"><span>V1</span></div>
-          <div class="version-thumb"><img src="Robot Iterations/base robot iteration 2.png" alt="Robot iteration 2"><span>V2</span></div>
-          <div class="version-thumb"><img src="Robot Iterations/base robot iteration 3.jpg" alt="Robot iteration 3"><span>V3</span></div>
-          <div class="version-thumb"><img src="Robot Iterations/base robot iteration 4.jpg" alt="Robot iteration 4"><span>V4</span></div>
-          <div class="version-thumb"><img src="Robot Iterations/base robot iteration 5.jpg" alt="Robot iteration 5"><span>V5</span></div>
-          <div class="version-thumb"><img src="Robot Iterations/base robot iteration 6.0.jpg" alt="Robot iteration 6"><span>V6</span></div>
-          <div class="version-thumb"><img src="Robot Iterations/base robot iteration 6.2.jpg" alt="Robot iteration 6.2"><span>V6.2</span></div>
+          <div class="version-thumb"><img loading="lazy" decoding="async" src="Robot Iterations/new base bot 4-24 (1).png" alt="Robot iteration 1"><span>V1</span></div>
+          <div class="version-thumb"><img loading="lazy" decoding="async" src="Robot Iterations/base robot iteration 2.png" alt="Robot iteration 2"><span>V2</span></div>
+          <div class="version-thumb"><img loading="lazy" decoding="async" src="Robot Iterations/base robot iteration 3.jpg" alt="Robot iteration 3"><span>V3</span></div>
+          <div class="version-thumb"><img loading="lazy" decoding="async" src="Robot Iterations/base robot iteration 4.jpg" alt="Robot iteration 4"><span>V4</span></div>
+          <div class="version-thumb"><img loading="lazy" decoding="async" src="Robot Iterations/base robot iteration 5.jpg" alt="Robot iteration 5"><span>V5</span></div>
+          <div class="version-thumb"><img loading="lazy" decoding="async" src="Robot Iterations/base robot iteration 6.0.jpg" alt="Robot iteration 6"><span>V6</span></div>
+          <div class="version-thumb"><img loading="lazy" decoding="async" src="Robot Iterations/base robot iteration 6.2.jpg" alt="Robot iteration 6.2"><span>V6.2</span></div>
         </div>
       </div>
+
+      <!-- NEW: Robot Evolution Timeline -->
+      <div class="evo" id="robotEvo">
+        <h3 class="evo-title">How the Robot Evolved</h3>
+        <p class="evo-cap">Seven builds, each fixing one specific problem we found in testing. Hover or tap a version to see what changed and why it mattered.</p>
+
+        <div class="evo-rail">
+          <svg class="evo-svgline" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true">
+            <path class="evo-dashbg" d="M2 4 H98" pathLength="100"/>
+            <path class="evo-dash" d="M2 4 H98" pathLength="100"/>
+          </svg>
+          <div class="evo-nodes" id="evoNodes" role="tablist" aria-label="Robot versions">
+            <button class="evo-node active" style="--nd:.30s" role="tab" data-v="V1"
+              data-img="Robot Iterations/new base bot 4-24 (1).png"
+              data-changed="Initial frame size with basic motor placement."
+              data-why="Gave us a working baseline to measure every later change against."
+              data-metric="Baseline Set"><span class="evo-dot">V1</span><span class="evo-tick">Start</span></button>
+            <button class="evo-node" style="--nd:.45s" role="tab" data-v="V2"
+              data-img="Robot Iterations/base robot iteration 2.png"
+              data-changed="Wheelbase extended for a wider, steadier base."
+              data-why="Reduced tipping during fast turns and quick stops."
+              data-metric="Stability &uarr;"><span class="evo-dot">V2</span><span class="evo-tick">Balance</span></button>
+            <button class="evo-node" style="--nd:.60s" role="tab" data-v="V3"
+              data-img="Robot Iterations/base robot iteration 3.jpg"
+              data-changed="Hub repositioned lower to drop the center of gravity."
+              data-why="A lower center of gravity makes the robot much harder to tip."
+              data-metric="Center of Gravity &darr;"><span class="evo-dot">V3</span><span class="evo-tick">Low CoG</span></button>
+            <button class="evo-node" style="--nd:.75s" role="tab" data-v="V4"
+              data-img="Robot Iterations/base robot iteration 4.jpg"
+              data-changed="Front attachment port redesigned for faster swaps."
+              data-why="Quicker attachment changes meant less wasted time each match."
+              data-metric="Swap Speed &uarr;"><span class="evo-dot">V4</span><span class="evo-tick">Fast Swap</span></button>
+            <button class="evo-node" style="--nd:.90s" role="tab" data-v="V5"
+              data-img="Robot Iterations/base robot iteration 5.jpg"
+              data-changed="Rear caster added to stop the robot from rocking."
+              data-why="Killed the front-to-back rock that threw off our stop positions."
+              data-metric="Stability &uarr;"><span class="evo-dot">V5</span><span class="evo-tick">No Rock</span></button>
+            <button class="evo-node" style="--nd:1.05s" role="tab" data-v="V6"
+              data-img="Robot Iterations/base robot iteration 6.0.jpg"
+              data-changed="Motor angle adjusted to improve straight driving."
+              data-why="Less drift over long distances, so runs landed where we aimed."
+              data-metric="Straightness &uarr;"><span class="evo-dot">V6</span><span class="evo-tick">Straight</span></button>
+            <button class="evo-node" style="--nd:1.20s" role="tab" data-v="V6.2"
+              data-img="Robot Iterations/base robot iteration 6.2.jpg"
+              data-changed="Final tuning: cable management and weight distribution."
+              data-why="Balanced, snag-free, and repeatable &mdash; our competition build."
+              data-metric="Consistency &uarr;"><span class="evo-dot" style="font-size:10px">V6.2</span><span class="evo-tick">Final</span></button>
+          </div>
+        </div>
+
+        <div class="evo-detail">
+          <div class="evo-photo">
+            <img loading="lazy" decoding="async" id="evoPhoto" src="Robot Iterations/new base bot 4-24 (1).png" alt="Selected robot version">
+            <div class="evo-ptag" id="evoPtag">V1 &middot; Start</div>
+          </div>
+          <div class="evo-info">
+            <div class="evo-row">
+              <div class="el">What changed</div>
+              <div class="ev" id="evoChanged">Initial frame size with basic motor placement.</div>
+            </div>
+            <div class="evo-row">
+              <div class="el">Why it mattered</div>
+              <div class="ev" id="evoWhy">Gave us a working baseline to measure every later change against.</div>
+            </div>
+            <div class="evo-badge" id="evoBadge"><span class="cl-vdot" style="background:var(--design); box-shadow:0 0 12px var(--design)"></span><span id="evoMetric">Baseline Set</span></div>
+          </div>
+        </div>
+
+        <div class="evo-principles" aria-label="Design principles learned">
+          <article class="evo-pcard">
+            <div class="evo-pic"><svg viewBox="0 0 24 24"><path d="M12 3v6M5 9h14l-2.5 7h-9z"/><circle cx="12" cy="20" r="1.6"/></svg></div>
+            <h4>Center of Gravity</h4>
+            <p>Keeping weight low and centered keeps the robot from tipping.</p>
+          </article>
+          <article class="evo-pcard">
+            <div class="evo-pic"><svg viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="7" rx="1.5"/><circle cx="8" cy="18" r="2"/><circle cx="16" cy="18" r="2"/><path d="M4 12H1M23 12h-3"/></svg></div>
+            <h4>Wheelbase</h4>
+            <p>A wider base is more stable but turns a little slower.</p>
+          </article>
+          <article class="evo-pcard">
+            <div class="evo-pic"><svg viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="10" rx="2"/><path d="M9 7V4h6v3M9 12h6"/></svg></div>
+            <h4>Attachment Access</h4>
+            <p>Ports must be reachable without moving the whole robot.</p>
+          </article>
+          <article class="evo-pcard">
+            <div class="evo-pic"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v4h-4"/></svg></div>
+            <h4>Iteration</h4>
+            <p>Each version fixed one specific problem found in testing.</p>
+          </article>
+        </div>
+      </div>
+
     </div>
   </section>
   <!-- MISSION STRATEGY -->
@@ -1300,7 +1908,7 @@
         0 2px 8px rgba(0,0,0,.55),
         0 0 14px rgba(255,213,109,.45);
       margin-bottom: 10px;
-      animation: vennTitleGlow 2.4s ease-in-out infinite;
+      animation: vennTitleGlow 2.4s ease-in-out 9;
     }
     @keyframes vennTitleGlow {
       0%, 100% {
@@ -1692,21 +2300,21 @@
         </div>
         <p class="sorter-status" id="sorterStatus">Sorted by Action Type: Push, Push/Pull, Pull, Lift, Push/Drop, Drop</p>
         <div class="sorter-grid" id="sorterGrid">
-          <article class="sort-card" data-id="M1" data-action="Drop" data-difficulty="Medium" data-points="30" data-location="Red" data-run="Run C"><img src="Mission Pictures/mission 1.png" alt="Mission 1"><div class="sort-meta"><span class="sort-id">M1</span><span class="sort-badge">Drop</span></div></article>
-          <article class="sort-card" data-id="M2" data-action="Push/Drop" data-difficulty="Easy" data-points="30" data-location="Red" data-run="Run C"><img src="Mission Pictures/mission 2.png" alt="Mission 2"><div class="sort-meta"><span class="sort-id">M2</span><span class="sort-badge">Push/Drop</span></div></article>
-          <article class="sort-card" data-id="M3" data-action="Lift" data-difficulty="Medium" data-points="30" data-location="Red" data-run="Run D"><img src="Mission Pictures/mission 3.png" alt="Mission 3"><div class="sort-meta"><span class="sort-id">M3</span><span class="sort-badge">Lift</span></div></article>
-          <article class="sort-card" data-id="M4" data-action="Drop" data-difficulty="Hard" data-points="40" data-location="Red" data-run="Run D"><img src="Mission Pictures/mission 4.png" alt="Mission 4"><div class="sort-meta"><span class="sort-id">M4</span><span class="sort-badge">Drop</span></div></article>
-          <article class="sort-card" data-id="M5" data-action="Push" data-difficulty="Easy" data-points="30" data-location="Red" data-run="Run A"><img src="Mission Pictures/mission 5.png" alt="Mission 5"><div class="sort-meta"><span class="sort-id">M5</span><span class="sort-badge">Push</span></div></article>
-          <article class="sort-card" data-id="M6" data-action="Push" data-difficulty="Easy" data-points="30" data-location="Red" data-run="Run A"><img src="Mission Pictures/mission 6.png" alt="Mission 6"><div class="sort-meta"><span class="sort-id">M6</span><span class="sort-badge">Push</span></div></article>
-          <article class="sort-card" data-id="M7" data-action="Lift" data-difficulty="Medium" data-points="30" data-location="Red" data-run="Run A"><img src="Mission Pictures/mission 7.png" alt="Mission 7"><div class="sort-meta"><span class="sort-id">M7</span><span class="sort-badge">Lift</span></div></article>
-          <article class="sort-card" data-id="M8" data-action="Push" data-difficulty="Hard" data-points="30" data-location="Red" data-run="Run A"><img src="Mission Pictures/mission 8.png" alt="Mission 8"><div class="sort-meta"><span class="sort-id">M8</span><span class="sort-badge">Push</span></div></article>
-          <article class="sort-card" data-id="M9" data-action="Pull" data-difficulty="Medium" data-points="30" data-location="Blue" data-run="Run B"><img src="Mission Pictures/mission 9.png" alt="Mission 9"><div class="sort-meta"><span class="sort-id">M9</span><span class="sort-badge">Pull</span></div></article>
-          <article class="sort-card" data-id="M10" data-action="Push/Pull" data-difficulty="Medium" data-points="30" data-location="Blue" data-run="Run B"><img src="Mission Pictures/mission 10.png" alt="Mission 10"><div class="sort-meta"><span class="sort-id">M10</span><span class="sort-badge">Push/Pull</span></div></article>
-          <article class="sort-card" data-id="M11" data-action="Push" data-difficulty="Hard" data-points="30" data-location="Blue" data-run="Run E"><img src="Mission Pictures/mission 11.png" alt="Mission 11"><div class="sort-meta"><span class="sort-id">M11</span><span class="sort-badge">Push</span></div></article>
-          <article class="sort-card" data-id="M12" data-action="Push/Pull" data-difficulty="Easy" data-points="30" data-location="Blue" data-run="Run B"><img src="Mission Pictures/mission 12.png" alt="Mission 12"><div class="sort-meta"><span class="sort-id">M12</span><span class="sort-badge">Push/Pull</span></div></article>
-          <article class="sort-card" data-id="M13" data-action="Lift" data-difficulty="Easy" data-points="30" data-location="Blue" data-run="Run E"><img src="Mission Pictures/mission 13.png" alt="Mission 13"><div class="sort-meta"><span class="sort-id">M13</span><span class="sort-badge">Lift</span></div></article>
-          <article class="sort-card" data-id="M14" data-action="Drop" data-difficulty="Easy" data-points="30" data-location="Blue" data-run="Run G"><img src="Mission Pictures/mission 14.png" alt="Mission 14"><div class="sort-meta"><span class="sort-id">M14</span><span class="sort-badge">Drop</span></div></article>
-          <article class="sort-card" data-id="M15" data-action="Drop" data-difficulty="Medium" data-points="30" data-location="Blue" data-run="Run G"><img src="Mission Pictures/mission 15.png" alt="Mission 15"><div class="sort-meta"><span class="sort-id">M15</span><span class="sort-badge">Drop</span></div></article>
+          <article class="sort-card" data-id="M1" data-action="Drop" data-difficulty="Medium" data-points="30" data-location="Red" data-run="Run C"><img loading="lazy" decoding="async" src="Mission Pictures/mission 1.png" alt="Mission 1"><div class="sort-meta"><span class="sort-id">M1</span><span class="sort-badge">Drop</span></div></article>
+          <article class="sort-card" data-id="M2" data-action="Push/Drop" data-difficulty="Easy" data-points="30" data-location="Red" data-run="Run C"><img loading="lazy" decoding="async" src="Mission Pictures/mission 2.png" alt="Mission 2"><div class="sort-meta"><span class="sort-id">M2</span><span class="sort-badge">Push/Drop</span></div></article>
+          <article class="sort-card" data-id="M3" data-action="Lift" data-difficulty="Medium" data-points="30" data-location="Red" data-run="Run D"><img loading="lazy" decoding="async" src="Mission Pictures/mission 3.png" alt="Mission 3"><div class="sort-meta"><span class="sort-id">M3</span><span class="sort-badge">Lift</span></div></article>
+          <article class="sort-card" data-id="M4" data-action="Drop" data-difficulty="Hard" data-points="40" data-location="Red" data-run="Run D"><img loading="lazy" decoding="async" src="Mission Pictures/mission 4.png" alt="Mission 4"><div class="sort-meta"><span class="sort-id">M4</span><span class="sort-badge">Drop</span></div></article>
+          <article class="sort-card" data-id="M5" data-action="Push" data-difficulty="Easy" data-points="30" data-location="Red" data-run="Run A"><img loading="lazy" decoding="async" src="Mission Pictures/mission 5.png" alt="Mission 5"><div class="sort-meta"><span class="sort-id">M5</span><span class="sort-badge">Push</span></div></article>
+          <article class="sort-card" data-id="M6" data-action="Push" data-difficulty="Easy" data-points="30" data-location="Red" data-run="Run A"><img loading="lazy" decoding="async" src="Mission Pictures/mission 6.png" alt="Mission 6"><div class="sort-meta"><span class="sort-id">M6</span><span class="sort-badge">Push</span></div></article>
+          <article class="sort-card" data-id="M7" data-action="Lift" data-difficulty="Medium" data-points="30" data-location="Red" data-run="Run A"><img loading="lazy" decoding="async" src="Mission Pictures/mission 7.png" alt="Mission 7"><div class="sort-meta"><span class="sort-id">M7</span><span class="sort-badge">Lift</span></div></article>
+          <article class="sort-card" data-id="M8" data-action="Push" data-difficulty="Hard" data-points="30" data-location="Red" data-run="Run A"><img loading="lazy" decoding="async" src="Mission Pictures/mission 8.png" alt="Mission 8"><div class="sort-meta"><span class="sort-id">M8</span><span class="sort-badge">Push</span></div></article>
+          <article class="sort-card" data-id="M9" data-action="Pull" data-difficulty="Medium" data-points="30" data-location="Blue" data-run="Run B"><img loading="lazy" decoding="async" src="Mission Pictures/mission 9.png" alt="Mission 9"><div class="sort-meta"><span class="sort-id">M9</span><span class="sort-badge">Pull</span></div></article>
+          <article class="sort-card" data-id="M10" data-action="Push/Pull" data-difficulty="Medium" data-points="30" data-location="Blue" data-run="Run B"><img loading="lazy" decoding="async" src="Mission Pictures/mission 10.png" alt="Mission 10"><div class="sort-meta"><span class="sort-id">M10</span><span class="sort-badge">Push/Pull</span></div></article>
+          <article class="sort-card" data-id="M11" data-action="Push" data-difficulty="Hard" data-points="30" data-location="Blue" data-run="Run E"><img loading="lazy" decoding="async" src="Mission Pictures/mission 11.png" alt="Mission 11"><div class="sort-meta"><span class="sort-id">M11</span><span class="sort-badge">Push</span></div></article>
+          <article class="sort-card" data-id="M12" data-action="Push/Pull" data-difficulty="Easy" data-points="30" data-location="Blue" data-run="Run B"><img loading="lazy" decoding="async" src="Mission Pictures/mission 12.png" alt="Mission 12"><div class="sort-meta"><span class="sort-id">M12</span><span class="sort-badge">Push/Pull</span></div></article>
+          <article class="sort-card" data-id="M13" data-action="Lift" data-difficulty="Easy" data-points="30" data-location="Blue" data-run="Run E"><img loading="lazy" decoding="async" src="Mission Pictures/mission 13.png" alt="Mission 13"><div class="sort-meta"><span class="sort-id">M13</span><span class="sort-badge">Lift</span></div></article>
+          <article class="sort-card" data-id="M14" data-action="Drop" data-difficulty="Easy" data-points="30" data-location="Blue" data-run="Run G"><img loading="lazy" decoding="async" src="Mission Pictures/mission 14.png" alt="Mission 14"><div class="sort-meta"><span class="sort-id">M14</span><span class="sort-badge">Drop</span></div></article>
+          <article class="sort-card" data-id="M15" data-action="Drop" data-difficulty="Medium" data-points="30" data-location="Blue" data-run="Run G"><img loading="lazy" decoding="async" src="Mission Pictures/mission 15.png" alt="Mission 15"><div class="sort-meta"><span class="sort-id">M15</span><span class="sort-badge">Drop</span></div></article>
         </div>
       </div>
       <script>
@@ -1837,7 +2445,56 @@
     </div>
   </div>
 
-  
+  <!-- NEW: Why action type decides difficulty -->
+  <div class="mission-infographic" style="margin-top:14px;">
+    <div class="panel" style="padding:12px;">
+      <h3 style="margin:0 0 4px; font-size:20px; font-weight:950; color:#fff; text-align:center;">Why action type decides difficulty</h3>
+      <p class="caption" style="text-align:center; margin:0 auto 6px;">The way the robot has to move a model is the single biggest clue to how hard a mission will be.</p>
+      <div class="cmp-grid">
+        <article class="cmp-card reveal" style="--c:var(--design); --d:0s">
+          <span class="cmp-kick">Easiest</span>
+          <div class="cmp-stage">
+            <svg viewBox="0 0 220 104" aria-hidden="true">
+              <rect class="cmp-bot" x="22" y="38" width="46" height="32" rx="6" stroke="#6dffb5" stroke-width="2.5"/>
+              <rect x="150" y="42" width="28" height="26" rx="4" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2.5"/>
+              <g class="cmp-pusharrow"><path d="M74 54 H132 M124 47 L132 54 L124 61" stroke="#6dffb5" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+            </svg>
+          </div>
+          <p class="cmp-label">Push &mdash; robot drives forward, model moves</p>
+          <p class="cmp-why">No precise positioning. The robot pushes until it meets resistance, so the result is consistent every run.</p>
+          <span class="cmp-tag">Most of our missions</span>
+        </article>
+        <article class="cmp-card reveal" style="--c:var(--identify); --d:.12s">
+          <span class="cmp-kick">Harder</span>
+          <div class="cmp-stage">
+            <svg viewBox="0 0 220 104" aria-hidden="true">
+              <rect class="cmp-bot" x="120" y="38" width="46" height="32" rx="6" stroke="#3aa7ff" stroke-width="2.5"/>
+              <rect x="40" y="42" width="28" height="26" rx="4" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2.5"/>
+              <g class="cmp-hook"><path d="M120 54 H92 a9 9 0 0 0 -9 9" stroke="#3aa7ff" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
+              <path d="M150 84 H198 M190 77 L198 84 L190 91" stroke="#3aa7ff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+            </svg>
+          </div>
+          <p class="cmp-label">Pull &mdash; robot hooks the model, drives back</p>
+          <p class="cmp-why">Needs precise alignment first. The hook has to engage perfectly before the robot can reverse, so there is more to get right.</p>
+          <span class="cmp-tag">One reliable hook attachment</span>
+        </article>
+        <article class="cmp-card reveal" style="--c:var(--create); --d:.24s">
+          <span class="cmp-kick">Most complex</span>
+          <div class="cmp-stage">
+            <svg viewBox="0 0 220 104" aria-hidden="true">
+              <rect class="cmp-bot" x="80" y="54" width="56" height="34" rx="6" stroke="#ff6df1" stroke-width="2.5"/>
+              <g class="cmp-arm"><rect x="92" y="20" width="10" height="48" rx="4" fill="#ff6df1"/></g>
+              <path d="M152 60 V26 M145 34 L152 26 L159 34" stroke="#ff6df1" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/>
+            </svg>
+          </div>
+          <p class="cmp-label">Lift / drop &mdash; raise or place an object</p>
+          <p class="cmp-why">Requires height control and an exact stopping point. The attachment has to reach the right level and release at the right moment.</p>
+          <span class="cmp-tag">Powered arm attachments</span>
+        </article>
+      </div>
+    </div>
+  </div>
+
     </div>
   </section>
 
@@ -1854,12 +2511,12 @@
         <div class="caption" style="text-align:center; margin-bottom:12px;">We grouped missions into runs by similar mechanics, field location, and attachment needs.</div>
 
         <div class="pm-main-grid">
-          <article class="pm-run-main"><h4>Run A - M5 M6 M7 M8</h4><div class="pm-run-pics"><div class="pm-run-pic"><img src="Mission Pictures/mission 5.png" alt="M5"><span>M5</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 6.png" alt="M6"><span>M6</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 7.png" alt="M7"><span>M7</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 8.png" alt="M8"><span>M8</span></div></div></article>
-          <article class="pm-run-main"><h4>Run B - M9 M10</h4><div class="pm-run-pics"><div class="pm-run-pic"><img src="Mission Pictures/mission 9.png" alt="M9"><span>M9</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 10.png" alt="M10"><span>M10</span></div></div></article>
-          <article class="pm-run-main"><h4>Run C - M1 M2</h4><div class="pm-run-pics"><div class="pm-run-pic"><img src="Mission Pictures/mission 1.png" alt="M1"><span>M1</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 2.png" alt="M2"><span>M2</span></div></div></article>
-          <article class="pm-run-main"><h4>Run D - M3 M4</h4><div class="pm-run-pics"><div class="pm-run-pic"><img src="Mission Pictures/mission 3.png" alt="M3"><span>M3</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 4.png" alt="M4"><span>M4</span></div></div></article>
-          <article class="pm-run-main"><h4>Run E - M11 M13</h4><div class="pm-run-pics"><div class="pm-run-pic"><img src="Mission Pictures/mission 11.png" alt="M11"><span>M11</span></div><div class="pm-run-pic"><img src="Mission Pictures/mission 13.png" alt="M13"><span>M13</span></div></div></article>
-          <article class="pm-run-main"><h4>Run G - M15</h4><div class="pm-run-pics"><div class="pm-run-pic"><img src="Mission Pictures/mission 15.png" alt="M15"><span>M15</span></div></div></article>
+          <article class="pm-run-main"><h4>Run A - M5 M6 M7 M8</h4><div class="pm-run-pics"><div class="pm-run-pic"><img loading="lazy" decoding="async" src="Mission Pictures/mission 5.png" alt="M5"><span>M5</span></div><div class="pm-run-pic"><img loading="lazy" decoding="async" src="Mission Pictures/mission 6.png" alt="M6"><span>M6</span></div><div class="pm-run-pic"><img loading="lazy" decoding="async" src="Mission Pictures/mission 7.png" alt="M7"><span>M7</span></div><div class="pm-run-pic"><img loading="lazy" decoding="async" src="Mission Pictures/mission 8.png" alt="M8"><span>M8</span></div></div></article>
+          <article class="pm-run-main"><h4>Run B - M9 M10</h4><div class="pm-run-pics"><div class="pm-run-pic"><img loading="lazy" decoding="async" src="Mission Pictures/mission 9.png" alt="M9"><span>M9</span></div><div class="pm-run-pic"><img loading="lazy" decoding="async" src="Mission Pictures/mission 10.png" alt="M10"><span>M10</span></div></div></article>
+          <article class="pm-run-main"><h4>Run C - M1 M2</h4><div class="pm-run-pics"><div class="pm-run-pic"><img loading="lazy" decoding="async" src="Mission Pictures/mission 1.png" alt="M1"><span>M1</span></div><div class="pm-run-pic"><img loading="lazy" decoding="async" src="Mission Pictures/mission 2.png" alt="M2"><span>M2</span></div></div></article>
+          <article class="pm-run-main"><h4>Run D - M3 M4</h4><div class="pm-run-pics"><div class="pm-run-pic"><img loading="lazy" decoding="async" src="Mission Pictures/mission 3.png" alt="M3"><span>M3</span></div><div class="pm-run-pic"><img loading="lazy" decoding="async" src="Mission Pictures/mission 4.png" alt="M4"><span>M4</span></div></div></article>
+          <article class="pm-run-main"><h4>Run E - M11 M13</h4><div class="pm-run-pics"><div class="pm-run-pic"><img loading="lazy" decoding="async" src="Mission Pictures/mission 11.png" alt="M11"><span>M11</span></div><div class="pm-run-pic"><img loading="lazy" decoding="async" src="Mission Pictures/mission 13.png" alt="M13"><span>M13</span></div></div></article>
+          <article class="pm-run-main"><h4>Run G - M15</h4><div class="pm-run-pics"><div class="pm-run-pic"><img loading="lazy" decoding="async" src="Mission Pictures/mission 15.png" alt="M15"><span>M15</span></div></div></article>
         </div>
       </div>
 
@@ -1886,8 +2543,8 @@
           .robot-path-board svg{z-index:2;overflow:visible}
           .robot-path-glow,.robot-path-line,.robot-path-progress{fill:none;stroke-linecap:round;stroke-linejoin:round}
           .robot-path-glow{stroke:var(--rp-path);stroke-width:24;opacity:.22;filter:blur(1px)}
-          .robot-path-line{stroke:var(--rp-path);stroke-width:9;stroke-dasharray:18 14;filter:drop-shadow(0 4px 8px rgba(0,0,0,.78));animation:robotPathMarch 1.15s linear infinite}
-          .robot-path-progress{stroke:var(--rp-path2);stroke-width:5;stroke-dasharray:1 1300;filter:drop-shadow(0 0 8px rgba(255,213,109,.8));animation:robotPathReveal 8s ease-in-out infinite}
+          .robot-path-line{stroke:var(--rp-path);stroke-width:9;stroke-dasharray:18 14;filter:drop-shadow(0 4px 8px rgba(0,0,0,.78));animation:robotPathMarch 1.15s linear 22}
+          .robot-path-progress{stroke:var(--rp-path2);stroke-width:5;stroke-dasharray:1 1300;filter:drop-shadow(0 0 8px rgba(255,213,109,.8));animation:robotPathReveal 8s ease-in-out 3}
           .robot-path-mission-dot{fill:#07131c;stroke:var(--rp-path);stroke-width:4;filter:drop-shadow(0 4px 8px rgba(0,0,0,.72))}
           .robot-path-label{fill:#fff;font:900 22px system-ui,-apple-system,Segoe UI,sans-serif;paint-order:stroke;stroke:rgba(0,0,0,.78);stroke-width:5;stroke-linejoin:round}
           .robot-path-base{fill:rgba(8,18,27,.82);stroke:rgba(255,255,255,.86);stroke-width:3}
@@ -1924,7 +2581,7 @@
 
           <section class="robot-path-shell" aria-label="Robot path animation">
             <div class="robot-path-board">
-              <img src="Mission Pictures/fll unearthed map.png" alt="FLL Unearthed mission map">
+              <img loading="lazy" decoding="async" src="Mission Pictures/fll unearthed map.png" alt="FLL Unearthed mission map">
               <svg id="robotPathSvg" viewBox="0 0 798 466" role="img" aria-label="Animated selected robot run path">
                 <defs><path id="robot-run-path" d="" /></defs>
                 <path class="robot-path-glow" id="robotPathGlow" d="" />
@@ -1933,7 +2590,7 @@
                 <g id="robotPathBaseLayer"></g>
                 <g id="robotPathMissionLayer"></g>
                 <g class="robot-path-robot" id="robotPathMarker">
-                  <animateMotion id="robotPathMotion" dur="8s" repeatCount="indefinite" rotate="auto">
+                  <animateMotion id="robotPathMotion" dur="8s" repeatCount="3" rotate="auto">
                     <mpath href="#robot-run-path" />
                   </animateMotion>
                   <rect class="body" x="-18" y="-14" width="36" height="28" rx="5" />
@@ -2139,6 +2796,80 @@
         </div>
         <p class="formula-note">For some of our strongest runs, we combined two powered actions with one simple passive mechanism. The active parts gave us control, while the passive part made the attachment faster and easier to use during a match.</p>
       </div>
+
+      <!-- NEW: How attachments work — animated mechanism diagrams -->
+      <div class="panel" style="padding:14px; margin-bottom:14px;">
+        <h3 style="margin:0 0 4px; font-size:18px; font-weight:950; color:var(--text);">How attachments work: a visual guide</h3>
+        <p class="caption" style="margin:0 0 12px;">Five motions cover almost every attachment we build. Each diagram loops the core movement so you can see what the mechanism actually does.</p>
+        <div class="am-grid">
+          <article class="am-card" style="--c:#6dffb5">
+            <div class="am-stage">
+              <svg viewBox="0 0 240 140" aria-hidden="true">
+                <rect class="am-bot" x="24" y="46" width="74" height="54" rx="8"/>
+                <rect x="190" y="56" width="30" height="34" rx="4" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="2.5"/>
+                <g class="am-slide"><rect x="98" y="64" width="44" height="18" rx="4" fill="#6dffb5"/></g>
+                <path class="am-flow" d="M152 73 H204" stroke="#6dffb5" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M198 66 L208 73 L198 80" fill="none" stroke="#6dffb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="am-meta"><span class="am-name">Push Bar</span><span class="am-type">Push</span></div>
+            <p class="am-ex">A bar slides forward off the robot's front. Example: the Run A ramp missions (M5&ndash;M8).</p>
+          </article>
+
+          <article class="am-card" style="--c:#3aa7ff">
+            <div class="am-stage">
+              <svg viewBox="0 0 240 140" aria-hidden="true">
+                <rect class="am-bot" x="142" y="46" width="74" height="54" rx="8"/>
+                <rect x="22" y="56" width="30" height="34" rx="4" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="2.5"/>
+                <g class="am-rotdown"><path d="M142 70 H96 a10 10 0 0 0 -10 10 V92" stroke="#3aa7ff" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+                <path class="am-flow" d="M120 118 H210" stroke="#3aa7ff" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M202 111 L212 118 L202 125" fill="none" stroke="#3aa7ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="am-meta"><span class="am-name">Pull Hook</span><span class="am-type">Pull</span></div>
+            <p class="am-ex">A hook drops down, engages, then the robot reverses. Example: the Run B pan mission (M9).</p>
+          </article>
+
+          <article class="am-card" style="--c:#ff6df1">
+            <div class="am-stage">
+              <svg viewBox="0 0 240 140" aria-hidden="true">
+                <rect class="am-bot" x="80" y="72" width="80" height="46" rx="8"/>
+                <g class="am-lift"><rect x="96" y="30" width="12" height="50" rx="5" fill="#ff6df1"/></g>
+                <path class="am-flow" d="M150 70 a44 44 0 0 1 22 -38" stroke="#ff6df1" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M164 30 L173 30 L172 40" fill="none" stroke="#ff6df1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="am-meta"><span class="am-name">Lift Arm</span><span class="am-type">Lift</span></div>
+            <p class="am-ex">A powered arm rotates up from flat to about 60&deg;. Example: raising the Run D model (M3).</p>
+          </article>
+
+          <article class="am-card" style="--c:#ffd56d">
+            <div class="am-stage">
+              <svg viewBox="0 0 240 140" aria-hidden="true">
+                <rect class="am-bot" x="70" y="40" width="100" height="34" rx="8"/>
+                <rect x="86" y="76" width="68" height="6" rx="3" fill="rgba(255,255,255,.4)"/>
+                <g class="am-drop"><rect x="104" y="52" width="32" height="22" rx="4" fill="#ffd56d"/></g>
+                <rect x="98" y="112" width="44" height="14" rx="4" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="2.5"/>
+              </svg>
+            </div>
+            <div class="am-meta"><span class="am-name">Drop Release</span><span class="am-type">Drop</span></div>
+            <p class="am-ex">The arm holds a payload, then releases it to fall into place. Example: depositing on M1 / M14.</p>
+          </article>
+
+          <article class="am-card" style="--c:#6dffb5">
+            <div class="am-stage">
+              <svg viewBox="0 0 240 140" aria-hidden="true">
+                <rect class="am-bot" x="40" y="64" width="78" height="50" rx="8"/>
+                <g class="am-combo"><rect x="116" y="82" width="40" height="14" rx="4" fill="#6dffb5"/><rect x="150" y="74" width="12" height="28" rx="4" fill="#6dffb5"/></g>
+                <path class="am-flow" d="M122 58 H184" stroke="#6dffb5" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".7"/>
+              </svg>
+            </div>
+            <div class="am-meta"><span class="am-name">Combination</span><span class="am-type">Push + Lift</span></div>
+            <p class="am-ex">The arm extends and rotates together for compound motion. Example: our multi-mission Run A tool.</p>
+          </article>
+        </div>
+      </div>
+
       <div class="attachment-system-note">
         <h3 class="attachment-system-title">Attachment System Upgrade: Color-Coordinated Across All Runs</h3>
         <p class="attachment-system-copy">Beyond improving each attachment, we color-coordinated all attachments by run so setup is faster, swaps are cleaner, and teammates can identify the correct tool instantly.</p>
@@ -2168,19 +2899,19 @@
         </div>
         <div class="iter-track" aria-label="Run A attachment evolution timeline">
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run A/run a v1.jpg" alt="Run A prototype version 1"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run A/run a v1.jpg" alt="Run A prototype version 1"></div>
             <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">Base Fit</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run A/run a v2.jpg" alt="Run A improvement version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run A/run a v2.jpg" alt="Run A improvement version"></div>
             <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Wider Intake</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run A/Run A attachment V2.jpg" alt="Run A refinement version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run A/Run A attachment V2.jpg" alt="Run A refinement version"></div>
             <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Added Support</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run A/run a iteration 4.jpg" alt="Run A final version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run A/run a iteration 4.jpg" alt="Run A final version"></div>
             <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Final Tuned</span></div>
           </article>
         </div>
@@ -2196,19 +2927,19 @@
         </div>
         <div class="iter-track" aria-label="Run B attachment evolution timeline">
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run B/run b v1.jpg" alt="Run B prototype version 1"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run B/run b v1.jpg" alt="Run B prototype version 1"></div>
             <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">Early Reach</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run B/run b v2.jpg" alt="Run B improvement version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run B/run b v2.jpg" alt="Run B improvement version"></div>
             <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Better Angle</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run B/run b attachment v2.jpg" alt="Run B refinement version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run B/run b attachment v2.jpg" alt="Run B refinement version"></div>
             <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Lower Friction</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run B/run b iteration 4.jpg" alt="Run B final version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run B/run b iteration 4.jpg" alt="Run B final version"></div>
             <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Final Tuned</span></div>
           </article>
         </div>
@@ -2224,19 +2955,19 @@
         </div>
         <div class="iter-track" aria-label="Run C attachment evolution timeline">
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run C/run c attachment v1.jpg" alt="Run C prototype version 1"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run C/run c attachment v1.jpg" alt="Run C prototype version 1"></div>
             <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">First Grip</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run C/run c attachment v2.jpg" alt="Run C improvement version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run C/run c attachment v2.jpg" alt="Run C improvement version"></div>
             <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Added Support</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run C/run c v3.1.jpg" alt="Run C refinement version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run C/run c v3.1.jpg" alt="Run C refinement version"></div>
             <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Cleaner Contact</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run C/run c iteration 4.jpg" alt="Run C final version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run C/run c iteration 4.jpg" alt="Run C final version"></div>
             <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Final Tuned</span></div>
           </article>
         </div>
@@ -2252,19 +2983,19 @@
         </div>
         <div class="iter-track" aria-label="Run D attachment evolution timeline">
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run D/run d attachment v1.jpg" alt="Run D prototype version 1"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run D/run d attachment v1.jpg" alt="Run D prototype version 1"></div>
             <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">Base Lift</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run D/run d attachment v1.jpg" alt="Run D improvement pass"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run D/run d attachment v1.jpg" alt="Run D improvement pass"></div>
             <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Angle Test</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run D/run d iteration 4.JPG" alt="Run D refinement version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run D/run d iteration 4.JPG" alt="Run D refinement version"></div>
             <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Added Support</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run D/run d iteration 4.JPG" alt="Run D final version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run D/run d iteration 4.JPG" alt="Run D final version"></div>
             <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Final Tuned</span></div>
           </article>
         </div>
@@ -2280,19 +3011,19 @@
         </div>
         <div class="iter-track" aria-label="Run E attachment evolution timeline">
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run E/run e v2.jpg" alt="Run E prototype version 1"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run E/run e v2.jpg" alt="Run E prototype version 1"></div>
             <div class="iter-meta"><span class="iter-label">Prototype</span><span class="iter-note">Initial Pass</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run E/run e v2.1.jpg" alt="Run E improvement version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run E/run e v2.1.jpg" alt="Run E improvement version"></div>
             <div class="iter-meta"><span class="iter-label">Improvement</span><span class="iter-note">Lower Friction</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run E/run 3 attachment V1.jpg" alt="Run E refinement version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run E/run 3 attachment V1.jpg" alt="Run E refinement version"></div>
             <div class="iter-meta"><span class="iter-label">Refinement</span><span class="iter-note">Underside Guide</span></div>
           </article>
           <article class="iter-step">
-            <div class="iter-thumb"><img src="Attachments/Run E/run e v3.jpg" alt="Run E final version"></div>
+            <div class="iter-thumb"><img loading="lazy" decoding="async" src="Attachments/Run E/run e v3.jpg" alt="Run E final version"></div>
             <div class="iter-meta"><span class="iter-label">Final Version</span><span class="iter-note">Cleaner Release</span></div>
           </article>
         </div>
@@ -2384,7 +3115,7 @@
           background: rgba(0,0,0,.20);
           padding: 12px;
           overflow: hidden;
-          animation: stepGlow 4.8s ease-in-out infinite;
+          animation: stepGlow 4.8s ease-in-out 5;
           animation-delay: calc(var(--step-index, 0) * .35s);
         }
         .program-step::after {
@@ -2397,7 +3128,7 @@
           border-radius: 999px;
           background: linear-gradient(90deg, var(--step-color, #6dffb5), transparent);
           transform-origin: left;
-          animation: stepProgress 4.8s ease-in-out infinite;
+          animation: stepProgress 4.8s ease-in-out 5;
           animation-delay: calc(var(--step-index, 0) * .35s);
         }
         .program-speaker {
@@ -2447,7 +3178,7 @@
           background: var(--step-color, #6dffb5);
           transform: translateY(-50%);
           box-shadow: 0 0 18px var(--step-color, #6dffb5);
-          animation: robotDrive 2.8s ease-in-out infinite;
+          animation: robotDrive 2.8s ease-in-out 8;
         }
         .program-visual .sensor-line {
           position: absolute;
@@ -2467,7 +3198,7 @@
           border-top: 3px solid var(--step-color, #6dffb5);
           border-radius: 50%;
           transform: translateY(-35%);
-          animation: correctionWave 2.2s ease-in-out infinite;
+          animation: correctionWave 2.2s ease-in-out 10;
         }
         .program-visual .data-dots {
           position: absolute;
@@ -2478,7 +3209,7 @@
             radial-gradient(circle at 44% 52%, var(--step-color, #6dffb5) 0 2px, transparent 2px),
             radial-gradient(circle at 62% 44%, var(--step-color, #6dffb5) 0 2px, transparent 2px),
             radial-gradient(circle at 80% 50%, var(--step-color, #6dffb5) 0 2px, transparent 2px);
-          animation: dataPulse 1.8s ease-in-out infinite;
+          animation: dataPulse 1.8s ease-in-out 12;
         }
         @keyframes stepGlow {
           0%, 100% { border-color: rgba(255,255,255,.14); transform: translateY(0); }
@@ -2522,7 +3253,7 @@
         .mini-blocks span:nth-child(3) {
           border-color: var(--step-color, #6dffb5);
           box-shadow: 0 0 14px var(--step-color, #6dffb5);
-          animation: blockLimit 1.8s ease-in-out infinite;
+          animation: blockLimit 1.8s ease-in-out 12;
         }
         .code-lines {
           display: grid;
@@ -2534,7 +3265,7 @@
           border-radius: 999px;
           background: var(--step-color, #6dffb5);
           opacity: .85;
-          animation: codeScan 2s ease-in-out infinite;
+          animation: codeScan 2s ease-in-out 11;
         }
         .code-lines span:nth-child(2) { width: 72%; animation-delay: .15s; }
         .code-lines span:nth-child(3) { width: 88%; animation-delay: .3s; }
@@ -2553,7 +3284,7 @@
           font-size: 10px;
           font-weight: 950;
           letter-spacing: .25px;
-          animation: sensorPulse 2s ease-in-out infinite;
+          animation: sensorPulse 2s ease-in-out 11;
         }
         .sensor-pair span:nth-child(2) { animation-delay: .35s; }
         .drift-track::before,
@@ -2577,7 +3308,7 @@
           border-radius: 6px;
           background: var(--step-color, #6dffb5);
           transform: translateY(-50%);
-          animation: driftCorrect 2.4s ease-in-out infinite;
+          animation: driftCorrect 2.4s ease-in-out 9;
         }
         .pid-loop {
           display: grid;
@@ -2599,7 +3330,7 @@
         }
         .pid-loop span:nth-child(2) {
           border-color: var(--step-color, #6dffb5);
-          animation: sensorPulse 1.6s ease-in-out infinite;
+          animation: sensorPulse 1.6s ease-in-out 13;
         }
         .accel-bars {
           display: flex;
@@ -2611,7 +3342,7 @@
           border-radius: 6px 6px 2px 2px;
           background: var(--step-color, #6dffb5);
           opacity: .85;
-          animation: accelSmooth 2s ease-in-out infinite;
+          animation: accelSmooth 2s ease-in-out 11;
         }
         .accel-bars span:nth-child(1) { height: 28%; }
         .accel-bars span:nth-child(2) { height: 46%; animation-delay: .08s; }
@@ -2702,6 +3433,34 @@
             </article>
           </div>
         </div>
+      </div>
+
+      <!-- NEW: inline interactive widget (PID — pairs with the PID tuning story) -->
+      <div class="cl-widget inline-widget" data-cl="pid" style="--cl-accent:#3aa7ff">
+        <div class="cl-whead">
+          <span class="cl-kicker">Try it &middot; The tuning we did by hand</span>
+          <div class="cl-title">PID Control</div>
+          <p class="cl-teach">Tuning PID is exactly what got us to 94.2% consistency. Drag the gains and watch the heading settle smoothly, overshoot, or wobble &mdash; the same trade-offs we tested run after run.</p>
+        </div>
+        <div class="cl-stage">
+          <span class="cl-live"><span class="cl-livedot"></span>Live</span>
+          <canvas class="cl-canvas" data-role="canvas" height="230"></canvas>
+        </div>
+        <div class="cl-preset-row" data-role="presets">
+          <button class="cl-preset" type="button" data-preset="soft">Too soft</button>
+          <button class="cl-preset active" type="button" data-preset="tuned">Tuned</button>
+          <button class="cl-preset" type="button" data-preset="hot">Too aggressive</button>
+        </div>
+        <div class="cl-controls">
+          <div class="cl-slider"><span class="cl-slabel">Kp &mdash; pushes back on current error</span><span class="cl-sval" data-out="kp">1.2</span><input class="cl-range" type="range" data-key="kp" min="0" max="4" step="0.1" value="1.2"></div>
+          <div class="cl-slider"><span class="cl-slabel">Ki &mdash; cleans up leftover error</span><span class="cl-sval" data-out="ki">0.00</span><input class="cl-range" type="range" data-key="ki" min="0" max="1" step="0.02" value="0"></div>
+          <div class="cl-slider"><span class="cl-slabel">Kd &mdash; damps the wobble</span><span class="cl-sval" data-out="kd">0.6</span><input class="cl-range" type="range" data-key="kd" min="0" max="3" step="0.1" value="0.6"></div>
+        </div>
+        <div class="cl-readout">
+          <div class="cl-chip"><span class="k">Overshoot</span><span class="v" data-out="overshoot">&mdash;</span></div>
+          <div class="cl-chip"><span class="k">Settles in</span><span class="v" data-out="settle">&mdash;</span></div>
+        </div>
+        <div class="cl-verdict"><span class="cl-vdot"></span><span data-out="verdict">Adjust the gains to see how the heading responds.</span></div>
       </div>
 
       <div class="graph-container">
@@ -3099,12 +3858,308 @@
     </div>
   </section>
 
+  <!-- NEW: CONCEPT LAB (interactive slider widgets) -->
+  <section id="concept-lab">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--share)"></span>CONCEPT LAB</div>
+        <div class="title">Play with the ideas behind our robot</div>
+      </div>
+
+      <div class="cl-intro">
+        <p>These are the same concepts that make our runs reliable &mdash; now you can <strong>drag the sliders and watch them change in real time</strong>. Press play on any widget to see a short demo, or grab a control and make it your own. Numbers update live for anyone who wants the detail.</p>
+      </div>
+
+      <div class="cl-grid">
+
+        <!-- PID -->
+        <div class="cl-widget" data-cl="pid" style="--cl-accent:#3aa7ff">
+          <div class="cl-whead">
+            <span class="cl-kicker">Control &middot; Live graph</span>
+            <div class="cl-title">PID Control</div>
+            <p class="cl-teach">PID steers the robot back to its target heading by reacting to the error. Drag the three gains and watch it settle smoothly, overshoot, or wobble.</p>
+          </div>
+          <div class="cl-stage">
+            <span class="cl-live"><span class="cl-livedot"></span>Live</span>
+            <canvas class="cl-canvas" data-role="canvas" height="230"></canvas>
+          </div>
+          <div class="cl-preset-row" data-role="presets">
+            <button class="cl-preset" type="button" data-preset="soft">Too soft</button>
+            <button class="cl-preset active" type="button" data-preset="tuned">Tuned</button>
+            <button class="cl-preset" type="button" data-preset="hot">Too aggressive</button>
+          </div>
+          <div class="cl-controls">
+            <div class="cl-slider"><span class="cl-slabel">Kp &mdash; pushes back on current error</span><span class="cl-sval" data-out="kp">1.2</span><input class="cl-range" type="range" data-key="kp" min="0" max="4" step="0.1" value="1.2"></div>
+            <div class="cl-slider"><span class="cl-slabel">Ki &mdash; cleans up leftover error</span><span class="cl-sval" data-out="ki">0.00</span><input class="cl-range" type="range" data-key="ki" min="0" max="1" step="0.02" value="0"></div>
+            <div class="cl-slider"><span class="cl-slabel">Kd &mdash; damps the wobble</span><span class="cl-sval" data-out="kd">0.6</span><input class="cl-range" type="range" data-key="kd" min="0" max="3" step="0.1" value="0.6"></div>
+          </div>
+          <div class="cl-readout">
+            <div class="cl-chip"><span class="k">Overshoot</span><span class="v" data-out="overshoot">&mdash;</span></div>
+            <div class="cl-chip"><span class="k">Settles in</span><span class="v" data-out="settle">&mdash;</span></div>
+          </div>
+          <div class="cl-verdict"><span class="cl-vdot"></span><span data-out="verdict">Adjust the gains to see how the heading responds.</span></div>
+        </div>
+
+        <!-- PROPORTIONAL -->
+        <div class="cl-widget" data-cl="prop" style="--cl-accent:#6dffb5">
+          <div class="cl-whead">
+            <span class="cl-kicker">Control &middot; Schematic</span>
+            <div class="cl-title">Proportional Control</div>
+            <p class="cl-teach">The further the robot is from the line, the bigger the correction. The gain decides how hard it nudges &mdash; too hard and it shoots past.</p>
+          </div>
+          <div class="cl-stage">
+            <span class="cl-live"><span class="cl-livedot"></span>Live</span>
+            <svg data-role="svg" viewBox="0 0 360 180" preserveAspectRatio="xMidYMid meet" aria-label="Proportional control diagram">
+              <line x1="24" y1="120" x2="336" y2="120" stroke="#6dffb5" stroke-width="2.5" stroke-dasharray="7 7" opacity=".85"/>
+              <text x="336" y="138" text-anchor="end" fill="rgba(233,236,255,.6)" font-size="11" font-weight="800">TARGET LINE</text>
+              <path data-role="arrow" d="" stroke="#6dffb5" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <g data-role="ghost" opacity=".5"><rect x="-11" y="-11" width="22" height="22" rx="5" fill="none" stroke="#6dffb5" stroke-width="2" stroke-dasharray="3 3"/></g>
+              <g data-role="robot"><rect x="-13" y="-13" width="26" height="26" rx="6" fill="#0b1020" stroke="#6dffb5" stroke-width="2.5"/><circle cx="0" cy="0" r="3.5" fill="#6dffb5"/></g>
+            </svg>
+          </div>
+          <div class="cl-controls">
+            <div class="cl-slider"><span class="cl-slabel">Gain (Kp) &mdash; nudge strength</span><span class="cl-sval" data-out="kp">0.50</span><input class="cl-range" type="range" data-key="kp" min="0.1" max="1.5" step="0.05" value="0.5"></div>
+            <div class="cl-slider"><span class="cl-slabel">Starting error &mdash; how far off</span><span class="cl-sval" data-out="err">24&deg;</span><input class="cl-range" type="range" data-key="err" min="6" max="40" step="1" value="24"></div>
+          </div>
+          <div class="cl-readout">
+            <div class="cl-chip"><span class="k">Correction = Kp &times; error</span><span class="v" data-out="corr">&mdash;</span></div>
+            <div class="cl-chip"><span class="k">This move lands</span><span class="v" data-out="lands">&mdash;</span></div>
+          </div>
+          <div class="cl-verdict"><span class="cl-vdot"></span><span data-out="verdict">Drag the gain to feel the trade-off.</span></div>
+        </div>
+
+        <!-- TRAPEZOID -->
+        <div class="cl-widget" data-cl="trap" style="--cl-accent:#ffd56d">
+          <div class="cl-whead">
+            <span class="cl-kicker">Motion &middot; Live graph</span>
+            <div class="cl-title">Trapezoid Speed Profile</div>
+            <p class="cl-teach">Instead of slamming to full speed, the robot ramps up, cruises, then ramps down. Smooth ramps stop the wheels from slipping.</p>
+          </div>
+          <div class="cl-stage">
+            <span class="cl-live"><span class="cl-livedot"></span>Live</span>
+            <canvas class="cl-canvas" data-role="canvas" height="210"></canvas>
+          </div>
+          <div class="cl-controls">
+            <div class="cl-slider"><span class="cl-slabel">Ramp-up &mdash; how fast it accelerates</span><span class="cl-sval" data-out="acc">20%</span><input class="cl-range" type="range" data-key="acc" min="3" max="46" step="1" value="20"></div>
+            <div class="cl-slider"><span class="cl-slabel">Cruise speed</span><span class="cl-sval" data-out="cruise">80%</span><input class="cl-range" type="range" data-key="cruise" min="25" max="100" step="1" value="80"></div>
+            <div class="cl-slider"><span class="cl-slabel">Ramp-down &mdash; how fast it stops</span><span class="cl-sval" data-out="dec">20%</span><input class="cl-range" type="range" data-key="dec" min="3" max="46" step="1" value="20"></div>
+          </div>
+          <div class="cl-readout">
+            <div class="cl-chip"><span class="k">Top speed</span><span class="v" data-out="top">&mdash;</span></div>
+            <div class="cl-chip"><span class="k">Time at cruise</span><span class="v" data-out="cruisetime">&mdash;</span></div>
+          </div>
+          <div class="cl-verdict"><span class="cl-vdot"></span><span data-out="verdict">Balance quick ramps against a long steady cruise.</span></div>
+        </div>
+
+        <!-- GEAR RATIO -->
+        <div class="cl-widget" data-cl="gear" style="--cl-accent:#ff6df1">
+          <div class="cl-whead">
+            <span class="cl-kicker">Mechanism &middot; Schematic</span>
+            <div class="cl-title">Gear Ratio</div>
+            <p class="cl-teach">Gears trade speed for force. A bigger wheel gear turns slower but pushes harder &mdash; a smaller one is the opposite.</p>
+          </div>
+          <div class="cl-stage">
+            <span class="cl-live"><span class="cl-livedot"></span>Live</span>
+            <svg data-role="svg" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid meet" aria-label="Gear ratio diagram">
+              <g data-role="driver"></g>
+              <g data-role="driven"></g>
+              <text x="90" y="188" text-anchor="middle" fill="rgba(233,236,255,.6)" font-size="11" font-weight="800">MOTOR (20T)</text>
+              <text data-role="drivenlabel" x="250" y="188" text-anchor="middle" fill="rgba(233,236,255,.6)" font-size="11" font-weight="800">WHEEL</text>
+            </svg>
+          </div>
+          <div class="cl-controls">
+            <div class="cl-slider"><span class="cl-slabel">Wheel gear teeth</span><span class="cl-sval" data-out="teeth">20T</span><input class="cl-range" type="range" data-key="teeth" min="8" max="40" step="1" value="20"></div>
+            <div class="cl-slider"><span class="cl-slabel">Motor speed</span><span class="cl-sval" data-out="motor">600</span><input class="cl-range" type="range" data-key="motor" min="200" max="1000" step="20" value="600"></div>
+          </div>
+          <div class="cl-readout">
+            <div class="cl-chip"><span class="k">Gear ratio</span><span class="v" data-out="ratio">&mdash;</span></div>
+            <div class="cl-chip"><span class="k">Wheel speed</span><span class="v" data-out="wheel">&mdash;</span></div>
+            <div class="cl-chip"><span class="k">Pushing force</span><span class="v" data-out="torque">&mdash;</span></div>
+          </div>
+          <div class="cl-verdict"><span class="cl-vdot"></span><span data-out="verdict">Slide the teeth count to trade speed for force.</span></div>
+        </div>
+
+        <!-- MOTOR SYNC -->
+        <div class="cl-widget" data-cl="sync" style="--cl-accent:#3aa7ff">
+          <div class="cl-whead">
+            <span class="cl-kicker">Driving &middot; Top-down</span>
+            <div class="cl-title">Motor Sync &amp; Turning</div>
+            <p class="cl-teach">Two drive motors. When they match, the robot drives straight. A speed difference bends the path into a curve &mdash; the bigger the gap, the tighter the turn.</p>
+          </div>
+          <div class="cl-stage">
+            <span class="cl-live"><span class="cl-livedot"></span>Live</span>
+            <svg data-role="svg" viewBox="0 0 360 230" preserveAspectRatio="xMidYMid meet" aria-label="Motor sync turning diagram">
+              <rect x="6" y="6" width="348" height="218" rx="12" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
+              <path data-role="path" d="" stroke="#3aa7ff" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="3 8"/>
+              <path data-role="head" d="" fill="#3aa7ff"/>
+              <g data-role="robot">
+                <rect x="-20" y="-26" width="40" height="52" rx="8" fill="#0b1020" stroke="#3aa7ff" stroke-width="2.5"/>
+                <rect data-role="wl" x="-26" y="-18" width="7" height="20" rx="2.5" fill="#3aa7ff"/>
+                <rect data-role="wr" x="19" y="-18" width="7" height="20" rx="2.5" fill="#3aa7ff"/>
+                <path d="M0 -26 L-7 -14 L7 -14 Z" fill="#3aa7ff"/>
+              </g>
+            </svg>
+          </div>
+          <div class="cl-controls">
+            <div class="cl-slider"><span class="cl-slabel">Left motor speed</span><span class="cl-sval" data-out="left">60%</span><input class="cl-range" type="range" data-key="left" min="0" max="100" step="1" value="60"></div>
+            <div class="cl-slider"><span class="cl-slabel">Right motor speed</span><span class="cl-sval" data-out="right">60%</span><input class="cl-range" type="range" data-key="right" min="0" max="100" step="1" value="60"></div>
+          </div>
+          <div class="cl-readout">
+            <div class="cl-chip"><span class="k">Path</span><span class="v" data-out="dir">&mdash;</span></div>
+            <div class="cl-chip"><span class="k">Turn radius</span><span class="v" data-out="radius">&mdash;</span></div>
+          </div>
+          <div class="cl-verdict"><span class="cl-vdot"></span><span data-out="verdict">Match both motors for a straight line.</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW: TESTING & ITERATION LOOP -->
+  <section id="testing">
+    <div class="wrap">
+      <div class="sectionHead">
+        <div class="tag"><span class="dot" style="background:var(--design)"></span>TESTING</div>
+        <div class="title">The loop that made every run reliable</div>
+      </div>
+
+      <div class="tl-panel">
+        <div class="tl-top">
+          <div class="tl-loopwrap">
+            <svg class="tl-loop" viewBox="0 0 360 330" role="img" aria-label="Test, record, find problem, improve, rebuild, test again loop">
+              <defs><path id="tlCircle" d="M180 44 A116 116 0 1 1 179.9 44 Z"/></defs>
+              <circle class="tl-track" cx="180" cy="160" r="116"/>
+              <g class="tl-node" style="--nc:#6dffb5; --pd:0s"><rect x="138" y="26" width="84" height="38" rx="10"/><text x="180" y="50" text-anchor="middle">Test</text></g>
+              <g class="tl-node" style="--nc:#3aa7ff; --pd:1.2s"><rect x="238" y="82" width="104" height="38" rx="10"/><text x="290" y="106" text-anchor="middle">Record data</text></g>
+              <g class="tl-node" style="--nc:#ffd56d; --pd:2.4s"><rect x="238" y="202" width="104" height="38" rx="10"/><text x="290" y="226" text-anchor="middle">Find problem</text></g>
+              <g class="tl-node" style="--nc:#ff6df1; --pd:3.6s"><rect x="138" y="262" width="84" height="38" rx="10"/><text x="180" y="286" text-anchor="middle">Improve</text></g>
+              <g class="tl-node" style="--nc:#6dffb5; --pd:4.8s"><rect x="18" y="202" width="104" height="38" rx="10"/><text x="70" y="220" text-anchor="middle">Rebuild /</text><text x="70" y="233" text-anchor="middle">rewrite</text></g>
+              <g class="tl-node" style="--nc:#3aa7ff; --pd:6s"><rect x="18" y="82" width="104" height="38" rx="10"/><text x="70" y="106" text-anchor="middle">Test again</text></g>
+              <circle class="tl-dot" r="7"><animateMotion dur="7.2s" repeatCount="3" rotate="auto"><mpath href="#tlCircle"/></animateMotion></circle>
+            </svg>
+          </div>
+          <div class="tl-copy">
+            <h3>Test &rarr; record &rarr; find &rarr; improve &rarr; rebuild &rarr; repeat</h3>
+            <p>We never changed two things at once. Every loop fixed exactly one problem, then we ran it again to prove the fix held. Doing this over and over is what turned shaky first drafts into competition-ready runs.</p>
+            <div class="tl-dash" id="tlDash">
+              <div class="tl-stat">
+                <div class="tl-ring">
+                  <svg viewBox="0 0 110 110"><circle class="rbg" cx="55" cy="55" r="45"/><circle class="rfg" data-role="ring" cx="55" cy="55" r="45"/></svg>
+                  <div class="rval" data-role="ringval">0%</div>
+                </div>
+                <div class="lab">Success rate</div>
+              </div>
+              <div class="tl-stat">
+                <div class="tl-bars" data-role="bars">
+                  <div class="tl-bar" data-v="62"></div>
+                  <div class="tl-bar" data-v="74"></div>
+                  <div class="tl-bar" data-v="69"></div>
+                  <div class="tl-bar" data-v="88"></div>
+                  <div class="tl-bar" data-v="82"></div>
+                </div>
+                <div class="lab">5 test runs</div>
+              </div>
+              <div class="tl-stat">
+                <div class="tl-spark">
+                  <svg viewBox="0 0 160 104" preserveAspectRatio="none">
+                    <polyline class="sline" data-role="spark" points="10,80 33,66 56,54 79,42 102,32 125,20 148,10"/>
+                    <circle class="sdot" data-role="sparkdot" cx="148" cy="10" r="4"/>
+                  </svg>
+                </div>
+                <div class="lab">V1 &rarr; V6.2 trend</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- DIAGNOSTICS -->
   <section id="diagnostics">
     <div class="wrap">
       <div class="sectionHead">
         <div class="tag"><span class="dot" style="background:var(--share)"></span>DIAGNOSTICS</div>
         <div class="title">How we checked robot health before runs</div>
+      </div>
+
+      <!-- NEW: Common problems & fixes -->
+      <div class="dx-panel">
+        <h3 class="dx-h">Common problems &amp; fixes</h3>
+        <p class="dx-sub">The issues that cost us missions most often &mdash; and the exact fix we reach for each time.</p>
+        <div class="dx-grid">
+
+          <article class="dx-card reveal" style="--d:0s">
+            <div class="dx-cardhead">
+              <div class="dx-ill"><svg viewBox="0 0 120 64" aria-hidden="true"><line x1="10" y1="34" x2="110" y2="34" stroke="rgba(255,255,255,.25)" stroke-width="2" stroke-dasharray="4 4"/><path d="M10 34 Q62 34 104 14" stroke="#ff8a8a" stroke-width="3" fill="none" stroke-linecap="round"/><rect class="dx-drift" x="96" y="6" width="14" height="14" rx="3" fill="#ff8a8a"/></svg></div>
+              <span class="dx-sev critical">Critical</span>
+            </div>
+            <div class="dx-prob"><span class="pl">Problem</span>Robot drifts off its straight path.</div>
+            <div class="dx-div"></div>
+            <div class="dx-fix"><span class="fl">&rarr; Fix</span>Recalibrate the gyro and run a motor-sync check so both wheels match.</div>
+          </article>
+
+          <article class="dx-card reveal" style="--d:.08s">
+            <div class="dx-cardhead">
+              <div class="dx-ill"><svg viewBox="0 0 120 64" aria-hidden="true"><rect x="92" y="20" width="20" height="24" rx="3" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"/><rect class="dx-pulse" x="18" y="24" width="16" height="16" rx="3" fill="#ffd56d"/><path d="M40 32 H72 M66 27 L72 32 L66 37" stroke="#ffd56d" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <span class="dx-sev common">Common</span>
+            </div>
+            <div class="dx-prob"><span class="pl">Problem</span>Attachment stops short of the target.</div>
+            <div class="dx-div"></div>
+            <div class="dx-fix"><span class="fl">&rarr; Fix</span>Recalibrate the start position and adjust the programmed stop distance.</div>
+          </article>
+
+          <article class="dx-card reveal" style="--d:.16s">
+            <div class="dx-cardhead">
+              <div class="dx-ill"><svg viewBox="0 0 120 64" aria-hidden="true"><rect x="10" y="10" width="40" height="44" rx="4" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-dasharray="4 4"/><g class="dx-pulse" transform="rotate(-16 30 32)"><rect x="20" y="22" width="20" height="20" rx="3" fill="#ff8a8a"/></g><line x1="64" y1="8" x2="64" y2="56" stroke="rgba(255,255,255,.2)" stroke-width="2"/></svg></div>
+              <span class="dx-sev common">Common</span>
+            </div>
+            <div class="dx-prob"><span class="pl">Problem</span>Robot starts crooked in the launch area.</div>
+            <div class="dx-div"></div>
+            <div class="dx-fix"><span class="fl">&rarr; Fix</span>Use physical alignment guides and a consistent start-position protocol.</div>
+          </article>
+
+          <article class="dx-card reveal" style="--d:.24s">
+            <div class="dx-cardhead">
+              <div class="dx-ill"><svg viewBox="0 0 120 64" aria-hidden="true"><g class="dx-pulse"><rect x="22" y="18" width="12" height="36" fill="#ffd56d"/><rect x="42" y="26" width="12" height="28" fill="#ffd56d"/><rect x="62" y="36" width="12" height="18" fill="#ff8a8a"/><rect x="82" y="44" width="12" height="10" fill="#ff8a8a"/></g><line x1="16" y1="54" x2="102" y2="54" stroke="rgba(255,255,255,.3)" stroke-width="2"/></svg></div>
+              <span class="dx-sev common">Common</span>
+            </div>
+            <div class="dx-prob"><span class="pl">Problem</span>Runs vary because the battery is low.</div>
+            <div class="dx-div"></div>
+            <div class="dx-fix"><span class="fl">&rarr; Fix</span>Check the battery before every run; replace it if it drops under 7400&nbsp;mV.</div>
+          </article>
+
+          <article class="dx-card reveal" style="--d:.32s">
+            <div class="dx-cardhead">
+              <div class="dx-ill"><svg viewBox="0 0 120 64" aria-hidden="true"><g class="dx-shake"><rect x="48" y="24" width="24" height="16" rx="3" fill="#8ac6ff"/></g><path d="M40 20 l-6 -4 M40 44 l-6 4 M80 20 l6 -4 M80 44 l6 4" stroke="rgba(255,255,255,.4)" stroke-width="2" stroke-linecap="round"/></svg></div>
+              <span class="dx-sev minor">Minor</span>
+            </div>
+            <div class="dx-prob"><span class="pl">Problem</span>Loose LEGO parts rattle and shift.</div>
+            <div class="dx-div"></div>
+            <div class="dx-fix"><span class="fl">&rarr; Fix</span>Reinforce with Technic pins and cross-brace the vulnerable joints.</div>
+          </article>
+
+          <article class="dx-card reveal" style="--d:.40s">
+            <div class="dx-cardhead">
+              <div class="dx-ill"><svg viewBox="0 0 120 64" aria-hidden="true"><line x1="60" y1="10" x2="60" y2="54" stroke="rgba(255,255,255,.25)" stroke-width="2" stroke-dasharray="3 3"/><g class="dx-pulse" transform="rotate(18 60 54)"><line x1="60" y1="54" x2="60" y2="16" stroke="#ff8a8a" stroke-width="3" stroke-linecap="round"/></g><circle cx="60" cy="54" r="4" fill="#ff8a8a"/></svg></div>
+              <span class="dx-sev critical">Critical</span>
+            </div>
+            <div class="dx-prob"><span class="pl">Problem</span>Gyro reads a drift away from zero.</div>
+            <div class="dx-div"></div>
+            <div class="dx-fix"><span class="fl">&rarr; Fix</span>Run the diagnostics script and keep the robot perfectly still during boot.</div>
+          </article>
+
+          <article class="dx-card reveal" style="--d:.48s">
+            <div class="dx-cardhead">
+              <div class="dx-ill"><svg viewBox="0 0 120 64" aria-hidden="true"><rect x="28" y="22" width="20" height="20" rx="3" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-dasharray="4 4"/><rect class="dx-drift" x="58" y="22" width="20" height="20" rx="3" fill="#8ac6ff"/><path d="M50 32 H58" stroke="rgba(255,255,255,.5)" stroke-width="2"/></svg></div>
+              <span class="dx-sev minor">Minor</span>
+            </div>
+            <div class="dx-prob"><span class="pl">Problem</span>A mission model shifted from its reset spot.</div>
+            <div class="dx-div"></div>
+            <div class="dx-fix"><span class="fl">&rarr; Fix</span>Follow a reset protocol that locks models to fixed reference corners.</div>
+          </article>
+
+        </div>
       </div>
 
       <div class="panel" style="padding:14px;">
@@ -3162,7 +4217,7 @@
           Community Resources
         </h3>
         <div class="img strip" style="height:280px;">
-          <img src="studentsharedfolder_ss.png" style="object-fit:contain; padding:12px; background:rgba(255,255,255,.02);">
+          <img loading="lazy" decoding="async" src="studentsharedfolder_ss.png" style="object-fit:contain; padding:12px; background:rgba(255,255,255,.02);">
           <div class="label">Shared Folder + Tutorials</div>
         </div>
       </div>
@@ -3170,7 +4225,7 @@
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-top:12px;">
         <div class="panel" style="padding:12px; display:flex; flex-direction:column;">
           <div style="height:200px; border-radius:14px; overflow:hidden; margin-bottom:10px; border:1px solid rgba(255,255,255,.1);">
-            <img src="tiktok screenshot.png" style="width:100%; height:100%; object-fit:contain; padding:8px; background:rgba(255,255,255,.02);">
+            <img loading="lazy" decoding="async" src="tiktok screenshot.png" style="width:100%; height:100%; object-fit:contain; padding:8px; background:rgba(255,255,255,.02);">
           </div>
           <div style="flex-grow:1;">
             <div style="font-weight:900; margin-bottom:8px; font-size:14px;">Follow on TikTok</div>
@@ -3181,7 +4236,7 @@
 
         <div class="panel" style="padding:12px; display:flex; flex-direction:column;">
           <div style="height:200px; border-radius:14px; overflow:hidden; margin-bottom:10px; border:1px solid rgba(255,255,255,.1);">
-            <img src="youtube screenshot.png" style="width:100%; height:100%; object-fit:contain; padding:8px; background:rgba(255,255,255,.02);">
+            <img loading="lazy" decoding="async" src="youtube screenshot.png" style="width:100%; height:100%; object-fit:contain; padding:8px; background:rgba(255,255,255,.02);">
           </div>
           <div style="flex-grow:1;">
             <div style="font-weight:900; margin-bottom:8px; font-size:14px;">Subscribe on YouTube</div>
@@ -3192,12 +4247,92 @@
 
         <div class="panel" style="padding:12px; display:flex; flex-direction:column;">
           <div style="height:200px; border-radius:14px; overflow:hidden; margin-bottom:10px; border:1px solid rgba(255,255,255,.1);">
-            <img src="instagram screenshot.png" style="width:100%; height:100%; object-fit:contain; padding:8px; background:rgba(255,255,255,.02);">
+            <img loading="lazy" decoding="async" src="instagram screenshot.png" style="width:100%; height:100%; object-fit:contain; padding:8px; background:rgba(255,255,255,.02);">
           </div>
           <div style="flex-grow:1;">
             <div style="font-weight:900; margin-bottom:8px; font-size:14px;">Follow on Instagram</div>
             <div style="color:var(--muted); font-size:12px; margin-bottom:10px;">Behind-the-scenes content and team updates.</div>
-            <a href="https://www.tiktok.com/@aifuturenyc" style="display:inline-block; padding:10px 14px; background:var(--share); color:#000; border-radius:10px; font-weight:900; font-size:12px;">Visit Instagram</a>
+            <span style="display:inline-block; padding:10px 14px; background:rgba(255,213,109,.16); color:var(--share); border:1px solid rgba(255,213,109,.26); border-radius:10px; font-weight:900; font-size:12px;">Instagram link coming soon</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel student-results" style="padding:14px;">
+        <div class="student-results-head">
+          <div>
+            <div class="tag"><span class="dot" style="background:var(--share)"></span>STUDENT SHARED FOLDER</div>
+            <h3>Teams using the shared folder are winning across events.</h3>
+            <p>Students add photos, resources, and competition updates so teams can learn from each other and celebrate the results together.</p>
+          </div>
+        </div>
+
+        <div class="region-block">
+          <h4 class="region-title">Hudson Valley Teams</h4>
+          <div class="student-team-grid">
+            <article class="student-team-card folder">
+              <img loading="lazy" decoding="async" src="studentsharedfolder_ss.png" alt="Student shared folder preview">
+              <div class="student-team-body">
+                <span class="student-region">Hudson Valley</span>
+                <h4>Tidal Engineers</h4>
+                <ul class="student-awards">
+                  <li>Hudson Valley Championship Event: Innovation Project Winners</li>
+                  <li>Invited to NJ</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="student-team-card">
+              <img loading="lazy" decoding="async" src="student%20shared%20team%20pictures/history%20guardians%20-%20championship%20winner.jpeg" alt="History Guardians championship winners">
+              <div class="student-team-body">
+                <span class="student-region">Hudson Valley</span>
+                <h4>History Guardians</h4>
+                <ul class="student-awards">
+                  <li>Hudson Valley Qualifier: 1st Place Championship Winners</li>
+                  <li>Hudson Valley Championship Event: 1st Place Championship Winners</li>
+                  <li>Western Edge Event in California: 1st Place Robot Performance On The Spot Challenge</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="student-team-card">
+              <img loading="lazy" decoding="async" src="student%20shared%20team%20pictures/firefox%20winning%20pic.jpeg" alt="FireFox winning team photo">
+              <div class="student-team-body">
+                <span class="student-region">Hudson Valley</span>
+                <h4>FireFox</h4>
+                <ul class="student-awards">
+                  <li>Hudson Valley Championship Event: Invited to the Brooklyn Bot Bash Event</li>
+                  <li>Brooklyn Bot Bash Event: 1st Place Championship Winners</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="region-block">
+          <h4 class="region-title">Manhattan Teams</h4>
+          <div class="student-team-grid">
+            <article class="student-team-card">
+              <img loading="lazy" decoding="async" src="student%20shared%20team%20pictures/6th%20grade%20championship%20winner.JPG" alt="Collegiate Dutchmen 6th Grade championship winners">
+              <div class="student-team-body">
+                <span class="student-region">Manhattan</span>
+                <h4>Collegiate Dutchmen 6th Grade</h4>
+                <ul class="student-awards">
+                  <li>NYC Qualifier: 1st Place Championship</li>
+                  <li>NYC Championship Event: 2nd Place Innovation Project Winner</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="student-team-card">
+              <img loading="lazy" decoding="async" src="student%20shared%20team%20pictures/5th%20grade%20core%20values.JPG" alt="Collegiate Dutchmen 5th Grade core values award">
+              <div class="student-team-body">
+                <span class="student-region">Manhattan</span>
+                <h4>Collegiate Dutchmen 5th Grade</h4>
+                <ul class="student-awards">
+                  <li>NYC Qualifier: 3rd Place Core Values</li>
+                </ul>
+              </div>
+            </article>
           </div>
         </div>
       </div>
@@ -3210,5 +4345,300 @@
       </div>
     </div>
   </footer>
+
+  <!-- ============================================================= -->
+  <!-- NEW INFOGRAPHIC SCRIPTS                                        -->
+  <!-- ============================================================= -->
+  <script>
+  (function(){
+    "use strict";
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
+    function hexA(h,a){h=(h||'#6dffb5').replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');const r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);return 'rgba('+r+','+g+','+b+','+a+')';}
+    function getAccent(w){let c=(w.style.getPropertyValue('--cl-accent')||'').trim();if(!c)c=getComputedStyle(w).getPropertyValue('--cl-accent').trim();return c||'#6dffb5';}
+    function setupCanvas(cv,cssH){const dpr=window.devicePixelRatio||1;const cssW=cv.clientWidth||cv.parentElement.clientWidth||320;cv.width=Math.round(cssW*dpr);cv.height=Math.round(cssH*dpr);const ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);return {ctx,W:cssW,H:cssH};}
+    function rot(px,py,ox,oy,deg){const a=deg*Math.PI/180,s=Math.sin(a),c=Math.cos(a),dx=px-ox,dy=py-oy;return [ox+dx*c-dy*s, oy+dx*s+dy*c];}
+
+    /* ---------- New Team Learning Mode reveal ---------- */
+    const ntg=document.getElementById('ntgStepper');
+    if(ntg){
+      if(reduce){ntg.querySelectorAll('.ntg-step').forEach(s=>s.classList.add('in'));}
+      else{
+        const io=new IntersectionObserver((ents,obs)=>{ents.forEach(e=>{if(e.isIntersecting){ntg.querySelectorAll('.ntg-step').forEach(s=>s.classList.add('in'));obs.disconnect();}});},{threshold:0.15});
+        io.observe(ntg);
+      }
+    }
+
+    /* ---------- Robot Evolution timeline ---------- */
+    (function(){
+      const evo=document.getElementById('robotEvo'); if(!evo) return;
+      const nodes=[...evo.querySelectorAll('.evo-node')];
+      const photo=evo.querySelector('#evoPhoto'), ptag=evo.querySelector('#evoPtag');
+      const changed=evo.querySelector('#evoChanged'), why=evo.querySelector('#evoWhy'), metric=evo.querySelector('#evoMetric');
+      let auto=null, idx=0;
+      function show(n){nodes.forEach(x=>x.classList.toggle('active',x===n));photo.src=n.dataset.img;photo.alt='Robot version '+n.dataset.v;ptag.innerHTML=n.dataset.v+' &middot; '+n.querySelector('.evo-tick').textContent;changed.textContent=n.dataset.changed;why.textContent=n.dataset.why;metric.innerHTML=n.dataset.metric;}
+      function stop(){if(auto){clearInterval(auto);auto=null;}}
+      nodes.forEach((n,i)=>{
+        n.addEventListener('mouseenter',()=>{stop();idx=i;show(n);});
+        n.addEventListener('focus',()=>{idx=i;show(n);});
+        n.addEventListener('click',()=>{stop();idx=i;show(n);});
+      });
+      show(nodes[0]);
+    })();
+
+    /* =========================================================
+       CONCEPT LAB — interactive slider widgets
+       ========================================================= */
+    const renders=[];
+
+    /* User-triggered demo runner. Widgets stay idle until their Play button is pressed. */
+    let activeDemo=null; const DEMO_MS=5200;
+    function setPlayButton(btn,running){
+      if(!btn)return;
+      btn.classList.toggle('is-running',running);
+      btn.disabled=!!running;
+      btn.innerHTML=running?'<span class="cl-livedot"></span>Playing':'<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1.4v7.2L8 5z"/></svg>Play';
+      btn.setAttribute('aria-label',running?'Demo playing':'Play demo');
+    }
+    function hideBadge(w){const d=w.querySelector('.cl-live');if(d)d.style.display='none';}
+    function stopActiveDemo(){
+      if(activeDemo){activeDemo.dead=true;setPlayButton(activeDemo.btn,false);activeDemo=null;}
+    }
+    function runWidgetDemo(job){
+      if(!job||!job.demoFn)return;
+      stopActiveDemo();
+      activeDemo=job; job.dead=false; setPlayButton(job.btn,true);
+      let t0=null,last=0;
+      function finishDemo(){
+        if(activeDemo===job)activeDemo=null;
+        job.dead=true; setPlayButton(job.btn,false);
+        try{job.render();}catch(e){}
+      }
+      function step(ts){
+        if(job.dead)return finishDemo();
+        if(t0==null){t0=ts;last=ts;}
+        const el=ts-t0;
+        if(ts-last>=33){last=ts;try{job.demoFn({t:el/1000,get:job.get,setRange:job.setRange,render:job.render,w:job.w});}catch(e){}job.render();}
+        if(el>=DEMO_MS)return finishDemo();
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function widgetCommon(w,drawFn,demoFn){
+      const ranges=[...w.querySelectorAll('input[data-key]')];
+      function updateFill(r){const pct=((r.value-r.min)/(r.max-r.min))*100;r.style.setProperty('--cl-fill',pct+'%');}
+      ranges.forEach(updateFill);
+      const get=k=>{const r=w.querySelector('input[data-key="'+k+'"]');return r?parseFloat(r.value):0;};
+      const out=(k,html)=>{const el=w.querySelector('[data-out="'+k+'"]');if(el)el.innerHTML=html;};
+      const setRange=(k,v)=>{const r=w.querySelector('input[data-key="'+k+'"]');if(r){r.value=v;updateFill(r);}};
+      function render(){try{drawFn({get,out,setRange,w});}catch(e){}}
+      const live=!reduce&&!!demoFn;
+      let btn=w.querySelector('.cl-live');
+      const job=live?{w,demoFn,get,setRange,render,dead:true,btn}:null;
+      function stopLive(){if(job&&activeDemo===job)stopActiveDemo();}
+      ranges.forEach(r=>{r.addEventListener('pointerdown',stopLive);r.addEventListener('keydown',stopLive);r.addEventListener('input',()=>{stopLive();updateFill(r);render();});});
+      render();
+      if(live){
+        if(btn){
+          if(btn.tagName!=='BUTTON'){
+            const b=document.createElement('button');
+            b.type='button'; b.className=btn.className; b.style.cssText=btn.style.cssText;
+            btn.replaceWith(b); btn=b; job.btn=b;
+          }
+          setPlayButton(btn,false);
+          btn.addEventListener('click',()=>runWidgetDemo(job));
+        }
+      } else {hideBadge(w);}
+      renders.push(render);
+      return {render,get,out,setRange,stopLive,w};
+    }
+
+    /* ----- PID ----- */
+    function drawPID({get,out,w}){
+      const Kp=get('kp'),Ki=get('ki'),Kd=get('kd');
+      out('kp',Kp.toFixed(1));out('ki',Ki.toFixed(2));out('kd',Kd.toFixed(1));
+      const dt=0.05,N=200,b=0.7,e0=30;let theta=e0,omega=0,integ=0,ePrev=-e0;
+      const ys=[];let maxNeg=0,settle=N,run=0;
+      for(let i=0;i<N;i++){const e=-theta;integ+=e*dt;const der=(e-ePrev)/dt;ePrev=e;
+        const u=Kp*e+Ki*integ+Kd*der;const acc=u-b*omega;omega+=acc*dt;theta+=omega*dt;
+        if(!isFinite(theta))theta=0; theta=clamp(theta,-400,400);
+        if(theta<-maxNeg)maxNeg=-theta;ys.push(theta);
+        if(Math.abs(theta)<=0.05*e0){run++;if(run>=8&&settle===N)settle=i;}else run=0;}
+      const overPct=Math.max(0,maxNeg)/e0*100;
+      out('overshoot',overPct<1.5?'~0%':Math.round(overPct)+'%');
+      out('settle',settle>=N?'> 10 s':(settle*dt).toFixed(1)+' s');
+      let v;
+      if(overPct>22)v='Too aggressive &mdash; it overshoots the target and wobbles before settling.';
+      else if(settle>=N||settle*dt>6.5)v='Too soft &mdash; it gets there, but slowly. Try more Kp (and a little Kd).';
+      else v='Dialed in &mdash; fast correction with very little overshoot.';
+      out('verdict',v);
+      const cv=w.querySelector('canvas[data-role="canvas"]');const {ctx,W,H}=setupCanvas(cv,230);
+      const padL=44,padR=14,padT=16,padB=24,gw=W-padL-padR,gh=H-padT-padB;
+      ctx.clearRect(0,0,W,H);
+      const lim=e0*1.3,Y=val=>padT+gh/2-(val/lim)*(gh/2),X=i=>padL+i/(N-1)*gw;
+      ctx.strokeStyle='rgba(255,255,255,.07)';ctx.lineWidth=1;
+      for(let i=0;i<=4;i++){const yy=padT+gh/4*i;ctx.beginPath();ctx.moveTo(padL,yy);ctx.lineTo(W-padR,yy);ctx.stroke();}
+      const accent=getAccent(w);
+      ctx.strokeStyle=hexA(accent,.85);ctx.setLineDash([6,5]);ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(padL,Y(0));ctx.lineTo(W-padR,Y(0));ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle=hexA(accent,.9);ctx.font='700 10px system-ui';ctx.textAlign='left';ctx.fillText('target heading',padL+5,Y(0)-5);
+      ctx.beginPath();ys.forEach((val,i)=>{const xx=X(i),yy=clamp(Y(val),padT-20,padT+gh+20);i?ctx.lineTo(xx,yy):ctx.moveTo(xx,yy);});
+      ctx.strokeStyle='#e9ecff';ctx.lineWidth=2.6;ctx.lineJoin='round';ctx.stroke();
+      ctx.fillStyle=accent;ctx.beginPath();ctx.arc(X(0),Y(e0),4,0,7);ctx.fill();
+      ctx.fillStyle='rgba(233,236,255,.55)';ctx.font='600 10px system-ui';ctx.textAlign='right';
+      ctx.fillText('+'+e0+'\u00b0',padL-6,Y(e0)+3);ctx.fillText('0\u00b0',padL-6,Y(0)+3);
+      ctx.textAlign='center';ctx.fillText('time \u2192',padL+gw/2,H-6);
+    }
+    function demoPID({t,setRange}){setRange('kp',(1.9+1.4*Math.sin(t*0.55)).toFixed(1));}
+    function initPID(w){
+      const api=widgetCommon(w,drawPID,reduce?null:demoPID);
+      if(!reduce)w.querySelectorAll('.cl-preset').forEach(x=>x.classList.remove('active'));
+      const P={soft:{kp:0.4,ki:0,kd:0},tuned:{kp:1.2,ki:0,kd:0.6},hot:{kp:3.7,ki:0.5,kd:0}};
+      w.querySelectorAll('.cl-preset').forEach(b=>b.addEventListener('click',()=>{api.stopLive();w.querySelectorAll('.cl-preset').forEach(x=>x.classList.remove('active'));b.classList.add('active');const p=P[b.dataset.preset];api.setRange('kp',p.kp);api.setRange('ki',p.ki);api.setRange('kd',p.kd);api.render();}));
+    }
+
+    /* ----- PROPORTIONAL ----- */
+    function drawProp({get,out,w}){
+      const Kp=get('kp'),err=get('err');
+      out('kp',Kp.toFixed(2));out('err',Math.round(err)+'\u00b0');
+      const targetY=120,robotX=120,scale=2.4;
+      const ePx=err*scale,ry=targetY-ePx,corrPx=Kp*ePx,landY=ry+corrPx;
+      w.querySelector('[data-role="robot"]').setAttribute('transform','translate('+robotX+','+ry.toFixed(1)+')');
+      w.querySelector('[data-role="ghost"]').setAttribute('transform','translate('+robotX+','+clamp(landY,12,168).toFixed(1)+')');
+      const tip=ry+corrPx,hp=corrPx>=0?7:-7;
+      w.querySelector('[data-role="arrow"]').setAttribute('d','M '+robotX+' '+ry.toFixed(1)+' L '+robotX+' '+tip.toFixed(1)+' M '+(robotX-6)+' '+(tip-hp).toFixed(1)+' L '+robotX+' '+tip.toFixed(1)+' L '+(robotX+6)+' '+(tip-hp).toFixed(1));
+      const corr=Kp*err;out('corr',corr.toFixed(1)+'\u00b0');
+      const diff=corr-err;let lands,v;
+      if(Math.abs(diff)<err*0.12){lands='on the line \u2713';v='Right in the sweet spot &mdash; one nudge lands it on the line.';}
+      else if(corr<err){lands='short';v='Gentle gain: small nudges, so it eases onto the line slowly without overshooting.';}
+      else {lands='past the line';v='Strong gain: the nudge is bigger than the error, so it overshoots and has to swing back.';}
+      out('lands',lands);out('verdict',v);
+    }
+    function demoProp({t,setRange}){setRange('err',Math.round(23+15*Math.sin(t*0.8)));}
+
+    /* ----- TRAPEZOID ----- */
+    function drawTrap({get,out,w}){
+      const cv=w.querySelector('canvas[data-role="canvas"]');
+      const acc=get('acc'),cr=get('cruise'),dec=get('dec');
+      out('acc',acc+'%');out('cruise',cr+'%');out('dec',dec+'%');
+      let a=acc/100,d=dec/100;if(a+d>0.9){const s=0.9/(a+d);a*=s;d*=s;}
+      const cf=1-a-d,h=cr/100;
+      out('top',cr+'% power');out('cruisetime',Math.round(cf*100)+'% of run');
+      let v;
+      if(acc<8||dec<8)v='Jerky: near-instant speed changes can make the wheels slip and lose accuracy.';
+      else if(cf<0.25)v='Very smooth, but most of the run is spent ramping &mdash; little time at full speed.';
+      else v='Smooth and efficient: quick ramps, then a long, steady cruise.';
+      out('verdict',v);
+      const {ctx,W,H}=setupCanvas(cv,210);
+      const padL=40,padR=14,padT=16,padB=26,gw=W-padL-padR,gh=H-padT-padB;
+      ctx.clearRect(0,0,W,H);
+      const X=f=>padL+f*gw,Y=s=>padT+gh-s*gh;
+      ctx.strokeStyle='rgba(255,255,255,.07)';ctx.lineWidth=1;
+      for(let i=0;i<=4;i++){const yy=padT+gh/4*i;ctx.beginPath();ctx.moveTo(padL,yy);ctx.lineTo(W-padR,yy);ctx.stroke();}
+      const accent=getAccent(w);const pts=[[0,0],[a,h],[1-d,h],[1,0]];
+      ctx.beginPath();pts.forEach((p,i)=>{i?ctx.lineTo(X(p[0]),Y(p[1])):ctx.moveTo(X(p[0]),Y(p[1]));});ctx.lineTo(X(1),Y(0));ctx.closePath();
+      ctx.fillStyle=hexA(accent,.16);ctx.fill();
+      ctx.beginPath();pts.forEach((p,i)=>{i?ctx.lineTo(X(p[0]),Y(p[1])):ctx.moveTo(X(p[0]),Y(p[1]));});
+      ctx.strokeStyle=accent;ctx.lineWidth=3.5;ctx.lineJoin='round';ctx.stroke();
+      if(w._phase!=null){const ph=w._phase;let sp;if(ph<a)sp=h*ph/a;else if(ph<1-d)sp=h;else sp=h*(1-ph)/Math.max(d,0.001);
+        const mx=X(ph),my=Y(sp);ctx.beginPath();ctx.arc(mx,my,6,0,7);ctx.fillStyle=accent;ctx.fill();ctx.beginPath();ctx.arc(mx,my,10,0,7);ctx.strokeStyle=hexA(accent,.5);ctx.lineWidth=2;ctx.stroke();}
+      ctx.fillStyle='rgba(233,236,255,.55)';ctx.font='600 10px system-ui';ctx.textAlign='right';
+      ctx.fillText('100%',padL-6,padT+4);ctx.fillText('0',padL-6,padT+gh+4);
+      ctx.textAlign='center';ctx.fillText('time \u2192',padL+gw/2,H-6);
+      ctx.save();ctx.translate(12,padT+gh/2);ctx.rotate(-Math.PI/2);ctx.fillText('speed',0,0);ctx.restore();
+    }
+    function demoTrap({t,w}){w._phase=(t*0.16)%1;}
+
+    /* ----- GEAR ----- */
+    function gearGroup(g,cx,cy,r,teeth,color,rotd){
+      let s='<g transform="rotate('+(rotd||0).toFixed(1)+' '+cx+' '+cy+')">';
+      for(let i=0;i<teeth;i++){const a=i/teeth*Math.PI*2,x1=cx+Math.cos(a)*r,y1=cy+Math.sin(a)*r,x2=cx+Math.cos(a)*(r+5),y2=cy+Math.sin(a)*(r+5);s+='<line x1="'+x1.toFixed(1)+'" y1="'+y1.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" stroke="'+color+'" stroke-width="3" stroke-linecap="round"/>';}
+      s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r.toFixed(1)+'" fill="none" stroke="'+color+'" stroke-width="3"/>';
+      s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*0.34).toFixed(1)+'" fill="'+color+'" opacity=".22"/>';
+      s+='<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="'+color+'"/>';
+      s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+cx+'" y2="'+(cy-r).toFixed(1)+'" stroke="'+color+'" stroke-width="3"/>';
+      s+='</g>';g.innerHTML=s;
+    }
+    function drawGear({get,out,w}){
+      const t=get('teeth'),motor=get('motor');
+      out('teeth',t+'T');out('motor',motor+' dps');
+      const driverT=20,r1=28,r2=28*t/driverT;
+      const dC={x:96,y:96},vC={x:96+r1+r2+6,y:96};
+      gearGroup(w.querySelector('[data-role="driver"]'),dC.x,dC.y,r1,driverT,'#9fb4d8',w._a1||0);
+      gearGroup(w.querySelector('[data-role="driven"]'),vC.x,vC.y,r2,t,getAccent(w),w._a2||0);
+      const dl=w.querySelector('[data-role="drivenlabel"]');if(dl){dl.setAttribute('x',vC.x);dl.textContent=t+'T WHEEL';}
+      out('ratio',t+' : '+driverT);
+      out('wheel',Math.round(motor*driverT/t)+' dps');
+      out('torque',(t/driverT).toFixed(2)+'\u00d7');
+      let v;
+      if(t>driverT+1)v='Geared for torque: the wheel turns slower but pushes much harder.';
+      else if(t<driverT-1)v='Geared for speed: the wheel spins faster but with less pushing force.';
+      else v='1 : 1 &mdash; wheel speed and force are balanced, no trade made.';
+      out('verdict',v);
+    }
+    function demoGear({t,get,w}){const ratio=get('teeth')/20;w._a1=(t*150)%360;w._a2=(-(t*150)/ratio)%360;}
+
+    /* ----- MOTOR SYNC ----- */
+    function drawSync({get,out,w}){
+      const L=get('left'),R=get('right');
+      out('left',L+'%');out('right',R+'%');
+      const sx=180,sy=190,W=46;
+      w.querySelector('[data-role="robot"]').setAttribute('transform','translate('+sx+','+sy+')');
+      const pathEl=w.querySelector('[data-role="path"]'),headEl=w.querySelector('[data-role="head"]');
+      let x=0,y=0,th=-Math.PI/2;const v=((L+R)/2)/100*3.0,om=((R-L)/W)/100*3.0;const pts=[];
+      for(let i=0;i<140;i++){const ax=sx+x,ay=sy+y;if(ax<12||ax>348||ay<12||ay>220)break;pts.push([ax,ay]);if(v<0.04)break;x+=v*Math.cos(th);y+=v*Math.sin(th);th+=om;}
+      if(pts.length<2){pathEl.setAttribute('d','');headEl.setAttribute('d','');}
+      else{let d='M '+pts[0][0].toFixed(1)+' '+pts[0][1].toFixed(1);for(let i=1;i<pts.length;i++)d+=' L '+pts[i][0].toFixed(1)+' '+pts[i][1].toFixed(1);pathEl.setAttribute('d',d);
+        const p2=pts[pts.length-1],p1=pts[pts.length-2],ang=Math.atan2(p2[1]-p1[1],p2[0]-p1[0]),a1=ang+Math.PI*0.82,a2=ang-Math.PI*0.82,hl=11;
+        headEl.setAttribute('d','M '+p2[0].toFixed(1)+' '+p2[1].toFixed(1)+' L '+(p2[0]+hl*Math.cos(a1)).toFixed(1)+' '+(p2[1]+hl*Math.sin(a1)).toFixed(1)+' L '+(p2[0]+hl*Math.cos(a2)).toFixed(1)+' '+(p2[1]+hl*Math.sin(a2)).toFixed(1)+' Z');}
+      const diff=R-L,avg=(L+R)/2;let dir,rad,v2;
+      if(avg<1){dir='Stopped';rad='\u2014';v2='Both motors at zero &mdash; the robot just sits still.';}
+      else if(Math.abs(diff)<1){dir='Straight';rad='\u221e (straight)';v2='Both motors matched \u2192 the robot tracks a perfectly straight line.';}
+      else{const Rt=Math.abs((W/2)*((R+L)/(R-L)));dir=diff>0?'Curves left':'Curves right';rad=Math.round(Rt)+' units';v2=Math.abs(diff)<18?'A small speed mismatch makes a wide, gentle curve.':'A big mismatch makes a tight turn &mdash; one wheel barely moves.';}
+      out('dir',dir);out('radius',rad);out('verdict',v2);
+    }
+    function demoSync({t,setRange}){const d=22*Math.sin(t*0.7);setRange('left',Math.round(60+d));setRange('right',Math.round(60-d));}
+
+    /* ----- dispatch ----- */
+    document.querySelectorAll('.cl-widget').forEach(w=>{
+      switch(w.dataset.cl){
+        case 'pid':initPID(w);break;
+        case 'prop':widgetCommon(w,drawProp,reduce?null:demoProp);break;
+        case 'trap':widgetCommon(w,drawTrap,reduce?null:demoTrap);break;
+        case 'gear':widgetCommon(w,drawGear,reduce?null:demoGear);break;
+        case 'sync':widgetCommon(w,drawSync,reduce?null:demoSync);break;
+      }
+    });
+
+    let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>renders.forEach(r=>r()),160);});
+
+    /* ---------- scroll reveal (cards) ---------- */
+    const reveals=[...document.querySelectorAll('.reveal')];
+    if(reveals.length){
+      if(reduce){reveals.forEach(el=>el.classList.add('in'));}
+      else{
+        const rio=new IntersectionObserver((ents,obs)=>{ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});},{threshold:0.15});
+        reveals.forEach(el=>rio.observe(el));
+      }
+    }
+
+    /* ---------- Testing dashboard counters ---------- */
+    (function(){
+      const dash=document.getElementById('tlDash'); if(!dash) return;
+      const PCT=78, CIRC=283;
+      function run(animate){
+        const ring=dash.querySelector('[data-role="ring"]'),ringval=dash.querySelector('[data-role="ringval"]');
+        if(ring)ring.style.strokeDashoffset=String(CIRC*(1-PCT/100));
+        if(ringval){if(animate){const t0=performance.now();(function step(t){const k=Math.min(1,(t-t0)/1400);ringval.textContent=Math.round(k*PCT)+'%';if(k<1)requestAnimationFrame(step);})(performance.now());}else ringval.textContent=PCT+'%';}
+        dash.querySelectorAll('[data-role="bars"] .tl-bar').forEach((b,i)=>{const h=(parseFloat(b.dataset.v)/100*104)+'px';if(animate)setTimeout(()=>{b.style.height=h;},i*120);else b.style.height=h;});
+        const spark=dash.querySelector('[data-role="spark"]');if(spark)spark.style.strokeDashoffset='0';
+        const sdot=dash.querySelector('[data-role="sparkdot"]');if(sdot)sdot.style.opacity='1';
+      }
+      if(reduce){run(false);return;}
+      const io=new IntersectionObserver((ents,obs)=>{ents.forEach(e=>{if(e.isIntersecting){run(true);obs.disconnect();}});},{threshold:0.15});
+      io.observe(dash);
+    })();
+  })();
+  </script>
 </body>
 </html>

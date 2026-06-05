@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <rect width="1200" height="720" fill="#F7FAFC"/>
+  <rect x="48" y="48" width="1104" height="624" rx="28" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="3"/>
+  <text x="80" y="120" font-family="Arial" font-size="52" font-weight="700" fill="#E84A4A">Run A Vertical Attachment Timeline</text>
+  <text x="80" y="180" font-family="Arial" font-size="28" fill="#64748B">Generated from local attachment photos.</text>
+</svg>

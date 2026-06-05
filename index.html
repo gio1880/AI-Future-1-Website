@@ -17,6 +17,27 @@
 		.card{ background:rgba(255,255,255,.9); padding:16px; border-radius:12px; border:1px solid rgba(11,18,32,.06); }
 		ul.team{ margin:8px 0 0 18px; }
 		a.btn{ display:inline-block; margin-top:8px; padding:10px 14px; border-radius:10px; text-decoration:none; color:#072b55; background:#fece00; font-weight:600; }
+		.community{ margin-top:22px; }
+		.community-head{ display:flex; justify-content:space-between; gap:16px; align-items:flex-end; flex-wrap:wrap; margin-bottom:14px; }
+		.community-head h2{ margin:0 0 6px; }
+		.community-head p{ margin:0; color:rgba(11,18,32,.68); line-height:1.5; max-width:62ch; }
+		.socials{ display:flex; gap:10px; flex-wrap:wrap; }
+		.socials a,.socials span{ display:inline-block; padding:10px 14px; border-radius:10px; font-weight:700; font-size:13px; text-decoration:none; border:1px solid rgba(11,18,32,.08); }
+		.socials a{ background:#073e77; color:#fff; }
+		.socials span{ background:#fff; color:rgba(11,18,32,.62); }
+		.region-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+		.region-card h3{ margin:0 0 10px; color:#073e77; }
+		.team-result{ display:grid; grid-template-columns:96px 1fr; gap:12px; padding:12px 0; border-top:1px solid rgba(11,18,32,.08); }
+		.team-result:first-of-type{ border-top:0; padding-top:0; }
+		.team-result img{ width:96px; height:76px; object-fit:cover; border-radius:10px; border:1px solid rgba(11,18,32,.08); background:#fff; }
+		.team-result.folder img{ object-fit:contain; padding:8px; }
+		.team-result h4{ margin:0 0 5px; font-size:15px; }
+		.team-result ul{ margin:0; padding-left:18px; color:rgba(11,18,32,.70); font-size:13px; line-height:1.4; }
+		@media (max-width:760px){
+			.grid,.region-grid{ grid-template-columns:1fr; }
+			.team-result{ grid-template-columns:1fr; }
+			.team-result img{ width:100%; height:150px; }
+		}
 		footer{ margin-top:28px; font-size:13px; color:rgba(11,18,32,.65); }
 	</style>
 </head>
@@ -102,6 +123,80 @@
 				</div>
 			</aside>
 		</div>
+
+		<section class="community card" aria-labelledby="student-shared-folder-title">
+			<div class="community-head">
+				<div>
+					<h2 id="student-shared-folder-title">Student Shared Folder Teams</h2>
+					<p>Teams use the shared folder to exchange photos, resources, and competition updates. These are some of the wins students added from Hudson Valley and Manhattan events.</p>
+				</div>
+				<div class="socials" aria-label="Social media links">
+					<a href="https://www.tiktok.com/@aifuturenyc" target="_blank" rel="noreferrer">TikTok</a>
+					<a href="https://www.youtube.com/@AIFutureRobotics" target="_blank" rel="noreferrer">YouTube</a>
+					<span>Instagram link coming soon</span>
+				</div>
+			</div>
+
+			<div class="region-grid">
+				<div class="region-card">
+					<h3>Hudson Valley Teams</h3>
+					<article class="team-result folder">
+						<img src="studentsharedfolder_ss.png" alt="Student shared folder preview" />
+						<div>
+							<h4>Tidal Engineers</h4>
+							<ul>
+								<li>Hudson Valley Championship Event: Innovation Project Winners</li>
+								<li>Invited to NJ</li>
+							</ul>
+						</div>
+					</article>
+					<article class="team-result">
+						<img src="student%20shared%20team%20pictures/history%20guardians%20-%20championship%20winner.jpeg" alt="History Guardians championship winners" />
+						<div>
+							<h4>History Guardians</h4>
+							<ul>
+								<li>Hudson Valley Qualifier: 1st Place Championship Winners</li>
+								<li>Hudson Valley Championship Event: 1st Place Championship Winners</li>
+								<li>Western Edge Event in California: 1st Place Robot Performance On The Spot Challenge</li>
+							</ul>
+						</div>
+					</article>
+					<article class="team-result">
+						<img src="student%20shared%20team%20pictures/firefox%20winning%20pic.jpeg" alt="FireFox winning team photo" />
+						<div>
+							<h4>FireFox</h4>
+							<ul>
+								<li>Hudson Valley Championship Event: Invited to the Brooklyn Bot Bash Event</li>
+								<li>Brooklyn Bot Bash Event: 1st Place Championship Winners</li>
+							</ul>
+						</div>
+					</article>
+				</div>
+
+				<div class="region-card">
+					<h3>Manhattan Teams</h3>
+					<article class="team-result">
+						<img src="student%20shared%20team%20pictures/6th%20grade%20championship%20winner.JPG" alt="Collegiate Dutchmen 6th Grade championship winners" />
+						<div>
+							<h4>Collegiate Dutchmen 6th Grade</h4>
+							<ul>
+								<li>NYC Qualifier: 1st Place Championship</li>
+								<li>NYC Championship Event: 2nd Place Innovation Project Winner</li>
+							</ul>
+						</div>
+					</article>
+					<article class="team-result">
+						<img src="student%20shared%20team%20pictures/5th%20grade%20core%20values.JPG" alt="Collegiate Dutchmen 5th Grade core values award" />
+						<div>
+							<h4>Collegiate Dutchmen 5th Grade</h4>
+							<ul>
+								<li>NYC Qualifier: 3rd Place Core Values</li>
+							</ul>
+						</div>
+					</article>
+				</div>
+			</div>
+		</section>
 
 		<footer>
 			Built for the Unearthed season — update team names or achievements by editing the project pages.
