@@ -2,3 +2,8 @@
 *.mp4
 *.mov
 *.m4v
+
+# Local tools, not part of the website
+.venv/
+__pycache__/
+.claude/worktrees/

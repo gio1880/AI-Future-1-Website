@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Unearthed 2025–26 · AI Future 1 · FLL Team #65773</title>
+	<meta name="description" content="Our Unearthed season: robot design, programming, and an archaeology rover that maps tunnels with a camera." />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="AI Future 1 · FLL Team #65773" />
+	<meta property="og:title" content="Unearthed 2025–26 · AI Future 1" />
+	<meta property="og:description" content="Our Unearthed season: robot design, programming, and an archaeology rover that maps tunnels with a camera." />
+	<meta property="og:url" content="https://aifuture1.org/unearthed.html" />
+	<meta property="og:image" content="https://aifuture1.org/img/share-preview.jpg" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<link rel="icon" href="img/favicon.png" type="image/png" />
+	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+	<style>
+		body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin:0; background:#f6f1e6; color:#0b1220; }
+		.wrap{ max-width:900px; margin:48px auto; padding:24px; }
+		header{ display:flex; align-items:center; gap:16px; }
+		.logo{ width:56px; height:56px; border-radius:12px; background:linear-gradient(135deg,#073e77,#fece00); box-shadow:0 8px 30px rgba(7,62,119,.12); }
+		h1{ margin:0 0 6px; font-size:28px; }
+		p.lead{ margin:12px 0 18px; color:#233; line-height:1.5; }
+		.badges{ display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+		.badge{ background:#fff; border:1px solid rgba(11,18,32,.08); padding:8px 12px; border-radius:999px; font-size:13px; }
+		.grid{ display:grid; grid-template-columns:1fr 320px; gap:20px; align-items:start; }
+		.card{ background:rgba(255,255,255,.9); padding:16px; border-radius:12px; border:1px solid rgba(11,18,32,.06); }
+		ul.team{ margin:8px 0 0 18px; }
+		a.btn{ display:inline-block; margin:8px 6px 0 0; padding:10px 14px; border-radius:10px; text-decoration:none; color:#072b55; background:#fece00; font-weight:600; }
+		.community{ margin-top:22px; }
+		.community-head{ display:flex; justify-content:space-between; gap:16px; align-items:flex-end; flex-wrap:wrap; margin-bottom:14px; }
+		.community-head h2{ margin:0 0 6px; }
+		.community-head p{ margin:0; color:rgba(11,18,32,.68); line-height:1.5; max-width:62ch; }
+		.socials{ display:flex; gap:10px; flex-wrap:wrap; }
+		.socials a,.socials span{ display:inline-block; padding:10px 14px; border-radius:10px; font-weight:700; font-size:13px; text-decoration:none; border:1px solid rgba(11,18,32,.08); }
+		.socials a{ background:#073e77; color:#fff; }
+		.socials span{ background:#fff; color:rgba(11,18,32,.62); }
+		.region-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+		.region-card h3{ margin:0 0 10px; color:#073e77; }
+		.team-result{ display:grid; grid-template-columns:96px 1fr; gap:12px; padding:12px 0; border-top:1px solid rgba(11,18,32,.08); }
+		.team-result:first-of-type{ border-top:0; padding-top:0; }
+		.team-result img{ width:96px; height:76px; object-fit:cover; border-radius:10px; border:1px solid rgba(11,18,32,.08); background:#fff; }
+		.team-result.folder img{ object-fit:contain; padding:8px; }
+		.team-result h4{ margin:0 0 5px; font-size:15px; }
+		.team-result ul{ margin:0; padding-left:18px; color:rgba(11,18,32,.70); font-size:13px; line-height:1.4; }
+		@media (max-width:760px){
+			.grid,.region-grid{ grid-template-columns:1fr; }
+			.team-result{ grid-template-columns:1fr; }
+			.team-result img{ width:100%; height:150px; }
+			.wrap{ margin:16px auto; padding:16px; }
+			.highlight{ flex-direction:column; align-items:stretch !important; }
+			.highlight > div{ flex-direction:column; align-items:flex-start !important; justify-content:flex-start !important; }
+			.highlight > div > div{ order:2; }
+			.highlight img{ width:100% !important; height:200px !important; }
+			.highlight .divider{ display:none; }
+		}
+		footer{ margin-top:28px; font-size:13px; color:rgba(11,18,32,.65); }
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<header>
+			<div class="logo" aria-hidden="true"></div>
+			<div>
+				<h1>Unearthed 2025–26</h1>
+				<div style="font-size:13px;color:rgba(11,18,32,.68)">AI Future 1 · FLL Team #65773 · Season archive · <a href="index.html">This season: BIOGLOW →</a></div>
+			</div>
+		</header>
+
+		<p class="lead">This page keeps our Unearthed season work in one place: our robot design, programming, and Innovation Project, from our first prototypes to the American Robotics Open Championship (AROC).</p>
+
+		<div class="badges">
+			<div class="badge">Season: Unearthed</div>
+			<div class="badge">Last season: Submerged — 3rd Place, Championship Award</div>
+			<div class="badge">NYC Championship — 3rd Place, Robot Performance</div>
+		</div>
+
+		<div class="grid" role="main">
+			<div class="card highlight" style="grid-column:1/-1; display:flex; gap:16px; align-items:center; justify-content:space-between;">
+				<div style="flex:1; display:flex; gap:12px; align-items:center;">
+					<img loading="lazy" decoding="async" src="img/Robot-Iterations/base-robot-iteration-6.2.webp" alt="Base robot iteration 6.2" style="width:220px; height:140px; object-fit:cover; border-radius:12px; border:1px solid rgba(11,18,32,.08);" />
+					<div>
+						<h3 style="margin:0 0 6px;">Our Competition Robot</h3>
+						<p style="margin:0;color:rgba(11,18,32,.68);">Base robot, version 6.2.</p>
+					</div>
+				</div>
+
+				<div class="divider" style="width:1px; background:rgba(11,18,32,.06); height:84px; margin:0 12px;"></div>
+
+				<div style="flex:1; display:flex; gap:12px; align-items:center; justify-content:flex-end;">
+					<div>
+						<h3 style="margin:0 0 6px;">Innovation Rover Update</h3>
+						<p style="margin:0;color:rgba(11,18,32,.68);">We built a wooden rover version and now use camera-based logic to map surroundings instead of relying on distance sensors.</p>
+					</div>
+					<img loading="lazy" decoding="async" src="img/Rover-Iterations/final-prototype-corner-view.webp" alt="Innovation assembled prototype" style="width:220px; height:140px; object-fit:cover; border-radius:12px; border:1px solid rgba(11,18,32,.08);" />
+				</div>
+			</div>
+			<div>
+				<div class="card">
+					<h2>About the Team</h2>
+					<p style="margin:6px 0 0;">Team members and contributors named across this site:</p>
+					<ul class="team">
+						<li>Kyle</li>
+						<li>Anthony</li>
+						<li>Julisa</li>
+						<li>Brian</li>
+						<li>Jonathan</li>
+						<li>Isabella</li>
+						<li>Owen</li>
+						<li>Cayle</li>
+						<li>Sam</li>
+						<li>Jasper</li>
+						<li>Harry</li>
+					</ul>
+					<p style="margin:10px 0 0;">Expert contributors: Grace Howe (archaeologist), Rawlins (event organizer).</p>
+				</div>
+
+				<div class="card" style="margin-top:16px;">
+					<h2>Achievements</h2>
+					<ul>
+						<li>Submerged (last season): 3rd Place — Championship Award</li>
+						<li>NYC Championship: 3rd Place — Robot Performance</li>
+						<li>Unearthed: competed at the American Robotics Open Championship (AROC), New Jersey</li>
+					</ul>
+				</div>
+			</div>
+
+			<aside>
+				<div class="card">
+					<h3>Explore</h3>
+					<p style="margin:6px 0;">Learn about our two main projects:</p>
+					<a class="btn" href="INNOVATION.html">Innovation Project</a>
+					<a class="btn" href="Rover%20Iterations/updatedinnovaiton.html" style="background:#fff;border:1px solid rgba(11,18,32,.12);">Innovation visual tour</a>
+					<a class="btn" href="ROBOTDESIGN.html" style="background:#073e77; color:#fff;">Robot Design &amp; Programming</a>
+					<a class="btn" href="newrobot.html" style="background:#fff;border:1px solid rgba(11,18,32,.12);">Robot visual guide</a>
+				</div>
+
+				<div class="card" style="margin-top:14px;">
+					<h3>Technical books (PDF)</h3>
+					<p style="margin:6px 0;">Our full write-ups for the season.</p>
+					<a class="btn" href="Innovation%20Project%20Technical%20Book/AI%20Future%20-%20Innovation%20Project%20Technical%20Book.pdf">Innovation Project book</a>
+					<a class="btn" href="Robot%20Design%20Technical%20Book/AI%20Future%20-%20Robot%20Design%20Technical%20Book.pdf" style="background:#073e77; color:#fff;">Robot Design book</a>
+				</div>
+			</aside>
+		</div>
+
+		<section class="community card" aria-labelledby="student-shared-folder-title">
+			<div class="community-head">
+				<div>
+					<h2 id="student-shared-folder-title">Student Shared Folder Teams</h2>
+					<p>Teams use the shared folder to exchange photos, resources, and competition updates. These are some of the wins students added from Hudson Valley and Manhattan events.</p>
+				</div>
+				<div class="socials" aria-label="Social media links">
+					<a href="https://www.tiktok.com/@aifuturenyc" target="_blank" rel="noreferrer">TikTok</a>
+					<a href="https://www.youtube.com/@AIFutureRobotics" target="_blank" rel="noreferrer">YouTube</a>
+					<a href="https://www.instagram.com/aifutureny" target="_blank" rel="noreferrer">Instagram</a>
+				</div>
+			</div>
+
+			<div class="region-grid">
+				<div class="region-card">
+					<h3>Hudson Valley Teams</h3>
+					<article class="team-result folder">
+						<img loading="lazy" decoding="async" src="img/studentsharedfolder_ss.webp" alt="Student shared folder preview" />
+						<div>
+							<h4>Tidal Engineers</h4>
+							<ul>
+								<li>Hudson Valley Championship Event: Innovation Project Winners</li>
+								<li>Invited to NJ</li>
+							</ul>
+						</div>
+					</article>
+					<article class="team-result">
+						<img loading="lazy" decoding="async" src="img/student-shared-team-pictures/history-guardians---championship-winner.webp" alt="History Guardians championship winners" />
+						<div>
+							<h4>History Guardians</h4>
+							<ul>
+								<li>Hudson Valley Qualifier: 1st Place Championship Winners</li>
+								<li>Hudson Valley Championship Event: 1st Place Championship Winners</li>
+								<li>Western Edge Event in California: 1st Place Robot Performance On The Spot Challenge</li>
+							</ul>
+						</div>
+					</article>
+					<article class="team-result">
+						<img loading="lazy" decoding="async" src="img/student-shared-team-pictures/firefox-winning-pic.webp" alt="FireFox winning team photo" />
+						<div>
+							<h4>FireFox</h4>
+							<ul>
+								<li>Hudson Valley Championship Event: Invited to the Brooklyn Bot Bash Event</li>
+								<li>Brooklyn Bot Bash Event: 1st Place Championship Winners</li>
+							</ul>
+						</div>
+					</article>
+				</div>
+
+				<div class="region-card">
+					<h3>Manhattan Teams</h3>
+					<article class="team-result">
+						<img loading="lazy" decoding="async" src="img/student-shared-team-pictures/6th-grade-championship-winner.webp" alt="Collegiate Dutchmen 6th Grade championship winners" />
+						<div>
+							<h4>Collegiate Dutchmen 6th Grade</h4>
+							<ul>
+								<li>NYC Qualifier: 1st Place Championship</li>
+								<li>NYC Championship Event: 2nd Place Innovation Project Winner</li>
+							</ul>
+						</div>
+					</article>
+					<article class="team-result">
+						<img loading="lazy" decoding="async" src="img/student-shared-team-pictures/5th-grade-core-values.webp" alt="Collegiate Dutchmen 5th Grade core values award" />
+						<div>
+							<h4>Collegiate Dutchmen 5th Grade</h4>
+							<ul>
+								<li>NYC Qualifier: 3rd Place Core Values</li>
+							</ul>
+						</div>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<footer>
+			AI Future 1 · FLL Team #65773 · <a href="index.html">Back to this season</a>
+		</footer>
+	</div>
+</body>
+</html>

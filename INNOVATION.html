@@ -4,7 +4,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>FLL Innovation Project — Archaeology Rover Mapping</title>
-  <meta name="description" content="A professional FLL Innovation Project site documenting an archaeology rover concept for safer mapping of dark, unstable sites." />
+	<meta name="description" content="Our archaeology rover: safer mapping for fragile, hard-to-reach sites. Research, prototypes, code and results." />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="AI Future 1 · FLL Team #65773" />
+	<meta property="og:title" content="Innovation Project · AI Future 1" />
+	<meta property="og:description" content="Our archaeology rover: safer mapping for fragile, hard-to-reach sites. Research, prototypes, code and results." />
+	<meta property="og:url" content="https://aifuture1.org/INNOVATION.html" />
+	<meta property="og:image" content="https://aifuture1.org/img/share-preview.jpg" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<link rel="icon" href="img/favicon.png" type="image/png" />
+	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
   <style>
     :root{
       --bg: #f6f1e6;         /* warm beige */
@@ -506,6 +517,16 @@
       position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
       clip: rect(0,0,0,0); white-space:nowrap; border:0;
     }
+    /* Phones: let the top nav scroll sideways instead of widening the page */
+    @media (max-width: 760px){
+      html{ overflow-x: clip; }
+      .blob.b2{ right: 0; width: 320px; height: 320px; }
+      .nav{ flex-wrap: wrap; }
+      .brand{ min-width: 0; }
+      nav{ order: 3; width: 100%; }
+      nav ul{ flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      nav li{ flex: none; }
+    }
   </style>
 </head>
 
@@ -539,8 +560,8 @@
         </nav>
 
         <div class="nav-cta">
-          <a class="btn" href="#gallery" title="Jump to prototype placeholders">Add Photos</a>
-          <a class="btn primary" href="#contact" title="Share this project">Share</a>
+          <a class="btn" href="index.html">Home</a>
+          <a class="btn primary" href="#contact">Summary</a>
         </div>
       </div>
     </div>
@@ -708,7 +729,7 @@
 
         <div class="media">
           <div class="ph tilt" style="padding:12px;">
-            <div class="label"><b>Project Plan — Snapshot</b><code style="margin-left:8px;color:rgba(11,18,32,.56);">Generated infographic</code></div>
+            <div class="label"><b>Project Plan — Snapshot</b></div>
             <div style="margin-top:10px;">
               <svg viewBox="0 0 600 200" width="100%" height="160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kanban style project plan infographic" style="border-radius:8px;">
                 <defs>
@@ -749,11 +770,11 @@
                 </g>
               </svg>
             </div>
-            <div class="hint" style="margin-top:10px;">Visual summary of assignments, current status, and short timeline — generated infographic.</div>
+            <div class="hint" style="margin-top:10px;">Our assignments, status and timeline at a glance.</div>
           </div>
 
           <div class="ph tilt" style="padding:12px;">
-            <div class="label"><b>Ideation Wall — Sketches</b><code style="margin-left:8px;color:rgba(11,18,32,.56);">Generated infographic</code></div>
+            <div class="label"><b>Ideation Wall — Sketches</b></div>
             <div style="margin-top:10px;">
               <svg viewBox="0 0 600 200" width="100%" height="160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sketches sticky note infographic">
                 <rect x="0" y="0" width="600" height="200" rx="12" fill="rgba(255,255,255,0.02)" />
@@ -773,7 +794,7 @@
                 </g>
               </svg>
             </div>
-            <div class="hint" style="margin-top:10px;">Quick visual summary of early ideas and decisions — generated from your project notes.</div>
+            <div class="hint" style="margin-top:10px;">Early ideas and decisions from our brainstorm.</div>
           </div>
         </div>
 
@@ -831,36 +852,32 @@
 
         <div class="media">
           <div class="ph tilt">
-            <img src="Rover%20Iterations/cardboard%20models.png" alt="Cardboard / top view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <img loading="lazy" decoding="async" src="img/Rover-Iterations/cardboard-models.webp" alt="Cardboard / top view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
               <b>Cardboard / Top View</b>
-              <code>Rover Iterations/cardboard models.png</code>
             </div>
-            <div class="hint">Show top + side views with labeled components (camera, hub, motors, protective bumper).</div>
+            <div class="hint">Early layout of the camera, hub, motors and protective bumper.</div>
           </div>
           <div class="ph tilt">
-            <img src="Rover%20Iterations/innovation%20lego%20prototype.jpg" alt="LEGO tracked prototype" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <img loading="lazy" decoding="async" src="img/Rover-Iterations/innovation-lego-prototype.webp" alt="LEGO tracked prototype" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
               <b>LEGO Tracked Prototype</b>
-              <code>Rover Iterations/innovation lego prototype.jpg</code>
             </div>
             <div class="hint">Angled (3/4) photo showing terrain and stability testing.</div>
           </div>
           <div class="ph tilt">
-            <img src="Rover%20Iterations/innovation%203d%20assembled%20v1.jpg" alt="LEGO wheeled prototype / assembled view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <img loading="lazy" decoding="async" src="img/Rover-Iterations/innovation-3d-assembled-v1.webp" alt="LEGO wheeled prototype / assembled view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
               <b>LEGO Wheeled / Assembled View</b>
-              <code>Rover Iterations/innovation 3d assembled v1.jpg</code>
             </div>
-            <div class="hint">Capture tight turns and turning radius. Add a quick note: “smooth surface maneuvering.”</div>
+            <div class="hint">Tight turns and turning radius on a smooth surface.</div>
           </div>
           <div class="ph tilt">
-            <img src="Rover%20Iterations/innovation%203d%20left%20side%20v1.jpg" alt="CAD / left side" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <img loading="lazy" decoding="async" src="img/Rover-Iterations/innovation-3d-left-side-v1.webp" alt="CAD / left side" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
               <b>CAD / Left Side View</b>
-              <code>Rover Iterations/innovation 3d left side v1.jpg</code>
             </div>
-            <div class="hint">Use an isometric view + an exploded view if you have one.</div>
+            <div class="hint">CAD model of the rover, left side.</div>
           </div>
         </div>
       </div>
@@ -916,25 +933,6 @@
           </ul>
         </div>
 
-        <div class="ph tilt" style="margin-top:14px;min-height:170px;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-            <video controls style="width:100%;height:160px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.08);">
-              <source src="Rover%20Iterations/Left%20Side%20Rover%20Test.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-            <video controls style="width:100%;height:160px;object-fit:cover;border-radius:10px;border:1px solid rgba(11,18,32,.08);">
-              <source src="Rover%20Iterations/Left%20Side%20Rover%20Test%202.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div class="label" style="margin-top:8px;">
-            <b>Before vs After: Left-side tests</b>
-            <code>Rover Iterations/Left Side Rover Test.mp4, Rover Iterations/Left Side Rover Test 2.mp4</code>
-          </div>
-          <div class="hint">
-            Two test runs showing adjustments to camera height/placement. Use the videos to demonstrate behavior differences.
-          </div>
-        </div>
       </div>
 
       <aside class="card reveal tilt">
@@ -945,13 +943,6 @@
           how well walls/ceilings are documented.
         </p>
 
-        <div class="chart">
-                  <div class="cap">
-            <b>Iteration Timeline (Example)</b>
-            <span>Timeline (example)</span>
-          </div>
-          <canvas id="timelineChart" height="170" aria-label="Iteration timeline chart" role="img"></canvas>
-        </div>
       </aside>
     </div>
   </section>
@@ -1037,7 +1028,7 @@ plt.show()
         <div class="card" style="padding:12px;border-radius:14px;background:rgba(255,255,255,.60);margin-top:12px;">
           <h3 style="margin:0 0 8px;">Tinkercad Screenshot</h3>
           <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start;">
-            <img src="Rover%20Iterations/tinkercadscreenshot.png" alt="Tinkercad screenshot" style="max-width:420px;width:100%;height:auto;border-radius:10px;border:1px solid rgba(11,18,32,.08);" />
+            <img loading="lazy" decoding="async" src="img/Rover-Iterations/tinkercadscreenshot.webp" alt="Tinkercad screenshot" style="max-width:420px;width:100%;height:auto;border-radius:10px;border:1px solid rgba(11,18,32,.08);" />
             <div style="flex:1;min-width:220px;">
               <p style="margin:0;color:rgba(11,18,32,.72);">Screenshot showing the CAD layout used for measuring camera height and mount positions.</p>
             </div>
@@ -1067,23 +1058,18 @@ plt.show()
 
         <div class="media">
           <div class="ph tilt">
-            <img src="Rover%20Iterations/innovation%203d%20assembled%20v1.jpg" alt="Presentation slide" style="width:100%;height:180px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <img loading="lazy" decoding="async" src="img/Rover-Iterations/innovation-3d-assembled-v1.webp" alt="3D-printed rover, assembled" style="width:100%;height:180px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
-              <b>Presentation Slide</b>
-              <code>Rover Iterations/innovation 3d assembled v1.jpg</code>
+              <b>3D-Printed Rover</b>
             </div>
-            <div class="hint">Include the one slide that best summarizes your solution (problem → rover → impact).</div>
+            <div class="hint">Assembled version 1, designed in CAD.</div>
           </div>
           <div class="ph tilt">
-            <video controls style="width:100%;height:180px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);">
-              <source src="Rover%20Iterations/Final%20Innovation%20Project%20Moving.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
+            <img loading="lazy" decoding="async" src="img/Rover-Iterations/final-prototype-corner-view.webp" alt="Final rover prototype, corner view" style="width:100%;height:180px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
-              <b>Demo Video</b>
-              <code>Rover Iterations/Final Innovation Project Moving.mp4</code>
+              <b>Final Prototype</b>
             </div>
-            <div class="hint">Use a still frame from your best demo video (or embed a video link later).</div>
+            <div class="hint">The wooden rover that maps its surroundings with a camera.</div>
           </div>
         </div>
 
@@ -1097,10 +1083,7 @@ plt.show()
       </div>
 
       <aside class="card reveal tilt" id="contact">
-        <h3>Share-ready description</h3>
-        <p>
-          Copy this into an email, flyer, or judge handout:
-        </p>
+        <h3>Our project in one paragraph</h3>
         <div class="card" style="padding:14px;border-radius:18px;background:rgba(255,255,255,.60);">
           <p style="margin:0;font-size:13px;color:rgba(11,18,32,.74);line-height:1.7;">
             <b>We designed an archaeology rover concept</b> that helps map dark, unstable spaces without risking people or artifacts.
@@ -1185,7 +1168,7 @@ plt.show()
           </div>
           <div class="step">
             <div class="badge">D</div>
-            <div><b>Documented</b><span>Placeholders encourage you to show evidence: photos, sketches, screenshots.</span></div>
+            <div><b>Documented</b><span>Photos, sketches and screenshots show each step.</span></div>
           </div>
         </div>
       </aside>
@@ -1197,41 +1180,37 @@ plt.show()
     <div class="wrap">
       <div class="card strong reveal">
         <div class="kicker"><span class="bar"></span> Prototype Gallery</div>
-        <h2>Drop in your best visuals to make the project “judge-ready.”</h2>
+        <h2>Every version of our rover, from cardboard to CAD.</h2>
           <p class="lead" style="margin-top:0;">
-          Project visuals and screenshots are shown below — placeholders have been replaced with project images and generated infographics.
+          Our prototypes in the order we built them.
         </p>
 
         <div class="media" style="margin-top:18px;">
           <div class="ph tilt" style="min-height:220px;">
-            <img src="Rover%20Iterations/innovation%20lego%20prototype%20top%20view.jpg" alt="Prototype 1: Top view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <img loading="lazy" decoding="async" src="img/Rover-Iterations/innovation-lego-prototype-top-view.webp" alt="Prototype 1: Top view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
               <b>Prototype 1: Cardboard / Top View</b>
-              <code>Rover Iterations/innovation lego prototype top view.jpg</code>
             </div>
             <div class="hint">Layout decisions: size, mounts, camera position.</div>
           </div>
           <div class="ph tilt" style="min-height:220px;">
-            <img src="Rover%20Iterations/innovation%20lego%20prototype.jpg" alt="Prototype 2: Tracked rover" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <img loading="lazy" decoding="async" src="img/Rover-Iterations/innovation-lego-prototype.webp" alt="Prototype 2: Tracked rover" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
               <b>Prototype 2: LEGO Tracked Rover</b>
-              <code>Rover Iterations/innovation lego prototype.jpg</code>
             </div>
             <div class="hint">Stability test: loose terrain + slope.</div>
           </div>
           <div class="ph tilt" style="min-height:220px;">
-            <img src="Rover%20Iterations/innovation%203d%20assembled%20v1.jpg" alt="Prototype 3: Wheeled / assembled" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <img loading="lazy" decoding="async" src="img/Rover-Iterations/innovation-3d-assembled-v1.webp" alt="Prototype 3: Wheeled / assembled" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
               <b>Prototype 3: Wheeled / Assembled</b>
-              <code>Rover Iterations/innovation 3d assembled v1.jpg</code>
             </div>
             <div class="hint">Turning test: tight spaces + pivot.</div>
           </div>
           <div class="ph tilt" style="min-height:220px;">
-            <img src="Rover%20Iterations/innovation%203d%20left%20side%20v1.jpg" alt="CAD: left side view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
+            <img loading="lazy" decoding="async" src="img/Rover-Iterations/innovation-3d-left-side-v1.webp" alt="CAD: left side view" style="width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid rgba(11,18,32,.08);" />
             <div class="label">
               <b>CAD: Left Side View</b>
-              <code>Rover Iterations/innovation 3d left side v1.jpg</code>
             </div>
             <div class="hint">Camera height and modular mount revision.</div>
           </div>
@@ -1285,8 +1264,8 @@ plt.show()
   <footer>
     <div class="wrap foot">
       <div>
-        <b>FLL Innovation Project Website</b><br/>
-        Built as a single-file site (HTML + CSS + JS). Image placeholders have been replaced; images are sourced from the project folders.
+        <b>AI Future 1 · FLL Team #65773</b><br/>
+        Innovation Project, Unearthed season (2025–26). <a href="index.html">Home</a> · <a href="ROBOTDESIGN.html">Robot Design</a>
       </div>
       <div>
         <b>Tools mentioned:</b> Tinkercad • Onshape • Bambu Lab P1S<br/>
@@ -1356,9 +1335,9 @@ plt.show()
       }
     });
 
-    // 2) Iteration timeline (replace the labels/dates with your real calendar)
+    // 2) Iteration timeline (chart removed from the page; kept off until real dates exist)
     const tlCtx = document.getElementById("timelineChart");
-    new Chart(tlCtx, {
+    if (tlCtx) new Chart(tlCtx, {
       type: "line",
       data: {
         labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
