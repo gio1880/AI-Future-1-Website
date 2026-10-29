@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Innovation Project · BIOGLOW 2026–27 · AI Future 1</title>
+	<meta name="description" content="SpectraFloat: a floating sensor buoy that watches Lake Agawam for harmful blue-green algae blooms. Monitor, predict, treat. BIOGLOW 2026–27 Innovation Project of FLL team #65773." />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="AI Future 1 · FLL Team #65773" />
+	<meta property="og:title" content="SpectraFloat · BIOGLOW Innovation Project · AI Future 1" />
+	<meta property="og:description" content="A floating sensor buoy that watches a Long Island lake for harmful blue-green algae blooms." />
+	<meta property="og:url" content="https://aifuture1.org/bioglow-innovation.html" />
+	<meta property="og:image" content="https://aifuture1.org/img/share-preview.jpg" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<link rel="icon" href="img/favicon.png" type="image/png" />
+	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+	<style>
+		body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin:0; background:#f6f1e6; color:#0b1220; }
+		.wrap{ max-width:900px; margin:48px auto; padding:24px; }
+		header{ display:flex; align-items:center; gap:16px; }
+		.logo{ width:56px; height:56px; border-radius:12px; background:linear-gradient(135deg,#073e77,#fece00); box-shadow:0 8px 30px rgba(7,62,119,.12); flex:none; }
+		h1{ margin:0 0 6px; font-size:28px; }
+		h2{ margin:0 0 10px; }
+		h3{ margin:18px 0 6px; font-size:17px; }
+		.sub{ font-size:13px; color:rgba(11,18,32,.68); }
+		.back{ display:inline-block; margin:0 0 14px; font-size:14px; }
+		p{ line-height:1.55; color:#233; margin:0 0 10px; }
+		p.lead{ margin:12px 0 18px; }
+		ul, ol{ line-height:1.55; color:#233; margin:0 0 10px; padding-left:22px; }
+		li{ margin:3px 0; }
+		.badges{ display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 20px; }
+		.badge{ background:#fff; border:1px solid rgba(11,18,32,.08); padding:8px 12px; border-radius:999px; font-size:13px; }
+		.badge.status{ background:#073e77; color:#fff; border-color:#073e77; }
+		.card{ background:rgba(255,255,255,.9); padding:16px; border-radius:12px; border:1px solid rgba(11,18,32,.06); }
+		.card + .card{ margin-top:16px; }
+		.season{ border-left:6px solid #fece00; }
+		.note{ background:#fff8d6; border-left:4px solid #fece00; padding:10px 12px; border-radius:8px; margin:10px 0; }
+		.note p:last-child{ margin:0; }
+		.grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:start; }
+		.steps{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:10px 0 14px; }
+		.step{ background:#fff; border:1px solid rgba(11,18,32,.08); border-radius:10px; padding:10px 12px; }
+		.step b{ display:block; color:#073e77; font-size:15px; }
+		.step span{ font-size:13px; color:#233; line-height:1.4; display:block; margin-top:4px; }
+		.timeline{ list-style:none; padding:0; margin:8px 0 0; }
+		.timeline li{ display:grid; grid-template-columns:88px 1fr; gap:12px; padding:10px 0; border-top:1px solid rgba(11,18,32,.08); margin:0; }
+		.timeline li:first-child{ border-top:0; }
+		.timeline .when{ font-weight:700; color:#073e77; font-size:14px; }
+		.timeline p{ margin:0 0 6px; }
+		figure{ margin:14px 0 6px; }
+		figure a{ display:block; }
+		figure img{ display:block; width:100%; height:auto; background:#fff; border-radius:10px; border:1px solid rgba(11,18,32,.08); }
+		figure img.tall{ max-width:420px; margin:0 auto; }
+		figcaption{ font-size:14px; color:#233; margin-top:8px; line-height:1.5; }
+		ol.key{ columns:2; column-gap:24px; font-size:14px; margin:8px 0 0; }
+		ol.key li{ break-inside:avoid; }
+		table{ border-collapse:collapse; width:100%; font-size:14px; }
+		th, td{ text-align:left; padding:7px 8px; border-bottom:1px solid rgba(11,18,32,.08); vertical-align:top; }
+		th{ font-size:13px; color:rgba(11,18,32,.68); }
+		.tablewrap{ overflow-x:auto; }
+		.bars{ margin:10px 0 4px; }
+		.bar{ display:grid; grid-template-columns:150px 1fr; gap:10px; align-items:center; margin:6px 0; font-size:14px; }
+		.bar .track{ background:#f1ece0; border-radius:4px; height:22px; position:relative; }
+		.bar .fill{ height:22px; border-radius:0 4px 4px 0; background:#073e77; }
+		.bar .fill.rule{ background:#9aa3ad; }
+		.bar .val{ position:absolute; top:2px; font-size:13px; font-weight:700; color:#0b1220; padding-left:6px; }
+		.done{ color:#1e6b3a; font-weight:700; }
+		.todo{ color:#8a5a00; font-weight:700; }
+		a.btn{ display:inline-block; margin:8px 6px 0 0; padding:10px 14px; border-radius:10px; text-decoration:none; color:#072b55; background:#fece00; font-weight:600; }
+		a.btn.blue{ background:#073e77; color:#fff; }
+		a{ color:#073e77; }
+		.sources li{ font-size:14px; }
+		@media (max-width:760px){
+			.wrap{ margin:16px auto; padding:16px; }
+			.grid{ grid-template-columns:1fr; }
+			.steps{ grid-template-columns:1fr 1fr; }
+			ol.key{ columns:1; }
+			.timeline li{ grid-template-columns:1fr; gap:2px; }
+			.bar{ grid-template-columns:110px 1fr; font-size:13px; }
+		}
+		footer{ margin-top:28px; font-size:13px; color:rgba(11,18,32,.65); line-height:1.6; }
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<a class="back" href="index.html">← AI Future 1 home</a>
+		<header>
+			<div class="logo" aria-hidden="true"></div>
+			<div>
+				<h1>Innovation Project: SpectraFloat</h1>
+				<div class="sub">BIOGLOW 2026–27 · FIRST LEGO League Challenge · Team #65773</div>
+			</div>
+		</header>
+
+		<p class="lead">SpectraFloat is a floating sensor buoy we are designing to watch a small Long Island lake, Lake Agawam, for harmful blue-green algae blooms. Our goal: <b>monitor</b> the water all the time, <b>predict</b> a bloom before it happens, and one day help <b>treat</b> it early.</p>
+
+		<div class="badges">
+			<div class="badge status">Status: designed in CAD · printing and building next</div>
+			<div class="badge">Lake Agawam, Southampton, NY</div>
+			<div class="badge">2 expert calls so far</div>
+		</div>
+
+		<main>
+			<section class="card season" aria-labelledby="problem-title">
+				<h2 id="problem-title">The problem: blue-green algae blooms</h2>
+				<p><b>Blue-green algae are not really algae.</b> They are tiny living things called cyanobacteria (say "sigh-AN-oh-bacteria"). Most lakes have a few of them, and that is normal.</p>
+				<p><b>A bloom</b> happens when they grow out of control. That needs lots of nutrients (like fertilizer washing into the water), lots of sunlight, and warm, calm water.</p>
+				<p><b>Some blooms make toxins.</b> They can make people sick, and they are especially dangerous for dogs that swim in them.</p>
+				<div class="note">
+					<p><b>But not every bloom is toxic.</b> New York's Department of Environmental Conservation (DEC) says even large blooms are not always harmful. You can't tell by looking, so the safe rule is: stay out of scummy or strange-colored water, and keep your dog out too.</p>
+				</div>
+				<h3>Why is it hard to catch blooms early?</h3>
+				<p>Today, checking a lake usually means taking a boat out, filling bottles with water, and sending them to a lab. That costs a lot of people, boats and lab work, so it doesn't happen very often. Each test is only a snapshot. A bloom can grow between visits, and nobody knows yet.</p>
+				<p><b>Our problem in one sentence:</b> blooms in a small lake can make the water unsafe, and testing by hand is too slow and too rare to warn people early.</p>
+			</section>
+
+			<section class="card" aria-labelledby="lake-title">
+				<h2 id="lake-title">Why Lake Agawam?</h2>
+				<p>Lake Agawam is a small lake in Southampton Village on Long Island. We picked it because:</p>
+				<ul>
+					<li><b>It has some of the worst blooms on Long Island.</b> Dense blooms have been recorded there since 2003. In 2018 it had the densest growth of blue-green algae ever recorded in a Long Island water body.</li>
+					<li><b>The county has warned people about it.</b> Suffolk County says its cyanobacteria and toxin levels are very high.</li>
+					<li><b>It is small and closed in</b>, not an open bay. A buoy can watch the whole lake, and treating a bloom early is more realistic.</li>
+					<li><b>Scientists already study it.</b> Stony Brook University researchers and the DEC have worked there, so we can compare our ideas with theirs and ask experts questions.</li>
+				</ul>
+				<p style="margin:0;"><b>Safety rule for our team:</b> we never collect real bloom water. Lake Agawam's blooms can be toxic to people and pets. For tests we use safe powders from a health-food store instead (see "What's next").</p>
+			</section>
+
+			<section class="card" aria-labelledby="expert-title">
+				<h2 id="expert-title">How an expert's feedback changed our problem</h2>
+				<p>Our project did not start at Lake Agawam. Talking to experts changed it twice.</p>
+				<ol class="timeline">
+					<li>
+						<div class="when">Sept 17</div>
+						<div>
+							<p><b>We chose our topic: plankton and harmful algae blooms.</b> Our first plan was about plankton in the ocean. Then we focused on <b>brown tide</b> in a Long Island bay (salt water). Brown tide is harmless to people, but it hurts shellfish like scallops and clams.</p>
+						</div>
+					</li>
+					<li>
+						<div class="when">Oct 14</div>
+						<div>
+							<p><b>Expert call 1: a scientist from the harmful algal bloom program at the NY State Department of Environmental Conservation.</b> She told us:</p>
+							<ul>
+								<li>The DEC's main bloom job is watching for blooms and telling the public. Testing by boat and lab is expensive and doesn't happen often.</li>
+								<li>A buoy left in a <b>small body of water</b> could measure much more often.</li>
+								<li>Make SpectraFloat do more than warn: <b>monitor → predict → treat → keep monitoring</b>. She called treatment a research direction, not a finished design, because dose, safety for wildlife, and permission all need research first.</li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<div class="when">Oct 15</div>
+						<div>
+							<p><b>We changed our problem.</b> We moved from salt-water brown tide in a bay to <b>fresh-water blue-green algae in a small lake: Lake Agawam</b>. Our sensors got a new orange light to find blue-green algae (see below), and our AI started learning from lake data.</p>
+						</div>
+					</li>
+					<li>
+						<div class="when">Oct 18</div>
+						<div>
+							<p><b>Expert call 2: a Columbia University engineering researcher</b> on a team that builds a robot boat and a sensor buoy for lakes. She looked at our CAD model and said it was "a really good CAD". Her advice:</p>
+							<ul>
+								<li><b>Leave room for wires.</b> "Wire management is like a beast."</li>
+								<li><b>Stay low and wide</b>, or a buoy tips over. Only the sensors need to be underwater.</li>
+								<li><b>Seal every cable</b> with a waterproof cable seal and run the wires through a tube.</li>
+								<li>Running AI on the buoy uses a lot of battery. Her team sends data to a computer on shore and runs the AI there.</li>
+								<li>Most boats and buoys only measure at the <b>surface</b>. Something that checks <b>below the surface</b> would be new.</li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<div class="when">Oct 22</div>
+						<div>
+							<p><b>The CAD design changed because of that feedback:</b></p>
+							<ul>
+								<li>A lift-out tray for the electronics, with a gap around every board for wires. The dry box is still about 85% empty space.</li>
+								<li>Five waterproof cable seals (two are spares for later), each with a tube for the wires.</li>
+								<li>A wide foam float ring with weights at the very bottom, so the buoy stays low and wide.</li>
+							</ul>
+							<p><b>Still open:</b> a second sensor deeper down, to check below the surface. We haven't added it yet.</p>
+						</div>
+					</li>
+				</ol>
+			</section>
+
+			<section class="card" aria-labelledby="buoy-title">
+				<h2 id="buoy-title">Our solution: the SpectraFloat buoy</h2>
+				<div class="steps" role="list">
+					<div class="step" role="listitem"><b>1. Monitor</b><span>Measures the water all day: temperature, cloudiness and algae glow.</span></div>
+					<div class="step" role="listitem"><b>2. Predict</b><span>An AI model guesses the chance of a bloom in the next 5 days.</span></div>
+					<div class="step" role="listitem"><b>3. Treat</b><span>Idea only: a small dose, and only after a person says yes.</span></div>
+					<div class="step" role="listitem"><b>4. Keep monitoring</b><span>Checks if the treatment worked, and starts again.</span></div>
+				</div>
+
+				<h3>Monitor: the two-light trick</h3>
+				<p>A cloudiness sensor alone can't tell algae from mud after a storm. So SpectraFloat shines lights into the water and looks for a glow:</p>
+				<ul>
+					<li><b>All algae glow red under blue light.</b> Mud doesn't glow. So blue light tells algae apart from mud.</li>
+					<li><b>Only blue-green algae have a pigment called phycocyanin</b>, which soaks up orange light. So blue-green algae glow much more under an orange light than other algae do.</li>
+					<li><b>Two lights, one sensor:</b> mud, ordinary green algae, and harmful blue-green algae all look different.</li>
+				</ul>
+				<p>The buoy also measures water temperature, because blue-green blooms come with warm, calm summer water. A warning light on top turns <b>green, yellow or red</b>, and a phone page shows the readings. The real warning about toxins still comes from a lab test; the buoy's job is to say "test here, now" sooner.</p>
+
+				<h3>Inside the buoy</h3>
+				<figure>
+					<a href="img/bioglow/spectrafloat-exploded-view.webp"><img class="tall" loading="lazy" decoding="async" width="655" height="1175" src="img/bioglow/spectrafloat-exploded-view.webp" alt="3D CAD drawing of the SpectraFloat buoy with its parts pulled apart, from the lid clamps at the top to the weights at the bottom. Yellow numbered circles mark 15 parts, listed below." /></a>
+					<figcaption>The whole buoy in CAD, with the parts pulled apart so you can see each one.</figcaption>
+				</figure>
+				<ol class="key">
+					<li>Clamp bars that hold the lid on</li>
+					<li>Top frame</li>
+					<li>Warning light ring (green / yellow / red) on its holder</li>
+					<li>Small computer and sensor boards</li>
+					<li>Lift-out electronics tray</li>
+					<li>Battery</li>
+					<li>Waterproof dry box with a clear lid</li>
+					<li>Foam float ring</li>
+					<li>Bottom plate with waterproof cable seals</li>
+					<li>Sensor cage</li>
+					<li>Cloudiness sensor</li>
+					<li>Temperature sensor</li>
+					<li>Algae light sensor (blue and orange lights + light sensor)</li>
+					<li>Dark hood that blocks sunlight</li>
+					<li>Weights that keep it upright</li>
+				</ol>
+
+				<h3>Will it float upright?</h3>
+				<figure>
+					<a href="img/bioglow/spectrafloat-side-cut.webp"><img loading="lazy" decoding="async" width="1260" height="1268" src="img/bioglow/spectrafloat-side-cut.webp" alt="CAD side view of the buoy cut in half, showing the float ring, the dry box, the battery, the waterline, the float point, the heavy point far below it, the sensor cage, the weights and the light sensor. Numbered circles mark 12 parts, listed below." /></a>
+					<figcaption>The buoy cut in half, seen from the side.</figcaption>
+				</figure>
+				<ol class="key">
+					<li>Foam float ring</li>
+					<li>Warning light, just under the clear lid</li>
+					<li>Waterproof dry box</li>
+					<li>Battery</li>
+					<li>Waterline: where the water should come up to</li>
+					<li>Float point (where the water pushes up)</li>
+					<li>Heavy point (the buoy's center of weight)</li>
+					<li>Sensor cage</li>
+					<li>Weights at the very bottom</li>
+					<li>Algae light sensor</li>
+					<li>Dark hood</li>
+					<li>Waterproof cable seal</li>
+				</ol>
+				<p>The heavy point (7) sits well <b>below</b> the float point (6), like the weight at the bottom of a punching toy, so the buoy should pop back up if a wave tips it. The CAD model says the buoy weighs about <b>2.4 kg</b> and that the float ring should sit about <b>2 cm</b> deep in the water. These are computer numbers; we still have to check them with a real float test.</p>
+
+				<h3>How the light sensor keeps sunlight out</h3>
+				<figure>
+					<a href="img/bioglow/spectrafloat-light-sensor-top-cut.webp"><img loading="lazy" decoding="async" width="1180" height="990" src="img/bioglow/spectrafloat-light-sensor-top-cut.webp" alt="CAD top view cut through the algae light sensor and its dark hood: the light sensor at the back, two lights angled toward one spot in front of a clear window, and zigzag water paths in the hood walls. Numbered circles mark 6 features, listed below." /></a>
+					<figcaption>The algae light sensor and its dark hood, cut in half and seen from above.</figcaption>
+				</figure>
+				<ol class="key">
+					<li>Light sensor (it "sees" the red glow)</li>
+					<li>The two lights, one blue and one orange (both drawn orange here)</li>
+					<li>Clear window</li>
+					<li>Sample spot: both lights shine here, and the sensor looks here (dotted lines)</li>
+					<li>Water comes in through slots in the side walls</li>
+					<li>Solid orange line: the flattest ray of sunlight that can sneak in. It hits the back wall, not the window.</li>
+				</ol>
+				<p>Sunlight has red light in it too, which would look like algae glow. So the water takes a zigzag path into the hood, and sunlight can't follow it. The code also takes a reading with both lights off and subtracts it.</p>
+
+				<h3>Treat (an idea we are researching, not building yet)</h3>
+				<p>The DEC scientist asked: could a buoy help stop a bloom early? Our plan for that is a <b>human in the loop</b>:</p>
+				<ol>
+					<li>The AI says bloom risk is high.</li>
+					<li>A person gets a message on a phone: "Approve dose?"</li>
+					<li>Only if the person taps yes, a small pump runs for a set time, with a maximum dose in the code.</li>
+					<li>The buoy keeps measuring: did the blue-green glow go down?</li>
+				</ol>
+				<p>Our demo will only ever pump plain or colored water, never real chemicals. Treating a real lake in New York needs permission from the state. We are researching options like hydrogen peroxide (a Stony Brook University study tested it on water from four New York lakes) and ultrasound, and the real long-term fix: less fertilizer and septic waste reaching the lake.</p>
+
+				<h3>What already exists, and what we want to do better</h3>
+				<div class="tablewrap">
+					<table>
+						<thead><tr><th>Existing solution</th><th>What it does</th></tr></thead>
+						<tbody>
+							<tr><td>Boat trips and lab tests</td><td>Accurate, but costly and not very often</td></tr>
+							<tr><td>DEC's bloom map</td><td>Tells the public where blooms were reported or confirmed</td></tr>
+							<tr><td>Buoys on Lake Agawam (2021)</td><td>The DEC put three solar-powered buoys on the lake that monitor water quality and send out ultrasound</td></tr>
+							<tr><td>A Columbia University team</td><td>A robot boat that collects water samples, plus a sensor buoy</td></tr>
+							<tr><td>A Cornell University team</td><td>A large buoy that collects data, aims to predict blooms, and works as a weather station</td></tr>
+						</tbody>
+					</table>
+				</div>
+				<p style="margin-top:10px;"><b>What we are aiming for with SpectraFloat:</b> it <b>predicts</b> blooms days ahead, tells <b>harmful blue-green algae apart</b> from other algae and from mud, costs much less (our goal is a core build under about $300), and only treats <b>with a person's approval</b>, then checks if it worked.</p>
+			</section>
+
+			<section class="card" aria-labelledby="ai-title">
+				<h2 id="ai-title">The AI bloom forecast</h2>
+				<p><b>The question:</b> can a computer warn us about a blue-green algae bloom <b>before</b> it happens?</p>
+
+				<h3>What data it learns from</h3>
+				<p>Lake Agawam's own sensor data isn't public (we plan to ask for it). So for now the model practices on the best public data we found: a US Geological Survey sensor in <b>Upper Klamath Lake, Oregon</b>. Like Lake Agawam, that lake is shallow, full of nutrients, and gets a big blue-green bloom every summer. The sensor measures the blue-green glow (phycocyanin, the same pigment our orange light looks for) and water temperature every day from May to October, 2011–2026 (2020 and 2023 are missing). We added free weather history for the same days: sun, rain and wind.</p>
+
+				<h3>What it predicts</h3>
+				<p>Every summer day becomes one row with <b>7 clues</b>: water temperature this week, whether the water is warming up, algae glow today, how much the glow changed in 3 days, and sun, rain and wind in the last 3 days. The answer it learns: <b>will the glow go above our bloom level in the next 5 days?</b> (We set the bloom level at about 10 times the early-summer glow.)</p>
+
+				<h3>How sure is it?</h3>
+				<p>We hid the summer of 2025 from the models and tested them on it, like a brand-new test. In 2025, 64 days had a bloom coming.</p>
+				<div class="bars" role="img" aria-label="Bloom days caught in the 2025 test, out of 64: always say no 0, today's level rule 27, small decision tree 44, logistic regression 50, random forest 53.">
+					<div class="bar" title="Always say no: 0 of 64 caught"><span>Always say no (rule)</span><div class="track"><div class="fill rule" style="width:0%"></div><span class="val" style="left:0%">0</span></div></div>
+					<div class="bar" title="Today's level rule: 27 of 64 caught, 4 false alarms"><span>Today's level (rule)</span><div class="track"><div class="fill rule" style="width:42.2%"></div><span class="val" style="left:42.2%">27</span></div></div>
+					<div class="bar" title="Small decision tree: 44 of 64 caught, 11 false alarms"><span>Small tree (AI)</span><div class="track"><div class="fill" style="width:68.8%"></div><span class="val" style="left:68.8%">44</span></div></div>
+					<div class="bar" title="Logistic regression: 50 of 64 caught, 9 false alarms"><span>Logistic regression (AI)</span><div class="track"><div class="fill" style="width:78.1%"></div><span class="val" style="left:78.1%">50</span></div></div>
+					<div class="bar" title="Random forest: 53 of 64 caught, 9 false alarms"><span>Random forest (AI)</span><div class="track"><div class="fill" style="width:82.8%"></div><span class="val" style="left:82.8%">53</span></div></div>
+				</div>
+				<p class="sub" style="margin:0 0 12px;">Bloom days caught in the 2025 test, out of 64. Gray = simple rules, blue = AI models.</p>
+				<ul>
+					<li><b>"Always say no" was right 62% of the time</b> but caught zero blooms. That's why we count blooms caught and false alarms, not just accuracy.</li>
+					<li><b>The AI models beat the simple rule.</b> The best one caught 53 of 64 bloom days, with 9 false alarms.</li>
+					<li><b>Real early warnings:</b> on 37 days a bloom was coming while the glow was still low. The rule "warn if it's high today" can never warn early. The random forest warned on 26 of those days.</li>
+					<li><b>Testing every summer the same way</b> (14 summers, one at a time): the models were right 88–89% of the time and caught 81–87% of bloom days. The cost: about 2.5 to 3 times more false alarms than the simple rule. More warnings means fewer missed blooms but more false alarms. We have to choose that trade on purpose.</li>
+					<li><b>The best clues</b> were algae glow today, how fast it's growing, water temperature and sun. SpectraFloat measures the first three itself.</li>
+					<li><b>We also tried Long Island salt water</b> with the same method. There the models barely beat the simple rule. That's more evidence that a lake was a good choice.</li>
+				</ul>
+				<p>The small tree (only 3 questions deep) turns into a few plain "if" statements that can run on the buoy's tiny computer. The bigger models would run on a laptop on shore, as the Columbia researcher suggested.</p>
+
+				<div class="note">
+					<p><b>The limits (we tell judges these):</b></p>
+					<ul style="margin:0;">
+						<li><b>It's not Lake Agawam yet.</b> Upper Klamath Lake is in Oregon and much bigger. Agawam's blooms may start differently.</li>
+						<li><b>Glow is not toxin.</b> The glow shows blue-green algae are there, not whether they are making toxins.</li>
+						<li><b>Different sensors.</b> The government sensor's numbers are on a different scale than our orange light. We must calibrate our sensor before using the model on the buoy.</li>
+						<li><b>Small data.</b> 14 summers from one spot, two missing years, and no data about nutrients like phosphorus and nitrogen.</li>
+					</ul>
+				</div>
+				<p style="margin:0;">Our coach built a starter version of this forecast notebook. Next, we redo each step ourselves and try to get Lake Agawam's own data.</p>
+			</section>
+
+			<section class="card" aria-labelledby="status-title">
+				<h2 id="status-title">Where we are now</h2>
+				<div class="grid">
+					<div>
+						<p class="done">Done</p>
+						<ul>
+							<li>Problem research and the switch to Lake Agawam</li>
+							<li>Two expert calls (Oct 14 and Oct 18)</li>
+							<li>The whole buoy designed in CAD, with computer checks that the parts fit and that it should float upright (Oct 22)</li>
+							<li>A first AI bloom forecast, tested on real lake data</li>
+						</ul>
+					</div>
+					<div>
+						<p class="todo">Not done yet</p>
+						<ul>
+							<li>Nothing is printed or built yet</li>
+							<li>No sensor tests yet</li>
+							<li>No leak test, float test or real-water test yet</li>
+							<li>The deeper second sensor is only an idea</li>
+						</ul>
+					</div>
+				</div>
+
+				<h3>What's next (our plan)</h3>
+				<ul>
+					<li><b>Light sensor test:</b> blue and orange lights with the light sensor in a dark cup. We test spirulina powder (a real blue-green alga, safe to use) against chlorella powder (a green alga) and muddy water.</li>
+					<li><b>Print, cut and build</b> the parts, then a <b>leak test</b>: the empty box under water for 30 minutes with a paper towel inside.</li>
+					<li><b>Float and tilt test:</b> does it float level and pop back up?</li>
+					<li><b>Code:</b> the green / yellow / red alert and the phone page, then a full "bloom" demo.</li>
+					<li><b>Mud test:</b> muddy water should show yellow, not a red bloom alarm.</li>
+					<li><b>Share it again</b> with the experts. Once it passes the leak test, the Columbia team offered to test it with their boat on a pond in New York City.</li>
+					<li><b>Ask for Lake Agawam's own sensor data</b> so the AI can learn from our real lake.</li>
+				</ul>
+				<p style="margin:0;">Our next event is the <b>NYC FIRST Founders Edition Qualifier 2 on January 10, 2027</b>. We'll update this page as we build and test.</p>
+			</section>
+
+			<section class="card" aria-labelledby="sources-title">
+				<h2 id="sources-title">Research sources</h2>
+				<ul class="sources">
+					<li>NY State DEC: <a href="https://dec.ny.gov/environmental-protection/water/water-quality/harmful-algal-blooms" target="_blank" rel="noreferrer">Harmful algal blooms</a> (what cyanobacteria are, what causes blooms, why dogs are at risk, not every bloom is toxic)</li>
+					<li>Suffolk County: <a href="https://suffolkcountyny.gov/News/ArtMID/583/ArticleID/1384/Cyanobacteria-Bloom-in-Agawam-Lake-in-Town-of-Southampton" target="_blank" rel="noreferrer">Cyanobacteria bloom in Agawam Lake</a></li>
+					<li>27east: <a href="https://27east.com/southampton-press/crisis-at-lake-agawam-2276774" target="_blank" rel="noreferrer">Crisis at Lake Agawam</a> (blooms since 2003, the 2018 record)</li>
+					<li>27east: <a href="https://27east.com/southampton-press/new-device-deployed-to-combat-algal-blooms-in-lake-agawam-in-southampton-village-1772171" target="_blank" rel="noreferrer">New device deployed to combat algal blooms in Lake Agawam</a> (the 2021 buoys)</li>
+					<li>Stony Brook University study (2020): <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7405413" target="_blank" rel="noreferrer">hydrogen peroxide tested on water from four New York lakes</a></li>
+					<li>A whole-lake hydrogen peroxide trial in the Netherlands (2012): <a href="https://dare.uva.nl/id/e1f3427b-3a96-49cb-8442-52968ac7d94a" target="_blank" rel="noreferrer">study page</a></li>
+					<li>University of Maine (2013): <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3715229/" target="_blank" rel="noreferrer">a low-cost Arduino algae sensor using a blue light</a>, the same idea our light sensor uses</li>
+					<li>US Geological Survey: daily lake sensor data from Upper Klamath Lake, Oregon (site 422305121553803) and Hog Island Channel, Long Island (site 01311143)</li>
+					<li><a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a> weather history</li>
+					<li>Expert calls: a scientist from the NY State DEC harmful algal bloom program (Oct 14, 2026) and a Columbia University engineering researcher (Oct 18, 2026)</li>
+				</ul>
+			</section>
+
+			<section class="card" aria-labelledby="more-title">
+				<h2 id="more-title">More from our team</h2>
+				<a class="btn blue" href="bioglow-robot.html">Robot Design &amp; Programming 2026–27</a>
+				<a class="btn" href="index.html">Home</a>
+				<a class="btn" href="unearthed.html">Last season: Unearthed</a>
+			</section>
+		</main>
+
+		<footer>
+			AI Future 1 · FLL Team #65773 · Part of <a href="https://aifuture.nyc">AI Future</a> robotics programs.<br/>
+			Built by AI Future 1 with help from Claude.
+		</footer>
+	</div>
+</body>
+</html>

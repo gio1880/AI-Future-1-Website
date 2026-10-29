@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Robot Design &amp; Programming · BIOGLOW 2026–27 · AI Future 1</title>
+	<meta name="description" content="How AI Future 1 programs its SPIKE Prime robot for BIOGLOW 2026–27: easy commands, gyro and PID driving, tuning experiments and a dashboard that logs every run." />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="AI Future 1 · FLL Team #65773" />
+	<meta property="og:title" content="Robot Design &amp; Programming 2026–27 · AI Future 1" />
+	<meta property="og:description" content="Easy commands, gyro and PID driving, tuning experiments and a dashboard that logs every robot run." />
+	<meta property="og:url" content="https://aifuture1.org/bioglow-robot.html" />
+	<meta property="og:image" content="https://aifuture1.org/img/share-preview.jpg" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<link rel="icon" href="img/favicon.png" type="image/png" />
+	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+	<style>
+		body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin:0; background:#f6f1e6; color:#0b1220; }
+		.wrap{ max-width:900px; margin:48px auto; padding:24px; }
+		header{ display:flex; align-items:center; gap:16px; }
+		.logo{ width:56px; height:56px; border-radius:12px; background:linear-gradient(135deg,#073e77,#fece00); box-shadow:0 8px 30px rgba(7,62,119,.12); flex:none; }
+		h1{ margin:0 0 6px; font-size:28px; }
+		h2{ margin:0 0 10px; }
+		h3{ margin:18px 0 6px; font-size:17px; }
+		.sub{ font-size:13px; color:rgba(11,18,32,.68); }
+		.back{ display:inline-block; margin:0 0 14px; font-size:14px; }
+		p{ line-height:1.55; color:#233; margin:0 0 10px; }
+		p.lead{ margin:12px 0 18px; }
+		ul, ol{ line-height:1.55; color:#233; margin:0 0 10px; padding-left:22px; }
+		li{ margin:3px 0; }
+		.badges{ display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 20px; }
+		.badge{ background:#fff; border:1px solid rgba(11,18,32,.08); padding:8px 12px; border-radius:999px; font-size:13px; }
+		.card{ background:rgba(255,255,255,.9); padding:16px; border-radius:12px; border:1px solid rgba(11,18,32,.06); }
+		.card + .card{ margin-top:16px; }
+		.season{ border-left:6px solid #fece00; }
+		.note{ background:#fff8d6; border-left:4px solid #fece00; padding:10px 12px; border-radius:8px; margin:10px 0; }
+		.note p:last-child{ margin:0; }
+		.grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:start; }
+		pre{ background:#0b1f3a; color:#e8eef8; padding:14px 16px; border-radius:10px; overflow-x:auto; font-size:14px; line-height:1.5; margin:8px 0 12px; }
+		code{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+		p code, li code, td code{ background:#efe8d8; padding:1px 5px; border-radius:4px; font-size:.92em; }
+		pre .c{ color:#9fb3cf; }
+		table{ border-collapse:collapse; width:100%; font-size:14px; }
+		th, td{ text-align:left; padding:7px 8px; border-bottom:1px solid rgba(11,18,32,.08); vertical-align:top; }
+		th{ font-size:13px; color:rgba(11,18,32,.68); }
+		.tablewrap{ overflow-x:auto; }
+		figure{ margin:14px 0 6px; }
+		figure a{ display:block; }
+		figure img{ display:block; width:100%; height:auto; background:#fff; border-radius:10px; border:1px solid rgba(11,18,32,.08); }
+		figcaption{ font-size:14px; color:#233; margin-top:8px; line-height:1.5; }
+		.loop{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:10px 0 14px; }
+		.loop div{ background:#fff; border:1px solid rgba(11,18,32,.08); border-radius:10px; padding:10px 12px; font-size:14px; line-height:1.4; }
+		.loop b{ display:block; color:#073e77; font-size:15px; margin-bottom:3px; }
+		a.btn{ display:inline-block; margin:8px 6px 0 0; padding:10px 14px; border-radius:10px; text-decoration:none; color:#072b55; background:#fece00; font-weight:600; }
+		a.btn.blue{ background:#073e77; color:#fff; }
+		a.btn.plain{ background:#fff; border:1px solid rgba(11,18,32,.12); }
+		a{ color:#073e77; }
+		.files li{ font-size:14px; }
+		@media (max-width:760px){
+			.wrap{ margin:16px auto; padding:16px; }
+			.grid{ grid-template-columns:1fr; }
+			.loop{ grid-template-columns:1fr 1fr; }
+			pre{ font-size:13px; }
+		}
+		footer{ margin-top:28px; font-size:13px; color:rgba(11,18,32,.65); line-height:1.6; }
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<a class="back" href="index.html">← AI Future 1 home</a>
+		<header>
+			<div class="logo" aria-hidden="true"></div>
+			<div>
+				<h1>Robot Design &amp; Programming</h1>
+				<div class="sub">BIOGLOW 2026–27 · FIRST LEGO League Challenge · Team #65773</div>
+			</div>
+		</header>
+
+		<p class="lead">Our robot is a LEGO SPIKE Prime robot that we program in Python with <a href="https://pybricks.com/" target="_blank" rel="noreferrer">Pybricks</a>. This season we write our missions with short, easy commands. A library underneath keeps the robot driving straight, and every run is saved so we can compare our tries with real numbers.</p>
+
+		<div class="badges">
+			<div class="badge">SPIKE Prime + Pybricks (Python)</div>
+			<div class="badge">2 drive motors + 2 arm motors</div>
+			<div class="badge">Every run logged</div>
+		</div>
+
+		<main>
+			<section class="card season" aria-labelledby="easy-title">
+				<h2 id="easy-title">How we program: easy commands</h2>
+				<p>Our coach wrote two files for us. <code>robot_master.py</code> does all the hard math. <code>robot.py</code> turns it into easy commands. We write each mission run in its own short file, using only the easy commands. Here is an example run:</p>
+<pre><code>from robot import *
+
+gears(left=[20, [12, 12], 12])  <span class="c"># the gears on the left arm, motor first</span>
+left_arm.homing(True)           <span class="c"># at the start, find the arm's bottom stop</span>
+
+start("Run 1")      <span class="c"># hands off! checks the battery, zeroes the gyro</span>
+drive(300)          <span class="c"># forward 300 mm (30 cm), the gyro keeps it straight</span>
+turn(90)            <span class="c"># turn right 90 degrees</span>
+left_arm(90)        <span class="c"># move the left arm to 90 degrees</span>
+drive(-300)         <span class="c"># back 300 mm</span>
+finish()            <span class="c"># relax the arms and print a summary</span></code></pre>
+				<h3>The cheat sheet</h3>
+				<p>The top of <code>robot.py</code> is a cheat sheet, so nobody has to remember every command. The main rule is easy: <b>+ means forward or right, − means backward or left.</b></p>
+				<div class="tablewrap">
+					<table>
+						<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+						<tbody>
+							<tr><td><code>drive(mm)</code></td><td>Drive forward (+) or backward (−). 10 mm = 1 cm.</td></tr>
+							<tr><td><code>turn(deg)</code></td><td>Turn right (+) or left (−).</td></tr>
+							<tr><td><code>face(deg)</code></td><td>Turn to face a direction: 0 = where it started, 90 = right, −90 = left.</td></tr>
+							<tr><td><code>drive(300, 50)</code></td><td>The same move at 50% speed. Speed is a percent: 100 = normal, 25 = slow and careful.</td></tr>
+							<tr><td><code>left_arm(90)</code></td><td>Move an arm <b>to</b> an angle. The code works out the gears for us.</td></tr>
+							<tr><td><code>left_arm.by(-20)</code></td><td>Move an arm <b>by</b> an amount from where it is.</td></tr>
+							<tr><td><code>left_arm(90, wait=False)</code></td><td>Start the arm and keep going, so the arm moves while the robot drives.</td></tr>
+							<tr><td><code>square()</code></td><td>Back gently into a wall to straighten up.</td></tr>
+							<tr><td><code>start("Run 1")</code> / <code>finish()</code></td><td>Start and end every run. The name is what the dashboard shows.</td></tr>
+						</tbody>
+					</table>
+				</div>
+				<p style="margin-top:10px;">Arms have gears between the motor and the arm. We just type the gear teeth in order, like <code>[20, [12, 12], 12]</code> (two gears on the same axle go in brackets), and the code turns "move the arm to 90°" into the right number of motor degrees.</p>
+			</section>
+
+			<section class="card" aria-labelledby="straight-title">
+				<h2 id="straight-title">How the robot drives straight: gyro + PID</h2>
+				<p>Two motors never turn at exactly the same speed, and wheels slip a little. If the robot just turned both motors on, it would curve. So <code>robot_master.py</code> checks and fixes the direction about every 5 milliseconds (200 times a second).</p>
+				<div class="loop">
+					<div><b>1. Measure</b>The gyro sensor in the hub says which way the robot is pointing.</div>
+					<div><b>2. Compare</b>How far is that from the direction it should be pointing? That difference is the "error".</div>
+					<div><b>3. Fix</b>Speed up one wheel and slow down the other to turn back.</div>
+					<div><b>4. Repeat</b>Do it again, about 200 times a second.</div>
+				</div>
+				<h3>PID, explained</h3>
+				<ul>
+					<li><b>P (proportional):</b> the bigger the error, the bigger the fix. A little off = a small fix. Far off = a big fix.</li>
+					<li><b>D (derivative):</b> watch how fast the robot is turning. If it is already swinging back, ease off so it doesn't wobble from side to side.</li>
+					<li><b>I (integral):</b> if a small error stays for a long time, push a bit harder. Our arms use this (through the motor's own controller) so they don't sag under a load.</li>
+				</ul>
+				<h3>More tricks in the library</h3>
+				<ul>
+					<li><b>A speed plan:</b> every drive speeds up smoothly, cruises, then slows down to stop exactly at the distance. The code knows where the robot <i>should</i> be at each moment and catches up if it falls behind.</li>
+					<li><b>Turns don't add up errors:</b> every turn is measured from where the robot is <i>supposed</i> to be facing, not where it ended up, so a small miss doesn't grow over a run.</li>
+					<li><b>Start-up checks:</b> before a run it checks the battery and waits until the robot is perfectly still before it zeroes the gyro.</li>
+					<li><b>Wall squaring:</b> <code>square()</code> backs gently into a wall until both wheels touch, which fixes any gyro drift.</li>
+					<li><b>Arm homing:</b> at the start, an arm lowers gently onto its stop and calls that spot 0, so arm angles mean the same thing every run.</li>
+					<li><b>Safety stops:</b> if the robot turns way off course, or an arm gets stuck, the code stops it and prints a note instead of crashing into things.</li>
+				</ul>
+			</section>
+
+			<section class="card" aria-labelledby="tuning-title">
+				<h2 id="tuning-title">Tuning experiments: what we tried and what we learned</h2>
+				<p>The settings in <code>robot_master.py</code> came from a series of small test programs. Each one changes <b>one number at a time</b> and checks what happens.</p>
+				<div class="tablewrap">
+					<table>
+						<thead><tr><th>What was tried</th><th>What it showed</th></tr></thead>
+						<tbody>
+							<tr><td><b>P only</b>: drive straight and fix the direction with just P</td><td>Change only one number and watch. P was set to 12 and then "locked" before the next test.</td></tr>
+							<tr><td><b>Add D</b>: P locked, only D changes</td><td>D calms the wobble that P alone can cause.</td></tr>
+							<tr><td><b>Smallest power test</b>: raise the motor power a tiny bit every half second until the wheels start to move</td><td>How much power the motors need just to get going.</td></tr>
+							<tr><td><b>Speed test</b>: run at 30%, 40% and 50% power and measure the speed</td><td>How speed grows with power. Together with the test above, this lets the code give the motors the power it already knows they need ("feed-forward"), and the feedback only fixes the small rest.</td></tr>
+							<tr><td><b>Three versions</b> of speed control + direction fixing, then distance-based driving</td><td>Each version kept what worked and fixed what didn't, like using the feed-forward only when far from the target.</td></tr>
+							<tr><td><b>Built-in vs. our own</b>: Pybricks' built-in drive code compared with a custom controller, on a 2 ft × 2 ft test area</td><td>A fair test: the same moves, two controllers.</td></tr>
+							<tr><td><b>Fast drive</b>: gyro direction fixing + the smooth speed plan</td><td>This became the driving in <code>robot_master.py</code>. Gentle speeding up and slowing down was actually <i>worse</i>.</td></tr>
+							<tr><td><b>Arm tests</b>: does each motor turn freely? Then arm control with two speed settings</td><td>"Precise": a 180° arm move in about 0.48 s with no overshoot. "Fast": about 0.29 s, at most 1° past the target.</td></tr>
+						</tbody>
+					</table>
+				</div>
+				<h3>Surprises that changed the settings</h3>
+				<ul>
+					<li><b>The robot overshot every distance.</b> The motors' normal acceleration limit was too gentle, so the wheels couldn't follow the speed plan. Raising the limit fixed it.</li>
+					<li><b>Our first top speed was impossible.</b> 650 mm per second was set, but the motors top out near 540. It is now 480.</li>
+					<li><b>Fast turns overshot by 2–4°.</b> Turning speed went down from 500 to 300 degrees per second.</li>
+					<li><b>The tape measure was not the best answer.</b> One turning number measured with a tape measure was 2.73, but testing showed 2.5 works better.</li>
+					<li><b>Batteries matter.</b> Tuning was done on a charged battery, so the robot now warns us (and turns its light orange) when the battery is low.</li>
+				</ul>
+			</section>
+
+			<section class="card" aria-labelledby="data-title">
+				<h2 id="data-title">The run dashboard: every run is logged</h2>
+				<p>After every move, the robot prints one line of data: how far it really drove, what each wheel did, what the gyro says, the arm angle and the time. When we run from our laptop, a small program saves each run as a spreadsheet file (CSV), and a dashboard page shows them all.</p>
+				<figure>
+					<a href="robot-code/2026-27/robot-data/dashboard.html#run=2026-10-27_212817_RUN-A_4&amp;name=RUN%20A"><img loading="lazy" decoding="async" width="1280" height="860" src="img/bioglow/robot-run-dashboard.webp" alt="Screenshot of the robot run dashboard showing five tries of Run A. One try is open: driving off by 0.5 mm (Great), turning off by 0.9 degrees (Great), arms off by 8.3 degrees (Needs work), and a table of all ten moves with planned and real values." /></a>
+					<figcaption>The dashboard showing one try of Run A. Each move has a "planned" and a "did" number, and green, yellow or red tells us if it was close enough.</figcaption>
+				</figure>
+				<p>Naming runs (like <code>start("Run A")</code>) groups every try of the same run together, so we can see if a change really helped. The dashboard's tip: change <b>one</b> setting, run the same run 3 times, then compare.</p>
+
+				<h3>A real example: Run A, October 27</h3>
+				<ul>
+					<li>We ran our first mission run, Run A, <b>5 times</b>.</li>
+					<li><b>Driving was very steady:</b> the 700 mm drive ended between 699.5 and 700.5 mm every time.</li>
+					<li><b>An arm problem showed up:</b> the left arm, sent to 90°, was logged at 96.7° to 101.7°. The data showed the arm was counted as "done" while it was still swinging, so the next command started too early.</li>
+					<li><b>The fix:</b> now an arm move only counts as done when the arm is within 2 motor degrees of its target and has almost stopped moving.</li>
+					<li>The right arm also got stuck on one try. It was measured 3 times with a setup program, and its homing direction was fixed the next day.</li>
+				</ul>
+				<a class="btn blue" href="robot-code/2026-27/robot-data/dashboard.html">Open the run dashboard</a>
+				<a class="btn plain" href="https://github.com/gio1880/AI-Future-1-Website/tree/main/robot-code/2026-27/robot-data/runs" target="_blank" rel="noreferrer">All run files (CSV)</a>
+			</section>
+
+			<section class="card" aria-labelledby="status-title">
+				<h2 id="status-title">Where we are now</h2>
+				<ul>
+					<li>The easy commands, the driving and arm library, and the run logging all work.</li>
+					<li>Our first mission run (Run A) is written and tested. More mission runs are next.</li>
+					<li>Both arms are set up with their gears. The right arm's range is measured; the left arm's top limit is still a placeholder.</li>
+				</ul>
+				<p style="margin:0;">Our next event is the <b>NYC FIRST Founders Edition Qualifier 2 on January 10, 2027</b>.</p>
+			</section>
+
+			<section class="card" aria-labelledby="code-title">
+				<h2 id="code-title">Our code on GitHub</h2>
+				<ul class="files">
+					<li><a href="https://github.com/gio1880/AI-Future-1-Website/blob/main/robot-code/2026-27/robot.py" target="_blank" rel="noreferrer">robot.py</a>: the easy commands and the cheat sheet</li>
+					<li><a href="https://github.com/gio1880/AI-Future-1-Website/blob/main/robot-code/2026-27/robot_master.py" target="_blank" rel="noreferrer">robot_master.py</a>: gyro-straight driving, PID, arm homing, gear ratios, run logging</li>
+					<li><a href="https://github.com/gio1880/AI-Future-1-Website/blob/main/robot-code/2026-27/run_easy_template.py" target="_blank" rel="noreferrer">run_easy_template.py</a> and <a href="https://github.com/gio1880/AI-Future-1-Website/blob/main/robot-code/2026-27/Run_A.py" target="_blank" rel="noreferrer">Run_A.py</a>: a template and our first mission run</li>
+					<li><a href="https://github.com/gio1880/AI-Future-1-Website/tree/main/robot-code/2026-27/tuning-tests" target="_blank" rel="noreferrer">tuning-tests/</a>: the PID and feed-forward experiments</li>
+					<li><a href="https://github.com/gio1880/AI-Future-1-Website/tree/main/robot-code/2026-27/robot-data" target="_blank" rel="noreferrer">robot-data/</a>: the run saver, the dashboard and every run</li>
+					<li><a href="https://github.com/gio1880/AI-Future-1-Website/tree/main/robot-code/2026-27" target="_blank" rel="noreferrer">The whole 2026–27 code folder</a></li>
+				</ul>
+			</section>
+
+			<section class="card" aria-labelledby="more-title">
+				<h2 id="more-title">More from our team</h2>
+				<a class="btn blue" href="bioglow-innovation.html">Innovation Project: SpectraFloat</a>
+				<a class="btn" href="index.html">Home</a>
+				<a class="btn" href="ROBOTDESIGN.html">Last season's robot</a>
+			</section>
+		</main>
+
+		<footer>
+			AI Future 1 · FLL Team #65773 · Part of <a href="https://aifuture.nyc">AI Future</a> robotics programs.<br/>
+			Built by AI Future 1 with help from Claude.
+		</footer>
+	</div>
+</body>
+</html>
