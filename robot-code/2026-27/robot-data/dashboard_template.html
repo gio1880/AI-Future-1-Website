@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robot Runs</title>
+<!-- Built by collect_runs.py from robot-data/runs/. Edit dashboard_template.html, not dashboard.html. -->
+<style>
+:root {
+  --bg: #f6f7f9; --card: #ffffff; --ink: #1c2330; --muted: #5d6778; --line: #e2e6ec; --accent: #2f6fde;
+  --great: #1e8e4e; --great-bg: #e3f5ea; --ok: #a86b00; --ok-bg: #fff3d6; --bad: #c9352b; --bad-bg: #fde6e4;
+  --none: #7a8494; --none-bg: #eef0f3; --bar: #9db6e8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12161d; --card: #1b212b; --ink: #e8ecf2; --muted: #9aa5b5; --line: #2c3442; --accent: #7aa7ff;
+    --great: #5fd28f; --great-bg: #183a27; --ok: #f0bd4f; --ok-bg: #3a2f14; --bad: #ff7d72; --bad-bg: #42201d;
+    --none: #9aa5b5; --none-bg: #262d39; --bar: #44669f;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+header { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; padding: 16px 20px 8px; }
+h1 { font-size: 22px; margin: 0; }
+h2 { font-size: 17px; margin: 0 0 10px; }
+h3 { font-size: 15px; margin: 0 0 6px; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+button, select { font: inherit; color: inherit; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+button:hover, select:hover { border-color: var(--accent); }
+main { display: grid; grid-template-columns: 320px 1fr; gap: 16px; padding: 8px 20px 24px; align-items: start; }
+@media (max-width: 900px) { main { grid-template-columns: 1fr; padding: 8px 16px 24px; } header { padding: 16px 16px 8px; } }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.stack > * + * { margin-top: 16px; }
+.runlist { display: flex; flex-direction: column; gap: 8px; max-height: 78vh; overflow: auto; padding-right: 2px; }
+.run { text-align: left; width: 100%; padding: 10px 12px; border-radius: 10px; }
+.run.sel { border: 2px solid var(--accent); padding: 9px 11px; }
+.run .top { display: flex; justify-content: space-between; gap: 8px; font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.chip { font-size: 12px; padding: 1px 7px; border-radius: 99px; white-space: nowrap; }
+.great { color: var(--great); background: var(--great-bg); }
+.ok { color: var(--ok); background: var(--ok-bg); }
+.bad { color: var(--bad); background: var(--bad-bg); }
+.none { color: var(--none); background: var(--none-bg); }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 640px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tile { border-radius: 10px; padding: 10px 12px; }
+.tile .k { font-size: 13px; font-weight: 600; }
+.tile .v { font-size: 22px; font-weight: 700; margin-top: 2px; }
+.tile .w { font-size: 13px; }
+.tile .d { font-size: 12px; margin-top: 2px; opacity: .9; }
+.row { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-size: 12px; color: var(--muted); font-weight: 600; }
+td.num { font-variant-numeric: tabular-nums; }
+.offcell { display: flex; align-items: center; gap: 6px; }
+.offbar { height: 8px; border-radius: 4px; background: var(--bar); }
+.tip { border-left: 4px solid var(--accent); padding: 8px 12px; border-radius: 6px; background: var(--bg); }
+.tip.good { border-color: var(--great); }
+.tip.warn { border-color: var(--ok); }
+.tip.bad { border-color: var(--bad); }
+.tip p { margin: 4px 0; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 13px; background: var(--bg); padding: 1px 5px; border-radius: 4px; }
+.tip code { background: var(--card); }
+details summary { cursor: pointer; font-weight: 600; }
+.empty { text-align: center; padding: 40px 16px; }
+svg text { fill: var(--muted); font-size: 11px; }
+.kv { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 4px 16px; font-size: 13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Robot runs</h1>
+  <span class="muted small" id="built"></span>
+  <span style="flex:1"></span>
+  <button id="refresh" title="Load runs saved since this page was opened">Refresh</button>
+</header>
+<main id="app"></main>
+<script>
+const DATA = /*__DATA__*/null || {built: "-", runs: [], settings: {}};
+const S = DATA.settings || {};
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+const num = v => (v === "" || v == null || isNaN(+v)) ? null : +v;
+const r1 = v => v == null ? "-" : (Math.round(v * 10) / 10).toString();
+const mean = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
+const median = a => { if (!a.length) return null; const b = [...a].sort((x, y) => x - y), m = b.length >> 1; return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; };
+const sgn = v => v > 0 ? 1 : v < 0 ? -1 : 0;
+
+// ---------- data
+const RUNS = (DATA.runs || []).map(r => {
+  const steps = r.rows.map(cells => { const o = {}; r.header.forEach((h, i) => o[h] = cells[i] == null ? "" : cells[i]); return o; })
+    .map(o => {
+      const s = {step: +o.step, cmd: o.cmd, plan: num(o.plan), dist: num(o.dist_mm), left: num(o.left_mm), right: num(o.right_mm),
+        gyro: num(o.gyro_change), wheel: num(o.wheel_change), herr: num(o.heading_err), heading: num(o.heading),
+        arm: num(o.arm_angle), load: num(o.arm_load), ok: o.ok !== "0", ms: num(o.ms), t: num(o.time_s),
+        speed: num(o.speed_pct), dir: o.arm_dir || "", raw: o};
+      s.kind = s.cmd === "drive" ? "drive" : s.cmd === "turn" ? "turn" : s.cmd === "square" ? "square"
+        : s.cmd.startsWith("arm:") ? "arm" : s.cmd.startsWith("gears:") ? "gears" : "other";
+      s.armName = s.kind === "arm" ? s.cmd.slice(4) : s.kind === "gears" ? s.cmd.slice(6) : "";
+      // "off" for drives and turns: + = went too far, - = stopped short (same meaning forward and back)
+      if (s.kind === "drive" && s.dist != null && s.plan) s.off = Math.abs(s.dist) - Math.abs(s.plan);
+      if (s.kind === "turn" && s.herr != null) { s.over = s.herr * sgn(s.plan); s.off = s.over; }
+      if (s.kind === "arm" && s.arm != null && s.plan != null) { s.off = s.arm - s.plan; s.over = s.off * (s.dir === "down" ? -1 : 1); }
+      return s;
+    });
+  const when = (r.time_exact === false ? "≈ " : "") + r.time.slice(5, 16);
+  return Object.assign({}, r, {steps, when});
+}).sort((a, b) => a.time !== b.time ? (a.time < b.time ? 1 : -1) : (b.seq || 0) - (a.seq || 0));  // newest first
+
+const LIMITS = {dist: [3, 8], turn: [1, 2.5], arm: [2, 5]};
+function grade(v, lim) {
+  if (v == null) return {cls: "none", word: "No data"};
+  if (v <= lim[0]) return {cls: "great", word: "Great"};
+  if (v <= lim[1]) return {cls: "ok", word: "OK"};
+  return {cls: "bad", word: "Needs work"};
+}
+function scores(run) {
+  const st = run.steps, mx = a => a.length ? Math.max(...a.map(Math.abs)) : null;
+  const dist = mx(st.filter(s => s.kind === "drive" && s.off != null).map(s => s.off));
+  const turn = mx(st.filter(s => (s.kind === "turn" || s.kind === "drive") && s.herr != null).map(s => s.herr));
+  const arm = mx(st.filter(s => s.kind === "arm" && s.off != null).map(s => s.off));
+  const failed = st.filter(s => !s.ok).length + (run.status === "finished" ? 0 : 1);
+  const last = [...st].reverse().find(s => s.t != null);
+  return {
+    dist: {v: dist, g: grade(dist, LIMITS.dist), unit: "mm"},
+    turn: {v: turn, g: grade(turn, LIMITS.turn), unit: "°"},
+    arm: {v: arm, g: grade(arm, LIMITS.arm), unit: "°"},
+    prob: {v: failed, g: failed ? {cls: "bad", word: failed === 1 ? "1 problem" : failed + " problems"} : {cls: "great", word: "None"}, unit: ""},
+    time: last ? last.t : null,
+    endHeading: ([...st].reverse().find(s => (s.kind === "turn" || s.kind === "drive") && s.herr != null) || {}).herr
+  };
+}
+RUNS.forEach(r => r.sc = scores(r));
+
+// ---------- state (kept in the address bar so a refresh keeps your place)
+const state = {run: null, cmp: null, name: "", coach: false};
+function readHash() {
+  const p = new URLSearchParams(location.hash.slice(1));
+  state.run = p.get("run"); state.cmp = p.get("cmp"); state.name = p.get("name") || ""; state.coach = p.get("coach") === "1";
+}
+function writeHash() {
+  const p = new URLSearchParams();
+  if (state.run) p.set("run", state.run); if (state.cmp) p.set("cmp", state.cmp);
+  if (state.name) p.set("name", state.name); if (state.coach) p.set("coach", "1");
+  history.replaceState(null, "", "#" + p.toString());
+}
+
+// ---------- rendering
+function chip(label, g) { return `<span class="chip ${g.cls}">${esc(label)}: ${esc(g.word)}</span>`; }
+function statusChip(run) {
+  const st = run.status || "";
+  const cls = st === "finished" ? "great" : st.startsWith("stopped") ? "ok" : "bad";
+  return `<span class="chip ${cls}">${esc(st === "finished" ? "Finished" : st)}</span>`;
+}
+
+function runCard(r) {
+  const sc = r.sc;
+  return `<button class="card run ${r.id === state.run ? "sel" : ""}" data-run="${esc(r.id)}">
+    <div class="top"><span>${esc(r.name)}</span><span class="muted small">${esc(r.when)}</span></div>
+    <div class="chips">${chip("Drive", sc.dist.g)}${chip("Turn", sc.turn.g)}${chip("Arms", sc.arm.g)}${sc.prob.v ? chip("Problems", sc.prob.g) : ""}</div>
+  </button>`;
+}
+
+function tile(title, s, cmp) {
+  let d = "";
+  if (cmp && s.v != null && cmp.v != null) {
+    const delta = Math.abs(s.v) - Math.abs(cmp.v);
+    d = `<div class="d">${delta === 0 ? "same as" : delta < 0 ? "better than" : "worse than"} the other run (${r1(cmp.v)}${cmp.unit})</div>`;
+  }
+  const value = title === "Problems" ? (s.v ? s.v : "0") : (s.v == null ? "-" : r1(s.v) + s.unit);
+  const sub = title === "Problems" ? "" : '<div class="d">worst move</div>';
+  return `<div class="tile ${s.g.cls}"><div class="k">${title}</div><div class="v">${value}</div><div class="w">${esc(s.g.word)}</div>${sub}${d}</div>`;
+}
+
+function describe(s) {
+  switch (s.kind) {
+    case "drive": return {what: s.plan >= 0 ? "Drive forward" : "Drive back", plan: r1(Math.abs(s.plan)) + " mm", did: r1(Math.abs(s.dist)) + " mm", unit: "mm", lim: LIMITS.dist};
+    case "turn": return {what: s.plan >= 0 ? "Turn right" : "Turn left", plan: r1(Math.abs(s.plan)) + "°", did: r1(Math.abs(s.gyro)) + "°", unit: "°", lim: LIMITS.turn};
+    case "arm": return {what: (s.armName === "left_arm" ? "Left arm" : s.armName === "right_arm" ? "Right arm" : s.armName) + (s.dir ? " " + s.dir : ""), plan: r1(s.plan) + "°", did: r1(s.arm) + "°", unit: "°", lim: LIMITS.arm};
+    case "square": return {what: "Square on wall", plan: "-", did: "fixed " + r1(Math.abs(s.herr)) + "° drift", unit: "", lim: null};
+    case "gears": return {what: "Gears " + (s.armName === "left_arm" ? "left arm" : s.armName), plan: "-", did: s.plan + " motor° per arm°", unit: "", lim: null};
+    default: return {what: s.cmd, plan: r1(s.plan), did: "-", unit: "", lim: null};
+  }
+}
+
+function stepsTable(run, cmpRun) {
+  const maxOff = Math.max(1, ...run.steps.filter(s => s.off != null).map(s => Math.abs(s.off) / (describe(s).lim ? describe(s).lim[1] : 1)));
+  const cmpBy = {};
+  if (cmpRun) cmpRun.steps.forEach(s => cmpBy[s.step] = s);
+  const coachCols = ["dist_mm", "left_mm", "right_mm", "gyro_change", "wheel_change", "heading_err", "heading", "arm_angle", "arm_load", "ms"];
+  let h = `<div class="tablewrap"><table><thead><tr><th>#</th><th>Move</th><th>Planned</th><th>Did</th><th>Off by</th>${cmpRun ? "<th>Other run</th>" : ""}<th>Speed</th><th>Time</th>`;
+  if (state.coach) h += coachCols.map(c => `<th>${c}</th>`).join("");
+  h += "</tr></thead><tbody>";
+  for (const s of run.steps) {
+    const d = describe(s);
+    let off = "";
+    if (s.off != null && d.lim) {
+      const g = grade(Math.abs(s.off), d.lim);
+      const w = Math.min(60, Math.abs(s.off) / d.lim[1] / maxOff * 60);
+      off = `<div class="offcell"><span class="chip ${g.cls}">${s.off > 0 ? "+" : ""}${r1(s.off)}${d.unit}</span><span class="offbar" style="width:${w}px"></span></div>`;
+    }
+    if (!s.ok) off += ` <span class="chip bad">${s.kind === "arm" ? "jammed / timed out" : "failed"}</span>`;
+    let other = "";
+    if (cmpRun) {
+      const c = cmpBy[s.step];
+      other = `<td class="num">${c && c.cmd === s.cmd && c.off != null ? (c.off > 0 ? "+" : "") + r1(c.off) + d.unit : '<span class="muted">-</span>'}</td>`;
+    }
+    h += `<tr><td class="num">${s.step}</td><td>${esc(d.what)}</td><td class="num">${esc(d.plan)}</td><td class="num">${esc(d.did)}</td><td>${off}</td>${other}<td class="num">${s.speed != null && s.speed !== "" ? s.speed + "%" : ""}</td><td class="num">${s.ms != null ? r1(s.ms / 1000) + " s" : ""}</td>`;
+    if (state.coach) h += coachCols.map(c => `<td class="num">${esc(s.raw[c])}</td>`).join("");
+    h += "</tr>";
+  }
+  return h + "</tbody></table></div>";
+}
+
+function trendChart(name) {
+  const tries = RUNS.filter(r => r.name === name).slice().reverse();  // oldest first
+  if (tries.length < 2) return "";
+  const W = 560, H = 120, P = 28, n = tries.length;
+  const series = [
+    {key: "dist", label: "drive mm", lim: LIMITS.dist[1]},
+    {key: "turn", label: "turn °", lim: LIMITS.turn[1]},
+    {key: "arm", label: "arm °", lim: LIMITS.arm[1]}];
+  const x = i => P + (n === 1 ? 0 : i * (W - 2 * P) / (n - 1));
+  let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Worst error per try">`;
+  svg += `<line x1="${P}" x2="${W - P}" y1="${H - 20}" y2="${H - 20}" stroke="currentColor" opacity=".2"/>`;
+  const colors = ["var(--accent)", "var(--ok)", "var(--great)"];
+  series.forEach((se, k) => {
+    // each line is scaled to its own "Needs work" limit, so 1.0 = the red line
+    const pts = tries.map((r, i) => r.sc[se.key].v == null ? null : [x(i), (H - 20) - Math.min(2, Math.abs(r.sc[se.key].v) / se.lim) * (H - 40) / 2]);
+    const d = pts.filter(Boolean).map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+    if (d) svg += `<path d="${d}" fill="none" stroke="${colors[k]}" stroke-width="2"/>` + pts.filter(Boolean).map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="${colors[k]}"/>`).join("");
+    svg += `<text x="${P + k * 90}" y="12" style="fill:${colors[k]}">● ${se.label}</text>`;
+  });
+  svg += `<line x1="${P}" x2="${W - P}" y1="${(H - 20) - (H - 40) / 2}" y2="${(H - 20) - (H - 40) / 2}" stroke="var(--bad)" stroke-dasharray="4 4" opacity=".6"/>`;
+  svg += `<text x="${W - P}" y="${(H - 20) - (H - 40) / 2 - 4}" text-anchor="end">needs work</text>`;
+  svg += `<text x="${P}" y="${H - 4}">try 1</text><text x="${W - P}" y="${H - 4}" text-anchor="end">try ${n}</text></svg>`;
+  const times = tries.map(r => r.sc.time).filter(v => v != null), ends = tries.map(r => r.sc.endHeading).filter(v => v != null);
+  const spread = a => a.length > 1 ? Math.max(...a) - Math.min(...a) : null;
+  return `<div class="card"><h3>${esc(name)}: all ${n} tries</h3><p class="muted small" style="margin:0 0 6px">Worst miss in each try. Lower is better; above the dashed line = needs work.</p>${svg}
+    <p class="small" style="margin:6px 0 0">Run time ${times.length ? r1(Math.min(...times)) + "–" + r1(Math.max(...times)) + " s" : "-"} · ending heading spread ${r1(spread(ends))}°</p></div>`;
+}
+
+// ---------- tuning tips
+function tip(level, title, saw, todo) {
+  return {level, html: `<div class="tip ${level}"><h3>${title}</h3><p class="small muted">${saw}</p>${todo ? `<p>${todo}</p>` : ""}</div>`};
+}
+const setting = (n, to) => `<code>${n} = ${S[n] == null ? "?" : S[n]}</code> → <code>${n} = ${to}</code> in <code>robot_master.py</code>`;
+const rnd = (v, step) => Math.round(v / step) * step;
+
+function tuningTips() {
+  const recent = RUNS.slice(0, 10), out = [];
+  const steps = recent.flatMap(r => r.steps.map(s => Object.assign({run: r}, s)));
+  const moves = steps.filter(s => ["drive", "turn", "arm"].includes(s.kind));
+  if (moves.length < 10) return {basis: recent.length, list: [tip("", "Do a few more runs first", "Tips need at least 10 drive / turn / arm moves to be fair.", "")]};
+  const drives = steps.filter(s => s.kind === "drive" && s.off != null && Math.abs(s.plan) >= 100);
+  const turns = steps.filter(s => s.kind === "turn" && s.over != null && Math.abs(s.plan) >= 15);
+
+  if (drives.length >= 4) {
+    const m = mean(drives.map(s => s.off)), fast = drives.filter(s => (s.speed ?? 100) >= 80), slow = drives.filter(s => (s.speed ?? 100) < 80);
+    const mf = mean(fast.map(s => s.off)), ms = mean(slow.map(s => s.off));
+    if (m > 4 && mf != null && mf > 4 && (slow.length < 2 || ms <= 2))
+      out.push(tip("warn", `Fast drives go about ${r1(mf)} mm too far`, `${fast.length} fast drives (80%+) averaged +${r1(mf)} mm; slower ones were fine. The robot can't brake as hard as planned.`, "Try gentler braking: " + setting("DRIVE_A", rnd((S.DRIVE_A || 3000) * 0.85, 100)) + "."));
+    else if (Math.abs(m) > 4)
+      out.push(tip("warn", `Drives end about ${r1(Math.abs(m))} mm ${m > 0 ? "too far" : "short"}`, `${drives.length} drives of 10 cm or more averaged ${m > 0 ? "+" : ""}${r1(m)} mm (measured by the wheels).`, "Pull harder toward the planned distance: " + setting("DRIVE_KS", (S.DRIVE_KS || 6) + 2) + "."));
+    const crooked = mean(steps.filter(s => s.kind === "drive" && s.herr != null).map(s => Math.abs(s.herr)));
+    if (crooked != null && crooked > 1.5)
+      out.push(tip("warn", `Drives end about ${r1(crooked)}° crooked`, "The gyro shows the robot is not facing straight at the end of drives.", "First check nothing rubs on a wheel. Then hold the heading harder: " + setting("DRIVE_KH", (S.DRIVE_KH || 15) + 3) + "."));
+  }
+  if (turns.length >= 4) {
+    const o = mean(turns.map(s => s.over));
+    if (o > 1) out.push(tip("warn", `Turns go about ${r1(o)}° too far`, `${turns.length} turns averaged ${r1(o)}° past the target.`, "Turn a bit slower: " + setting("TURN_RATE", rnd((S.TURN_RATE || 300) * 0.85, 10)) + " - or slow only the big turns, e.g. <code>turn(90, 70)</code>."));
+    else if (o < -1) out.push(tip("warn", `Turns stop about ${r1(-o)}° short`, `${turns.length} turns averaged ${r1(-o)}° before the target.`, "Push harder at the end of turns: " + setting("TURN_KT", (S.TURN_KT || 8) + 2) + "."));
+  }
+  const ratios = steps.filter(s => s.kind === "turn" && s.gyro != null && s.wheel != null && Math.abs(s.gyro) >= 30).map(s => s.wheel / s.gyro);
+  if (ratios.length >= 4) {
+    const med = median(ratios), spread = Math.max(...ratios) - Math.min(...ratios);
+    if (spread <= 0.08 && Math.abs(med - 1) > 0.05)
+      out.push(tip("warn", "The turn calibration (TW) looks off", `On every big turn the wheels say the robot turned ${r1(med * 100)}% of what the gyro says, very consistently.`, "Update the calibration: " + setting("TW", ((S.TW || 2.5) * med).toFixed(2)) + "."));
+    else if (spread > 0.15)
+      out.push(tip("warn", "Wheels slip on some turns", `Gyro and wheels disagree on turns by up to ${r1(spread * 100)}%: the tyres slide.`, "Clean the tyres, then try a gentler start and stop: " + setting("TURN_ACC", rnd((S.TURN_ACC || 3000) * 0.8, 100)) + "."));
+  }
+  for (const arm of ["left_arm", "right_arm"]) {
+    const label = arm === "left_arm" ? "Left arm" : "Right arm", key = arm === "left_arm" ? "left" : "right";
+    for (const dir of ["up", "down"]) {
+      const a = steps.filter(s => s.kind === "arm" && s.armName === arm && s.dir === dir && s.over != null && s.ok);
+      if (a.length < 3) continue;
+      const o = mean(a.map(s => s.over)), sp = mean(a.map(s => s.speed ?? 100)) || 100;
+      if (o > 2) out.push(tip("warn", `${label} goes about ${r1(o)}° too far when moving ${dir}`, `${a.length} moves ${dir} at about ${Math.round(sp)}% speed.`, `Move it ${dir} slower - add <code>arm_speed(${key}_${dir}=${Math.max(30, rnd(sp * 0.7, 10))})</code> near the top of your run.`));
+    }
+    const all = steps.filter(s => s.kind === "arm" && s.armName === arm && s.over != null && s.ok);
+    const up = all.filter(s => s.dir === "up"), down = all.filter(s => s.dir === "down");
+    if (up.length >= 3 && down.length >= 3 && mean(up.map(s => s.over)) < -2 && mean(down.map(s => s.over)) < -2)
+      out.push(tip("warn", `${label} stops short both ways`, "It doesn't quite reach its target going up or down: the motor gives up a little early.", "Hold the target harder: " + setting("ARM_KI_X", (S.ARM_KI_X || 1) + 1) + ". Check it doesn't start to buzz."));
+  }
+  const jams = steps.filter(s => s.kind === "arm" && !s.ok);
+  if (jams.length) out.push(tip("bad", `Arm jammed ${jams.length} time${jams.length > 1 ? "s" : ""}`, jams.slice(0, 4).map(s => `${esc(s.run.name)} step ${s.step}`).join(", ") + ".", "Look at what the arm hit at that step. If the arm was just slow (heavy load), raise <code>ARM_TIMEOUT_EXTRA_MS</code> in robot_master.py."));
+  const low = recent.filter(r => r.battery && S.BATTERY_WARN_MV && r.battery < S.BATTERY_WARN_MV);
+  if (low.length) out.push(tip("bad", `${low.length} run${low.length > 1 ? "s were" : " was"} on a low battery`, "Distances and turns change when the battery is low.", "Charge the battery before tuning, and ignore those runs."));
+  const names = [...new Set(recent.map(r => r.name))];
+  for (const n of names) {
+    const tries = RUNS.filter(r => r.name === n).slice(0, 6), ends = tries.map(r => r.sc.endHeading).filter(v => v != null);
+    if (ends.length >= 3 && Math.max(...ends) - Math.min(...ends) > 3)
+      out.push(tip("warn", `${esc(n)} ends differently each time`, `Over the last ${ends.length} tries the final heading varied by ${r1(Math.max(...ends) - Math.min(...ends))}°.`, "Usually this is how the robot is placed at base. Use a jig or line it up on the same marks every time, then compare again."));
+  }
+  if (!out.length) out.push(tip("good", "Looking good", `No pattern in the last ${recent.length} runs needs a tuning change.`, "Keep testing missions. Re-check after any change to wheels, tyres or arms."));
+  return {basis: recent.length, list: out};
+}
+
+// ---------- page
+function render() {
+  const app = $("#app");
+  $("#built").textContent = "Updated " + DATA.built + " · " + RUNS.length + " run" + (RUNS.length === 1 ? "" : "s");
+  if (!RUNS.length) {
+    app.innerHTML = `<div class="card empty" style="grid-column:1/-1"><h2>No runs saved yet</h2>
+      <p>Run a program from VS Code (<b>Pybricks: Compile and Start Program</b>). A few seconds after it ends the run is saved here.</p>
+      <p class="muted small">The saver starts by itself when you open the AI Future 1 folder in VS Code (Terminal panel: "Robot data saver is ON").
+      Using code.pybricks.com instead? Paste its output into a .txt file in <code>robot-data/inbox</code>.</p></div>`;
+    return;
+  }
+  const names = [...new Set(RUNS.map(r => r.name))].sort();
+  const shown = RUNS.filter(r => !state.name || r.name === state.name);
+  if (!state.run || !RUNS.find(r => r.id === state.run)) state.run = (shown[0] || RUNS[0]).id;
+  const run = RUNS.find(r => r.id === state.run);
+  const sameName = RUNS.filter(r => r.name === run.name && r.id !== run.id);
+  if (state.cmp && !RUNS.find(r => r.id === state.cmp)) state.cmp = null;
+  const cmpRun = state.cmp ? RUNS.find(r => r.id === state.cmp) : null;
+  const sc = run.sc, csc = cmpRun ? cmpRun.sc : null;
+  const tips = tuningTips();
+
+  app.innerHTML = `
+  <section class="stack">
+    <div class="card">
+      <div class="row" style="justify-content:space-between"><h2 style="margin:0">Runs</h2>
+        <select id="nameFilter" aria-label="Show runs named"><option value="">All runs</option>${names.map(n => `<option ${n === state.name ? "selected" : ""}>${esc(n)}</option>`).join("")}</select></div>
+      <div class="runlist" style="margin-top:10px">${shown.map(runCard).join("")}</div>
+    </div>
+    <details class="card"><summary>How this works</summary>
+      <ol class="small" style="padding-left:18px;margin:8px 0 0">
+        <li>Run your program from VS Code like always.</li>
+        <li>A few seconds after it ends, the run is saved as a CSV in <code>robot-data/runs</code>.</li>
+        <li>Press <b>Refresh</b> (top right) to see it here.</li>
+        <li>Give each run a name: <code>start("Run 1")</code>. Same name = easy to compare tries.</li>
+        <li>To remove a bad run, delete its CSV file.</li>
+      </ol>
+      <p class="small muted">Distances are measured by the wheels. If the wheels slip, the real robot can be off even when this says Great - check big misses with a ruler.</p>
+    </details>
+  </section>
+  <section class="stack">
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <div><h2 style="margin:0">${esc(run.name)}</h2>
+          <div class="muted small">${esc((run.time_exact === false ? "≈ " : "") + run.time.slice(0, 16))}${run.time_exact === false ? " (found later in the log)" : ""} · ${run.moves} moves${sc.time != null ? " · " + r1(sc.time) + " s" : ""}${run.battery ? " · battery " + run.battery + " mV" : ""} · ${statusChip(run)}</div></div>
+        <label class="small">Compare with
+          <select id="cmp"><option value="">nothing</option>
+            ${sameName.length ? `<optgroup label="Same run name">${sameName.map(r => `<option value="${esc(r.id)}" ${r.id === state.cmp ? "selected" : ""}>${esc(r.when)}</option>`).join("")}</optgroup>` : ""}
+            <optgroup label="Other runs">${RUNS.filter(r => r.name !== run.name).map(r => `<option value="${esc(r.id)}" ${r.id === state.cmp ? "selected" : ""}>${esc(r.name)} · ${esc(r.when)}</option>`).join("")}</optgroup>
+          </select></label>
+      </div>
+      <div class="tiles" style="margin-top:12px">
+        ${tile("Driving", sc.dist, csc && csc.dist)}${tile("Turning", sc.turn, csc && csc.turn)}${tile("Arms", sc.arm, csc && csc.arm)}${tile("Problems", sc.prob, null)}
+      </div>
+      ${run.notes && run.notes.length ? `<div style="margin-top:10px">${run.notes.map(n => `<div class="small">⚠ ${esc(n)}</div>`).join("")}</div>` : ""}
+    </div>
+    <div class="card">
+      <div class="row" style="justify-content:space-between"><h2 style="margin:0">Every move</h2>
+        <label class="small"><input type="checkbox" id="coach" ${state.coach ? "checked" : ""}> Coach view (all numbers)</label></div>
+      <p class="muted small" style="margin:4px 0 8px"><b>Off by:</b> + = went too far, − = stopped short (arms: + = too high, − = too low).
+        For turns it is how far the robot ends up from the direction it should face (a turn also fixes earlier drift, so it can differ from Did − Planned).
+        Green ≤ ${LIMITS.dist[0]} mm / ${LIMITS.turn[0]}°, yellow ≤ ${LIMITS.dist[1]} mm / ${LIMITS.turn[1]}° (arms ${LIMITS.arm[0]}° / ${LIMITS.arm[1]}°), red above.</p>
+      ${stepsTable(run, cmpRun)}
+    </div>
+    ${trendChart(run.name)}
+    <div class="card">
+      <h2>Tuning tips</h2>
+      <p class="muted small" style="margin-top:-6px">From the last ${tips.basis} run${tips.basis === 1 ? "" : "s"}. Change <b>one</b> setting at a time, run the same run 3 times, then compare.</p>
+      <div class="stack">${tips.list.map(t => t.html).join("")}</div>
+    </div>
+    <details class="card"><summary>Current settings in robot_master.py</summary>
+      <div class="kv" style="margin-top:8px">${Object.keys(S).map(k => `<div><code>${esc(k)}</code> ${esc(S[k])}</div>`).join("") || '<span class="muted">Not found</span>'}</div>
+    </details>
+  </section>`;
+
+  app.querySelectorAll("[data-run]").forEach(b => b.onclick = () => { state.run = b.dataset.run; state.cmp = null; go(); });
+  $("#nameFilter").onchange = e => { state.name = e.target.value; state.run = null; state.cmp = null; go(); };
+  $("#cmp").onchange = e => { state.cmp = e.target.value || null; go(); };
+  $("#coach").onchange = e => { state.coach = e.target.checked; go(); };
+}
+function go() { writeHash(); render(); }
+
+readHash(); render();
+$("#refresh").onclick = () => location.reload();
+// Reload by itself every 20 s while open and untouched, so new runs show up (your place is kept).
+let touched = Date.now();
+["click", "keydown", "scroll", "change"].forEach(ev => addEventListener(ev, () => touched = Date.now(), true));
+setInterval(() => { if (document.visibilityState === "visible" && Date.now() - touched > 15000) location.reload(); }, 20000);
+</script>
+</body>
+</html>

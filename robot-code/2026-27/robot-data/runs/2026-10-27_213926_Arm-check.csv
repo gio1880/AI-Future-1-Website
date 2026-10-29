@@ -1,0 +1,14 @@
+step,cmd,plan,dist_mm,left_mm,right_mm,gyro_change,wheel_change,heading_err,heading,arm_angle,arm_load,ok,ms,time_s,speed_pct,arm_dir
+1,arm:left_arm,8.0,,,,,,,,6.7,1,1,150,0.01,100,up
+2,arm:left_arm,90.0,,,,,,,,86.7,24,1,591,0.6,100,up
+3,arm:left_arm,30.0,,,,,,,,33.3,-5,1,306,1.71,100,down
+4,arm:left_arm,90.0,,,,,,,,86.7,22,1,551,3.07,100,up
+5,arm:left_arm,8.0,,,,,,,,8.3,-20,1,375,4.25,100,down
+6,arm:left_arm,60.0,,,,,,,,60.0,10,1,352,5.4,100,up
+7,arm:left_arm,8.0,,,,,,,,8.3,-16,1,275,6.49,100,down
+8,arm:left_arm,90.0,,,,,,,,86.7,24,1,590,7.88,60,up
+9,arm:left_arm,30.0,,,,,,,,31.7,-8,1,351,9.04,60,down
+10,arm:left_arm,90.0,,,,,,,,86.7,23,1,537,10.38,60,up
+11,arm:left_arm,8.0,,,,,,,,6.7,-11,1,441,11.63,60,down
+12,arm:left_arm,60.0,,,,,,,,61.7,2,1,361,12.79,60,up
+13,arm:left_arm,8.0,,,,,,,,10.0,-18,1,275,13.87,60,down
