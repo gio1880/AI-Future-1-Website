@@ -1,0 +1,3 @@
+step,cmd,plan,dist_mm,left_mm,right_mm,gyro_change,wheel_change,heading_err,heading,arm_angle,arm_load,ok,ms,time_s
+1,arm:left_arm,5,,,,,,,,5.0,4,1,85,0.0
+2,drive,600,601.2,600.9,601.4,-0.0,-0.2,0.0,0.0,,,1,1768,1.78

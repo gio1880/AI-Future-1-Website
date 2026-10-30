@@ -1,0 +1,4 @@
+# machine-only files of collect_runs.py
+.watch.lock
+runs/.collected.json
+*.tmp
