@@ -44,8 +44,8 @@
 		.step b{ display:block; color:#073e77; font-size:15px; }
 		.step span{ font-size:13px; color:#233; line-height:1.4; display:block; margin-top:4px; }
 		.timeline{ list-style:none; padding:0; margin:8px 0 0; }
-		.timeline li{ display:grid; grid-template-columns:88px 1fr; gap:12px; padding:10px 0; border-top:1px solid rgba(11,18,32,.08); margin:0; }
-		.timeline li:first-child{ border-top:0; }
+		.timeline > li{ display:grid; grid-template-columns:88px 1fr; gap:12px; padding:10px 0; border-top:1px solid rgba(11,18,32,.08); margin:0; }
+		.timeline > li:first-child{ border-top:0; }
 		.timeline .when{ font-weight:700; color:#073e77; font-size:14px; }
 		.timeline p{ margin:0 0 6px; }
 		figure{ margin:14px 0 6px; }
@@ -71,12 +71,27 @@
 		a.btn.blue{ background:#073e77; color:#fff; }
 		a{ color:#073e77; }
 		.sources li{ font-size:14px; }
+		ol.path{ list-style:none; padding:0; margin:10px 0 6px; display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px; }
+		ol.path li{ background:#fff; border:1px solid rgba(11,18,32,.1); border-radius:10px; padding:8px 10px; margin:0; font-size:14px; line-height:1.35; }
+		ol.path li .when{ display:block; font-size:12px; font-weight:700; color:#073e77; text-transform:uppercase; letter-spacing:.04em; }
+		ol.path li.end{ border-color:#d7263d; background:#fff3f4; }
+		.xgrid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:10px 0 4px; }
+		.xcard{ background:#fff; border-radius:10px; border:1px solid rgba(11,18,32,.08); border-top:5px solid #073e77; padding:12px 14px; }
+		.xcard.group{ border-top-color:#fece00; }
+		.xcard h3{ margin:0 0 2px; font-size:16px; }
+		.xcard .xrole{ margin:0; font-size:13px; color:rgba(11,18,32,.68); }
+		.xcard .xorg{ display:block; margin:4px 0 6px; font-size:14px; font-weight:600; }
+		.xcard .xhow{ display:inline-block; margin:0 0 6px; font-size:12px; font-weight:700; color:#073e77; background:#eaf1f8; border-radius:999px; padding:2px 8px; }
+		.xcard .xsaid{ margin:0; font-size:14px; }
+		.credit{ font-size:12px; color:rgba(11,18,32,.65); }
 		@media (max-width:760px){
 			.wrap{ margin:16px auto; padding:16px; }
 			.grid{ grid-template-columns:1fr; }
 			.steps{ grid-template-columns:1fr 1fr; }
 			ol.key{ columns:1; }
-			.timeline li{ grid-template-columns:1fr; gap:2px; }
+			.timeline > li{ grid-template-columns:1fr; gap:2px; }
+			ol.path{ grid-template-columns:1fr 1fr; }
+			.xgrid{ grid-template-columns:1fr; }
 			.bar{ grid-template-columns:110px 1fr; font-size:13px; }
 		}
 		footer{ margin-top:28px; font-size:13px; color:rgba(11,18,32,.65); line-height:1.6; }
@@ -98,12 +113,17 @@
 		<div class="badges">
 			<div class="badge status">Status: designed in CAD · printing and building next</div>
 			<div class="badge">Lake Agawam, Southampton, NY</div>
-			<div class="badge">2 expert calls so far</div>
+			<div class="badge">2 expert calls · 7 experts wrote back</div>
 		</div>
+		<p style="margin:-6px 0 18px;"><a class="btn blue" href="bioglow-judging.html">Presentation view: our judging talk</a></p>
 
 		<main>
 			<section class="card season" aria-labelledby="problem-title">
 				<h2 id="problem-title">The problem: blue-green algae blooms</h2>
+				<figure style="margin:4px auto 12px; max-width:640px;">
+					<img loading="lazy" decoding="async" width="800" height="600" src="img/bioglow/bloom-lake-erie-noaa.webp" alt="A beach on a lake. The water near the shore is bright green and thick with blue-green algae." />
+					<figcaption class="credit">A blue-green algae bloom at Catawba Island, Lake Erie, Ohio (summer 2009). Photo: NOAA, public domain, via <a href="https://commons.wikimedia.org/wiki/File:Blue-gree_algae_bloom_Lake_Erie.png" target="_blank" rel="noreferrer">Wikimedia Commons</a>.</figcaption>
+				</figure>
 				<p><b>Blue-green algae are not really algae.</b> They are tiny living things called cyanobacteria (say "sigh-AN-oh-bacteria"). Most lakes have a few of them, and that is normal.</p>
 				<p><b>A bloom</b> happens when they grow out of control. That needs lots of nutrients (like fertilizer washing into the water), lots of sunlight, and warm, calm water.</p>
 				<p><b>Some blooms make toxins.</b> They can make people sick, and they are especially dangerous for dogs that swim in them.</p>
@@ -127,8 +147,22 @@
 				<p style="margin:0;"><b>Safety rule for our team:</b> we never collect real bloom water. Lake Agawam's blooms can be toxic to people and pets. For tests we use safe powders from a health-food store instead (see "What's next").</p>
 			</section>
 
+			<section class="card" aria-labelledby="found-title">
+				<h2 id="found-title">How we found our problem</h2>
+				<p>We started with this season's big theme and narrowed it down, one step at a time:</p>
+				<ol class="path">
+					<li><span class="when">August</span>BIOGLOW: protecting living things</li>
+					<li><span class="when">Then</span>Our idea map: air, ocean, plants, forests</li>
+					<li><span class="when">Then</span>Water</li>
+					<li><span class="when">Then</span>Tiny plankton</li>
+					<li><span class="when">Sept 17</span>Brown tide in Great South Bay</li>
+					<li class="end"><span class="when">Oct 15</span>Blue-green algae in Lake Agawam</li>
+				</ol>
+				<p style="margin:8px 0 0;">We read reports from NOAA, the NY State DEC and Suffolk County. Then the experts below changed our project.</p>
+			</section>
+
 			<section class="card" aria-labelledby="expert-title">
-				<h2 id="expert-title">How an expert's feedback changed our problem</h2>
+				<h2 id="expert-title">How experts changed our project</h2>
 				<p>Our project did not start at Lake Agawam. Talking to experts changed it twice.</p>
 				<ol class="timeline">
 					<li>
@@ -157,7 +191,7 @@
 					<li>
 						<div class="when">Oct 18</div>
 						<div>
-							<p><b>Expert call 2: a Columbia University engineering researcher</b> on a team that builds a robot boat and a sensor buoy for lakes. She looked at our CAD model and said it was "a really good CAD". Her advice:</p>
+							<p><b>Expert call 2: a Columbia University engineering student</b> on the AQUAS team, which builds a robot boat and a sensor buoy for lakes. She looked at our CAD model and said it was "a really good CAD". Her advice:</p>
 							<ul>
 								<li><b>Leave room for wires.</b> "Wire management is like a beast."</li>
 								<li><b>Stay low and wide</b>, or a buoy tips over. Only the sensors need to be underwater.</li>
@@ -179,7 +213,25 @@
 							<p><b>Still open:</b> a second sensor deeper down, to check below the surface. We haven't added it yet.</p>
 						</div>
 					</li>
+					<li>
+						<div class="when">Oct 30</div>
+						<div>
+							<p><b>Lake Agawam wrote back.</b> The Lake Agawam Conservancy (the group that takes care of the lake) sent our email to its science advisor, a Stony Brook University scientist who has studied the lake for years. We learned:</p>
+							<ul>
+								<li>The sound-wave (ultrasound) buoys tried on the lake in 2021 were "largely unsuccessful".</li>
+								<li>Hydrogen peroxide worked well, but only for a few days.</li>
+								<li>The lake has its own buoy, and it shares its readings online. Next, our AI can learn from our real lake.</li>
+							</ul>
+						</div>
+					</li>
 				</ol>
+			</section>
+
+			<section class="card" aria-labelledby="who-title">
+				<h2 id="who-title">Experts who helped us</h2>
+				<p>We emailed <b data-out="emailed">about 10</b> experts. <b data-out="replied">7</b> wrote back, and we had <b data-out="calls">2</b> video calls.</p>
+				<div class="xgrid" id="expert-cards"></div>
+				<noscript><p>Turn on JavaScript to see the expert cards.</p></noscript>
 			</section>
 
 			<section class="card" aria-labelledby="buoy-title">
@@ -267,7 +319,7 @@
 					<li>Only if the person taps yes, a small pump runs for a set time, with a maximum dose in the code.</li>
 					<li>The buoy keeps measuring: did the blue-green glow go down?</li>
 				</ol>
-				<p>Our demo will only ever pump plain or colored water, never real chemicals. Treating a real lake in New York needs permission from the state. We are researching options like hydrogen peroxide (a Stony Brook University study tested it on water from four New York lakes) and ultrasound, and the real long-term fix: less fertilizer and septic waste reaching the lake.</p>
+				<p>Our demo will only ever pump plain or colored water, never real chemicals. Treating a real lake in New York needs permission from the state. We are researching options like hydrogen peroxide (a Stony Brook University study tested it on water from four New York lakes; on Lake Agawam it "worked incredibly well, but the positive effects only lasted a short time, a few days", the Lake Agawam Conservancy told us) and ultrasound, and the real long-term fix: less fertilizer and septic waste reaching the lake.</p>
 
 				<h3>What already exists, and what we want to do better</h3>
 				<div class="tablewrap">
@@ -276,7 +328,8 @@
 						<tbody>
 							<tr><td>Boat trips and lab tests</td><td>Accurate, but costly and not very often</td></tr>
 							<tr><td>DEC's bloom map</td><td>Tells the public where blooms were reported or confirmed</td></tr>
-							<tr><td>Buoys on Lake Agawam (2021)</td><td>The DEC put three solar-powered buoys on the lake that monitor water quality and send out ultrasound</td></tr>
+							<tr><td>Buoys on Lake Agawam (2021)</td><td>The DEC put three solar-powered buoys on the lake that monitor water quality and send out ultrasound. A scientist who studies the lake told us they were "largely unsuccessful".</td></tr>
+							<tr><td>Lake Agawam's own buoy (since 2020)</td><td>Measures the lake all the time, including blue-green algae and temperature, and <a href="https://lakeagawam.org/real-time-data/" target="_blank" rel="noreferrer">shares its readings online</a></td></tr>
 							<tr><td>A Columbia University team</td><td>A robot boat that collects water samples, plus a sensor buoy</td></tr>
 							<tr><td>A Cornell University team</td><td>A large buoy that collects data, aims to predict blooms, and works as a weather station</td></tr>
 						</tbody>
@@ -290,7 +343,7 @@
 				<p><b>The question:</b> can a computer warn us about a blue-green algae bloom <b>before</b> it happens?</p>
 
 				<h3>What data it learns from</h3>
-				<p>Lake Agawam's own sensor data isn't public (we plan to ask for it). So for now the model practices on the best public data we found: a US Geological Survey sensor in <b>Upper Klamath Lake, Oregon</b>. Like Lake Agawam, that lake is shallow, full of nutrients, and gets a big blue-green bloom every summer. The sensor measures the blue-green glow (phycocyanin, the same pigment our orange light looks for) and water temperature every day from May to October, 2011–2026 (2020 and 2023 are missing). We added free weather history for the same days: sun, rain and wind.</p>
+				<p>Lake Agawam has its own buoy that <a href="https://lakeagawam.org/real-time-data/" target="_blank" rel="noreferrer">shares its readings online</a> (a scientist who studies the lake sent us the link on Oct 30). We haven't used those readings yet. So far the model practices on the best public data we found before that: a US Geological Survey sensor in <b>Upper Klamath Lake, Oregon</b>. Like Lake Agawam, that lake is shallow, full of nutrients, and gets a big blue-green bloom every summer. The sensor measures the blue-green glow (phycocyanin, the same pigment our orange light looks for) and water temperature every day from May to October, 2011–2026 (2020 and 2023 are missing). We added free weather history for the same days: sun, rain and wind.</p>
 
 				<h3>What it predicts</h3>
 				<p>Every summer day becomes one row with <b>7 clues</b>: water temperature this week, whether the water is warming up, algae glow today, how much the glow changed in 3 days, and sun, rain and wind in the last 3 days. The answer it learns: <b>will the glow go above our bloom level in the next 5 days?</b> (We set the bloom level at about 10 times the early-summer glow.)</p>
@@ -324,7 +377,7 @@
 						<li><b>Small data.</b> 14 summers from one spot, two missing years, and no data about nutrients like phosphorus and nitrogen.</li>
 					</ul>
 				</div>
-				<p style="margin:0;">Our coach built a starter version of this forecast notebook. Next, we redo each step ourselves and try to get Lake Agawam's own data.</p>
+				<p style="margin:0;">Our coach built a starter version of this forecast notebook. Next, we redo each step ourselves and teach it with Lake Agawam's own buoy readings.</p>
 			</section>
 
 			<section class="card" aria-labelledby="status-title">
@@ -334,7 +387,7 @@
 						<p class="done">Done</p>
 						<ul>
 							<li>Problem research and the switch to Lake Agawam</li>
-							<li>Two expert calls (Oct 14 and Oct 18)</li>
+							<li>Two expert calls (Oct 14 and Oct 18), and 7 experts wrote back by email, including the group that takes care of Lake Agawam (Oct 30)</li>
 							<li>The whole buoy designed in CAD, with computer checks that the parts fit and that it should float upright (Oct 22)</li>
 							<li>A first AI bloom forecast, tested on real lake data</li>
 						</ul>
@@ -358,9 +411,9 @@
 					<li><b>Code:</b> the green / yellow / red alert and the phone page, then a full "bloom" demo.</li>
 					<li><b>Mud test:</b> muddy water should show yellow, not a red bloom alarm.</li>
 					<li><b>Share it again</b> with the experts. Once it passes the leak test, the Columbia team offered to test it with their boat on a pond in New York City.</li>
-					<li><b>Ask for Lake Agawam's own sensor data</b> so the AI can learn from our real lake.</li>
+					<li><b>Use Lake Agawam's own buoy readings</b> (they are online) so the AI can learn from our real lake.</li>
 				</ul>
-				<p style="margin:0;">Our next event is the <b>NYC FIRST Founders Edition Qualifier 2 on January 10, 2027</b>. We'll update this page as we build and test.</p>
+				<p style="margin:0;">Our first event is a <b>practice tournament on December 13, 2026</b> (Bethpage). Then comes the <b>NYC FIRST Founders Edition Qualifier 2 on January 10, 2027</b>. We'll update this page as we build and test.</p>
 			</section>
 
 			<section class="card" aria-labelledby="sources-title">
@@ -375,7 +428,10 @@
 					<li>University of Maine (2013): <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3715229/" target="_blank" rel="noreferrer">a low-cost Arduino algae sensor using a blue light</a>, the same idea our light sensor uses</li>
 					<li>US Geological Survey: daily lake sensor data from Upper Klamath Lake, Oregon (site 422305121553803) and Hog Island Channel, Long Island (site 01311143)</li>
 					<li><a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a> weather history</li>
-					<li>Expert calls: a scientist from the NY State DEC harmful algal bloom program (Oct 14, 2026) and a Columbia University engineering researcher (Oct 18, 2026)</li>
+					<li>Lake Agawam Conservancy: <a href="https://lakeagawam.org/real-time-data/" target="_blank" rel="noreferrer">real-time data from the lake's buoy</a></li>
+					<li>Columbia News: <a href="https://news.columbia.edu/node/7632" target="_blank" rel="noreferrer">How can robots improve our waterways?</a> (the AQUAS team)</li>
+					<li>Expert calls: a scientist from the NY State DEC harmful algal bloom program (Oct 14, 2026) and a Columbia University engineering student on the AQUAS team (Oct 18, 2026). Emails from the experts listed in "Experts who helped us".</li>
+					<li>Photo credits: <a href="https://github.com/gio1880/AI-Future-1-Website/blob/main/img/bioglow/CREDITS.md" target="_blank" rel="noreferrer">img/bioglow/CREDITS.md</a></li>
 				</ul>
 			</section>
 
@@ -383,6 +439,7 @@
 				<h2 id="more-title">More from our team</h2>
 				<a class="btn blue" href="bioglow-robot.html">Robot Design &amp; Programming 2026–27</a>
 				<a class="btn" href="index.html">Home</a>
+				<a class="btn blue" href="bioglow-judging.html">Presentation view</a>
 				<a class="btn" href="unearthed.html">Last season: Unearthed</a>
 			</section>
 		</main>
@@ -392,5 +449,13 @@
 			Built by AI Future 1 with help from Claude.
 		</footer>
 	</div>
+	<script src="js/bioglow-experts.js?v=2026-11-03"></script>
+	<script>
+		(function () {
+			var X = window.AF1_EXPERTS;
+			X.fillCards(document.getElementById("expert-cards"));
+			document.querySelectorAll("[data-out]").forEach(function (el) { el.textContent = X.outreach[el.getAttribute("data-out")]; });
+		})();
+	</script>
 </body>
 </html>
