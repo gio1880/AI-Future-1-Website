@@ -8,7 +8,7 @@
   - Companies and groups have no "anon" because they are not people.
 */
 window.AF1_EXPERTS = {
-	SHOW_NAMES: true,
+	SHOW_NAMES: false,
 
 	outreach: { emailed: "about 10", replied: 7, calls: 2 },
 
