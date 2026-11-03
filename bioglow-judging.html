@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<meta name="robots" content="noindex, nofollow" />
+	<title>Judging talk · SpectraFloat · AI Future 1</title>
+	<meta name="description" content="The slides AI Future 1 (FLL team #65773) uses for its BIOGLOW Innovation Project talk: blue-green algae blooms in Lake Agawam and the SpectraFloat buoy." />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="AI Future 1 · FLL Team #65773" />
+	<meta property="og:title" content="SpectraFloat · Judging talk · AI Future 1" />
+	<meta property="og:description" content="Our Innovation Project talk, one big picture per part: the problem, our research, the experts, our plan and the SpectraFloat buoy." />
+	<meta property="og:url" content="https://aifuture1.org/bioglow-judging.html" />
+	<meta property="og:image" content="https://aifuture1.org/img/share-preview.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<link rel="icon" href="img/favicon.png" type="image/png" />
+	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+	<style>
+		:root{
+			--blue:#073e77; --yellow:#fece00; --cream:#f6f1e6; --ink:#0b1220; --soft:#233;
+			--water:#cfe8f3; --land:#efe4c8; --algae:#6aa832; --bluegreen:#2a9d8f; --mud:#8d6e4f;
+			--go:#2e9e44; --watch:#e0a800; --stop:#d7263d;
+		}
+		html, body{ margin:0; }
+		body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; background:var(--cream); color:var(--ink); overflow-x:hidden; }
+		a{ color:var(--blue); }
+
+		/* Without JavaScript (or with ?all) the slides are one long page. */
+		.slide{ box-sizing:border-box; min-height:100vh; min-height:100dvh; padding:clamp(14px,3vw,40px) clamp(16px,4vw,64px) 84px; display:flex; flex-direction:column; border-bottom:2px dashed rgba(11,18,32,.12); }
+		.slide > .inner{ margin:auto 0; width:100%; max-width:1280px; align-self:center; text-align:center; }
+		.deck-on .slide{ display:none; position:fixed; inset:0; overflow-y:auto; border:0; background:var(--cream); }
+		.deck-on .slide.active{ display:flex; }
+
+		.kicker{ display:inline-block; font-size:clamp(13px,1.4vw,18px); font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--blue); background:#fff; border:1px solid rgba(7,62,119,.18); border-radius:999px; padding:4px 12px; margin:0 0 10px; }
+		h1, h2{ margin:0 0 8px; line-height:1.1; }
+		h2.t{ font-size:clamp(28px,4.6vw,64px); }
+		p.line{ font-size:clamp(19px,2.6vw,36px); line-height:1.3; margin:0 auto 18px; max-width:30ch; color:var(--soft); }
+		p.line.wide{ max-width:40ch; }
+		.visual{ margin:0 auto; width:100%; }
+		.visual svg{ display:block; width:100%; height:auto; max-height:52vh; max-height:52dvh; margin:0 auto; }
+		.visual img{ display:block; max-width:100%; height:auto; max-height:60vh; max-height:60dvh; margin:0 auto; border-radius:14px; background:#fff; border:1px solid rgba(11,18,32,.08); }
+		.credit{ font-size:clamp(12px,1.1vw,15px); color:rgba(11,18,32,.7); margin:8px auto 0; max-width:70ch; }
+		.big{ font-size:clamp(36px,7vw,104px); font-weight:800; line-height:1.08; margin:0 auto; max-width:16ch; color:var(--blue); }
+		.big.ink{ color:var(--ink); }
+		.svgtext{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+
+		/* Title slide */
+		.logo{ width:clamp(64px,9vw,120px); height:clamp(64px,9vw,120px); border-radius:22%; background:linear-gradient(135deg,var(--blue),var(--yellow)); margin:0 auto 18px; box-shadow:0 10px 40px rgba(7,62,119,.18); }
+		.team{ font-size:clamp(14px,1.6vw,20px); color:var(--soft); margin-top:22px; }
+
+		/* Step path (how we found our problem) */
+		ol.path{ list-style:none; padding:0; margin:10px auto 0; display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(8px,1.4vw,18px); max-width:1240px; }
+		ol.path li{ position:relative; background:#fff; border:2px solid rgba(7,62,119,.15); border-radius:16px; padding:clamp(10px,1.4vw,18px); width:clamp(130px,14vw,180px); box-sizing:border-box; }
+		ol.path li .when{ display:block; font-size:clamp(12px,1.2vw,16px); font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:.05em; }
+		ol.path li b{ display:block; font-size:clamp(17px,1.9vw,26px); line-height:1.2; margin-top:6px; }
+		ol.path li svg{ width:56%; height:auto; margin:6px auto 0; display:block; }
+		ol.path li.end{ border-color:var(--stop); background:#fff3f4; }
+		ol.path li:not(:last-child)::after{ content:"→"; position:absolute; right:clamp(-17px,-1.2vw,-12px); top:42%; font-size:clamp(18px,2vw,28px); color:var(--blue); font-weight:800; }
+		.sources{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin:22px auto 0; font-size:clamp(14px,1.5vw,20px); }
+		.sources span{ background:var(--blue); color:#fff; border-radius:999px; padding:6px 14px; font-weight:600; }
+
+		/* Number tiles */
+		.tiles{ display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(10px,2vw,28px); margin:16px auto 0; }
+		.tile{ background:#fff; border-radius:20px; border:2px solid rgba(7,62,119,.15); padding:clamp(14px,2vw,28px) clamp(16px,2.4vw,36px); min-width:clamp(150px,20vw,260px); box-sizing:border-box; }
+		.tile b{ display:block; font-size:clamp(40px,7vw,96px); line-height:1; color:var(--blue); }
+		.tile span{ display:block; font-size:clamp(17px,2vw,28px); margin-top:8px; }
+		.tile.hot{ border-color:var(--yellow); background:#fffbe6; }
+
+		/* Expert cards (filled from js/bioglow-experts.js) */
+		.xgrid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(8px,1.2vw,16px); text-align:left; margin:8px auto 0; }
+		.xgrid.two{ grid-template-columns:repeat(2,minmax(0,1fr)); max-width:1000px; }
+		.xgrid.one{ grid-template-columns:1fr; max-width:720px; }
+		.xcard{ background:#fff; border-radius:14px; border:1px solid rgba(11,18,32,.1); border-top:6px solid var(--blue); padding:12px 14px; }
+		.xcard.group{ border-top-color:var(--yellow); }
+		.xcard h3{ margin:0 0 4px; font-size:clamp(16px,1.5vw,21px); }
+		.xcard .xrole{ margin:0; font-size:clamp(13px,1.1vw,15px); color:var(--soft); }
+		.xcard .xorg{ display:block; margin:4px 0 6px; font-size:clamp(13px,1.15vw,15px); font-weight:600; }
+		.xcard .xhow{ display:inline-block; margin:0 0 6px; font-size:12px; font-weight:700; color:var(--blue); background:#eaf1f8; border-radius:999px; padding:2px 8px; }
+		.xcard .xsaid{ margin:0; font-size:clamp(13px,1.2vw,16px); line-height:1.4; }
+		.xgrid[data-cards="all"] .xcard{ padding:10px 12px; }
+		.xgrid[data-cards="all"] .xcard .xsaid{ font-size:clamp(12px,1.05vw,15px); line-height:1.3; }
+		.xgrid[data-cards="all"] .xcard .xrole{ display:none; }
+		.xgrid.two .xcard h3, .xgrid.one .xcard h3{ font-size:clamp(20px,2.2vw,30px); }
+		.xgrid.two .xcard .xsaid, .xgrid.one .xcard .xsaid{ font-size:clamp(16px,1.7vw,22px); }
+		.xgrid.two .xcard .xorg, .xgrid.one .xcard .xorg{ font-size:clamp(14px,1.5vw,19px); }
+
+		.quote{ font-size:clamp(22px,3.4vw,46px); font-weight:700; color:var(--blue); margin:22px auto 4px; max-width:24ch; line-height:1.2; }
+		.quote::before{ content:"“"; } .quote::after{ content:"”"; }
+		.quote-by{ font-size:clamp(14px,1.4vw,18px); color:var(--soft); }
+
+		/* Feedback timeline */
+		ol.tl{ list-style:none; padding:0; margin:14px auto 0; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:clamp(8px,1.2vw,16px); max-width:1240px; position:relative; }
+		ol.tl::before{ content:""; position:absolute; left:4%; right:4%; top:22px; height:6px; background:var(--blue); border-radius:3px; }
+		ol.tl li{ position:relative; padding-top:52px; }
+		ol.tl li::before{ content:""; position:absolute; top:10px; left:50%; width:30px; height:30px; margin-left:-15px; border-radius:50%; background:var(--yellow); border:5px solid var(--blue); box-sizing:border-box; }
+		ol.tl .when{ display:block; font-weight:800; color:var(--blue); font-size:clamp(17px,1.8vw,26px); }
+		ol.tl .what{ display:block; font-size:clamp(15px,1.5vw,21px); line-height:1.3; margin-top:6px; background:#fff; border-radius:12px; padding:10px; border:1px solid rgba(11,18,32,.08); }
+
+		/* Placeholder frames */
+		.frame{ border:4px dashed rgba(7,62,119,.35); border-radius:18px; background:repeating-linear-gradient(45deg,#fff,#fff 14px,#f7f3ea 14px,#f7f3ea 28px); display:flex; align-items:center; justify-content:center; min-height:clamp(200px,42vh,520px); padding:20px; box-sizing:border-box; font-size:clamp(18px,2.2vw,30px); font-weight:700; color:var(--blue); }
+		.frames{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,2vw,24px); }
+		.frames .frame{ min-height:clamp(180px,36vh,440px); flex-direction:column; gap:8px; }
+		.frames .frame small{ font-size:clamp(14px,1.4vw,18px); font-weight:600; color:var(--soft); }
+
+		/* Image + key side by side */
+		.split{ display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:clamp(12px,2vw,32px); align-items:center; text-align:left; }
+		.split img{ max-height:68vh; max-height:68dvh; }
+		ul.key{ list-style:none; padding:0; margin:0; font-size:clamp(17px,1.9vw,27px); line-height:1.3; }
+		ul.key li{ display:flex; gap:12px; align-items:flex-start; margin:0 0 12px; }
+		ul.key li i{ flex:none; font-style:normal; width:1.6em; height:1.6em; border-radius:50%; background:var(--yellow); color:var(--ink); font-weight:800; display:inline-flex; align-items:center; justify-content:center; font-size:.8em; border:2px solid var(--ink); }
+		.note-small{ font-size:clamp(13px,1.2vw,16px); color:var(--soft); margin-top:4px; }
+
+		/* Sensors + who it helps */
+		.cardbox{ background:#fff; border-radius:18px; border:2px solid rgba(7,62,119,.15); padding:clamp(14px,2vw,28px); text-align:left; max-width:980px; margin:0 auto; }
+		ul.parts{ list-style:none; padding:0; margin:0; display:grid; grid-template-columns:1fr 1fr; gap:10px 28px; font-size:clamp(16px,1.8vw,25px); }
+		ul.parts li{ display:flex; gap:10px; align-items:center; }
+		ul.parts li::before{ content:""; flex:none; width:.8em; height:.8em; border-radius:50%; background:var(--blue); }
+		.cardbox .foot{ margin:16px 0 0; padding-top:12px; border-top:1px solid rgba(11,18,32,.1); font-size:clamp(15px,1.6vw,22px); }
+		.helps{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(8px,1.6vw,22px); margin:16px auto 0; max-width:1150px; }
+		.helps div{ background:#fff; border-radius:18px; border:2px solid rgba(7,62,119,.15); padding:clamp(10px,1.6vw,22px); }
+		.helps svg{ width:70%; height:auto; display:block; margin:0 auto 8px; }
+		.helps b{ display:block; font-size:clamp(18px,2.1vw,30px); }
+		.helps span{ display:block; font-size:clamp(13px,1.3vw,18px); color:var(--soft); margin-top:4px; }
+
+		/* Warning light animation */
+		.beacon-wrap{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(12px,3vw,40px); align-items:center; max-width:1100px; margin:0 auto; }
+		.beacon-anim svg{ max-height:60vh; max-height:60dvh; }
+		.beacon-anim .lamp{ color:var(--go); animation:lamp 9s infinite; }
+		@keyframes lamp{ 0%,30%{ color:var(--go); } 34%,63%{ color:var(--watch); } 67%,97%{ color:var(--stop); } 100%{ color:var(--go); } }
+		.beacon-anim .more{ animation:more 9s infinite; }
+		.beacon-anim .most{ animation:most 9s infinite; }
+		@keyframes more{ 0%,30%{ opacity:0; } 34%,97%{ opacity:1; } 100%{ opacity:0; } }
+		@keyframes most{ 0%,63%{ opacity:0; } 67%,97%{ opacity:1; } 100%{ opacity:0; } }
+		.states{ display:grid; text-align:left; }
+		.states > div{ grid-area:1/1; animation:show 9s infinite; opacity:0; }
+		.states .s1{ animation-delay:0s; } .states .s2{ animation-delay:-6s; } .states .s3{ animation-delay:-3s; }
+		@keyframes show{ 0%,30%{ opacity:1; } 34%,100%{ opacity:0; } }
+		.state-name{ font-size:clamp(30px,4.6vw,64px); font-weight:800; line-height:1.05; }
+		.state-says{ font-size:clamp(18px,2.2vw,30px); margin-top:10px; color:var(--soft); }
+		.s1 .state-name{ color:var(--go); } .s2 .state-name{ color:#a87b00; } .s3 .state-name{ color:var(--stop); }
+		.dotrow{ display:flex; gap:10px; margin-top:18px; }
+		.dotrow i{ width:22px; height:22px; border-radius:50%; background:#d9d2c0; }
+		.s1 .dotrow i:nth-child(1){ background:var(--go); } .s2 .dotrow i:nth-child(2){ background:var(--watch); } .s3 .dotrow i:nth-child(3){ background:var(--stop); }
+		.beacon-static{ display:none; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; max-width:1000px; margin:0 auto; }
+		.beacon-static svg{ max-height:38vh; }
+		.beacon-static b{ display:block; font-size:clamp(18px,2.2vw,30px); }
+		.beacon-static span{ display:block; font-size:clamp(14px,1.5vw,20px); color:var(--soft); }
+		.light-note{ font-size:clamp(13px,1.3vw,17px); color:var(--soft); margin-top:14px; }
+
+		@media (prefers-reduced-motion: reduce){
+			.beacon-wrap{ display:none; }
+			.beacon-static{ display:grid; }
+		}
+
+		/* Credits slide */
+		ul.credits{ text-align:left; max-width:900px; margin:0 auto; font-size:clamp(13px,1.3vw,17px); line-height:1.5; }
+		ul.credits li{ margin:0 0 8px; }
+
+		/* Controls */
+		nav.controls{ position:fixed; left:0; right:0; bottom:0; z-index:5; display:none; align-items:center; justify-content:space-between; gap:8px; padding:8px clamp(8px,2vw,20px); background:rgba(246,241,230,.92); border-top:1px solid rgba(11,18,32,.08); font-size:14px; }
+		.deck-on nav.controls{ display:flex; }
+		nav.controls button, nav.controls a{ font:inherit; font-weight:700; border:0; border-radius:10px; padding:9px 14px; background:var(--blue); color:#fff; cursor:pointer; text-decoration:none; }
+		nav.controls button.ghost, nav.controls a.ghost{ background:#fff; color:var(--blue); border:1px solid rgba(7,62,119,.25); }
+		nav.controls .where{ text-align:center; flex:1; min-width:0; color:var(--soft); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+		nav.controls .where b{ color:var(--ink); }
+		nav.controls .group{ display:flex; gap:6px; }
+		.progress{ position:fixed; top:0; left:0; height:5px; background:var(--yellow); z-index:6; transition:width .2s; display:none; }
+		.deck-on .progress{ display:block; }
+		.help{ font-size:13px; color:var(--soft); }
+		footer.pagefoot{ text-align:center; padding:12px 16px 90px; font-size:13px; color:rgba(11,18,32,.65); }
+		.deck-on footer.pagefoot{ display:none; }
+
+		/* Short screens (a 1280×720 projector): tighter spacing so each slide fits without scrolling. */
+		@media (max-height:820px) and (min-width:861px){
+			.slide{ padding-top:12px; padding-bottom:66px; }
+			.kicker{ margin-bottom:6px; padding:3px 10px; }
+			h2.t{ font-size:clamp(26px,3.8vw,50px); margin-bottom:4px; }
+			p.line{ font-size:clamp(18px,2.1vw,28px); margin-bottom:10px; }
+			.big{ font-size:clamp(34px,6vw,84px); }
+			.visual svg{ max-height:46vh; max-height:46dvh; }
+			.visual img{ max-height:54vh; max-height:54dvh; }
+			.split img{ max-height:64vh; max-height:64dvh; }
+			.beacon-anim svg{ max-height:48vh; max-height:48dvh; }
+			.logo{ width:72px; height:72px; margin-bottom:10px; }
+			.team{ margin-top:12px; }
+			.quote{ margin-top:12px; }
+			.xgrid.one .xcard .xsaid{ font-size:clamp(15px,1.5vw,19px); }
+		}
+
+		@media (max-width:860px){
+			.xgrid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+			.helps{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+			.split{ grid-template-columns:1fr; text-align:center; }
+			ul.key{ text-align:left; max-width:520px; margin:0 auto; }
+			ol.tl{ grid-template-columns:1fr; max-width:520px; text-align:left; }
+			ol.tl::before{ left:13px; right:auto; top:8px; bottom:8px; width:6px; height:auto; }
+			ol.tl li{ padding:0 0 0 46px; }
+			ol.tl li::before{ left:16px; top:0; }
+			.beacon-wrap{ grid-template-columns:1fr; }
+			.states{ text-align:center; } .dotrow{ justify-content:center; }
+			ul.parts{ grid-template-columns:1fr; }
+			nav.controls .hide-sm{ display:none; }
+		}
+		@media (max-width:560px){
+			.xgrid, .xgrid.two{ grid-template-columns:1fr; }
+			.frames{ grid-template-columns:1fr; }
+			ol.path li{ width:calc(50% - 10px); }
+			ol.path li:not(:last-child)::after{ display:none; }
+			.beacon-static{ grid-template-columns:1fr; }
+		}
+	</style>
+</head>
+<body>
+	<!-- Small drawings used more than once. -->
+	<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+		<defs>
+			<symbol id="i-person" viewBox="0 0 64 64"><circle cx="32" cy="13" r="9" fill="currentColor"/><path d="M18 60V36c0-8 6-13 14-13s14 5 14 13v24h-8V40h-2v20H28V40h-2v20z" fill="currentColor"/></symbol>
+			<symbol id="i-kid" viewBox="0 0 64 64"><circle cx="32" cy="27" r="7" fill="currentColor"/><path d="M22 62V46c0-6 4-10 10-10s10 4 10 10v16h-6V49h-2v13h-4V49h-2v13z" fill="currentColor"/></symbol>
+			<symbol id="i-dog" viewBox="0 0 64 64"><path d="M14 30c-4-1-7-5-7-9 3 3 6 4 9 4h22l4-8c1-3 4-4 7-4h3l3 4 4 1v4c0 3-2 5-5 5h-3l-1 6v24h-6V44H20v13h-6V30z" fill="currentColor"/><path d="M48 13l3-6 2 7z" fill="currentColor"/><circle cx="51" cy="19" r="1.6" fill="#fff"/></symbol>
+			<symbol id="i-swim" viewBox="0 0 64 64"><circle cx="40" cy="18" r="7" fill="currentColor"/><path d="M8 34l16-10 10 6 10-3 3 5-13 5-9-5-11 7z" fill="currentColor"/><path d="M4 46c5 0 5-4 10-4s5 4 10 4 5-4 10-4 5 4 10 4 5-4 10-4 5 4 6 4" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M4 56c5 0 5-4 10-4s5 4 10 4 5-4 10-4 5 4 10 4 5-4 10-4 5 4 6 4" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></symbol>
+			<symbol id="i-flask" viewBox="0 0 64 64"><path d="M24 6h16v4h-3v14l15 26c2 4-1 8-5 8H17c-4 0-7-4-5-8l15-26V10h-3z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M17 44h30l4 7c1 2 0 3-2 3H15c-2 0-3-1-2-3z" fill="currentColor"/></symbol>
+			<symbol id="i-warn" viewBox="0 0 64 64"><path d="M32 5l29 52H3z" fill="#fece00" stroke="#0b1220" stroke-width="4" stroke-linejoin="round"/><rect x="29" y="22" width="6" height="20" rx="2" fill="#0b1220"/><circle cx="32" cy="49" r="3.5" fill="#0b1220"/></symbol>
+			<symbol id="i-algae" viewBox="0 0 64 64"><g fill="currentColor"><circle cx="14" cy="20" r="6"/><circle cx="30" cy="14" r="5"/><circle cx="46" cy="22" r="7"/><circle cx="22" cy="36" r="7"/><circle cx="40" cy="40" r="6"/><circle cx="54" cy="44" r="5"/><circle cx="12" cy="50" r="5"/><circle cx="28" cy="54" r="6"/><circle cx="46" cy="56" r="4"/></g></symbol>
+			<!-- The buoy, side view. The warning light uses currentColor. -->
+			<symbol id="buoy" viewBox="0 0 400 430">
+				<rect x="0" y="250" width="400" height="180" fill="#cfe8f3"/>
+				<path d="M0 250 q25 -10 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0" fill="none" stroke="#7fb3cf" stroke-width="4"/>
+				<rect x="186" y="270" width="8" height="110" fill="#2e7d4f"/>
+				<rect x="206" y="270" width="8" height="110" fill="#2e7d4f"/>
+				<rect x="150" y="372" width="100" height="16" rx="4" fill="#6b7280"/>
+				<rect x="214" y="318" width="44" height="30" rx="4" fill="#1f2937"/>
+				<rect x="70" y="215" width="80" height="48" rx="12" fill="#f5d77a" stroke="#b8962e" stroke-width="3"/>
+				<rect x="250" y="215" width="80" height="48" rx="12" fill="#f5d77a" stroke="#b8962e" stroke-width="3"/>
+				<rect x="140" y="185" width="120" height="85" rx="10" fill="#e5edf5" stroke="#5b7fa6" stroke-width="4"/>
+				<rect x="130" y="178" width="140" height="12" rx="4" fill="#3b4b5e"/>
+				<circle cx="200" cy="150" r="58" fill="currentColor" opacity=".25"/>
+				<circle cx="200" cy="150" r="30" fill="currentColor" stroke="#0b1220" stroke-width="3"/>
+				<rect x="190" y="178" width="20" height="10" fill="#3b4b5e"/>
+			</symbol>
+			<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#073e77"/></marker>
+			<radialGradient id="glow"><stop offset="0" stop-color="#ff3b3b" stop-opacity=".95"/><stop offset=".6" stop-color="#ff3b3b" stop-opacity=".35"/><stop offset="1" stop-color="#ff3b3b" stop-opacity="0"/></radialGradient>
+		</defs>
+	</svg>
+
+	<div class="progress" aria-hidden="true"></div>
+
+	<main id="deck" aria-live="polite">
+
+		<!-- ============ TITLE ============ -->
+		<section class="slide" data-part="Hello">
+			<div class="inner">
+				<div class="logo" aria-hidden="true"></div>
+				<p class="kicker">FIRST LEGO League · BIOGLOW 2026–27</p>
+				<h1 class="big ink">AI Future 1</h1>
+				<p class="line wide" style="margin-top:12px;">Team 65773 · Queens, New York</p>
+				<p class="big" style="font-size:clamp(30px,5.4vw,80px);">SpectraFloat</p>
+				<p class="line wide">A buoy that watches a lake for harmful algae blooms</p>
+				<p class="team">Ariel Q. · Julisa L. · Kyle T. · Marcus C. · Ethan L. · Brian Z. · Andrew L.</p>
+				<p class="help hint-keys">Use the arrow keys, the space bar or a click to move. Press F for full screen.</p>
+			</div>
+		</section>
+
+		<!-- ============ 1. HELLO AND OUR PROBLEM ============ -->
+		<section class="slide" data-part="1 · Our problem">
+			<div class="inner">
+				<p class="kicker">1 · Our problem</p>
+				<h2 class="t">See the green water? That is a bloom!</h2>
+				<div class="visual">
+					<img src="img/bioglow/bloom-lake-erie-noaa.webp" width="800" height="600" alt="A beach on a lake. The water near the shore is bright green and thick with blue-green algae." />
+				</div>
+				<p class="credit">A blue-green algae bloom at Catawba Island, Lake Erie, Ohio (summer 2009). Photo: NOAA, public domain, via Wikimedia Commons.</p>
+			</div>
+		</section>
+
+		<section class="slide" data-part="1 · Our problem">
+			<div class="inner">
+				<p class="kicker">1 · Our problem</p>
+				<h2 class="t">What is a bloom?</h2>
+				<p class="line">Blue-green algae grow too much. Some make poison.</p>
+				<div class="visual">
+					<svg viewBox="0 0 1000 330" role="img" aria-label="Three steps. One: blue-green algae grow too much. Two: some blooms make poison. Three: the poison can make people and dogs sick." class="svgtext">
+						<g transform="translate(40,20)">
+							<rect width="250" height="220" rx="22" fill="#fff" stroke="#c9d6e3" stroke-width="3"/>
+							<svg x="25" y="20" width="200" height="180" viewBox="0 0 64 64" style="color:#2a9d8f"><use href="#i-algae"/></svg>
+						</g>
+						<g transform="translate(375,20)">
+							<rect width="250" height="220" rx="22" fill="#fff" stroke="#c9d6e3" stroke-width="3"/>
+							<svg x="45" y="20" width="160" height="160" viewBox="0 0 64 64"><use href="#i-warn"/></svg>
+						</g>
+						<g transform="translate(710,20)">
+							<rect width="250" height="220" rx="22" fill="#fff" stroke="#c9d6e3" stroke-width="3"/>
+							<svg x="20" y="40" width="110" height="150" viewBox="0 0 64 64" style="color:#073e77"><use href="#i-person"/></svg>
+							<svg x="120" y="80" width="115" height="115" viewBox="0 0 64 64" style="color:#8d6e4f"><use href="#i-dog"/></svg>
+						</g>
+						<line x1="300" y1="130" x2="362" y2="130" stroke="#073e77" stroke-width="8" marker-end="url(#arrow)"/>
+						<line x1="635" y1="130" x2="697" y2="130" stroke="#073e77" stroke-width="8" marker-end="url(#arrow)"/>
+						<g font-size="30" font-weight="700" text-anchor="middle" fill="#0b1220">
+							<text x="165" y="290">Algae grow</text><text x="165" y="324">too much</text>
+							<text x="500" y="290">Some make</text><text x="500" y="324">poison</text>
+							<text x="835" y="290">People and dogs</text><text x="835" y="324">can get sick</text>
+						</g>
+					</svg>
+				</div>
+				<p class="credit">Not every bloom makes poison, but you can’t tell by looking. So people and dogs should stay out. (NY State DEC)</p>
+			</div>
+		</section>
+
+		<section class="slide" data-part="1 · Our problem">
+			<div class="inner">
+				<p class="kicker">Our problem</p>
+				<p class="big">People often find out about a bloom too late.</p>
+			</div>
+		</section>
+
+		<!-- ============ 2. HOW WE FOUND OUR PROBLEM ============ -->
+		<section class="slide" data-part="2 · How we found our problem">
+			<div class="inner">
+				<p class="kicker">2 · How we found our problem</p>
+				<h2 class="t">From a big theme to one lake</h2>
+				<ol class="path">
+					<li><span class="when">August</span><b>BIOGLOW: protect living things</b></li>
+					<li><span class="when">Then</span><b>Our idea map</b>
+						<svg viewBox="0 0 64 40" aria-hidden="true"><circle cx="32" cy="20" r="8" fill="#073e77"/><circle cx="8" cy="8" r="6" fill="#fece00"/><circle cx="56" cy="8" r="6" fill="#fece00"/><circle cx="8" cy="34" r="6" fill="#fece00"/><circle cx="56" cy="34" r="6" fill="#fece00"/><path d="M13 11l12 6M51 11l-12 6M13 31l12-6M51 31l-12-6" stroke="#073e77" stroke-width="3"/></svg></li>
+					<li><span class="when">Then</span><b>Water</b>
+						<svg viewBox="0 0 64 40" aria-hidden="true"><path d="M4 16c7 0 7-6 14-6s7 6 14 6 7-6 14-6 7 6 14 6M4 30c7 0 7-6 14-6s7 6 14 6 7-6 14-6 7 6 14 6" fill="none" stroke="#2b7bb9" stroke-width="5" stroke-linecap="round"/></svg></li>
+					<li><span class="when">Then</span><b>Tiny plankton</b>
+						<svg viewBox="0 0 64 40" aria-hidden="true"><g fill="#2a9d8f"><circle cx="12" cy="20" r="6"/><circle cx="28" cy="12" r="4"/><circle cx="34" cy="28" r="7"/><circle cx="52" cy="16" r="5"/></g></svg></li>
+					<li><span class="when">Sept 17</span><b>Brown tide in Great South Bay</b></li>
+					<li class="end"><span class="when">Oct 15</span><b>Blue-green algae in Lake Agawam</b></li>
+				</ol>
+				<div class="sources" aria-label="Our sources"><span>NOAA</span><span>NY State DEC</span><span>Suffolk County</span></div>
+				<p class="credit">We read reports from these groups.</p>
+			</div>
+		</section>
+
+		<section class="slide" data-part="2 · How we found our problem">
+			<div class="inner">
+				<p class="kicker">2 · How we found our problem</p>
+				<h2 class="t">From the bay to the lake</h2>
+				<p class="line wide">Brown tide grows in Great South Bay. Then we chose Lake Agawam.</p>
+				<div class="visual map" data-map="both"></div>
+			</div>
+		</section>
+
+		<!-- ============ 3. EXPERTS CHANGED OUR PROJECT ============ -->
+		<section class="slide" data-part="3 · Experts changed our project">
+			<div class="inner">
+				<p class="kicker">3 · Experts changed our project</p>
+				<h2 class="t">We asked experts for help</h2>
+				<div class="tiles">
+					<div class="tile"><b data-out="emailed">about 10</b><span>experts emailed</span></div>
+					<div class="tile hot"><b data-out="replied">7</b><span>wrote back</span></div>
+					<div class="tile"><b data-out="calls">2</b><span>video calls</span></div>
+				</div>
+			</div>
+		</section>
+
+		<section class="slide" data-part="3 · Experts changed our project">
+			<div class="inner">
+				<p class="kicker">3 · Experts changed our project</p>
+				<h2 class="t">Who helped us</h2>
+				<div class="xgrid" data-cards="all"></div>
+			</div>
+		</section>
+
+		<section class="slide" data-part="3 · Experts changed our project">
+			<div class="inner">
+				<p class="kicker">3 · Video call · Oct 14</p>
+				<h2 class="t"><span data-expert-name="sarah">A bloom scientist at NY State DEC</span><span data-named-only="sarah">, NY State DEC</span></h2>
+				<p class="line wide">Boat and lab tests are slow and cost a lot.</p>
+				<div class="visual">
+					<svg viewBox="0 0 960 300" role="img" aria-label="Testing by hand: a boat goes out, people fill a bottle with lake water, and a lab tests it. It is slow and costs a lot." class="svgtext">
+						<g transform="translate(40,10)">
+							<rect width="240" height="200" rx="22" fill="#fff" stroke="#c9d6e3" stroke-width="3"/>
+							<rect x="20" y="150" width="200" height="40" fill="#cfe8f3"/>
+							<path d="M40 130h160l-24 38H64z" fill="#073e77"/>
+							<rect x="92" y="92" width="56" height="38" rx="4" fill="#fece00" stroke="#0b1220" stroke-width="3"/>
+						</g>
+						<g transform="translate(360,10)">
+							<rect width="240" height="200" rx="22" fill="#fff" stroke="#c9d6e3" stroke-width="3"/>
+							<rect x="96" y="24" width="48" height="22" rx="4" fill="#073e77"/>
+							<rect x="104" y="44" width="32" height="20" fill="#e5edf5" stroke="#5b7fa6" stroke-width="3"/>
+							<rect x="80" y="62" width="80" height="120" rx="14" fill="#e5edf5" stroke="#5b7fa6" stroke-width="4"/>
+							<rect x="84" y="112" width="72" height="66" rx="10" fill="#6aa832"/>
+						</g>
+						<g transform="translate(680,10)">
+							<rect width="240" height="200" rx="22" fill="#fff" stroke="#c9d6e3" stroke-width="3"/>
+							<svg x="50" y="20" width="140" height="160" viewBox="0 0 64 64" style="color:#073e77"><use href="#i-flask"/></svg>
+						</g>
+						<line x1="288" y1="110" x2="350" y2="110" stroke="#073e77" stroke-width="8" marker-end="url(#arrow)"/>
+						<line x1="608" y1="110" x2="670" y2="110" stroke="#073e77" stroke-width="8" marker-end="url(#arrow)"/>
+						<g font-size="30" font-weight="700" text-anchor="middle" fill="#0b1220">
+							<text x="160" y="260">Boat</text><text x="480" y="260">Bottle</text><text x="800" y="260">Lab</text>
+						</g>
+						<g font-size="24" font-weight="700" text-anchor="middle" fill="#d7263d">
+							<text x="480" y="294">Slow · costs a lot · not very often</text>
+						</g>
+					</svg>
+				</div>
+				<p class="line wide" style="margin-top:14px;">Small lakes bloom too. So we switched from the bay to a lake.</p>
+			</div>
+		</section>
+
+		<section class="slide" data-part="3 · Experts changed our project">
+			<div class="inner">
+				<p class="kicker">3 · Experts changed our project</p>
+				<h2 class="t">We picked Lake Agawam</h2>
+				<p class="line wide">Some of Long Island’s worst blooms, almost every summer since 2003.</p>
+				<div class="visual map" data-map="lake"></div>
+			</div>
+		</section>
+
+		<section class="slide" data-part="3 · Experts changed our project">
+			<div class="inner">
+				<p class="kicker"><span data-expert-name="sarah">A bloom scientist at NY State DEC</span> asked us</p>
+				<p class="big">Can a buoy warn people early?</p>
+			</div>
+		</section>
+
+		<section class="slide" data-part="3 · Experts changed our project">
+			<div class="inner">
+				<p class="kicker">3 · Email · Oct 30</p>
+				<h2 class="t">Lake Agawam wrote back</h2>
+				<p class="line wide">The Lake Agawam Conservancy connected us with <span data-expert-name="gobler" data-mid>a Stony Brook University scientist</span>.</p>
+				<div class="xgrid two" data-cards="magyar,gobler"></div>
+				<div class="visual" style="max-width:560px;margin-top:12px;">
+					<svg viewBox="0 0 760 170" role="img" aria-label="The sound-wave buoys tried on Lake Agawam in 2021 mostly did not work." class="svgtext">
+						<rect x="0" y="0" width="760" height="170" rx="20" fill="#fff" stroke="#c9d6e3" stroke-width="3"/>
+						<rect x="20" y="110" width="210" height="44" fill="#cfe8f3"/>
+						<rect x="95" y="70" width="60" height="50" rx="8" fill="#9aa3ad"/>
+						<path d="M165 80a30 30 0 0 1 0 30M180 70a46 46 0 0 1 0 50M195 60a62 62 0 0 1 0 70" fill="none" stroke="#073e77" stroke-width="5" stroke-linecap="round"/>
+						<path d="M50 30L210 150M210 30L50 150" stroke="#d7263d" stroke-width="10" stroke-linecap="round" opacity=".85"/>
+						<text x="260" y="72" font-size="30" font-weight="800" fill="#0b1220">2021 sound-wave buoys</text>
+						<text x="260" y="116" font-size="28" fill="#233">mostly did not work</text>
+					</svg>
+				</div>
+			</div>
+		</section>
+
+		<section class="slide" data-part="3 · Experts changed our project">
+			<div class="inner">
+				<p class="kicker">So…</p>
+				<p class="big">People need an early warning!</p>
+				<div class="visual" style="max-width:420px;margin-top:20px;">
+					<svg viewBox="0 0 400 430" role="img" aria-label="The SpectraFloat buoy with its warning light on."><use href="#buoy" style="color:#d7263d"/></svg>
+				</div>
+			</div>
+		</section>
+
+		<section class="slide" data-part="3 · Experts changed our project">
+			<div class="inner">
+				<p class="kicker">3 · Experts changed our project</p>
+				<h2 class="t">How the experts changed our project</h2>
+				<ol class="tl">
+					<li><span class="when">Oct 14</span><span class="what">Video call with <span data-expert-name="sarah" data-mid>a bloom scientist at NY State DEC</span><span data-named-only="sarah"> (DEC)</span></span></li>
+					<li><span class="when">Oct 15</span><span class="what">We switched from the bay to Lake Agawam</span></li>
+					<li><span class="when">Oct 18</span><span class="what"><span data-expert-name="shining">An engineering student at Columbia</span><span data-named-only="shining"> (Columbia AQUAS)</span> looked at our 3D model</span></li>
+					<li><span class="when">Oct 22</span><span class="what">We changed our design</span></li>
+					<li><span class="when">Oct 30</span><span class="what">Lake Agawam’s experts wrote back</span></li>
+				</ol>
+			</div>
+		</section>
+
+		<!-- ============ 4. OUR IDEA AND OUR PLAN ============ -->
+		<section class="slide" data-part="4 · Our idea and our plan">
+			<div class="inner">
+				<p class="kicker">4 · Our idea</p>
+				<div class="split">
+					<div class="visual"><img src="img/bioglow/spectrafloat-exploded-view.webp" width="655" height="1175" alt="Our 3D model of the SpectraFloat buoy with its parts pulled apart, from the lid at the top to the weights at the bottom." /></div>
+					<div>
+						<h2 class="t">Our idea: SpectraFloat</h2>
+						<p class="line" style="margin-left:0;">A buoy that floats and checks the water.</p>
+						<p class="note-small">Our 3D model with the parts pulled apart. Designed on the computer, not built yet.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="slide" data-part="4 · Our idea and our plan">
+			<div class="inner">
+				<p class="kicker">4 · Our idea</p>
+				<h2 class="t">Three jobs</h2>
+				<p class="line wide">Watch the water, warn early, and later, help treat it.</p>
+				<div class="visual">
+					<svg viewBox="0 0 800 580" style="max-height:58dvh" role="img" aria-label="A loop of four steps: Monitor (watch the water), Predict (warn early), Treat (later, an idea only), and Keep monitoring (did it work?), then back to Monitor." class="svgtext">
+						<g fill="none" stroke="#073e77" stroke-width="8" marker-end="url(#arrow)">
+							<path d="M529 137 A200 200 0 0 1 588 222"/>
+							<path d="M588 358 A200 200 0 0 1 529 443"/>
+							<path d="M271 443 A200 200 0 0 1 212 358"/>
+							<path d="M212 222 A200 200 0 0 1 271 137"/>
+						</g>
+						<g font-weight="800" text-anchor="middle">
+							<rect x="290" y="44" width="220" height="92" rx="18" fill="#073e77"/>
+							<text x="400" y="86" font-size="32" fill="#fff">Monitor</text>
+							<text x="400" y="118" font-size="20" font-weight="600" fill="#fff">watch the water</text>
+							<rect x="490" y="246" width="220" height="92" rx="18" fill="#fece00" stroke="#0b1220" stroke-width="3"/>
+							<text x="600" y="288" font-size="32" fill="#0b1220">Predict</text>
+							<text x="600" y="320" font-size="20" font-weight="600" fill="#0b1220">warn early (AI)</text>
+							<rect x="290" y="446" width="220" height="92" rx="18" fill="#fff" stroke="#073e77" stroke-width="4" stroke-dasharray="12 8"/>
+							<text x="400" y="488" font-size="32" fill="#073e77">Treat</text>
+							<text x="400" y="520" font-size="20" font-weight="600" fill="#073e77">later · idea only</text>
+							<rect x="90" y="246" width="220" height="92" rx="18" fill="#2e9e44"/>
+							<text x="200" y="282" font-size="27" fill="#fff">Keep</text>
+							<text x="200" y="310" font-size="27" fill="#fff">monitoring</text>
+							<text x="200" y="333" font-size="18" font-weight="600" fill="#fff">did it work?</text>
+						</g>
+						<svg x="340" y="200" width="120" height="130" viewBox="0 0 400 430" style="color:#2e9e44"><use href="#buoy"/></svg>
+						<text x="400" y="360" text-anchor="middle" font-size="24" font-weight="800" fill="#0b1220">SpectraFloat</text>
+					</svg>
+				</div>
+			</div>
+		</section>
+
+		<section class="slide" data-part="4 · Our idea and our plan">
+			<div class="inner">
+				<p class="kicker">4 · Our plan</p>
+				<h2 class="t">We planned backward from December 13</h2>
+				<p class="line wide">Research in September. Design in October. Build and test in November.</p>
+				<div class="visual">
+					<svg viewBox="0 0 1000 380" role="img" aria-label="Our plan from August to December. August: we learned the BIOGLOW theme. Research in September and October. Topic chosen September 17. Expert calls October 14 and 18. Design in October. Build and test from November to December 12. Practice tournament December 13." class="svgtext">
+						<g font-size="26" font-weight="800" text-anchor="middle">
+							<rect x="60" y="20" width="172" height="46" rx="8" fill="#e9e1cc"/><text x="146" y="52">Aug</text>
+							<rect x="236" y="20" width="172" height="46" rx="8" fill="#e9e1cc"/><text x="322" y="52">Sep</text>
+							<rect x="412" y="20" width="172" height="46" rx="8" fill="#e9e1cc"/><text x="498" y="52">Oct</text>
+							<rect x="588" y="20" width="172" height="46" rx="8" fill="#e9e1cc"/><text x="674" y="52">Nov</text>
+							<rect x="764" y="20" width="172" height="46" rx="8" fill="#e9e1cc"/><text x="850" y="52">Dec</text>
+						</g>
+						<g font-size="24" font-weight="800">
+							<rect x="236" y="88" width="352" height="46" rx="23" fill="#8fb8de"/><text x="256" y="119" fill="#0b1220">Research</text>
+							<rect x="412" y="146" width="176" height="46" rx="23" fill="#fece00"/><text x="432" y="177" fill="#0b1220">Design</text>
+							<rect x="588" y="204" width="244" height="46" rx="23" fill="#2e9e44"/><text x="608" y="235" fill="#fff">Build + test</text>
+						</g>
+						<line x1="60" y1="290" x2="936" y2="290" stroke="#073e77" stroke-width="6" stroke-linecap="round"/>
+						<line x1="832" y1="72" x2="832" y2="290" stroke="#d7263d" stroke-width="4" stroke-dasharray="10 8"/>
+						<g fill="#fece00" stroke="#073e77" stroke-width="5">
+							<circle cx="148" cy="290" r="13"/><circle cx="327" cy="290" r="13"/><circle cx="486" cy="290" r="13"/><circle cx="509" cy="290" r="13"/>
+						</g>
+						<path d="M832 266l7 15 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z" fill="#d7263d" stroke="#0b1220" stroke-width="2"/>
+						<g font-size="20" font-weight="700" text-anchor="middle" fill="#0b1220">
+							<text x="148" y="330">BIOGLOW</text><text x="148" y="354">theme</text>
+							<text x="327" y="330">Sep 17</text><text x="327" y="354">topic chosen</text>
+							<text x="498" y="330">Oct 14 + 18</text><text x="498" y="354">expert calls</text>
+							<text x="832" y="330" fill="#d7263d">Dec 13</text><text x="832" y="354" fill="#d7263d">tournament</text>
+						</g>
+					</svg>
+				</div>
+			</div>
+		</section>
+
+		<section class="slide" data-part="4 · Our idea and our plan">
+			<div class="inner">
+				<p class="kicker">4 · Our plan</p>
+				<h2 class="t">Our team spreadsheet</h2>
+				<p class="line wide">It tracks our research, notes and emails.</p>
+				<div class="frame">Team spreadsheet (screenshot coming)</div>
+			</div>
+		</section>
+
+		<!-- ============ 5. OUR 3D MODEL ============ -->
+		<section class="slide" data-part="5 · Our 3D model">
+			<div class="inner">
+				<p class="kicker">5 · Our 3D model</p>
+				<div class="split">
+					<div class="visual"><img src="img/bioglow/spectrafloat-side-cut.webp" width="1260" height="1268" alt="Our 3D model cut in half, seen from the side, with numbered circles on the float ring, the waterline, the float point, the heavy point and the weights." /></div>
+					<div>
+						<h2 class="t">It floats upright</h2>
+						<p class="line" style="margin-left:0;">A foam ring floats it. Weights at the bottom stop it tipping.</p>
+						<ul class="key">
+							<li><i>1</i>Foam float ring</li>
+							<li><i>5</i>Waterline</li>
+							<li><i>6</i>Float point</li>
+							<li><i>7</i>Heavy point, far below</li>
+							<li><i>9</i>Weights</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="slide" data-part="5 · Our 3D model">
+			<div class="inner">
+				<p class="kicker">5 · Our 3D model</p>
+				<div class="split">
+					<div class="visual"><img src="img/bioglow/spectrafloat-light-sensor-top-cut.webp" width="1180" height="990" alt="Our 3D model of the algae light sensor, cut in half and seen from above: the light sensor, two lights aimed at one spot, a clear window and a dark hood with zigzag water paths." /></div>
+					<div>
+						<h2 class="t">Two lights under the water</h2>
+						<p class="line" style="margin-left:0;">A blue light and an orange light. A dark hood keeps sunlight out.</p>
+						<ul class="key">
+							<li><i>1</i>Light sensor</li>
+							<li><i>2</i>Blue and orange lights</li>
+							<li><i>4</i>Where the water is checked</li>
+							<li><i>6</i>Sunlight hits the wall, not the window</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="slide" data-part="5 · Our 3D model">
+			<div class="inner">
+				<p class="kicker">5 · Our 3D model</p>
+				<h2 class="t">The two-light trick</h2>
+				<p class="line">Algae glow. Mud does not!</p>
+				<div class="visual">
+					<svg viewBox="0 0 1000 520" style="max-height:56dvh" role="img" aria-label="Under blue light, green algae and blue-green algae both glow red, and mud does not glow. Under orange light, blue-green algae glow much more than green algae, and mud still does not glow." class="svgtext">
+						<g font-size="26" font-weight="800" text-anchor="middle" fill="#0b1220">
+							<text x="380" y="40">Green algae</text>
+							<text x="620" y="40">Blue-green algae</text>
+							<text x="860" y="40">Mud</text>
+						</g>
+						<!-- Row 1: blue light -->
+						<rect x="20" y="62" width="960" height="210" rx="22" fill="#eef4ff"/>
+						<circle cx="90" cy="150" r="34" fill="#2563eb"/>
+						<path d="M134 150h40M128 122l30-14M128 178l30 14" stroke="#2563eb" stroke-width="7" stroke-linecap="round"/>
+						<text x="90" y="230" text-anchor="middle" font-size="28" font-weight="800" fill="#1d4ed8">Blue light</text>
+						<circle cx="380" cy="150" r="90" fill="url(#glow)"/>
+						<circle cx="620" cy="150" r="90" fill="url(#glow)"/>
+						<g stroke="#5b7fa6" stroke-width="4">
+							<rect x="330" y="100" width="100" height="110" rx="12" fill="#6aa832"/>
+							<rect x="570" y="100" width="100" height="110" rx="12" fill="#2a9d8f"/>
+							<rect x="810" y="100" width="100" height="110" rx="12" fill="#8d6e4f"/>
+						</g>
+						<g font-size="24" font-weight="700" text-anchor="middle">
+							<text x="380" y="252" fill="#b91c1c">Glows red</text>
+							<text x="620" y="252" fill="#b91c1c">Glows red</text>
+							<text x="860" y="252" fill="#233">No glow</text>
+						</g>
+						<!-- Row 2: orange light -->
+						<rect x="20" y="290" width="960" height="210" rx="22" fill="#fff4e6"/>
+						<circle cx="90" cy="378" r="34" fill="#f28c28"/>
+						<path d="M134 378h40M128 350l30-14M128 406l30 14" stroke="#f28c28" stroke-width="7" stroke-linecap="round"/>
+						<text x="90" y="458" text-anchor="middle" font-size="28" font-weight="800" fill="#c2410c">Orange light</text>
+						<circle cx="380" cy="378" r="62" fill="url(#glow)" opacity=".55"/>
+						<circle cx="620" cy="378" r="118" fill="url(#glow)"/>
+						<g stroke="#5b7fa6" stroke-width="4">
+							<rect x="330" y="328" width="100" height="110" rx="12" fill="#6aa832"/>
+							<rect x="570" y="328" width="100" height="110" rx="12" fill="#2a9d8f"/>
+							<rect x="810" y="328" width="100" height="110" rx="12" fill="#8d6e4f"/>
+						</g>
+						<g font-size="24" font-weight="700" text-anchor="middle">
+							<text x="380" y="480" fill="#233">Small glow</text>
+							<text x="620" y="480" fill="#b91c1c">Big glow!</text>
+							<text x="860" y="480" fill="#233">No glow</text>
+						</g>
+					</svg>
+				</div>
+				<p class="credit">Two lights and one sensor tell mud, green algae and blue-green algae apart.</p>
+			</div>
+		</section>
+
+		<section class="slide" data-part="5 · Our 3D model">
+			<div class="inner">
+				<p class="kicker">5 · Our 3D model</p>
+				<h2 class="t">The warning light</h2>
+				<p class="line">Red means: test the water now!</p>
+				<div class="beacon-wrap">
+					<div class="visual beacon-anim">
+						<svg viewBox="0 0 400 430" role="img" aria-label="Animation: the buoy's light turns green, then yellow, then red as more algae grow in the water.">
+							<use href="#buoy" class="lamp"/>
+							<g fill="#2a9d8f">
+								<circle cx="60" cy="300" r="6"/><circle cx="340" cy="330" r="6"/>
+								<g class="more"><circle cx="100" cy="350" r="7"/><circle cx="300" cy="290" r="6"/><circle cx="40" cy="390" r="7"/><circle cx="360" cy="400" r="6"/></g>
+								<g class="most"><circle cx="80" cy="280" r="8"/><circle cx="130" cy="320" r="7"/><circle cx="270" cy="350" r="8"/><circle cx="320" cy="370" r="7"/><circle cx="110" cy="405" r="8"/><circle cx="290" cy="410" r="7"/><circle cx="30" cy="340" r="7"/><circle cx="370" cy="300" r="8"/><circle cx="160" cy="395" r="6"/><circle cx="240" cy="300" r="6"/></g>
+							</g>
+						</svg>
+					</div>
+					<div class="states" aria-hidden="true">
+						<div class="s1"><div class="state-name">Green</div><div class="state-says">No bloom seen</div><div class="dotrow"><i></i><i></i><i></i></div></div>
+						<div class="s2"><div class="state-name">Yellow</div><div class="state-says">Algae rising, watch</div><div class="dotrow"><i></i><i></i><i></i></div></div>
+						<div class="s3"><div class="state-name">Red</div><div class="state-says">Test the water now</div><div class="dotrow"><i></i><i></i><i></i></div></div>
+					</div>
+				</div>
+				<div class="beacon-static">
+					<div><svg viewBox="0 0 400 430" role="img" aria-label="Green light"><use href="#buoy" style="color:#2e9e44"/></svg><b style="color:#2e9e44">Green</b><span>No bloom seen</span></div>
+					<div><svg viewBox="0 0 400 430" role="img" aria-label="Yellow light"><use href="#buoy" style="color:#e0a800"/></svg><b style="color:#a87b00">Yellow</b><span>Algae rising, watch</span></div>
+					<div><svg viewBox="0 0 400 430" role="img" aria-label="Red light"><use href="#buoy" style="color:#d7263d"/></svg><b style="color:#d7263d">Red</b><span>Test the water now</span></div>
+				</div>
+				<p class="light-note">“No bloom seen” does not mean “safe”. Only a lab test can tell if there is poison.</p>
+			</div>
+		</section>
+
+		<!-- ============ 6. WHAT EXPERTS SAID ABOUT OUR DESIGN ============ -->
+		<section class="slide" data-part="6 · What experts said about our design">
+			<div class="inner">
+				<p class="kicker">6 · What experts said about our design</p>
+				<h2 class="t">We showed our model to <span data-expert-name="shining" data-mid>an engineering student at Columbia</span></h2>
+				<p class="line wide">They build a robot boat and a buoy for blooms in a New York lake!</p>
+				<div class="xgrid one" data-cards="shining"></div>
+				<p class="quote">Wire management is like a beast.</p>
+				<p class="quote-by">What she told us about the wires (Oct 18 video call)</p>
+			</div>
+		</section>
+
+		<section class="slide" data-part="6 · What experts said about our design">
+			<div class="inner">
+				<p class="kicker">6 · What experts said about our design</p>
+				<h2 class="t">What we changed on Oct 22</h2>
+				<p class="line wide">Low and wide, weights at the bottom, and a wire tray.</p>
+				<div class="visual">
+					<svg viewBox="0 0 1000 520" style="max-height:56dvh" role="img" aria-label="Before and after. Before: no space planned for the boards and wires, and the weights were not fixed in place. After: a lift-out wire tray with room around every board, weights fixed at the very bottom, a low and wide float ring, and waterproof cable seals." class="svgtext">
+						<g font-size="34" font-weight="800" text-anchor="middle">
+							<text x="250" y="42" fill="#233">Before</text>
+							<text x="750" y="42" fill="#2e9e44">After (Oct 22)</text>
+						</g>
+						<line x1="500" y1="20" x2="500" y2="500" stroke="#c9b98f" stroke-width="3" stroke-dasharray="10 8"/>
+						<!-- BEFORE -->
+						<g transform="translate(250,0)">
+							<rect x="-230" y="200" width="460" height="300" fill="#cfe8f3" opacity=".6"/>
+							<rect x="-150" y="160" width="60" height="50" rx="10" fill="#f5d77a" stroke="#b8962e" stroke-width="3"/>
+							<rect x="90" y="160" width="60" height="50" rx="10" fill="#f5d77a" stroke="#b8962e" stroke-width="3"/>
+							<rect x="-90" y="110" width="180" height="120" rx="10" fill="#e5edf5" stroke="#5b7fa6" stroke-width="4"/>
+							<rect x="-70" y="190" width="70" height="30" rx="3" fill="#555"/>
+							<rect x="10" y="150" width="40" height="16" fill="#1e40af"/><rect x="-40" y="128" width="34" height="14" fill="#1e40af"/>
+							<path d="M-60 140c20 30 40-30 60 10s30 20 50-20M-50 175c30-20 40 30 70 0s20-40 40-10" fill="none" stroke="#d7263d" stroke-width="4"/>
+							<rect x="-14" y="230" width="8" height="200" fill="#2e7d4f"/><rect x="6" y="230" width="8" height="200" fill="#2e7d4f"/>
+							<path d="M-60 430h120v-20" fill="none" stroke="#2e7d4f" stroke-width="6"/>
+							<rect x="-40" y="400" width="70" height="14" rx="3" fill="#6b7280" transform="rotate(-8 -5 407)"/>
+						</g>
+						<g font-size="27" font-weight="800" fill="#b91c1c">
+							<line x1="215" y1="150" x2="120" y2="90" stroke="#b91c1c" stroke-width="3"/>
+							<text x="20" y="80">Wires: no plan</text>
+							<line x1="240" y1="405" x2="120" y2="470" stroke="#b91c1c" stroke-width="3"/>
+							<text x="20" y="494">Weights not fixed</text>
+						</g>
+						<!-- AFTER -->
+						<g transform="translate(750,0)">
+							<rect x="-230" y="200" width="460" height="300" fill="#cfe8f3" opacity=".6"/>
+							<rect x="-150" y="160" width="60" height="50" rx="10" fill="#f5d77a" stroke="#b8962e" stroke-width="3"/>
+							<rect x="90" y="160" width="60" height="50" rx="10" fill="#f5d77a" stroke="#b8962e" stroke-width="3"/>
+							<rect x="-90" y="110" width="180" height="120" rx="10" fill="#e5edf5" stroke="#5b7fa6" stroke-width="4"/>
+							<rect x="-70" y="190" width="70" height="30" rx="3" fill="#555"/>
+							<rect x="-76" y="168" width="152" height="8" fill="#2e9e44"/>
+							<rect x="-72" y="176" width="6" height="14" fill="#2e9e44"/><rect x="66" y="176" width="6" height="14" fill="#2e9e44"/>
+							<rect x="-56" y="150" width="34" height="14" fill="#1e40af"/><rect x="0" y="150" width="40" height="14" fill="#1e40af"/>
+							<path d="M-39 150v-12h59v12" fill="none" stroke="#0b1220" stroke-width="3"/>
+							<g fill="#9aa3ad"><rect x="-60" y="228" width="16" height="14"/><rect x="-24" y="228" width="16" height="14"/><rect x="40" y="228" width="16" height="14"/></g>
+							<rect x="-14" y="242" width="8" height="188" fill="#2e7d4f"/><rect x="6" y="242" width="8" height="188" fill="#2e7d4f"/>
+							<rect x="-70" y="428" width="140" height="10" fill="#2e7d4f"/>
+							<rect x="-50" y="438" width="100" height="26" rx="4" fill="#6b7280"/>
+						</g>
+						<g font-size="27" font-weight="800" fill="#14532d">
+							<line x1="826" y1="172" x2="880" y2="100" stroke="#14532d" stroke-width="3"/>
+							<text x="770" y="90">Lift-out wire tray</text>
+							<line x1="610" y1="185" x2="560" y2="120" stroke="#14532d" stroke-width="3"/>
+							<text x="512" y="104">Low, wide float</text>
+							<line x1="796" y1="236" x2="880" y2="300" stroke="#14532d" stroke-width="3"/>
+							<text x="820" y="324">Cable seals</text>
+							<line x1="800" y1="452" x2="830" y2="480" stroke="#14532d" stroke-width="3"/>
+							<text x="728" y="506">Weights at the bottom</text>
+						</g>
+					</svg>
+				</div>
+				<p class="credit">A simple drawing of our 3D model, not to scale.</p>
+			</div>
+		</section>
+
+		<!-- ============ 7. OUR FIRST TESTS ============ -->
+		<section class="slide" data-part="7 · Our first tests">
+			<div class="inner">
+				<p class="kicker">7 · Our first tests (Nov 7)</p>
+				<h2 class="t">Testing with LEGO sensors</h2>
+				<p class="line wide">Safe algae powder and mud in water. Never real bloom water.</p>
+				<div class="visual" style="max-width:1000px;">
+					<svg viewBox="0 0 1000 250" role="img" aria-label="Our test plan: six cups of water. A: clean water. B, C, D: a little, more and the most blue-green algae powder. E: green algae powder. F: mud." class="svgtext">
+						<g stroke="#5b7fa6" stroke-width="4">
+							<path d="M40 60h120l-12 140H52z" fill="#dff1f8"/>
+							<path d="M200 60h120l-12 140H212z" fill="#a8d8cf"/>
+							<path d="M360 60h120l-12 140H372z" fill="#5fbcaa"/>
+							<path d="M520 60h120l-12 140H532z" fill="#2a9d8f"/>
+							<path d="M680 60h120l-12 140H692z" fill="#6aa832"/>
+							<path d="M840 60h120l-12 140H852z" fill="#8d6e4f"/>
+						</g>
+						<g font-size="40" font-weight="800" text-anchor="middle" fill="#0b1220">
+							<text x="100" y="145">A</text><text x="260" y="145">B</text><text x="420" y="145">C</text><text x="580" y="145" fill="#fff">D</text><text x="740" y="145" fill="#fff">E</text><text x="900" y="145" fill="#fff">F</text>
+						</g>
+						<g font-size="21" font-weight="700" text-anchor="middle" fill="#233">
+							<text x="100" y="236">Clean</text><text x="260" y="236">A little</text><text x="420" y="236">More</text><text x="580" y="236">Most</text><text x="740" y="236">Green algae</text><text x="900" y="236">Mud</text>
+						</g>
+						<text x="420" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#2a9d8f">— blue-green algae powder —</text>
+					</svg>
+				</div>
+				<div class="frame" style="min-height:clamp(120px,20vh,240px);margin-top:14px;">Photo of our test setup (after Nov 7)</div>
+			</div>
+		</section>
+
+		<section class="slide" data-part="7 · Our first tests">
+			<div class="inner">
+				<p class="kicker">7 · Our first tests</p>
+				<h2 class="t">Results from Nov 7 tests</h2>
+				<p class="line wide">We will put our real numbers here after the tests.</p>
+				<div class="frames">
+					<div class="frame">More algae → the number…<small>Chart coming after Nov 7</small></div>
+					<div class="frame">Wide float vs. tall float: wobble<small>Chart coming after Nov 7</small></div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ 8. REAL SENSORS, AND WHO IT HELPS ============ -->
+		<section class="slide" data-part="8 · Real sensors, and who it helps">
+			<div class="inner">
+				<p class="kicker">8 · Real sensors</p>
+				<h2 class="t">The real sensors we need</h2>
+				<div class="cardbox">
+					<ul class="parts">
+						<li>Algae light sensor (sees the glow)</li>
+						<li>A blue light and an orange light</li>
+						<li>Water temperature probe</li>
+						<li>Cloudiness sensor</li>
+						<li>Small computer with Wi-Fi</li>
+						<li>Green / yellow / red light ring</li>
+						<li>Waterproof box and cable seals</li>
+						<li>Foam float and weights</li>
+					</ul>
+					<p class="foot"><b>Our goal:</b> the main parts for under $300. <b>Sponsor:</b> to be added.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="slide" data-part="8 · Real sensors, and who it helps">
+			<div class="inner">
+				<p class="kicker">8 · Who it helps</p>
+				<h2 class="t">SpectraFloat could help…</h2>
+				<div class="helps">
+					<div><svg viewBox="0 0 64 64" style="color:#2b7bb9" aria-hidden="true"><use href="#i-swim"/></svg><b>Swimmers</b><span>know when to stay out</span></div>
+					<div><svg viewBox="0 0 96 64" style="color:#073e77" aria-hidden="true"><svg x="0" y="0" width="64" height="64" viewBox="0 0 64 64"><use href="#i-person"/></svg><svg x="44" y="8" width="56" height="56" viewBox="0 0 64 64"><use href="#i-kid"/></svg></svg><b>Families</b><span>at the lake</span></div>
+					<div><svg viewBox="0 0 64 64" style="color:#8d6e4f" aria-hidden="true"><use href="#i-dog"/></svg><b>Dogs</b><span>stay out of bad water</span></div>
+					<div><svg viewBox="0 0 64 64" style="color:#2e9e44" aria-hidden="true"><use href="#i-flask"/></svg><b>Scientists</b><span>choose where to test first</span></div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ THANK YOU ============ -->
+		<section class="slide" data-part="Thank you">
+			<div class="inner">
+				<div class="logo" aria-hidden="true"></div>
+				<p class="big">Thank you!</p>
+				<p class="line wide" style="margin-top:16px;">Do you have any questions?</p>
+				<p class="team">AI Future 1 · Team 65773 · Queens · aifuture1.org</p>
+			</div>
+		</section>
+
+		<section class="slide" data-part="Credits">
+			<div class="inner">
+				<p class="kicker">Credits</p>
+				<h2 class="t" style="font-size:clamp(24px,3vw,40px);">Pictures and help</h2>
+				<ul class="credits">
+					<li><b>Bloom photo:</b> blue-green algae bloom at Catawba Island, Lake Erie, Ohio (2009). NOAA / NASA, public domain. <a href="https://commons.wikimedia.org/wiki/File:Blue-gree_algae_bloom_Lake_Erie.png" target="_blank" rel="noreferrer">Wikimedia Commons</a>.</li>
+					<li><b>3D model pictures:</b> made from our own SpectraFloat 3D model.</li>
+					<li><b>All drawings and the map:</b> drawn for this page with help from Claude (the map is a simple drawing, not to scale).</li>
+					<li><b>Facts:</b> NY State DEC, Suffolk County, 27east, the Lake Agawam Conservancy, and the experts who talked to us.</li>
+					<li>Full list: <a href="https://github.com/gio1880/AI-Future-1-Website/blob/main/img/bioglow/CREDITS.md" target="_blank" rel="noreferrer">img/bioglow/CREDITS.md</a> · More about our project: <a href="bioglow-innovation.html">Innovation Project page</a></li>
+					<li>Built by the team with help from Claude.</li>
+				</ul>
+			</div>
+		</section>
+	</main>
+
+	<nav class="controls" aria-label="Slide controls">
+		<div class="group">
+			<a class="ghost hide-sm" href="bioglow-innovation.html">Exit</a>
+			<button type="button" class="ghost" data-go="prev" aria-label="Previous slide">← Back</button>
+		</div>
+		<div class="where" aria-live="polite"><b class="count">1 / 1</b> <span class="part hide-sm"></span></div>
+		<div class="group">
+			<button type="button" class="ghost hide-sm" data-go="full" aria-label="Full screen">Full screen</button>
+			<button type="button" data-go="next" aria-label="Next slide">Next →</button>
+		</div>
+	</nav>
+
+	<footer class="pagefoot">
+		AI Future 1 · FLL Team #65773 · <a href="index.html">Home</a> · <a href="bioglow-innovation.html">Innovation Project</a><br/>
+		Built by the team with help from Claude.
+	</footer>
+
+	<script src="js/bioglow-experts.js?v=2026-11-03b"></script>
+	<script src="js/team-mode.js"></script>
+	<script>
+	(function () {
+		var X = window.AF1_EXPERTS;
+
+		/* Long Island map: a simple drawing, not to scale. "both" marks the bay and the lake, "lake" marks the lake. */
+		function mapSvg(mode) {
+			var lakeOnly = mode === "lake";
+			return '<svg viewBox="0 0 1000 420" role="img" class="svgtext" aria-label="A simple map of Long Island, not to scale. Our team is in Queens at the west end. Great South Bay is on the south shore. Lake Agawam is in Southampton, near the east end on the south fork.">' +
+				'<rect width="1000" height="420" rx="20" fill="#cfe8f3"/>' +
+				'<path d="M60 205 L72 172 L150 142 L250 150 L350 136 L450 140 L550 150 L650 145 L720 140 L800 120 L880 96 L952 80 L944 96 L872 122 L800 146 L742 166 L782 176 L852 166 L922 160 L978 176 L962 196 L882 206 L802 226 L722 242 L622 256 L502 266 L402 271 L302 273 L202 269 L122 256 L72 236 Z" fill="#efe4c8" stroke="#b8a77a" stroke-width="3" stroke-linejoin="round"/>' +
+				'<path d="M372 294 L612 278" stroke="#efe4c8" stroke-width="9" stroke-linecap="round"/>' +
+				'<ellipse cx="490" cy="276" rx="118" ry="11" fill="' + (lakeOnly ? '#cfe8f3' : '#8b6b3e') + '" opacity="' + (lakeOnly ? '1' : '.75') + '"/>' +
+				'<g font-size="20" font-style="italic" fill="#3b6b8c" text-anchor="middle"><text x="420" y="92">Long Island Sound</text><text x="520" y="372">Atlantic Ocean</text></g>' +
+				'<g font-weight="800" font-size="22" fill="#0b1220">' +
+					'<path d="M98 200l6 13 14 2-10 10 2 14-12-7-12 7 2-14-10-10 14-2z" fill="#073e77"/>' +
+					'<text x="40" y="128" font-size="22">Queens</text><text x="40" y="152" font-size="18" font-weight="600">(our team)</text>' +
+					(lakeOnly ? '' : '<line x1="470" y1="282" x2="420" y2="322" stroke="#8b6b3e" stroke-width="3"/><text x="300" y="344" fill="#6b4f22">Great South Bay</text><text x="300" y="366" font-size="17" font-weight="600" fill="#6b4f22">(brown tide)</text>') +
+					'<circle cx="838" cy="212" r="' + (lakeOnly ? 26 : 18) + '" fill="none" stroke="#d7263d" stroke-width="6"/>' +
+					'<ellipse cx="838" cy="212" rx="8" ry="6" fill="#2a9d8f"/>' +
+					'<line x1="842" y1="240" x2="842" y2="300" stroke="#d7263d" stroke-width="3"/>' +
+					'<text x="760" y="326" fill="#b91c1c">Lake Agawam</text><text x="760" y="350" font-size="17" font-weight="600" fill="#b91c1c">Southampton (blue-green algae)</text>' +
+				'</g>' +
+				'<text x="980" y="404" text-anchor="end" font-size="16" fill="#233">Not to scale</text>' +
+				'</svg>';
+		}
+		document.querySelectorAll("[data-map]").forEach(function (el) { el.innerHTML = mapSvg(el.getAttribute("data-map")); });
+
+		/* Expert names and cards all come from js/bioglow-experts.js. */
+		document.querySelectorAll("[data-cards]").forEach(function (el) {
+			var v = el.getAttribute("data-cards");
+			X.fillCards(el, v === "all" ? null : v.split(","));
+		});
+		X.fillNames(document);
+		document.querySelectorAll("[data-out]").forEach(function (el) { el.textContent = X.outreach[el.getAttribute("data-out")]; });
+
+		/* Slide deck. Add ?all to the address to see every slide on one page. */
+		if (/[?&]all\b/.test(location.search)) return;
+		var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+		var count = document.querySelector(".controls .count");
+		var part = document.querySelector(".controls .part");
+		var bar = document.querySelector(".progress");
+		var i = 0;
+		document.body.classList.add("deck-on");
+
+		function show(n, fromHash) {
+			i = Math.max(0, Math.min(slides.length - 1, n));
+			slides.forEach(function (s, k) { s.classList.toggle("active", k === i); s.setAttribute("aria-hidden", k === i ? "false" : "true"); });
+			slides[i].scrollTop = 0;
+			count.textContent = (i + 1) + " / " + slides.length;
+			part.textContent = "· " + (slides[i].getAttribute("data-part") || "");
+			bar.style.width = (100 * (i + 1) / slides.length) + "%";
+			if (!fromHash) history.replaceState(null, "", "#" + (i + 1));
+		}
+		function fromHash() {
+			var n = parseInt(location.hash.slice(1), 10);
+			show(isNaN(n) ? 0 : n - 1, true);
+		}
+		function full() {
+			if (document.fullscreenElement) document.exitFullscreen();
+			else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+		}
+
+		document.addEventListener("keydown", function (e) {
+			if (e.altKey || e.ctrlKey || e.metaKey) return;
+			var k = e.key;
+			if (k === "ArrowRight" || k === "ArrowDown" || k === "PageDown" || (k === " " && !e.shiftKey) || k === "Enter") { e.preventDefault(); show(i + 1); }
+			else if (k === "ArrowLeft" || k === "ArrowUp" || k === "PageUp" || (k === " " && e.shiftKey) || k === "Backspace") { e.preventDefault(); show(i - 1); }
+			else if (k === "Home") { e.preventDefault(); show(0); }
+			else if (k === "End") { e.preventDefault(); show(slides.length - 1); }
+			else if (k === "f" || k === "F") { full(); }
+		});
+		document.querySelector(".controls").addEventListener("click", function (e) {
+			var b = e.target.closest("[data-go]");
+			if (!b) return;
+			var g = b.getAttribute("data-go");
+			if (g === "next") show(i + 1); else if (g === "prev") show(i - 1); else full();
+		});
+		/* A click on a slide moves forward (on a laptop). Links still work. */
+		document.getElementById("deck").addEventListener("click", function (e) {
+			if (e.target.closest("a, button")) return;
+			if (window.matchMedia("(max-width: 860px)").matches) return;
+			show(i + 1);
+		});
+		/* Swipe left or right on a phone or tablet. */
+		var x0 = null, y0 = null;
+		document.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+		document.addEventListener("touchend", function (e) {
+			if (x0 === null) return;
+			var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+			if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) show(i + (dx < 0 ? 1 : -1));
+			x0 = null;
+		});
+		window.addEventListener("hashchange", fromHash);
+		fromHash();
+	})();
+	</script>
+</body>
+</html>
