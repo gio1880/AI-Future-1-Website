@@ -277,7 +277,7 @@
 				<p class="kicker">1 · Our problem</p>
 				<h2 class="t">What is a bloom?</h2>
 				<p class="line">Blue-green algae grow too much. Some make poison.</p>
-				<div class="visual">
+				<div class="visual" data-anim="bloom"><!-- Static fallback; js/anim/bloom.js replaces it with the playable version. -->
 					<svg viewBox="0 0 1000 330" role="img" aria-label="Three steps. One: blue-green algae grow too much. Two: some blooms make poison. Three: the poison can make people and dogs sick." class="svgtext">
 						<g transform="translate(40,20)">
 							<rect width="250" height="220" rx="22" fill="#fff" stroke="#c9d6e3" stroke-width="3"/>
@@ -368,7 +368,7 @@
 				<p class="kicker">3 · Video call · Oct 14</p>
 				<h2 class="t"><span data-expert-name="sarah">A bloom scientist at NY State DEC</span><span data-named-only="sarah">, NY State DEC</span></h2>
 				<p class="line wide">Boat and lab tests are slow and cost a lot.</p>
-				<div class="visual">
+				<div class="visual" data-anim="slowtest"><!-- Static fallback; js/anim/slowtest.js replaces it. -->
 					<svg viewBox="0 0 960 300" role="img" aria-label="Testing by hand: a boat goes out, people fill a bottle with lake water, and a lab tests it. It is slow and costs a lot." class="svgtext">
 						<g transform="translate(40,10)">
 							<rect width="240" height="200" rx="22" fill="#fff" stroke="#c9d6e3" stroke-width="3"/>
@@ -580,6 +580,15 @@
 		<section class="slide" data-part="5 · Our 3D model">
 			<div class="inner">
 				<p class="kicker">5 · Our 3D model</p>
+				<h2 class="t">Why it doesn’t tip over</h2>
+				<p class="line wide">Foam pushes up. Weights pull it back.</p>
+				<div class="visual" data-anim="upright" data-anim-mode="float"></div>
+			</div>
+		</section>
+
+		<section class="slide" data-part="5 · Our 3D model">
+			<div class="inner">
+				<p class="kicker">5 · Our 3D model</p>
 				<div class="split">
 					<div class="visual"><img src="img/bioglow/spectrafloat-light-sensor-top-cut.webp" width="1180" height="990" alt="Our 3D model of the algae light sensor, cut in half and seen from above: the light sensor, two lights aimed at one spot, a clear window and a dark hood with zigzag water paths." /></div>
 					<div>
@@ -601,7 +610,7 @@
 				<p class="kicker">5 · Our 3D model</p>
 				<h2 class="t">The two-light trick</h2>
 				<p class="line">Algae glow. Mud does not!</p>
-				<div class="visual">
+				<div class="visual" data-anim="twolight"><!-- Static fallback; js/anim/twolight.js replaces it. -->
 					<svg viewBox="0 0 1000 520" style="max-height:56dvh" role="img" aria-label="Under blue light, green algae and blue-green algae both glow red, and mud does not glow. Under orange light, blue-green algae glow much more than green algae, and mud still does not glow." class="svgtext">
 						<g font-size="26" font-weight="800" text-anchor="middle" fill="#0b1220">
 							<text x="380" y="40">Green algae</text>
@@ -645,6 +654,15 @@
 					</svg>
 				</div>
 				<p class="credit">Two lights and one sensor tell mud, green algae and blue-green algae apart.</p>
+			</div>
+		</section>
+
+		<section class="slide" data-part="5 · Our 3D model">
+			<div class="inner">
+				<p class="kicker">5 · Our 3D model</p>
+				<h2 class="t">The zigzag path</h2>
+				<p class="line">A dark hood keeps sunlight out.</p>
+				<div class="visual" data-anim="darkhood"></div>
 			</div>
 		</section>
 
@@ -751,6 +769,15 @@
 					</svg>
 				</div>
 				<p class="credit">A simple drawing of our 3D model, not to scale.</p>
+			</div>
+		</section>
+
+		<section class="slide" data-part="6 · What experts said about our design">
+			<div class="inner">
+				<p class="kicker">6 · What experts said about our design</p>
+				<h2 class="t">Why low and wide?</h2>
+				<p class="line wide">Low and wide rocks less in the waves.</p>
+				<div class="visual" data-anim="upright" data-anim-mode="compare"></div>
 			</div>
 		</section>
 
@@ -874,6 +901,12 @@
 
 	<script src="js/bioglow-experts.js?v=2026-11-03b"></script>
 	<script src="js/team-mode.js"></script>
+	<!-- Playable animations (press Play on the slide). Each mounts on its [data-anim] box. -->
+	<script src="js/anim/bloom.js?v=2026-11-10"></script>
+	<script src="js/anim/slowtest.js?v=2026-11-10"></script>
+	<script src="js/anim/upright.js?v=2026-11-10b"></script>
+	<script src="js/anim/twolight.js?v=2026-11-10b"></script>
+	<script src="js/anim/darkhood.js?v=2026-11-10"></script>
 	<script>
 	(function () {
 		var X = window.AF1_EXPERTS;
