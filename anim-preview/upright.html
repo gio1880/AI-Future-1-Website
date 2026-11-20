@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<meta name="robots" content="noindex, nofollow" />
+	<title>Preview · upright animation</title>
+	<style>
+		:root{
+			--blue:#073e77; --yellow:#fece00; --cream:#f6f1e6; --ink:#0b1220; --soft:#233;
+			--water:#cfe8f3; --land:#efe4c8; --algae:#6aa832; --bluegreen:#2a9d8f; --mud:#8d6e4f;
+			--go:#2e9e44; --watch:#e0a800; --stop:#d7263d;
+		}
+		html, body{ margin:0; }
+		body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; background:var(--cream); color:var(--ink); overflow-x:hidden; }
+		/* Copied from bioglow-judging.html so the preview looks like a real slide. */
+		.slide{ box-sizing:border-box; min-height:100vh; min-height:100dvh; padding:clamp(14px,3vw,40px) clamp(16px,4vw,64px) 84px; display:flex; flex-direction:column; border-bottom:2px dashed rgba(11,18,32,.12); }
+		.slide > .inner{ margin:auto 0; width:100%; max-width:1280px; align-self:center; text-align:center; }
+		.kicker{ display:inline-block; font-size:clamp(13px,1.4vw,18px); font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--blue); background:#fff; border:1px solid rgba(7,62,119,.18); border-radius:999px; padding:4px 12px; margin:0 0 10px; }
+		h2{ margin:0 0 8px; line-height:1.1; }
+		h2.t{ font-size:clamp(28px,4.6vw,64px); }
+		p.line{ font-size:clamp(19px,2.6vw,36px); line-height:1.3; margin:0 auto 18px; max-width:30ch; color:var(--soft); }
+		p.line.wide{ max-width:40ch; }
+		.visual{ margin:0 auto; width:100%; }
+		.visual svg{ display:block; width:100%; height:auto; max-height:52vh; max-height:52dvh; margin:0 auto; }
+		.credit{ font-size:clamp(12px,1.1vw,15px); color:rgba(11,18,32,.7); margin:8px auto 0; max-width:70ch; }
+		@media (max-height:820px) and (min-width:861px){
+			.slide{ padding-top:12px; padding-bottom:66px; }
+			.kicker{ margin-bottom:6px; padding:3px 10px; }
+			h2.t{ font-size:clamp(26px,3.8vw,50px); margin-bottom:4px; }
+			p.line{ font-size:clamp(18px,2.1vw,28px); margin-bottom:10px; }
+			.visual svg{ max-height:46vh; max-height:46dvh; }
+		}
+		.pv-note{ text-align:center; font-size:13px; color:var(--soft); padding:8px 16px; margin:0; }
+	</style>
+</head>
+<body>
+	<p class="pv-note">Preview of <code>js/anim/upright.js</code>: mode <b>float</b> (new slide after “It floats upright”), then mode <b>compare</b> (“What we changed on Oct 22”).</p>
+
+	<section class="slide active" id="s-float">
+		<div class="inner">
+			<p class="kicker">5 · Our 3D model</p>
+			<h2 class="t">It floats upright</h2>
+			<p class="line wide">A foam ring floats it. Weights at the bottom stop it tipping.</p>
+			<div class="visual" data-anim="upright" data-anim-mode="float"></div>
+		</div>
+	</section>
+
+	<section class="slide active" id="s-compare">
+		<div class="inner">
+			<p class="kicker">6 · What experts said about our design</p>
+			<h2 class="t">What we changed on Oct 22</h2>
+			<p class="line wide">Low and wide, weights at the bottom, and a wire tray.</p>
+			<div class="visual" data-anim="upright" data-anim-mode="compare"></div>
+			<p class="credit">A simple drawing of our 3D model, not to scale.</p>
+		</div>
+	</section>
+
+	<script>
+		/* Stand-in for the deck: logs keys that would move the slide, so we can check the Play button stops them. */
+		window.pvDeckKeys = [];
+		document.addEventListener("keydown", function (e) {
+			if (e.key === "Enter" || e.key === " " || e.key.indexOf("Arrow") === 0) window.pvDeckKeys.push(e.key);
+		});
+	</script>
+	<script src="../js/anim/upright.js"></script>
+</body>
+</html>
